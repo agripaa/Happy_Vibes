@@ -13,11 +13,21 @@ const fileStorage = multer.diskStorage({
     },
     filename: (req , file , cb) => {
         cb( null, Date.now() + '-' + file.originalname);
-        // cb(null , file.originalname)
     }
 })
 
-const upload = multer({storage: fileStorage})
+const upload = multer({storage: fileStorage , limits: { fileSize: 5242880 },
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" 
+        || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg"
+        ) {
+          cb(null, true);
+        } else {
+          cb(null, false);
+          return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+      }
+})
 
 Routes.get('/posting/all_content', getAllContent)
 Routes.get('/:id/posting', getContentById)
