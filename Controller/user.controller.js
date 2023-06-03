@@ -29,7 +29,7 @@ module.exports = {
         const size = file.data.length;
         const extend = path.extname(file.name);
         const name_img = file.md5 + extend
-        const url = `${req.protocol}://${req.get("host")}/images/users/${name_img}`;
+        const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
         const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
 
         if(!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
@@ -90,7 +90,7 @@ module.exports = {
                 });
             }
 
-            const url = `${req.protocol}://${req.get('host')}/images/users/${name_img}`;
+            const url = `${req.protocol}://${req.get('host')}/users/${name_img}`;
             await Users.update( {
                 name: name,
                 email: email,
