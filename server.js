@@ -8,6 +8,7 @@ const Users = require('./Routes/users.route.js');
 const Auth = require('./Routes/auth.route.js');
 const db = require('./Config/database.js');
 const Post = require('./Routes/posting.route.js')
+const Comment = require('./Routes/comment.route.js')
 const session = require('express-session');
 require('dotenv').config();
 
@@ -35,6 +36,7 @@ const corsOptions = {
 
 app.use(Post)
 app.use(express.json())
+app.use(Comment)
 
 app.use(cors(corsOptions));
 app.use(fileUpload());

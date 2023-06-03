@@ -5,19 +5,6 @@ const log = require('../utils/log.js')
 
 const express = require('express');
 
-const fileStorage = multer.diskStorage({
-    destination: (req, file , cb) => {
-        cb(null , './public/users')
-    },
-    filename: (req , file , cb) => {
-        cb(null , new Date().toString() + '-' + file.originalname)
-    }
-})
-
-const filterImage = (req , file , cb) => {
-
-}
-
 const getAllContent = async (req,res) => {
     try {
         const posting = await Posting.findAll();

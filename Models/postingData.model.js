@@ -3,6 +3,12 @@ const db = require('../Config/database.js');
 const {DataTypes} = Sequelize
 
 const Posting = db.define('posting_data', {
+    postId:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
+    },
     uuid:{
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
