@@ -5,11 +5,12 @@ const {
     getAllContent,
     getContentById,
     createNewPosting,
-} = require('../Controller/posting.controller.js')
+} = require('../Controller/posting.controller.js');
+const sessionUser = require('../middleware/session.js');
 
 const fileStorage = multer.diskStorage({
     destination: (req, file , cb) => {
-        cb(null, './public/users/');
+        cb(null, './public/postings/');
     },
     filename: (req , file , cb) => {
         cb( null, Date.now() + '-' + file.originalname);
@@ -34,8 +35,8 @@ const upload = multer({storage: fileStorage , limits: { fileSize: 5242880 },
       }
 })
 
-Routes.get('/posting/all_content', getAllContent)
-Routes.get('/:id/posting', getContentById)
-Routes.post('/posting/new_content', upload.single('image') , createNewPosting)
+Routes.get('/posting/all_content', sessionUser , getAllContent)
+Routes.get('/:id/posting', sessionUser , getContentById)
+Routes.post('/posting/new_content', sessionUser , upload.single('image') , createNewPosting)
 
 module.exports = Routes

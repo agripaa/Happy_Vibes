@@ -1,26 +1,25 @@
 const Posting = require('../Models/postingData.model.js');
-const { sequelize , QueryTypes } = require('sequelize');
-const multer = require('multer')
-const log = require('../utils/log.js')
+const log = require('../utils/log.js');
+const Users = require('../models/usersData.model.js');
+const Comment = require('../Models/commentsData.model.js');
 
-const express = require('express');
-
-const fileStorage = multer.diskStorage({
-    destination: (req, file , cb) => {
-        cb(null , './public/users')
-    },
-    filename: (req , file , cb) => {
-        cb(null , new Date().toString() + '-' + file.originalname)
-    }
-})
-
-const filterImage = (req , file , cb) => {
-
-}
+const attributesUser = ['name', 'url', 'name_img'];
 
 const getAllContent = async (req,res) => {
     try {
-        const posting = await Posting.findAll();
+        const posting = await Posting.findAll({
+            include: 
+            [
+                {
+                    model: Users,
+                    attributes: attributesUser
+                },
+                {
+                    model: Comment,
+                    attributes: ['comment']
+                }
+            ]
+        });
         res.status(200).json({
             status: "200", 
             result: posting
@@ -35,7 +34,17 @@ const getContentById = async (req,res) => {
         const posting = await Posting.findOne({
             where: {
               uuid : req.params.id
-            }
+            },
+            include: [
+                {
+                    model: Users,
+                    attributes: attributesUser
+                },
+                {
+                    model: Comment,
+                    attributes: ['comment']
+                }
+            ]
           });
 
           if(!posting) {
@@ -54,12 +63,14 @@ const getContentById = async (req,res) => {
 const createNewPosting = async (req, res) => {
         const newPosting = req.body
         const image = req.file.path
+        log.info(req.userId)
         try {
             await Posting.create({
                 name_img: newPosting.name_img,
                 url: image, // Tambahkan url ke data yang akan dibuat
                 desc: newPosting.desc,
-                like: newPosting.like
+                like: newPosting.like,
+                userId: req.userId
             });
 
             return res.status(200).json({ status: 200, msg: 'Posting created successfully' });

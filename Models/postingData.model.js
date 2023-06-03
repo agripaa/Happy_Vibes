@@ -1,5 +1,7 @@
 const { Sequelize } = require('sequelize');
 const db = require('../Config/database.js');
+const Users = require('./usersData.model.js');
+const Comment = require('./commentsData.model.js');
 const {DataTypes} = Sequelize
 
 const Posting = db.define('posting_data', {
@@ -28,12 +30,23 @@ const Posting = db.define('posting_data', {
         allowNull: true,
     },
     commentId : {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: true,
+        validate: {
+            notEmpty: true,
+        }
     },
     userId : {
-        type: DataTypes.STRING,
-        allowNull: true,
-    }
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
 }, {freezeTableName: true})
+
+Users.hasMany(Posting);
+Posting.belongsTo(Users, {foreignKey: 'userId'});
+
+
 module.exports = Posting;
