@@ -6,6 +6,6 @@ const { getComments, uploadComment } = require('../Controller/comment.controller
 const router = express.Router();
 
 router.get('/comment/all_comment', sessionUser, getComments);
-router.post('/comment/upload', sessionUser, uploadComment);
+router.post('/comment/upload', sessionUser , uploadComment);
 
 module.exports = router;

@@ -14,7 +14,17 @@ module.exports = {
         res.status(200).json({status: 200, result: comments})
     },
     async uploadComment(req, res){
-        const { comment } = req.body;
-        
+        try {
+            await Comment.create({
+                comment: req.body.comment,
+                // userId: req.userId
+                userId: 1
+            });
+
+            return res.status(200).json({ status: 200, msg: 'Comment posted successfully' });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ status: 500, msg: 'Internal server error' });
+        }
     }
 }

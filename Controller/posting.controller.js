@@ -1,6 +1,6 @@
 const Posting = require('../Models/postingData.model.js');
 const log = require('../utils/log.js');
-const Users = require('../models/usersData.model.js');
+const Users = require('../Models/usersData.model.js');
 const Comment = require('../Models/commentsData.model.js');
 
 const attributesUser = ['name', 'url', 'name_img'];
@@ -67,7 +67,7 @@ const createNewPosting = async (req, res) => {
         try {
             await Posting.create({
                 name_img: newPosting.name_img,
-                url: image, // Tambahkan url ke data yang akan dibuat
+                url: image,
                 desc: newPosting.desc,
                 like: newPosting.like,
                 userId: req.userId
