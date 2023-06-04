@@ -8,17 +8,10 @@ const attributesUser = ['name', 'url', 'name_img'];
 const getAllContent = async (req,res) => {
     try {
         const posting = await Posting.findAll({
-            include: 
-            [
-                {
-                    model: Users,
-                    attributes: attributesUser
-                },
-                {
-                    model: Comment,
-                    attributes: ['comment']
-                }
-            ]
+            include: [{
+                model: Users,
+                attributes: attributesUser
+            }]
         });
         res.status(200).json({
             status: "200", 
@@ -35,16 +28,10 @@ const getContentById = async (req,res) => {
             where: {
               uuid : req.params.id
             },
-            include: [
-                {
+            include: [{
                     model: Users,
                     attributes: attributesUser
-                },
-                {
-                    model: Comment,
-                    attributes: ['comment']
-                }
-            ]
+                }]
           });
 
           if(!posting) {
@@ -61,15 +48,14 @@ const getContentById = async (req,res) => {
 }
 
 const createNewPosting = async (req, res) => {
-        const newPosting = req.body
+        const { name_img, desc, like } = req.body
         const image = req.file.path
-        log.info(req.userId)
         try {
             await Posting.create({
-                name_img: newPosting.name_img,
+                name_img: name_img,
                 url: image,
-                desc: newPosting.desc,
-                like: newPosting.like,
+                desc: desc,
+                like: like,
                 userId: req.userId
             });
 
