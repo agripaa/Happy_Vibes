@@ -1,0 +1,63 @@
+@mixin fade($parameters: false) {
+  @if ($parameters) {
+    animation-name: fadein;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+  } @else {
+    animation-name: fadeout;
+    animation-duration: 1s;
+    animation-delay: 3s;
+    animation-fill-mode: forwards;
+  }
+}
+
+.Container-Welcome {
+  width: 100%;
+  @include fade();
+  height: 100vh;
+  &-header {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.textHeader {
+  @include fade(true);
+  &1,
+  &2 {
+    font-family: "welcome";
+    font-size: 48px;
+    font-weight: 400;
+  }
+  &1 {
+    color: #ffaf38;
+  }
+  &2 {
+    color: #cc1d5a;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@font-face {
+  font-family: "welcome";
+  src: url("../font/Pacifico-Regular.ttf") format("truetype");
+}
