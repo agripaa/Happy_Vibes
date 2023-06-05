@@ -1,0 +1,327 @@
+.color {
+  &-white {
+    color: #ffffff;
+  }
+  &-black {
+    color: #0000;
+  }
+  &-neutral {
+    &-5 {
+      color: #f5f5f5;
+    }
+    &-10 {
+      color: #dbdbdb;
+    }
+    &-20 {
+      color: #c2c2c2;
+    }
+    &-30 {
+      color: #a8a8a8;
+    }
+    &-40 {
+      color: #8f8f8f;
+    }
+    &-50 {
+      color: #757575;
+    }
+    &-60 {
+      color: #5c5c5c;
+    }
+    &-70 {
+      color: #424242;
+    }
+    &-80 {
+      color: #282828;
+    }
+    &-90 {
+      color: #0f0f0f;
+    }
+  }
+  &-primary {
+    &-10 {
+      color: #ffd89e;
+    }
+    &-20 {
+      color: #ffce85;
+    }
+    &-30 {
+      color: #ffc46b;
+    }
+    &-40 {
+      color: #ffba53;
+    }
+    &-50 {
+      color: #ffaf38;
+    }
+  }
+  &-secondary {
+    &-10 {
+      color: #e56591;
+    }
+    &-20 {
+      color: #e54e82;
+    }
+    &-30 {
+      color: #e53773;
+    }
+    &-40 {
+      color: #e53773;
+    }
+    &-50 {
+      color: #cc1d5a;
+    }
+  }
+  &-success {
+    &-10 {
+      color: #9ee8a2;
+    }
+    &-20 {
+      color: #87e88b;
+    }
+    &-30 {
+      color: #6fe874;
+    }
+    &-40 {
+      color: #57e85d;
+    }
+    &-50 {
+      color: #41e848;
+    }
+  }
+  &-warning {
+    &-10 {
+      color: #ebe081;
+    }
+    &-20 {
+      color: #ebde6a;
+    }
+    &-30 {
+      color: #ebdc52;
+    }
+    &-40 {
+      color: #ebd93b;
+    }
+    &-50 {
+      color: #ebd723;
+    }
+  }
+  &-danger {
+    &-10 {
+      color: #ff8787;
+    }
+    &-20 {
+      color: #ff6e6e;
+    }
+    &-30 {
+      color: #ff5454;
+    }
+    &-40 {
+      color: #ff3b3b;
+    }
+    &-50 {
+      color: #ff2121;
+    }
+  }
+}
+
+.bcolor {
+  &-white {
+    background-color: #ffffff;
+  }
+  &-black {
+    background-color: #0000;
+  }
+  &-neutral {
+    &-5 {
+      background-color: #f5f5f5;
+    }
+    &-10 {
+      background-color: #dbdbdb;
+    }
+    &-20 {
+      background-color: #c2c2c2;
+    }
+    &-30 {
+      background-color: #a8a8a8;
+    }
+    &-40 {
+      background-color: #8f8f8f;
+    }
+    &-50 {
+      background-color: #757575;
+    }
+    &-60 {
+      background-color: #5c5c5c;
+    }
+    &-70 {
+      background-color: #424242;
+    }
+    &-80 {
+      background-color: #282828;
+    }
+    &-90 {
+      background-color: #0f0f0f;
+    }
+  }
+  &-primary {
+    &-10 {
+      background-color: #ffd89e;
+    }
+    &-20 {
+      background-color: #ffce85;
+    }
+    &-30 {
+      background-color: #ffc46b;
+    }
+    &-40 {
+      background-color: #ffba53;
+    }
+    &-50 {
+      background-color: #ffaf38;
+    }
+  }
+  &-secondary {
+    &-10 {
+      background-color: #e56591;
+    }
+    &-20 {
+      background-color: #e54e82;
+    }
+    &-30 {
+      background-color: #e53773;
+    }
+    &-40 {
+      background-color: #e53773;
+    }
+    &-50 {
+      background-color: #cc1d5a;
+    }
+  }
+  &-success {
+    &-10 {
+      background-color: #9ee8a2;
+    }
+    &-20 {
+      background-color: #87e88b;
+    }
+    &-30 {
+      background-color: #6fe874;
+    }
+    &-40 {
+      background-color: #57e85d;
+    }
+    &-50 {
+      background-color: #41e848;
+    }
+  }
+  &-warning {
+    &-10 {
+      background-color: #ebe081;
+    }
+    &-20 {
+      background-color: #ebde6a;
+    }
+    &-30 {
+      background-color: #ebdc52;
+    }
+    &-40 {
+      background-color: #ebd93b;
+    }
+    &-50 {
+      background-color: #ebd723;
+    }
+  }
+  &-danger {
+    &-10 {
+      background-color: #ff8787;
+    }
+    &-20 {
+      background-color: #ff6e6e;
+    }
+    &-30 {
+      background-color: #ff5454;
+    }
+    &-40 {
+      background-color: #ff3b3b;
+    }
+    &-50 {
+      background-color: #ff2121;
+    }
+  }
+}
+.flex {
+  display: flex;
+  &-justify-center {
+    justify-content: center;
+  }
+  &-justify-between {
+    justify-content: space-between;
+  }
+  &-justify-around {
+    justify-content: space-around;
+  }
+  &-justify-evenly {
+    justify-content: space-evenly;
+  }
+  &-justify-start {
+    justify-content: start;
+  }
+  &-justify-end {
+    justify-content: end;
+  }
+  &-align-center {
+    align-items: center;
+  }
+  &-align-start {
+    align-items: start;
+  }
+  &-align-end {
+    align-items: end;
+  }
+  &-complete-center {
+    &-between {
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-center {
+      justify-content: center;
+      align-items: center;
+    }
+    &-around {
+      justify-content: space-around;
+      align-items: center;
+    }
+    &-evenly {
+      justify-content: space-evenly;
+      align-items: center;
+    }
+  }
+}
+
+.heading {
+  &-bold {
+    font-weight: 800;
+  }
+  &-regular {
+    font-weight: 700;
+  }
+  &-thin {
+    font-weight: 600;
+  }
+  &-sub {
+    &-regular {
+      font-weight: 400;
+    }
+    &-thin {
+      font-weight: 300;
+    }
+  }
+}
+.paragraph {
+  &-regular {
+    font-weight: 400;
+  }
+  &-thin {
+    font-weight: 300;
+  }
+}
