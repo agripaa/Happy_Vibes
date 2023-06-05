@@ -29,13 +29,6 @@ const Posting = db.define('posting_data', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    commentId : {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        validate: {
-            notEmpty: true,
-        }
-    },
     userId : {
         type: DataTypes.INTEGER,
         allowNull: false,
