@@ -325,3 +325,14 @@
     font-weight: 300;
   }
 }
+
+.font {
+  &-inter {
+    font-family: "inter";
+  }
+}
+
+@font-face {
+  font-family: "inter";
+  src: url("../font/Inter-Regular.ttf") format("truetype");
+}
