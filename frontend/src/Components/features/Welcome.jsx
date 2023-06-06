@@ -1,5 +1,4 @@
 import React from "react";
-import "animate.css";
 import "../css/welcome.scss";
 function Welcome() {
   return (

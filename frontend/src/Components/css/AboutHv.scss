@@ -142,6 +142,297 @@
     border-radius: 40px;
   }
 }
+
+.buttonNext {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 40px;
+  z-index: 200;
+  button {
+    width: 123px;
+    height: 27px;
+    background-color: transparent;
+    border: 1px solid #ffc56d;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 1010px) {
+  .Container {
+    &-description {
+      &2 {
+        width: 50%;
+      }
+    }
+  }
+  .aboutHv {
+    height: 160px;
+    padding-left: 10px;
+    &-desc1 {
+      width: 90%;
+      p {
+        font-size: 13px;
+      }
+    }
+    &-desc2 {
+      width: 90%;
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+  .button-Auth {
+    height: 100px;
+    &-login {
+      button {
+        font-size: 14px;
+        width: 300px;
+        height: 30px;
+      }
+    }
+    &-register {
+      button {
+        font-size: 14px;
+        width: 300px;
+        height: 30px;
+      }
+    }
+  }
+  .Container-image-about {
+    img {
+      width: 95%;
+    }
+  }
+}
+@media screen and (max-width: 760px) {
+  .Judul {
+    &1 {
+      h1 {
+        font-size: 38px;
+      }
+    }
+  }
+
+  .aboutHv {
+    height: 200px;
+    &-desc1 {
+      p {
+        font-size: 12px;
+      }
+    }
+    &-desc2 {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+  .button-Auth {
+    &-login {
+      button {
+        width: 250px;
+        height: 30px;
+      }
+    }
+    &-register {
+      button {
+        width: 250px;
+        height: 30px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 590px) {
+  .Judul {
+    &1 {
+      h1 {
+        font-size: 30px;
+      }
+    }
+  }
+  .aboutHv {
+    height: 250px;
+  }
+  .button-Auth {
+    &-login {
+      button {
+        font-size: 13px;
+        width: 220px;
+        height: 30px;
+      }
+    }
+    &-register {
+      button {
+        font-size: 13px;
+        width: 220px;
+        height: 30px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .Container {
+    position: absolute;
+    &-description {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      box-shadow: none;
+      flex-direction: column-reverse;
+      &1 {
+        width: 100%;
+        height: 40%;
+        padding-left: 30px;
+        display: block;
+      }
+      &2 {
+        width: 100%;
+        height: 60%;
+      }
+    }
+  }
+
+  .Judul {
+    display: block;
+    padding-top: 10px;
+    height: auto;
+    &1 {
+      h1 {
+        font-size: 32px;
+        color: #ffaf38;
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .aboutHv {
+    height: auto;
+    display: block;
+    padding-left: 0;
+    padding-top: 20px;
+
+    &-desc1 {
+      width: 90%;
+      p {
+        font-size: 15px;
+        font-weight: 300;
+      }
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .Container-image-about {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: none;
+    img {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
+  }
+}
+@media screen and (max-width: 450px) {
+  .aboutHv {
+    &-desc1 {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 390px) {
+  .aboutHv {
+    &-desc1 {
+      p {
+        font-size: 10px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1500px) and (min-height: 800px) {
+  .Container {
+    &-description {
+      height: 100%;
+    }
+  }
+  .Judul {
+    height: 300px;
+    &1 {
+      h1 {
+        font-size: 78px;
+        &::after {
+          height: 39px;
+          margin-top: -27px;
+        }
+      }
+    }
+    &2 {
+      font-size: 36px;
+    }
+  }
+  .aboutHv {
+    height: 350px;
+
+    &-desc1 {
+      width: 870px;
+      p {
+        font-size: 30px;
+      }
+      &::after {
+        height: 5px;
+      }
+    }
+    &-desc2 {
+      width: 870px;
+
+      p {
+        font-size: 30px;
+      }
+      &::after {
+        height: 5px;
+      }
+    }
+  }
+  .button-Auth {
+    height: 200px;
+    &-login {
+      button {
+        font-size: 24px;
+        width: 580px;
+        height: 70px;
+      }
+    }
+    &-register {
+      width: 100%;
+      button {
+        font-size: 24px;
+        width: 580px;
+        height: 70px;
+      }
+    }
+  }
+}
+
+@media screen and (min-height: 800px) and (max-width: 890px) {
+  .Container {
+    &-description {
+      height: 60%;
+    }
+  }
+  .aboutHv {
+    height: 200px;
+  }
+}
+
 @keyframes fadein {
   0% {
     opacity: 0;
