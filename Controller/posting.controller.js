@@ -69,8 +69,6 @@ const createNewPosting = async (req, res) => {
             if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
  
             try {
-                const image = req.file
-                console.log(image)
                 await Posting.create({
                     name_img: name_img,
                     url: url,

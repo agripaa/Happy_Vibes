@@ -29,14 +29,12 @@ const Comment = db.define('commentsData' , {
         allowNull: false,
         validate: {
             notEmpty: true,
-        }
+        },
+        field: 'postId' 
     }
 } , {freezeTableName: true})
 
-Users.hasMany(Comment);
-Comment.belongsTo(Users, {foreignKey: 'userId'})
-
-Posting.hasMany(Comment);
-Comment.belongsTo(Posting);
+Comment.belongsTo(Users, { foreignKey: 'userId' });
+Comment.belongsTo(Posting, { foreignKey: 'postId' });
 
 module.exports = Comment;
