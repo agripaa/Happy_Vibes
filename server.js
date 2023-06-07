@@ -7,8 +7,9 @@ const log = require('./utils/log.js');
 const Users = require('./Routes/users.route.js');
 const Auth = require('./Routes/auth.route.js');
 const Comments = require('./Routes/comment.route.js');
+const BugReport = require('./Routes/bugreport.route.js');
 const db = require('./Config/database.js');
-const Post = require('./Routes/posting.route.js')
+const Post = require('./Routes/posting.route.js');
 const session = require('express-session');
 require('dotenv').config();
 
@@ -41,8 +42,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(Users);
 app.use(Auth);
-app.use(Post)
-app.use(Comments)
+app.use(Post);
+app.use(Comments);
+app.use(BugReport)
 
 app.listen(process.env.PORT, () => {
     log.info(`listening on port http://localhost:${process.env.PORT}`)

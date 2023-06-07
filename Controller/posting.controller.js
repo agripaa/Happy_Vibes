@@ -6,7 +6,7 @@ const Comment = require('../Models/commentsData.model.js');
 
 const attributesUser = ['name', 'url', 'name_img'];
 
-const getAllContent = async (req,res) => {
+const getAllContent = async (_,res) => {
     try {
         const posting = await Posting.findAll({
             include: [{

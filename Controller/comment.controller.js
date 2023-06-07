@@ -4,7 +4,8 @@ const Users = require('../Models/usersData.model.js');
 const log = require('../utils/log.js');
 
 const attributesUser = ['name', 'url', 'name_img'];
-const attributePosting = ['url', 'name_img', 'desc']
+const attributePosting = ['url', 'name_img', 'desc'];
+
 module.exports = {
     async getComments(req, res) {
         const { id } = req.params;
