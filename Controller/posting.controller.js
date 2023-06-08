@@ -59,6 +59,7 @@ const createNewPosting = async (req, res) => {
         const size = file.data.length;
         const extend = path.extname(file.name);
         const name_img = file.md5 + extend
+        console.log(name_img)
         const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
         const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
 
@@ -74,7 +75,7 @@ const createNewPosting = async (req, res) => {
                     url: url,
                     desc: desc,
                     like: like,
-                    userId: req.userId
+                    userId: 1
                 });
     
                 return res.status(200).json({ status: 200, msg: 'Posting created successfully' });
@@ -85,5 +86,24 @@ const createNewPosting = async (req, res) => {
         })
 }
 
+const getHotPost = async (req, res) => {
+    try {
+        const posting = await Posting.findAll({
+            order: [['like', 'DESC']],
+            limit: 15,
+            include: [{
+                model: Users,
+                attributes: attributesUser
+            }]
+        });
+        res.status(200).json({
+            status: "200", 
+            result: posting
+        })
+    } catch (error) {
+        log.error(error)
+    }
+} 
 
-module.exports = {getAllContent , getContentById , createNewPosting }
+
+module.exports = {getAllContent , getContentById , createNewPosting, getHotPost }
