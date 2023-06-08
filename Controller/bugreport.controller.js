@@ -1,24 +1,36 @@
 const BugReport = require("../Models/bugreportData.model");
 const nodemailer = require('nodemailer');
 const Users = require("../Models/usersData.model");
+const log = require("../utils/log");
 require('dotenv').config();
 
 module.exports = {
+  async getReport(req, res) {
+    try {
+      const bugReport = await BugReport.findAll({
+        include:[{
+          model: Users,
+          attributes: ['uuid', 'name', 'email', 'url', 'name_img']
+        }]
+      })
+      res.status(200).json({status: 200, result: bugReport})
+    } catch (err) {
+      log.error(err);
+      return res.status(500).json({ status: 500, msg: 'Internal server error' });
+    }
+  },
   async sendReport(req, res) {
     const { title, type_bug, report } = req.body;
 
-    let testAccount = await nodemailer.createTestAccount();
-
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass, // generated ethereal password
-    },
-  });
+     let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_SEND, 
+        pass: process.env.EMAIL_SEND_PASSWORD, 
+      },
+    });
 
     try {
       const user = await Users.findOne({
@@ -36,8 +48,8 @@ module.exports = {
       });
 
       const mailOptions = {
-        from: 'zycx989@gmail.com',
-        to: 'happyVibess23@gmail.com',
+        from: process.env.EMAIL_SEND,
+        to: process.env.EMAIL,
         subject: 'Bug Report!',
         text: `Title: ${title}\nType bug: ${type_bug}\nBug Report: ${report}\nReporter: ${user.name}`,
       };
