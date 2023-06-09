@@ -1,4 +1,5 @@
 const Users = require("../Models/usersData.model.js");
+const Follows = require("../Models/followsData.model.js");
 const argon2 = require('argon2');
 const path = require('path');
 const fs = require('fs');
@@ -39,7 +40,13 @@ module.exports = {
             if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
  
             try {
-                await Users.create({name: name, email: email, password: hashPassword, name_img: name_img, url: url});
+                await Users.create({
+                    name: name,
+                    email: email, 
+                    password: hashPassword, 
+                    name_img: name_img, 
+                    url: url
+                });
                 res.status(200).json({status: 200, msg: 'data user created successfully'});
             } catch (err) {
                 log.error(err);
@@ -96,7 +103,7 @@ module.exports = {
                 email: email,
                 password: hashPassword,
                 name_img: name_img,
-                url: url,
+                url: url
             },{
                 where: { id: user.id },
             });

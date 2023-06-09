@@ -21,7 +21,6 @@
     "nodemailer": "^6.9.3",
     "pino": "^8.14.1",
     "pino-pretty": "^10.0.0",
-    "sendmail": "^1.6.1",
     "sequelize": "^6.31.1"
   }
 }
