@@ -38,7 +38,10 @@ module.exports = {
 
         file.mv(`./public/users/${name_img}`, async(err) => {
             if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
- 
+
+            const validationEmail = await Users.findOne({ where: { email: email } });
+            if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
+            
             try {
                 await Users.create({
                     name: name,
