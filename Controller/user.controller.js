@@ -61,9 +61,7 @@ module.exports = {
         const { name, email, password, confPassword } = req.body;
     
         try {
-            const user = await Users.findOne({
-                where: { uuid: req.params.id },
-            });
+            const user = await Users.findOne({where: { uuid: req.params.id }});
             if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
 
             if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and confirm password do not match' });

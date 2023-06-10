@@ -1,4 +1,5 @@
 const Follows = require("../Models/followsData.model");
+const Posting = require("../Models/postingData.model");
 const Users = require("../Models/usersData.model");
 const log = require("../utils/log");
 
@@ -7,24 +8,12 @@ module.exports = {
     const { userId } = req;
     try {
       const user = await Users.findByPk(userId, {
-        include: {
-          model: Follows,
-          as: 'Followers',
-          include: 'Follower',
-        },
+        attributes: ['uuid', 'name', 'email', 'followerCount', 'followingCount']
       });
 
       if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
 
-      const followers = user.Followers.map((follow) => {
-        return {
-          id: follow.Follower.id,
-          name: follow.Follower.name,
-          email: follow.Follower.email,
-        };
-      });
-
-      res.status(200).json({ status: 200, followers: followers });
+      res.status(200).json({ status: 200, result:user });
     } catch (err) {
       log.error(err);
       res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
