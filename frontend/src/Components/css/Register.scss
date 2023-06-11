@@ -61,10 +61,7 @@
 }
 
 .formRegister {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 75px;
+    margin-top: 20px;
 }
 
 .wrapper {
@@ -88,7 +85,9 @@
         justify-content: center;
         align-items: center;
         margin: 10px 20px;
-
+        span {
+            font-size: 12px;
+        }
     }
 }
 
@@ -114,6 +113,9 @@
     &-register2 {
         width: 100%;
         button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-size: 14px;
             font-weight: 600;
             width: 380px;
@@ -125,6 +127,10 @@
             }
         }
     }
+}
+
+.button-icon {
+    margin-left: 5px;
 }
 
 .input-field {
@@ -152,4 +158,19 @@
     }
 }
 
+.navLogin {
+    margin-top: 70px;
+    p {
+        font-size: 12px;
+    }
+    a {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
 
+.line {
+    border: 0.2px solid black;
+    margin: 0 5px;
+    width: 100%;
+}
