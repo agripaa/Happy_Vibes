@@ -1,6 +1,5 @@
 const express = require('express');
 const Routes = express.Router();
-// const upload = require('../Controller/uploadfile.js')
 const {sessionUser} = require('../middleware/session.js');
 const { 
     getAllContent,

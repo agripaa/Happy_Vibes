@@ -1,5 +1,4 @@
 const Follows = require("../Models/followsData.model");
-const Posting = require("../Models/postingData.model");
 const Users = require("../Models/usersData.model");
 const log = require("../utils/log");
 
@@ -24,13 +23,8 @@ module.exports = {
     const followingId = req.userId;
 
     try {
-      const follower = await Users.findOne({
-        where: {
-          id: followerId,
-        },
-      });
+      const follower = await Users.findOne({where: {id: followerId}});
       const following = await Users.findByPk(followingId);
-      log.info({follower, following});
       if (!follower || !following) return res.status(404).json({ status: 404, msg: 'User not found' });
 
       const existingFollow = await Follows.findOne({

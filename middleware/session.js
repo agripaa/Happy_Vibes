@@ -1,5 +1,4 @@
 const Users = require('../Models/usersData.model.js');
-const log = require("../utils/log.js");
 
 module.exports = {
     async sessionUser(req, res, next) {
