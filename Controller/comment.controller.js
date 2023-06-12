@@ -1,24 +1,29 @@
 const Comment = require('../Models/commentsData.model.js');
 const Posting = require('../Models/postingData.model.js');
 const Users = require('../Models/usersData.model.js');
-const log = require('../utils/log.js');
 
 const attributesUser = ['name', 'url', 'name_img'];
-const attributePosting = ['url', 'name_img', 'desc']
+const attributePosting = ['url', 'name_img', 'desc'];
+
 module.exports = {
     async getComments(req, res) {
-        const { id } = req.params;
-        const comments = await Comment.findAll({
-            where: { postId: id },
-            include: [{
-                model: Users,
-                attributes: attributesUser
-            },{
-                model: Posting,
-                attributes: attributePosting
-            }]
-        })
-        res.status(200).json({status: 200, result: comments})
+        try {
+            const { id } = req.params;
+            const comments = await Comment.findAll({
+                where: { postId: id },
+                include: [{
+                    model: Users,
+                    attributes: attributesUser
+                },{
+                    model: Posting,
+                    attributes: attributePosting
+                }]
+            })
+            res.status(200).json({status: 200, result: comments})
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ status: 500, msg: 'Internal server error' });
+        }
     },
     async uploadComment(req, res){
         const postId = req.params.id;

@@ -1,5 +1,5 @@
 {
-  "name": "blyatt_media",
+  "name": "Happy_Vibes",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -19,6 +19,7 @@
     "express-fileupload": "^1.4.0",
     "express-session": "^1.17.3",
     "mysql2": "^3.3.3",
+    "nodemailer": "^6.9.3",
     "pino": "^8.14.1",
     "pino-pretty": "^10.0.0",
     "sequelize": "^6.31.1"

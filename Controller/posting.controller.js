@@ -2,11 +2,10 @@ const Posting = require('../Models/postingData.model.js');
 const log = require('../utils/log.js');
 const Users = require('../Models/usersData.model.js');
 const path = require('path');
-const Comment = require('../Models/commentsData.model.js');
 
 const attributesUser = ['name', 'url', 'name_img'];
 
-const getAllContent = async (req,res) => {
+const getAllContent = async (_,res) => {
     try {
         const posting = await Posting.findAll({
             include: [{
@@ -59,7 +58,6 @@ const createNewPosting = async (req, res) => {
         const size = file.data.length;
         const extend = path.extname(file.name);
         const name_img = file.md5 + extend
-        console.log(name_img)
         const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
         const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
 
@@ -75,7 +73,7 @@ const createNewPosting = async (req, res) => {
                     url: url,
                     desc: desc,
                     like: like,
-                    userId: 1
+                    userId: req.userId
                 });
     
                 return res.status(200).json({ status: 200, msg: 'Posting created successfully' });

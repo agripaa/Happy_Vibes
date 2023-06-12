@@ -6,47 +6,50 @@ const path = require('path');
 const log = require('./utils/log.js');
 const Users = require('./Routes/users.route.js');
 const Auth = require('./Routes/auth.route.js');
+const Follows = require('./Routes/follows.route.js');
 const Comments = require('./Routes/comment.route.js');
+const BugReport = require('./Routes/bugreport.route.js');
 const db = require('./Config/database.js');
-const Post = require('./Routes/posting.route.js')
+const Post = require('./Routes/posting.route.js');
 const session = require('express-session');
 const bodyparser = require('body-parser');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
-const sessionStore  = sequelizeStore(session.Store);
-const store = new sessionStore({db:db});
+const sessionStore = new (sequelizeStore(session.Store))({ db: db });
 
-// async function startDB(){await db.sync();}startDB();
+// async function startDB(){await db.sync();};startDB();
 
-// bodyParser()
 app.use(session({
     secret: process.env.SESS,
     resave: true,
     saveUninitialized: true,
-    store: store,
+    store: sessionStore,
     cookie: {
-        secure: "auto",
-    },
-    proxy: true
-}));
+      secure: "auto",
+    },  
+    proxy: true,
+  })
+);
 
 const corsOptions = {
-    origin: '*',
-    credentials: true
-}
+  origin: '*',
+  credentials: true
+};
 
 app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(Users);
 app.use(Auth);
-app.use(Post)
-app.use(Comments)
+app.use(Post);
+app.use(Users);
+app.use(Follows)
+app.use(Comments);
+app.use(BugReport);
 
 app.listen(process.env.PORT, () => {
-    log.info(`listening on port http://localhost:${process.env.PORT}`)
+  log.info(`listening on port http://localhost:${process.env.PORT}`);
 });
