@@ -1,4 +1,5 @@
 const Users = require("../Models/usersData.model.js");
+const Follows = require("../Models/followsData.model.js");
 const argon2 = require('argon2');
 const path = require('path');
 const fs = require('fs');
@@ -37,9 +38,18 @@ module.exports = {
 
         file.mv(`./public/users/${name_img}`, async(err) => {
             if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
- 
+
+            const validationEmail = await Users.findOne({ where: { email: email } });
+            if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
+            
             try {
-                await Users.create({name: name, email: email, password: hashPassword, name_img: name_img, url: url});
+                await Users.create({
+                    name: name,
+                    email: email, 
+                    password: hashPassword, 
+                    name_img: name_img, 
+                    url: url
+                });
                 res.status(200).json({status: 200, msg: 'data user created successfully'});
             } catch (err) {
                 log.error(err);
@@ -54,9 +64,7 @@ module.exports = {
         const { name, email, password, confPassword } = req.body;
     
         try {
-            const user = await Users.findOne({
-                where: { uuid: req.params.id },
-            });
+            const user = await Users.findOne({where: { uuid: req.params.id }});
             if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
 
             if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and confirm password do not match' });
@@ -96,7 +104,7 @@ module.exports = {
                 email: email,
                 password: hashPassword,
                 name_img: name_img,
-                url: url,
+                url: url
             },{
                 where: { id: user.id },
             });
