@@ -1,9 +1,11 @@
 const Users = require("../Models/usersData.model.js");
-const Follows = require("../Models/followsData.model.js");
 const argon2 = require('argon2');
 const path = require('path');
 const fs = require('fs');
 const log = require("../utils/log.js");
+const nodemailer = require("nodemailer");
+const CodeOTP = require("../Models/codeOTP.model.js");
+require('dotenv').config();
 
 module.exports = {
     async getUsers(_, res){
@@ -20,8 +22,9 @@ module.exports = {
     },
     async createUser(req, res) {
         const files = req.files;
-        const { name, email, password, confPassword } = req.body;
+        const { name, email, password, confPassword, otp } = req.body;
 
+        if(name.length <= 3 && name.length > 25) return res.status(403).json({status:403, msg: 'Username must be a minimum of 3 characters and a maximum of 25 characters'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
         const hashPassword = await argon2.hash(password);
 
@@ -43,13 +46,24 @@ module.exports = {
             if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
             
             try {
-                await Users.create({
+                const OTP = module.exports.generateOTP();
+                log.info(OTP)
+                
+                const userCreated = await Users.create({
                     name: name,
                     email: email, 
                     password: hashPassword, 
                     name_img: name_img, 
-                    url: url
+                    url: url,
+                    verificationCode: OTP
                 });
+                
+                module.exports.sendOTP(email, OTP);
+                
+                await CodeOTP.create({
+                    userId: userCreated.id,
+                    otp: OTP
+                })
                 res.status(200).json({status: 200, msg: 'data user created successfully'});
             } catch (err) {
                 log.error(err);
@@ -92,9 +106,7 @@ module.exports = {
                 if (size > 5000000) return res.status(422).json({ msg: 'Images must be less than 5MB' });
 
                 file.mv(`./public/users/${name_img}`, async (err) => {
-                    if (err) {
-                    return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-                    }
+                    if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
                 });
             }
 
@@ -114,5 +126,43 @@ module.exports = {
             log.error(err);
             res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
         }
+    },
+    generateOTP() {
+        const digits = '0123456789';
+        let OTP = '';
+        for (let i = 0; i < 6; i++) {
+            OTP += digits[Math.floor(Math.random() * 10)];
+        }
+        return OTP;
+    },
+    async sendOTP(email, otp) {
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+              user: process.env.EMAIL, 
+              pass: process.env.PASS_EMAIL_OTP, 
+            },
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL, 
+            to: email,
+            subject: 'Verification Code',
+            text: `Your verification code is: ${otp}`,
+        };
+
+        return new Promise((resolve, reject) => {
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                log.error('Error sending OTP email:', error);
+                reject(new Error('Failed to send OTP email'));
+              } else {
+                log.info('OTP email sent successfully');
+                resolve();
+              }
+            });
+        });
     }
 }
