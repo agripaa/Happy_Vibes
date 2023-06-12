@@ -1,0 +1,222 @@
+.ContainerLogin {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: fadein;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  &-Form {
+    width: 90%;
+    height: 90%;
+    border-radius: 40px;
+    box-shadow: 0px 2px 80px #dbdbdb;
+    display: flex;
+    &-Img {
+      width: 45%;
+      height: 100%;
+    }
+    &-SignIn {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+.myImageLogin {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  img {
+    width: 90%;
+    object-fit: fill;
+    height: 100%;
+    border-radius: 40px;
+  }
+}
+.JudulLogin {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  h1 {
+    padding-top: 25px;
+    font-size: 48px;
+    &::after {
+      content: "";
+      display: block;
+      background-color: #ffc46b;
+      height: 19px;
+      width: 100%;
+      margin-top: -17px;
+      border-radius: 40px;
+    }
+  }
+}
+.myFormLogin {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 350px;
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+.Container-Email-Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 480px;
+  label {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  input {
+    height: 48px;
+    border: 1px solid black;
+    background-color: #f5f5f5;
+    padding: 5px 0 5px 15px;
+    border-radius: 10px;
+    font-size: 12px;
+    outline: none;
+    &:focus {
+      border: 1px solid black;
+    }
+  }
+}
+.errorLogin1,
+.errorLogin2 {
+  p {
+    font-size: 13px;
+    color: red;
+  }
+}
+.Container-Password-Login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 480px;
+  label {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  input {
+    height: 48px;
+    border: 1px solid black;
+    background-color: #f5f5f5;
+    padding: 5px 0 5px 15px;
+    border-radius: 10px;
+    font-size: 12px;
+    outline: none;
+    &:focus {
+      border: 1px solid black;
+    }
+  }
+}
+.optionsLogin {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &-remember {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    label {
+      font-weight: 300;
+      font-size: 12px;
+    }
+  }
+  &-forgot {
+    a {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+}
+.buttonLogin {
+  width: 480px;
+  button {
+    width: 100%;
+    height: 48px;
+    border: 1px solid black;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.orLogin {
+  width: 480px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    width: 100%;
+    font-size: 16px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    &::before {
+      content: "";
+      display: block;
+      width: 45%;
+      height: 2px;
+      background-color: #282828;
+      position: absolute;
+      left: 0;
+      bottom: 40%;
+    }
+    &::after {
+      content: "";
+      display: block;
+      width: 45%;
+      height: 2px;
+      background-color: #282828;
+      position: absolute;
+      right: 0;
+      bottom: 40%;
+    }
+  }
+}
+.ContainerLogin2 {
+  width: 480px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.Button-Login-google {
+  padding-top: 10px;
+  width: 100%;
+  button {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.ContainerLogin2-Register {
+  padding-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #282828;
+    a {
+      color: #282828;
+    }
+  }
+}
