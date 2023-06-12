@@ -10,6 +10,8 @@ const Comments = require('./Routes/comment.route.js');
 const db = require('./Config/database.js');
 const Post = require('./Routes/posting.route.js')
 const session = require('express-session');
+const bodyparser = require('body-parser');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +20,7 @@ const store = new sessionStore({db:db});
 
 // async function startDB(){await db.sync();}startDB();
 
+// bodyParser()
 app.use(session({
     secret: process.env.SESS,
     resave: true,
