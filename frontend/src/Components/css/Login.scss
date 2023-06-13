@@ -20,9 +20,7 @@
     &-SignIn {
       width: 55%;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: center;
     }
   }
 }
@@ -37,6 +35,13 @@
     height: 100%;
     border-radius: 40px;
   }
+}
+.WrapperLogin {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 .JudulLogin {
   width: 100%;
@@ -74,7 +79,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 480px;
+  width: 78%;
   label {
     font-size: 24px;
     font-weight: 600;
@@ -103,7 +108,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 480px;
+  width: 78%;
   label {
     font-size: 24px;
     font-weight: 600;
@@ -143,7 +148,7 @@
   }
 }
 .buttonLogin {
-  width: 480px;
+  width: 78%;
   button {
     width: 100%;
     height: 48px;
@@ -153,7 +158,7 @@
   }
 }
 .orLogin {
-  width: 480px;
+  width: 78%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -186,7 +191,7 @@
   }
 }
 .ContainerLogin2 {
-  width: 480px;
+  width: 78%;
   height: 200px;
   display: flex;
   flex-direction: column;
@@ -204,6 +209,9 @@
     align-items: center;
     font-size: 16px;
     font-weight: 600;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 .ContainerLogin2-Register {
@@ -217,6 +225,194 @@
     color: #282828;
     a {
       color: #282828;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .JudulLogin {
+    width: 80%;
+    h1 {
+      padding-top: 25px;
+      font-size: 40px;
+    }
+  }
+}
+@media screen and (max-width: 992px) {
+  .myImageLogin {
+    img {
+      object-fit: cover;
+    }
+  }
+  .WrapperLogin {
+    width: 100%;
+  }
+  .JudulLogin {
+    h1 {
+      padding-top: 30px;
+      font-size: 30px;
+      &::after {
+        height: 20px;
+        margin-top: -15px;
+      }
+    }
+  }
+  .myFormLogin {
+    height: 250px;
+  }
+  .Container-Email-Login {
+    width: 70%;
+    label {
+      font-size: 18px;
+    }
+    input {
+      height: 35px;
+      font-size: 13px;
+      border-radius: 5px;
+    }
+  }
+  .Container-Password-Login {
+    width: 70%;
+    label {
+      font-size: 18px;
+    }
+    input {
+      height: 35px;
+      font-size: 13px;
+      border-radius: 5px;
+    }
+  }
+  .optionsLogin {
+    &-remember {
+      label {
+        font-size: 12px;
+      }
+    }
+    &-forgot {
+      a {
+        font-size: 12px;
+      }
+    }
+  }
+  .buttonLogin {
+    width: 70%;
+    button {
+      height: 40px;
+      font-size: 16px;
+    }
+  }
+  .orLogin {
+    width: 70%;
+    p {
+      font-size: 16px;
+    }
+  }
+  .ContainerLogin2 {
+    width: 70%;
+    height: 150px;
+  }
+  .Button-Login-google {
+    padding-top: 10px;
+    button {
+      height: 40px;
+      font-size: 16px;
+    }
+  }
+}
+
+@media screen and (min-width: 1400px) and (min-height: 1250px) {
+  .JudulLogin {
+    h1 {
+      padding-top: 45px;
+      font-size: 70px;
+      &::after {
+        height: 30px;
+        margin-top: -25px;
+      }
+    }
+  }
+  .myFormLogin {
+    height: 450px;
+  }
+  .Container-Email-Login {
+    width: 70%;
+    label {
+      font-size: 45px;
+    }
+    input {
+      height: 70px;
+      font-size: 25px;
+    }
+  }
+  .errorLogin1,
+  .errorLogin2 {
+    p {
+      font-size: 23px;
+    }
+  }
+  .Container-Password-Login {
+    width: 70%;
+    label {
+      font-size: 45px;
+    }
+    input {
+      height: 70px;
+      font-size: 25px;
+    }
+  }
+  .optionsLogin {
+    &-remember {
+      label {
+        font-size: 20px;
+      }
+    }
+    &-forgot {
+      a {
+        font-size: 20px;
+      }
+    }
+  }
+  .buttonLogin {
+    width: 70%;
+    button {
+      height: 70px;
+      font-size: 26px;
+    }
+  }
+  .orLogin {
+    width: 70%;
+    p {
+      font-size: 26px;
+    }
+  }
+  .ContainerLogin2 {
+    width: 70%;
+    height: 300px;
+  }
+  .Button-Login-google {
+    padding-top: 0px;
+    button {
+      height: 70px;
+      font-size: 26px;
+      gap: 7px;
+      img {
+        margin-top: 4px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  .ContainerLogin2-Register {
+    padding-bottom: 30px;
+    p {
+      font-size: 22px;
+    }
+  }
+}
+@media screen and (min-height: 780px) and (max-width: 992px) {
+  .ContainerLogin {
+    &-Form {
+      height: 60%;
     }
   }
 }

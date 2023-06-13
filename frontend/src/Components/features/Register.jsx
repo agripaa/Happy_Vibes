@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Register() {
-  return <div>Register</div>;
+  return <div></div>;
 }
 
 export default Register;
