@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/users', sessionUser, getUsers);
 router.post('/user/create', createUser);
 router.patch('/user/verify', verifyUser);
-router.patch('/users/resend/otp', resendCode);
+router.patch('/user/resend/otp', resendCode);
 router.patch('/user/:id/edit', sessionUser, updateUser);
 
 module.exports = router;

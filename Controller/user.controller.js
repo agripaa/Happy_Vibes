@@ -95,6 +95,7 @@ module.exports = {
         const { email } = req.body;
         
         const user = await Users.findOne({email: email});
+        if(user.verificationCode === null) return res.status(400).json({status: 400, msg: "email already registered"}) 
         if(!user) return res.status(404).json({status: 404, msg: 'email user not found'});
 
         const OTP = module.exports.generateOTP();
