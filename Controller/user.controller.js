@@ -3,8 +3,10 @@ const argon2 = require('argon2');
 const path = require('path');
 const fs = require('fs');
 const log = require("../utils/log.js");
+const moment = require('moment');
 const nodemailer = require("nodemailer");
 const CodeOTP = require("../Models/codeOTP.model.js");
+const { P } = require("pino");
 require('dotenv').config();
 
 module.exports = {
@@ -22,7 +24,7 @@ module.exports = {
     },
     async createUser(req, res) {
         const files = req.files;
-        const { name, email, password, confPassword, otp } = req.body;
+        const { name, username, email, password, confPassword } = req.body;
 
         if(name.length <= 3 && name.length > 25) return res.status(403).json({status:403, msg: 'Username must be a minimum of 3 characters and a maximum of 25 characters'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
@@ -47,23 +49,20 @@ module.exports = {
             
             try {
                 const OTP = module.exports.generateOTP();
+                module.exports.sendOTP(email, OTP);
                 log.info(OTP)
                 
-                const userCreated = await Users.create({
-                    name: name,
-                    email: email, 
+                await Users.create({
+                    name: name, 
+                    username: username,
+                    email: email,
                     password: hashPassword, 
                     name_img: name_img, 
                     url: url,
-                    verificationCode: OTP
+                    verificationCode: OTP,
+                    createdAt: moment().toISOString()
                 });
                 
-                module.exports.sendOTP(email, OTP);
-                
-                await CodeOTP.create({
-                    userId: userCreated.id,
-                    otp: OTP
-                })
                 res.status(200).json({status: 200, msg: 'data user created successfully'});
             } catch (err) {
                 log.error(err);
@@ -71,6 +70,45 @@ module.exports = {
                 return false;
             }
         })
+    },
+    async verifyUser(req, res){
+        const { otp } = req.body;
+        
+        const user = await Users.findOne({where: {verificationCode: otp}})
+        if(!user) return res.status(404).json({status: 404, msg: 'wrong otp code'})
+
+        if(user.verificationCode !== otp) return res.status(400).json({status: 400, msg: "code otp yang anda masukkan tidak sesuai"})
+        try {
+            await Users.update({
+                verificationCode: null
+            },{
+                where: {verificationCode: user.verificationCode}
+            })
+            res.status(200).json({status: 200, msg:"otp approved"})
+        } catch (err) {
+            log.error(err);
+            res.status(500).json({status: 500, msg: "Internal server Error"});
+            return false;
+        }
+    },
+    async resendCode(req, res){
+        const { email } = req.body;
+        
+        const user = await Users.findOne({email: email});
+        if(!user) return res.status(404).json({status: 404, msg: 'email user not found'});
+
+        const OTP = module.exports.generateOTP();
+        module.exports.sendOTP(email, OTP);
+        log.info(OTP)
+        try {
+            await Users.update({
+                verificationCode: OTP
+            },{where: {email: email}})
+        } catch (error) {
+            log.error(err);
+            res.status(500).json({status: 500, msg: "Internal server Error"});
+            return false;
+        }
     },
     async updateUser(req, res){
         let name_img, hashPassword;
@@ -82,7 +120,6 @@ module.exports = {
             if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
 
             if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and confirm password do not match' });
-
             if (password === null || password === '') {
                 hashPassword = user.password;
             } else {

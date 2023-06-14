@@ -14,10 +14,18 @@ const Users = db.define('users_data', {
     },
     name : {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
             len: [3, 25]
+        }
+    },
+    username : {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            notEmpty: false,
+            len: [3, 15]
         }
     },
     email : {
@@ -30,9 +38,9 @@ const Users = db.define('users_data', {
     },
     password:{
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true
+            notEmpty: false
         }
     },
     name_img : {
