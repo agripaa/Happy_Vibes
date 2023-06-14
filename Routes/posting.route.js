@@ -1,6 +1,5 @@
 const express = require('express');
 const Routes = express.Router();
-// const upload = require('../Controller/uploadfile.js')
 const {sessionUser} = require('../middleware/session.js');
 const { 
     getAllContent,
@@ -9,9 +8,9 @@ const {
     getHotPost,
 } = require('../Controller/posting.controller.js');
 
-Routes.get('/posting/all_content', getAllContent)
+Routes.get('/posting/all_content', sessionUser, getAllContent)
 Routes.get('/:id/posting', sessionUser , getContentById)
-Routes.post('/posting/new_content' , createNewPosting)
-Routes.get('/posting/get/hot_postings' , getHotPost)
+Routes.post('/posting/new_content' , sessionUser, createNewPosting)
+Routes.get('/posting/get/hot_postings', sessionUser, getHotPost)
 
 module.exports = Routes
