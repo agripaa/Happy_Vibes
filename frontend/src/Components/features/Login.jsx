@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../css/Login.scss";
 import "../css/myLibrary.scss";
 import ImageLogin from "../img/img-1.png";
 import GoogleLogin from "../img/Vector-google.png";
 import { Link } from "react-router-dom";
 function Login() {
+  const [displayWidth, setDisplayWidth] = useState(innerWidth);
+  const [displayHeight, setDisplayHeight] = useState(innerHeight);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setDisplayWidth(innerWidth);
+      setDisplayHeight(innerHeight);
+    });
+  }, [displayWidth, displayHeight]);
   return (
     <div className="ContainerLogin">
       <div className="ContainerLogin-Form bcolor-neutral-5">
-        <div className="ContainerLogin-Form-Img">
-          <figure className="myImageLogin">
-            <img src={ImageLogin} alt="" />
-          </figure>
-        </div>
+        {displayWidth > 500 ? (
+          <div className="ContainerLogin-Form-Img">
+            <figure className="myImageLogin">
+              <img src={ImageLogin} alt="" />
+            </figure>
+          </div>
+        ) : null}
         <div className="ContainerLogin-Form-SignIn">
           <div className="WrapperLogin">
             <header className="JudulLogin">
               <h1 className=" heading-bold">Let’s Sign you In</h1>
+              {displayWidth < 500 ? (
+                <p>
+                  Oh, Hi! Welcome back to HappyVibes! We hopes you always in
+                  happy vibe!
+                </p>
+              ) : null}
             </header>
             <section className="myFormLogin">
               <form>
@@ -65,7 +82,7 @@ function Login() {
               </form>
             </section>
             <div className="orLogin">
-              <p>Or</p>
+              {displayWidth > 500 ? <p>Or</p> : <p>Or Login With</p>}
             </div>
             <section className="ContainerLogin2">
               <div className="Button-Login-google">

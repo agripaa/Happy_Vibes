@@ -8,11 +8,13 @@ import "swiper/css/navigation";
 import "swiper/swiper-bundle.min.css";
 import "../css/welcome.scss";
 import SwiperSlideNext from "./SwiperSlideNexr";
+import Login from "./Login";
 
 function Home() {
   const [display, setDisplay] = useState(true);
   const [displayWidth, setDisplayWidth] = useState(innerWidth);
-  const swiper = useSwiper();
+  const [getIndex, setgetIndex] = useState(0);
+  const [getIndexLength, setgetIndexLength] = useState(0);
   function ChangeDisplay() {
     setDisplay(false);
   }
@@ -21,7 +23,7 @@ function Home() {
     setTimeout(() => {
       ChangeDisplay();
     }, 4200);
-  }, [display, displayWidth]);
+  }, [display, displayWidth, getIndex]);
   return (
     <div>
       {" "}
@@ -39,6 +41,8 @@ function Home() {
           pagination={{ type: "bullets", clickable: true }}
           modules={[Navigation, Pagination]}
           slidesPerView={1}
+          onSwiper={(swiper) => setgetIndexLength(swiper.slides.length)}
+          onSlideChange={(swiper) => setgetIndex(swiper.activeIndex)}
         >
           <SwiperSlide>
             <Welcome />
@@ -46,7 +50,10 @@ function Home() {
           <SwiperSlide>
             <AboutHv />{" "}
           </SwiperSlide>
-          <SwiperSlideNext />
+          <SwiperSlide>
+            <Login />
+          </SwiperSlide>
+          {getIndex < getIndexLength - 1 ? <SwiperSlideNext /> : null}
         </Swiper>
       )}
     </div>
