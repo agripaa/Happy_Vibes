@@ -25,41 +25,20 @@ function EmailAuth() {
           </header>
           <main className="mainEmail">
             <form className="formEmail">
-              {getWitdh <= 500 ? (
-                <>
-                  <div className="ResendEmail">
-                    <p>
-                      We will send you an OTP Code Verification to Email you
-                      input
+              <div className="kolomInputEmail">
+                <input type="email" required placeholder="example@gmail.com" />
+              </div>
+              <div className="ResendEmail">
+                <p>
+                  We will send you an OTP Code Verification to email you input{" "}
+                  {getWitdh <= 500 ? (
+                    <>
                       <br />
                       <span>Enter Email</span>
-                    </p>
-                  </div>
-                  <div className="kolomInputEmail">
-                    <input
-                      type="email"
-                      required
-                      placeholder="example@gmail.com"
-                    />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="kolomInputEmail">
-                    <input
-                      type="email"
-                      required
-                      placeholder="example@gmail.com"
-                    />
-                  </div>
-                  <div className="ResendEmail">
-                    <p>
-                      We will send you an OTP Code Verification to email you
-                      input
-                    </p>
-                  </div>
-                </>
-              )}
+                    </>
+                  ) : null}
+                </p>
+              </div>
 
               <div className="submitEmail">
                 <button

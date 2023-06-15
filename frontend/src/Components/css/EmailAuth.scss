@@ -137,6 +137,7 @@
     }
   }
   .kolomInputEmail {
+    order: 2;
     input {
       width: 80%;
       height: 48px;
@@ -144,6 +145,7 @@
     }
   }
   .ResendEmail {
+    order: 1;
     display: flex;
     justify-content: center;
     p {
@@ -158,7 +160,9 @@
       }
     }
   }
+
   .submitEmail {
+    order: 3;
     height: 50%;
 
     button {
