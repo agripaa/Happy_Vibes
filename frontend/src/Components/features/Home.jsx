@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import "swiper/swiper-bundle.min.css";
 import "../css/welcome.scss";
 import SwiperSlideNext from "./SwiperSlideNexr";
+import Register from "./Register"
 
 function Home() {
   const [display, setDisplay] = useState(true);
@@ -45,6 +46,9 @@ function Home() {
           </SwiperSlide>
           <SwiperSlide>
             <AboutHv />{" "}
+          </SwiperSlide>
+          <SwiperSlide>
+            <Register/>
           </SwiperSlide>
           <SwiperSlideNext />
         </Swiper>

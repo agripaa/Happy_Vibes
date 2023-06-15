@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import imageRegister from "../img/Img-1.png"
 import "../css/Register.scss"
 import "../css/myLibrary.scss";
@@ -6,6 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineGoogle } from "react-icons/ai"
 
 function Register() {
+  const [displayWidth, setDisplayWitdh] = useState(innerWidth);
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setDisplayWitdh(innerWidth);
+    });
+  }, [displayWidth]);
+
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -41,53 +48,62 @@ function Register() {
     setPassword('')
   }
 
-
-
   const navigate = useNavigate();
 
   return (
-    <div className="Container">
-      <div className="Container-section">
-        <div className="Container-section1">
-          <figure className="Container-image-register">
-            <img src={imageRegister} alt=""/>
-          </figure>
+    <div className="ContainerRegister bcolor-neutral-5">
+      <div className="ContainerRegister-form bcolor-neutral-5">
+        <div className="ContainerRegister-form1">
+          {displayWidth > 500 ? (
+            <figure className="myImageRegister">
+              <img src={imageRegister} alt=""/>
+            </figure>
+          ) : null}
         </div>
-        <div className="Container-section2">
+        <div className="ContainerRegister-form2">
           <header className="titleRegister">
             <div className="titleRegister1">
-              <h1 className="heading-bold">
+              {displayWidth > 500 ? <h1 className="heading-bold">
                 Register
-              </h1>
+              </h1> : (
+                <div className="titleRegister2">
+                  <h2 className="heading-bold">Let's Register You To</h2>
+                  <h1 className="heading-bold">HappyVibes!</h1>
+                  <p className="descRegister">You Don't Have Account On Hyv.</p>
+                  <p>Let's Register Now!</p>
+                </div>
+              )}
             </div>
           </header>
-          <div className="formRegister flex flex-justify-center">
+          <section className="formRegister flex flex-justify-center">
             <form onSubmit={handleSubmit}>
-              <div className="wrapper">
-                <div className="wrapper1 flex flex-justify-center">
-                  <label htmlFor="name">Name</label>
-                  <input type="text" id="name" value={name} onChange={handleNameChange} className="input-field-name"/>
+              <div className="formWrapper">
+                <div className="formWrapper1">
+                  <label className="labelForm">Name</label>
+                  <input type="text" id="name" value={name} onChange={handleNameChange} className="input-field-name" placeholder="Full Name"/>
                 </div>
-                <div className="wrapper2">
-                  <label htmlFor="username">Username</label>
-                  <input type="text" id="username" value={username} onChange={handleUsernameChange} className="input-field-name"/>
+                <div className="formWrapper1">
+                  <label className="labelForm">Username</label>
+                  <input type="text" id="username" value={username} onChange={handleUsernameChange} className="input-field-username" placeholder="Username"/>
                 </div>
               </div>
-              <div className="wrapper3">
-                <label htmlFor="email">Email</label>
-                <input type="text" id="email" value={email} onChange={handleEmailChange} className="input-field-email" />
+              <div className="formWrapper2">
+                <label className="labelForm">Email</label>
+                <input type="text" id="email" value={email} onChange={handleEmailChange} className="input-field-email" placeholder="Email" />
               </div>
-              <div className="wrapper3">
-                <label htmlFor="password">Password</label>
-                <input type="text" id="password" value={password} onChange={handlePasswordChange} className="input-field-password" />
+              <div className="formWrapper2">
+                <label className="labelForm">Password</label>
+                <input type="text" id="password" value={password} onChange={handlePasswordChange} className="input-field-password" placeholder="********" />
               </div>
               <section className="button-Auth">
-                <div className="button-Auth-register1 flex flex-justify-center">
+                {displayWidth > 500 ? ( <div className="button-Auth-register1 flex flex-justify-center">
                   <button type="submit">Register</button>
-                </div>
-                <div className="wrapper4">
+                </div> ) : ( <div className="button-Auth-register1 flex flex-justify-center">
+                  <button type="submit">Sign Up</button>
+                </div> )}
+                <div className="formWrapper3 ">
                   <hr className="line"/>
-                  <span>Or</span>
+                  {displayWidth > 500 ? ( <span>Or</span> ) : ( <span>Or Register With</span> ) }
                   <hr className="line"/>
                 </div>
                 <div className="button-Auth-register2 flex flex-justify-center">
@@ -97,7 +113,7 @@ function Register() {
                 </div>
               </section>
             </form>
-          </div>
+          </section>
           <div className="navLogin flex flex-justify-center">
             <p>
               Have An Account? <a onClick={() => navigate("/login")}>Sign In</a>

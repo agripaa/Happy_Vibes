@@ -7,7 +7,7 @@
   animation-name: fadein;
   animation-duration: 1s;
   animation-fill-mode: forwards;
-  &-section {
+  &-description {
     width: 90%;
     height: 90%;
     border-radius: 40px;
@@ -111,6 +111,7 @@
       font-weight: 600;
       width: 380px;
       height: 35px;
+      margin-bottom: 10px;
       &:hover {
         cursor: pointer;
       }
@@ -124,6 +125,7 @@
       font-weight: 600;
       width: 380px;
       height: 35px;
+      margin-bottom: 50px;
       &:hover {
         cursor: pointer;
       }
