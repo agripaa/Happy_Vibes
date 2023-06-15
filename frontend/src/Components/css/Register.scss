@@ -1,316 +1,512 @@
 .ContainerRegister {
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: fadein;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  &-form {
+    width: 90%;
+    height: 90%;
+    border-radius: 40px;
+    box-shadow: 0px 2px 80px #dbdbdb;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    animation-name: fadein;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    &-form {
-        width: 90%;
-        height: 90%;
-        border-radius: 40px;
-        box-shadow: 0px 2px 80px #dbdbdb;
-        display: flex;
-        &1 {
-            width: 55%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-        }
-        
-        &2 {
-            width: 55%;
-            height: 100%;
-        }
+    &1 {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
     }
+
+    &2 {
+      width: 55%;
+      height: 100%;
+    }
+  }
 }
 
 .myImageRegister {
-    width: 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  img {
+    width: 90%;
+    object-fit: cover;
     height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    img {
-        width: 90%;
-        object-fit: fill;
-        height: 100%;
-        border-radius: 40px;
-    }
+    border-radius: 40px;
+  }
 }
 
 .titleRegister {
-    display: flex; 
-    width: 100%;
-    padding: 10px;
-    height: 100px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    &1 {
-        h1 {
-            font-size: 48px;
-            width: 100%;
-        }
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  &1 {
+    h1 {
+      font-size: 48px;
+      width: 100%;
     }
-    &2 {
-        margin-left: -59;
-    }
+  }
 }
 
 .formRegister {
-    margin-top: 20px;
+  margin-top: 20px;
+  height: 400px;
 }
-
+.formRegister-container {
+  width: 350px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
 .formWrapper {
-    display: flex;
-    &1 {
-        display: flex;
-        flex-direction: column;
-        margin: 0 20px;
-    }
-    &2 {
-        display: flex;
-        flex-direction: column;
-        margin: 10px 20px;
-    }
-    &3 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 10px 20px;
-        span {
-            font-size: 12px;
-        }
-    }
-}
-
-.button-Auth {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  &1 {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    padding-top: 40px;
-    &-register1 {
-        width: 100%;
-        button {
-            font-size: 14px;
-            font-weight: 600;
-            width: 380px;
-            height: 35px;
-            background-color: #ffc56d;
-            border: 1px solid #282828;
-            &:hover {
-                cursor: pointer;
-            }
-        }
+  }
+  &2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    label {
+      align-self: flex-start;
     }
-    &-register2 {
-        width: 100%;
-        button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 600;
-            width: 380px;
-            height: 35px;
-            background-color: white;
-            border: 1px solid #282828;
-            &:hover {
-                cursor: pointer;
-            }
-        }
+    input {
+      width: 100%;
     }
+  }
+  &3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+  }
+}
+
+.formWrapper3 {
+  span {
+    width: 100%;
+    font-size: 12px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &::before {
+      content: "";
+      display: block;
+      width: 40%;
+      height: 2px;
+      background-color: black;
+      position: absolute;
+      left: 0;
+    }
+    &::after {
+      content: "";
+      display: block;
+      width: 40%;
+      height: 2px;
+      background-color: black;
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+.button-Auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-top: 40px;
+  &-register1 {
+    width: 100%;
+    button {
+      font-size: 14px;
+      font-weight: 600;
+      width: 380px;
+      height: 35px;
+      background-color: #ffc56d;
+      border: 1px solid #282828;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &-register2 {
+    width: 100%;
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 600;
+      width: 380px;
+      height: 35px;
+      background-color: white;
+      border: 1px solid #282828;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .button-icon {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .input-field {
-    width: 100%;
-    height: 120px;
-    padding-top: 20px;
-    &-name {
-        width: 170px;
-        border: 1px solid #282828;
-        border-radius: 5px;
-        padding: 10px 5px;
-    }
-    &-username {
-        width: 170px;
-        border: 1px solid #282828;
-        border-radius: 5px;
-        padding: 10px 5px
-    }
-    &-email {
-        width: 380px;
-        border: 1px solid #282828;
-        border-radius: 5px;
-        padding: 10px 5px;
-    }
+  width: 100%;
+  height: 120px;
+  padding-top: 20px;
+  &-name {
+    width: 170px;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    padding: 10px 5px;
+  }
+  &-username {
+    width: 170px;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    padding: 10px 5px;
+  }
+  &-email {
+    width: 380px;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    padding: 10px 5px;
+  }
 
-    &-password {
-        width: 380px;
-        border: 1px solid #282828;
-        border-radius: 5px;
-        padding: 10px 5px;
-    }
+  &-password {
+    width: 380px;
+    border: 1px solid #282828;
+    border-radius: 5px;
+    padding: 10px 5px;
+  }
 }
 
 .navLogin {
-    margin-top: 70px;
-    p {
-        font-size: 12px;
-    }
-    a {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-}
-
-.line {
-    border: 0.2px solid black;
-    margin: 0 5px;
-    width: 100%;
+  height: 150px;
+  align-items: flex-end;
+  p {
+    font-size: 12px;
+  }
+  a {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .labelForm {
-    font-size: 16px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 990px) {
+  .formRegister {
+    height: 420px;
+  }
+  .formRegister-container {
+    width: 250px;
+    gap: 20px;
+  }
+  .input-field {
+    &-name {
+      width: 120px;
+      padding: 5px;
+      height: 30px;
+    }
+
+    &-username {
+      width: 120px;
+      padding: 5px;
+      height: 30px;
+    }
+    &-email {
+      height: 30px;
+      padding: 5px;
+    }
+
+    &-password {
+      height: 30px;
+      padding: 5px;
+    }
+  }
 }
 
 @media screen and (max-width: 500px) {
-    .ContainerRegister {
-        position: absolute;
-
-        &-form {
-            width: 100%;
-            height: 100%;
-            &1 {
-                width: 25%;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                align-items: center;
-            }
-            
-            &2 {
-                width: 55%;
-                height: 100%;
-            }
-        } 
+  .ContainerRegister {
+    position: absolute;
+    &-form {
+      width: 100%;
+      height: 100%;
+      &1 {
+        display: none;
+      }
+      &2 {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+      }
     }
-    .titleRegister {
-        height: auto;
-        margin: 10px 10px 0 -160px;
-        display: flex; 
-        width: 200%;
-        padding-left: -10px;
-        &1 {
-            h1 {
-                font-size: 24px;
+  }
+  .titleRegister {
+    height: auto;
+    margin: 0;
+    display: block;
+    width: 100%;
+    padding: 0;
+    &1 {
+      h1 {
+        font-size: 24px;
 
-                &::after {
-                    content: "";
-                    display: block;
-                    background-color: #ffc56d;
-                    height: 15px;
-                    width: 25%;
-                    margin: -12px 1px;
-                    border-radius: 40px;
-                }
-            }
-            h2 {
-                font-size: 24px;
-            }
+        &::after {
+          content: "";
+          display: block;
+          background-color: #ffc56d;
+          height: 15px;
+          width: 151px;
+          border-radius: 40px;
+          margin-top: -10px;
         }
+      }
+      h2 {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .descRegister {
+    margin-top: 20px;
+  }
+
+  .formRegister {
+    margin-top: 0;
+    height: 450px;
+  }
+  .formRegister-container {
+    width: 100%;
+    gap: 30px;
+  }
+  .input-field {
+    &-name {
+      width: 150px;
+      margin-left: 0;
+      padding: 0 5px;
+      height: 40px;
     }
 
-    .descRegister {
-        margin-top: 20px;
-    }
-    
-    .formRegister {
-        margin-top: 25px;
-        height: 320px;
+    &-username {
+      width: 150px;
+      margin-right: 0;
+      padding: 0 5px;
+      height: 40px;
     }
 
-    .line {
-        width: 35%;
+    &-email {
+      width: 340px;
+      margin-left: 0;
+      padding: 0 5px;
+      height: 40px;
     }
 
-    .input-field {
-        &-name {
-            width: 150px;
-            margin-left: -10px;
-            padding: 10px 5px;
+    &-password {
+      width: 340px;
+      margin-left: 0;
+      padding: 0 5px;
+      height: 40px;
+    }
+  }
+
+  .button-Auth {
+    padding-top: 0;
+    &-register1 {
+      button {
+        margin-left: 0;
+        width: 100%;
+        &:hover {
+          cursor: pointer;
         }
-
-        &-username{
-            width: 150px;
-            margin-right: 10px;
-            padding: 10px 5px;
-        }
-
-        &-email {
-            width: 340px;
-            margin-left: -10px;
-            padding: 10px 5px;
-        }
-
-        &-password {
-            width: 340px;
-            margin-left: -10px;
-            padding: 10px 5px;
-        }
+      }
     }
 
-    .button-Auth {
-        &-register1 {
-            button {
-                font-size: 10px;
-                margin-left: -20px;
-                width: 340px;
+    &-register2 {
+      button {
+        font-size: 10px;
+        margin-left: 0;
+        width: 100%;
 
-                &:hover {
-                    cursor: pointer;
-                }
-            }
+        &:hover {
+          cursor: pointer;
         }
+      }
+    }
+  }
 
-        &-register2 {
-            button {
-                font-size: 10px;
-                margin-left: -20px;
-                width: 340px;
+  .button-icon {
+    margin-left: 5px;
+  }
 
-                &:hover {
-                    cursor: pointer;
-                }
-            }
+  .navLogin {
+    height: 80px;
+    margin-left: 0;
+    p {
+      font-size: 13px;
+    }
+  }
+
+  .formWrapper {
+    &3 {
+      margin-left: 0;
+      span {
+        font-size: 10px;
+        &:after {
+          width: 30%;
         }
+        &::before {
+          width: 30%;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 330px) {
+  .titleRegister {
+    &1 {
+      h1 {
+        font-size: 20px;
+        &::after {
+          height: 10px;
+          width: 128px;
+          margin-top: -8px;
+        }
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+  }
+  .formRegister {
+    height: 410px;
+  }
+  .formRegister-container {
+    gap: 30px;
+  }
+  .input-field {
+    &-name {
+      width: 130px;
+      font-size: 12px;
+      height: 30px;
     }
 
-    .button-icon {
-        margin-left: 5px;
+    &-username {
+      width: 130px;
+      font-size: 12px;
+
+      height: 30px;
     }
 
-    .navLogin {
-        margin-left: -20px;
-        p {
-            font-size: 10px;
-        }
+    &-email {
+      width: 340px;
+      height: 30px;
     }
 
-    .formWrapper {
-        &3 {
-            margin-left: 2px;
-            span {
-                font-size: 10px;
-            }
-            
-        }
+    &-password {
+      width: 340px;
+      height: 30px;
     }
+  }
+  .navLogin {
+    align-items: center;
+  }
+}
+@media screen and (min-width: 1500px) and (min-height: 810px) {
+  .formRegister {
+    height: 530px;
+  }
+  .formRegister-container {
+    width: 420px;
+    gap: 0;
+  }
+  .formWrapper {
+    &1 {
+      margin: 0;
+    }
+    &2 {
+      margin: 10px 20px;
+    }
+    &3 {
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+  .labelForm {
+    font-size: 20px;
+  }
+  .input-field {
+    &-name {
+      width: 200px;
+    }
+
+    &-username {
+      width: 200px;
+    }
+  }
+  .button-Auth {
+    padding-top: 0;
+    &-register1 {
+      button {
+        width: 100%;
+      }
+    }
+    &-register2 {
+      button {
+        width: 100%;
+      }
+    }
+  }
+  .navLogin {
+    height: 100px;
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (min-height: 840px) and (max-width: 420px) {
+  .ContainerRegister {
+    &-form {
+      height: 100%;
+    }
+  }
+}
+@media screen and (min-height: 850px) and (max-width: 1030px) {
+  .ContainerRegister {
+    &-form {
+      height: 60%;
+    }
+  }
+  .formRegister {
+    height: 350px;
+  }
+  .formRegister-container {
+    gap: 10px;
+  }
+  .navLogin {
+    height: 80px;
+    align-items: flex-end;
+  }
 }
