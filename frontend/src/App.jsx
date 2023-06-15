@@ -6,6 +6,8 @@ import { Route, Routes } from "react-router";
 import Home from "./Components/features/Home";
 import Login from "./Components/features/Login";
 import Register from "./Components/features/Register";
+import OTP from "./Components/features/OTP";
+import EmailAuth from "./Components/features/EmailAuth";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/authOtp" element={<EmailAuth />} />
+        <Route path="/authOtp/otp" element={<OTP />} />
       </Routes>
     </>
   );
