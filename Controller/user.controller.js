@@ -4,6 +4,7 @@ const argon2 = require('argon2');
 const path = require('path');
 const fs = require('fs');
 const log = require("../utils/log.js");
+const validatePassword = require("../middleware/password.validation.js");
 
 module.exports = {
     async getUsers(_, res){
@@ -43,6 +44,7 @@ module.exports = {
             if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
             
             try {
+                validatePassword(password)
                 await Users.create({
                     name: name,
                     email: email, 
@@ -50,10 +52,10 @@ module.exports = {
                     name_img: name_img, 
                     url: url
                 });
-                res.status(200).json({status: 200, msg: 'data user created successfully'});
+                res.status(200).json({status: 200, msg: 'data user createdva successfully'});
             } catch (err) {
                 log.error(err);
-                res.status(500).json({status: 500, msg: "Internal server Error"});
+                res.status(400).json({status: 400, msg: err.message});
                 return false;
             }
         })
