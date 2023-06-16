@@ -3,6 +3,7 @@ const argon2 = require('argon2');
 const path = require('path');
 const fs = require('fs');
 const log = require("../utils/log.js");
+const validatePassword = require("../middleware/password.validation.js");
 const moment = require('moment');
 const nodemailer = require("nodemailer");
 const CodeOTP = require("../Models/codeOTP.model.js");
@@ -48,6 +49,8 @@ module.exports = {
             if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
             
             try {
+                validatePassword(password)
+              
                 const OTP = module.exports.generateOTP();
                 module.exports.sendOTP(email, OTP);
                 log.info(OTP)
@@ -66,7 +69,7 @@ module.exports = {
                 res.status(200).json({status: 200, msg: 'data user created successfully'});
             } catch (err) {
                 log.error(err);
-                res.status(500).json({status: 500, msg: "Internal server Error"});
+                res.status(400).json({status: 400, msg: err.message});
                 return false;
             }
         })
