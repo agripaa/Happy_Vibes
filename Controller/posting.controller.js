@@ -49,12 +49,10 @@ const getContentById = async (req,res) => {
 
 const createNewPosting = async (req, res) => {
         const files = req.files;
-        const { desc, like, password, confPassword } = req.body;
-
-        if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
-
+        const { desc, like } = req.body; 
+        
         if(files === null) return res.status(400).json({status: 400, msg: 'No file uploaded'})
-        const file = files.image;
+        const file = files.file;
         const size = file.data.length;
         const extend = path.extname(file.name);
         const name_img = file.md5 + extend

@@ -8,24 +8,10 @@ const {
     getHotPost,
 } = require('../Controller/posting.controller.js');
 
-Routes.get('/posting/all_content', async (req,res) => {
-    try {
-        const posting = await Posting.findAll({
-            include: [{
-                model: Users,
-                attributes: attributesUser
-            }]
-        });
-        res.status(200).json({
-            status: "200", 
-            result: posting
-        })
-    } catch (error) {
-        log.error(error)
-    }
-})
+
+Routes.get('/posting/all_content', sessionUser, getAllContent)
 Routes.get('/:id/posting', sessionUser , getContentById)
-Routes.post('/posting/new_content' , createNewPosting)
-Routes.get('/posting/get/hot_postings' , getHotPost)
+Routes.post('/posting/new_content' , sessionUser, createNewPosting)
+Routes.get('/posting/get/hot_postings', sessionUser, getHotPost)
 
 module.exports = Routes
