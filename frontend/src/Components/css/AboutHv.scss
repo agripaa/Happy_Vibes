@@ -1,0 +1,466 @@
+.Container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: fadein;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  &-description {
+    width: 90%;
+    height: 90%;
+    border-radius: 40px;
+    box-shadow: 0px 2px 80px #dbdbdb;
+    display: flex;
+    &1 {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &2 {
+      width: 55%;
+      height: 100%;
+    }
+  }
+}
+.Judul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 20px;
+  height: 160px;
+  &1 {
+    h1 {
+      font-size: 48px;
+      width: 100%;
+      &::after {
+        content: "";
+        display: block;
+        background-color: #ffc46b;
+        height: 19px;
+        width: 100%;
+        margin-top: -17px;
+        border-radius: 40px;
+      }
+    }
+  }
+  &2 {
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+
+.aboutHv {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 30px;
+
+  &-desc1 {
+    width: 495px;
+    p {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #ffc46b;
+      border-radius: 40px;
+    }
+  }
+  &-desc2 {
+    width: 495px;
+
+    p {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #ffc46b;
+      border-radius: 40px;
+    }
+  }
+}
+
+.button-Auth {
+  width: 100%;
+  height: 120px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  &-login {
+    width: 100%;
+    button {
+      border: 1px solid #282828;
+      font-size: 14px;
+      font-weight: 600;
+      width: 380px;
+      height: 35px;
+      margin-bottom: 10px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &-register {
+    width: 100%;
+    button {
+      border: 1px solid #282828;
+      font-size: 14px;
+      font-weight: 600;
+      width: 380px;
+      height: 35px;
+      margin-bottom: 50px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.Container-image-about {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  img {
+    width: 90%;
+    object-fit: fill;
+    height: 100%;
+    border-radius: 40px;
+  }
+}
+
+.buttonNext {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 40px;
+  z-index: 1;
+  button {
+    width: 123px;
+    height: 27px;
+    background-color: transparent;
+    border: 1px solid #ffc56d;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 1010px) {
+  .Container {
+    &-description {
+      &2 {
+        width: 50%;
+      }
+    }
+  }
+  .aboutHv {
+    height: 160px;
+    padding-left: 10px;
+    &-desc1 {
+      width: 90%;
+      p {
+        font-size: 13px;
+      }
+    }
+    &-desc2 {
+      width: 90%;
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+  .button-Auth {
+    height: 100px;
+    &-login {
+      button {
+        font-size: 14px;
+        width: 300px;
+        height: 30px;
+      }
+    }
+    &-register {
+      button {
+        font-size: 14px;
+        width: 300px;
+        height: 30px;
+      }
+    }
+  }
+  .Container-image-about {
+    img {
+      width: 95%;
+    }
+  }
+}
+@media screen and (max-width: 760px) {
+  .Judul {
+    &1 {
+      h1 {
+        font-size: 38px;
+      }
+    }
+  }
+
+  .aboutHv {
+    height: 200px;
+    &-desc1 {
+      p {
+        font-size: 12px;
+      }
+    }
+    &-desc2 {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+  .button-Auth {
+    &-login {
+      button {
+        width: 250px;
+        height: 30px;
+      }
+    }
+    &-register {
+      button {
+        width: 250px;
+        height: 30px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 590px) {
+  .Judul {
+    &1 {
+      h1 {
+        font-size: 30px;
+      }
+    }
+  }
+  .aboutHv {
+    height: 250px;
+  }
+  .button-Auth {
+    &-login {
+      button {
+        font-size: 13px;
+        width: 220px;
+        height: 30px;
+      }
+    }
+    &-register {
+      button {
+        font-size: 13px;
+        width: 220px;
+        height: 30px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .Container {
+    position: absolute;
+    &-description {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      box-shadow: none;
+      flex-direction: column-reverse;
+      overflow-x: auto;
+      &1 {
+        width: 100%;
+        height: 40%;
+        padding-left: 30px;
+        display: block;
+      }
+      &2 {
+        width: 100%;
+        height: 60%;
+      }
+    }
+  }
+
+  .Judul {
+    display: block;
+    padding-top: 10px;
+    height: auto;
+    &1 {
+      h1 {
+        font-size: 32px;
+        color: #ffaf38;
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .aboutHv {
+    height: auto;
+    display: block;
+    padding-left: 0;
+    padding-top: 20px;
+
+    &-desc1 {
+      width: 90%;
+      p {
+        font-size: 15px;
+        font-weight: 300;
+      }
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .Container-image-about {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: none;
+    img {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
+  }
+}
+@media screen and (max-width: 450px) {
+  .aboutHv {
+    &-desc1 {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 390px) {
+  .aboutHv {
+    &-desc1 {
+      p {
+        font-size: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 325px) {
+  .Container {
+    &-description {
+      &1 {
+        height: 60%;
+      }
+      &2 {
+        width: 100%;
+        height: 40%;
+      }
+    }
+  }
+  .Judul {
+    &1 {
+      h1 {
+        font-size: 25px;
+      }
+    }
+  }
+}
+@media screen and (min-width: 1500px) and (min-height: 800px) {
+  .Container {
+    &-description {
+      height: 100%;
+    }
+  }
+  .Judul {
+    height: 300px;
+    &1 {
+      h1 {
+        font-size: 78px;
+        &::after {
+          height: 39px;
+          margin-top: -27px;
+        }
+      }
+    }
+    &2 {
+      font-size: 36px;
+    }
+  }
+  .aboutHv {
+    height: 350px;
+
+    &-desc1 {
+      width: 870px;
+      p {
+        font-size: 30px;
+      }
+      &::after {
+        height: 5px;
+      }
+    }
+    &-desc2 {
+      width: 870px;
+
+      p {
+        font-size: 30px;
+      }
+      &::after {
+        height: 5px;
+      }
+    }
+  }
+  .button-Auth {
+    height: 200px;
+    &-login {
+      button {
+        font-size: 24px;
+        width: 580px;
+        height: 70px;
+      }
+    }
+    &-register {
+      width: 100%;
+      button {
+        font-size: 24px;
+        width: 580px;
+        height: 70px;
+      }
+    }
+  }
+}
+
+@media screen and (min-height: 800px) and (max-width: 890px) {
+  .Container {
+    &-description {
+      height: 60%;
+    }
+  }
+  .aboutHv {
+    height: 200px;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
