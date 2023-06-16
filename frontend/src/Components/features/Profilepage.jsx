@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./features_components/Navbar";
 
-function Homepage() {
+function Profilepage() {
   return (
     <div>
       <Navbar />
@@ -9,4 +9,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default Profilepage;
