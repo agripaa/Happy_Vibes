@@ -8,6 +8,7 @@ const {
     getHotPost,
 } = require('../Controller/posting.controller.js');
 
+
 Routes.get('/posting/all_content', sessionUser, getAllContent)
 Routes.get('/:id/posting', sessionUser , getContentById)
 Routes.post('/posting/new_content' , sessionUser, createNewPosting)
