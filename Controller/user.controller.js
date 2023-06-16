@@ -5,8 +5,6 @@ const fs = require('fs');
 const log = require("../utils/log.js");
 const moment = require('moment');
 const nodemailer = require("nodemailer");
-const CodeOTP = require("../Models/codeOTP.model.js");
-const { P } = require("pino");
 require('dotenv').config();
 
 module.exports = {
@@ -50,7 +48,6 @@ module.exports = {
             try {
                 const OTP = module.exports.generateOTP();
                 module.exports.sendOTP(email, OTP);
-                log.info(OTP)
                 
                 await Users.create({
                     name: name, 

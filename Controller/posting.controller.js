@@ -73,7 +73,7 @@ const createNewPosting = async (req, res) => {
                     like: like,
                     userId: req.userId
                 });
-    
+
                 return res.status(200).json({ status: 200, msg: 'Posting created successfully' });
             } catch (error) {
                 console.error(error);

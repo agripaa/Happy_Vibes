@@ -1,4 +1,5 @@
 const Follows = require("../Models/followsData.model");
+const Notifications = require("../Models/notifData.model");
 const Users = require("../Models/usersData.model");
 const log = require("../utils/log");
 
@@ -43,6 +44,13 @@ module.exports = {
 
       await following.increment('followingCount');
       await follower.increment('followerCount');
+
+      await Notifications.create({
+        content_notif: `User ${follower.name} started following you`,
+        type_notif: 'follow',
+        userId: followingId,
+        followsId: followerId
+      });
 
       res.status(200).json({ status: 200, msg: 'User followed successfully' });
     } catch (err) {
