@@ -1,0 +1,180 @@
+.ContainerNavbar {
+  width: 230px;
+  height: 100vh;
+  position: fixed;
+  left: 100px;
+  &-Components {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+.Navbar {
+  &Logo {
+    width: 100%;
+    height: 10%;
+  }
+  &List {
+    width: 100%;
+    height: 60%;
+  }
+  &Profile {
+    width: 100%;
+    height: 15%;
+  }
+}
+
+.Navbar {
+  &Logo {
+    display: flex;
+    justify-content: flex-start;
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        margin-top: -12px;
+        border-radius: 40px;
+        height: 13px;
+        background-color: #ffba53;
+      }
+    }
+  }
+}
+.navTags {
+  width: 100%;
+  height: 90%;
+}
+.NavbarList-Container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  li {
+    list-style: none;
+  }
+}
+.List {
+  &home {
+    width: 100%;
+    a {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-decoration: none;
+      color: #282828;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  &Explore {
+    a {
+      width: 50%;
+
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-decoration: none;
+      color: #282828;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  &Notifications {
+    a {
+      width: 50%;
+
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-decoration: none;
+      color: #282828;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  &Messages {
+    a {
+      width: 50%;
+
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-decoration: none;
+      color: #282828;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+  &Bookmarks {
+    a {
+      width: 50%;
+      font-weight: 600;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-decoration: none;
+      color: #282828;
+    }
+  }
+  &Profile {
+    a {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-decoration: none;
+      color: #282828;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+}
+.NavbarProfile {
+  display: flex;
+  align-items: center;
+}
+.NavbarProfile-Container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  &:hover {
+    cursor: pointer;
+  }
+  figure {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      object-fit: cover;
+    }
+  }
+  figcaption {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    p {
+      font-weight: 300;
+      font-size: 12px;
+      color: #757575;
+    }
+  }
+}
