@@ -14,4 +14,4 @@ module.exports = {
         req.userId = user.id;
         return next();
     }
-}
+} 
