@@ -6,6 +6,7 @@ import ImageListMessages from "../../img/Vector-Messages.png";
 import ImageListNotifications from "../../img/Vector-Notifications.png";
 import ImageListProfile from "../../img/Vector-Profile.png";
 import ImageListBookmarks from "../../img/Vector-Bookmarks.png";
+import ImageListPost from "../../img/Vector-Post.png";
 import ImageDummmy from "../../img/imageDummy2.png";
 import { Link } from "react-router-dom";
 function Navbar() {
@@ -17,11 +18,6 @@ function Navbar() {
   }, [getInnerWidth]);
   return (
     <div className="ContainerNavbar">
-      {getInnerWidth <= 500 ? (
-        <div className="NavbarLogo">
-          <h1>HyV</h1>
-        </div>
-      ) : null}
       <div className="ContainerNavbar-Components">
         {getInnerWidth > 500 ? (
           <div className="NavbarLogo">
@@ -55,22 +51,35 @@ function Navbar() {
                   </Link>
                 </div>
               </li>
-              <li>
-                <div className="ListMessages">
-                  <Link to={"/"}>
-                    <img src={ImageListMessages} alt="" />
-                    <p>Messages</p>
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="ListBookmarks">
-                  <Link to={"/"}>
-                    <img src={ImageListBookmarks} alt="" />
-                    <p>Bookmarks</p>
-                  </Link>
-                </div>
-              </li>
+              {getInnerWidth > 500 ? (
+                <>
+                  <li>
+                    <div className="ListMessages">
+                      <Link to={"/"}>
+                        <img src={ImageListMessages} alt="" />
+                        <p>Messages</p>
+                      </Link>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="ListBookmarks">
+                      <Link to={"/"}>
+                        <img src={ImageListBookmarks} alt="" />
+                        <p>Bookmarks</p>
+                      </Link>
+                    </div>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <div className="ListPost">
+                    <Link to={"/"}>
+                      <img src={ImageListPost} alt="" />
+                    </Link>
+                  </div>
+                </li>
+              )}
+
               <li>
                 <div className="ListProfile">
                   <Link to={"/"}>

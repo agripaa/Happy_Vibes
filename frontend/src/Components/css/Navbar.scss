@@ -307,9 +307,58 @@
   }
   .Navbar {
     &Logo {
-      position: fixed;
-      top: 10px;
-      left: 20px;
+      display: none;
+    }
+  }
+  .List {
+    &home {
+      a {
+        p {
+          display: none;
+        }
+      }
+    }
+    &Explore {
+      a {
+        p {
+          display: none;
+        }
+      }
+    }
+    &Notifications {
+      a {
+        p {
+          display: none;
+        }
+      }
+    }
+
+    &Profile {
+      a {
+        p {
+          display: none;
+        }
+      }
+    }
+  }
+  .NavbarList-Container {
+    height: 40px;
+    flex-direction: row;
+    justify-content: space-around;
+    li:nth-child(1) {
+      order: 1;
+    }
+    li:nth-child(2) {
+      order: 2;
+    }
+    li:nth-child(3) {
+      order: 4;
+    }
+    li:nth-child(4) {
+      order: 3;
+    }
+    li:nth-child(5) {
+      order: 5;
     }
   }
 }
