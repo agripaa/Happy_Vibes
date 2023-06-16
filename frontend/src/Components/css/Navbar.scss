@@ -178,3 +178,229 @@
     }
   }
 }
+@media screen and (max-width: 1020px) {
+  .ContainerNavbar {
+    width: 220px;
+
+    left: 20px;
+  }
+}
+@media screen and (max-width: 720px) {
+  .List {
+    &home {
+      width: 100%;
+      a {
+        img {
+          width: 18px;
+          height: 17px;
+        }
+        font-weight: 600;
+        font-size: 13px;
+      }
+    }
+    &Explore {
+      a {
+        img {
+          width: 19px;
+          height: 20px;
+        }
+        font-weight: 600;
+        font-size: 13px;
+      }
+    }
+    &Notifications {
+      a {
+        img {
+          width: 19px;
+          height: 20px;
+        }
+        font-weight: 600;
+        font-size: 13px;
+      }
+    }
+    &Messages {
+      a {
+        img {
+          width: 19px;
+          height: 20px;
+        }
+        font-weight: 600;
+        font-size: 13px;
+      }
+    }
+    &Bookmarks {
+      a {
+        img {
+          width: 19px;
+          height: 20px;
+        }
+        font-weight: 600;
+        font-size: 13px;
+      }
+    }
+    &Profile {
+      a {
+        img {
+          width: 19px;
+          height: 20px;
+        }
+        font-weight: 600;
+        font-size: 13px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  .ContainerNavbar {
+    width: 200px;
+  }
+  .List {
+    &home {
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+    }
+    &Explore {
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+    }
+    &Notifications {
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+    }
+    &Messages {
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+    }
+    &Bookmarks {
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+    }
+    &Profile {
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .ContainerNavbar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    &-Components {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  .Navbar {
+    &Logo {
+      position: fixed;
+      top: 10px;
+      left: 20px;
+    }
+  }
+}
+@media screen and (min-width: 1500px) and (min-height: 800px) {
+  .Navbar {
+    &Logo {
+      h1 {
+        font-size: 42px;
+      }
+    }
+  }
+  .List {
+    &home {
+      width: 100%;
+      a {
+        img {
+          width: 25px;
+          height: 24px;
+        }
+        font-weight: 600;
+        font-size: 25px;
+      }
+    }
+    &Explore {
+      a {
+        img {
+          width: 25px;
+          height: 24px;
+        }
+        font-weight: 600;
+        font-size: 25px;
+      }
+    }
+    &Notifications {
+      a {
+        img {
+          width: 25px;
+          height: 24px;
+        }
+        font-weight: 600;
+        font-size: 25px;
+      }
+    }
+    &Messages {
+      a {
+        img {
+          width: 25px;
+          height: 24px;
+        }
+        font-weight: 600;
+        font-size: 25px;
+      }
+    }
+    &Bookmarks {
+      a {
+        img {
+          width: 25px;
+          height: 24px;
+        }
+        font-weight: 600;
+        font-size: 25px;
+      }
+    }
+    &Profile {
+      a {
+        img {
+          width: 25px;
+          height: 24px;
+        }
+        font-weight: 600;
+        font-size: 25px;
+      }
+    }
+  }
+  .NavbarProfile-Container {
+    figure {
+      width: 40%;
+      img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+    figcaption {
+      width: 40%;
+
+      h5 {
+        font-size: 25px;
+      }
+      p {
+        font-size: 20px;
+      }
+    }
+  }
+}
