@@ -1,8 +1,8 @@
 .ContainerNavbar {
-  width: 230px;
+  width: 200px;
   height: 100vh;
   position: fixed;
-  left: 100px;
+  left: 80px;
   &-Components {
     width: 100%;
     height: 100%;
@@ -181,8 +181,6 @@
 }
 @media screen and (max-width: 1020px) {
   .ContainerNavbar {
-    width: 220px;
-
     left: 20px;
   }
 }
