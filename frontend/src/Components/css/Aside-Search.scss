@@ -1,6 +1,7 @@
 .AsideSearch {
   width: 350px;
-  height: 290px;
+  height: 400px;
+
   position: fixed;
   right: 100px;
   &-components {
@@ -18,11 +19,11 @@
   height: 20%;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
 }
 .FormSearch-aside {
   width: 100%;
-  height: 75%;
+  height: 60%;
   display: flex;
   gap: 5px;
   align-items: center;
@@ -62,7 +63,13 @@
 .titleAsideSearch {
   width: 100%;
   font-size: 16px;
+  height: 10%;
   font-weight: 600;
+}
+.WrapUser {
+  width: 100%;
+  height: 90%;
+  overflow-x: auto;
 }
 .ThisUser {
   width: 100%;
@@ -121,6 +128,7 @@
   .AsideSearch {
     width: 250px;
     right: 30px;
+
     &-components {
       gap: 15px;
     }
