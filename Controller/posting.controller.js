@@ -103,7 +103,7 @@ const getHotPost = async (req, res) => {
 
 const deletePosting = async (req, res) => {
     const {postId}  = req.params;
-    const {userId} = req.session;
+    const {userId} = req;
 
     console.log(postId)
     console.log(userId)

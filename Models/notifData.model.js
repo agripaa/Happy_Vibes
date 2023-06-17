@@ -43,9 +43,9 @@ const Notifications = db.define('notifs', {
     },
     followsId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true
+            notEmpty: false
         }
     }
 })
