@@ -8,7 +8,7 @@ module.exports = {
     const { userId } = req;
     try {
       const user = await Users.findByPk(userId, {
-        attributes: ['uuid', 'name', 'email', 'followerCount', 'followingCount']
+        attributes: ['uuid', 'name', 'followerCount', 'followingCount']
       });
 
       if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
@@ -46,9 +46,9 @@ module.exports = {
       await follower.increment('followerCount');
 
       await Notifications.create({
-        content_notif: `User ${follower.name} started following you`,
+        content_notif: `${following.name} started following you!`,
         type_notif: 'follow',
-        userId: followingId,
+        userId: followerId,
         followsId: followerId
       });
 

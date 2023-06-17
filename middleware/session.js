@@ -12,6 +12,7 @@ module.exports = {
         if(!user) return res.status(404).json({status:404, msg: "User not found"});
     
         req.userId = user.id;
+        req.user = user;
         return next();
     }
 } 
