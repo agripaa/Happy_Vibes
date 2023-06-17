@@ -101,5 +101,34 @@ const getHotPost = async (req, res) => {
     }
 } 
 
+const deletePosting = async (req, res) => {
+    const {postId}  = req.params;
+    const {userId} = req.session;
 
-module.exports = {getAllContent , getContentById , createNewPosting, getHotPost }
+    console.log(postId)
+    console.log(userId)
+
+    
+  try {
+    const post = await Posting.findOne({
+        include: [{
+          model: Users,
+          where: {uuid: userId}
+      }],
+        where: { uuid: postId },
+    });
+
+    if (!post) {
+      return res.status(404).json({ error: 'Postingan tidak ditemukan.' });
+    }
+
+    await post.destroy();
+
+    return res.status(200).json({ message: 'Postingan berhasil dihapus.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Terjadi kesalahan saat menghapus postingan.' });
+  }
+};
+
+module.exports = {getAllContent , getContentById , createNewPosting, getHotPost, deletePosting }
