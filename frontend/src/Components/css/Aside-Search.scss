@@ -1,7 +1,7 @@
 .AsideSearch {
   width: 350px;
   height: 400px;
-
+  top: 0;
   position: fixed;
   right: 100px;
   &-components {
@@ -155,16 +155,16 @@
     display: none;
   }
 }
-@media screen and (min-width: 1500px) and (min-height: 800px) {
+@media screen and (min-width: 1351px) and (min-height: 800px) {
   .AsideSearch {
-    width: 400px;
-    height: 300px;
+    width: 350px;
+    height: 500px;
     position: fixed;
-    right: 80px;
+    right: 30px;
   }
 
   .FormSearch-aside {
-    height: 80%;
+    height: 60%;
   }
   .imageSearch-aside {
     width: 10%;
@@ -179,6 +179,9 @@
       font-size: 20px;
       font-weight: 600;
     }
+  }
+  .WrapUser {
+    height: 100%;
   }
   .titleAsideSearch {
     height: 15%;

@@ -1,24 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../css/Navbar.scss";
 
-import ImageDummmy from "../../img/imageDummy2.png";
 import ListNavbar from "./Micro_components/ListNavbar";
 import LogoNavbar from "./Micro_components/LogoNavbar";
 import ProfileNavbar from "./Micro_components/ProfileNavbar";
+import AccountInfo from "./Micro_components/AccountInfo";
+import NameBrand from "./Micro_components/NameBrand";
 function Navbar() {
-  const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setGetInnerWidth(innerWidth);
-    });
-  }, [getInnerWidth]);
+  const [isDown, setIsDown] = useState(false);
+  const reff = useRef(null);
+  function HandleMouseDown() {
+    setIsDown(!isDown);
+  }
+  function HandleMouseMove(e) {
+    e.preventDefault();
+    if (isDown) {
+      reff.current.classList.add(`activeNavbar`);
+    } else {
+      reff.current.classList.remove(`activeNavbar`);
+    }
+  }
+  function HandleCloseNav() {
+    setIsDown(!isDown);
+    reff.current.classList.remove(`activeNavbar`);
+  }
   return (
-    <div className="ContainerNavbar">
+    <div className="ContainerNavbar" key={"Navbar"} ref={reff}>
       <div className="ContainerNavbar-Components">
         <LogoNavbar myClass="NavbarLogo" />
+        <AccountInfo closeNav={HandleCloseNav} />
         <ListNavbar />
-        <ProfileNavbar />
+        <NameBrand />
+        <ProfileNavbar check={true} />
       </div>
+      <div
+        className="SlideNavbar"
+        onMouseDown={HandleMouseDown}
+        onMouseMove={HandleMouseMove}
+      ></div>
     </div>
   );
 }

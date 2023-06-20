@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "../../../css/Navbar.scss";
 
-function LogoNavbar({ myClass }) {
+function NameBrand() {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -10,14 +10,13 @@ function LogoNavbar({ myClass }) {
   }, [getInnerWidth]);
   return (
     <Fragment>
-      {" "}
-      {getInnerWidth > 500 ? (
-        <div className={myClass}>
-          <h1>HyV</h1>
+      {getInnerWidth < 500 ? (
+        <div className="NameBrand">
+          <h1>HappyVibes</h1>
         </div>
       ) : null}
     </Fragment>
   );
 }
 
-export default LogoNavbar;
+export default NameBrand;
