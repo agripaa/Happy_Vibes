@@ -1,6 +1,6 @@
 const express = require('express');
-const { followUser, getFollowers, unfollowUser } = require('../Controller/follows.controller.js');
-const { sessionUser } = require('../middleware/session.js');
+const { followUser, getFollowers, unfollowUser } = require('../Controller/follows.controller');
+const { sessionUser } = require('../middleware/session');
 
 const router = express.Router();
 

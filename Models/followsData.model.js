@@ -1,23 +1,23 @@
 const { DataTypes } = require('sequelize');
-const db = require('../Config/database.js');
+const db = require('../Config/database');
 
 const Follows = db.define('Follows', {
-    uuid: {
-        type: DataTypes.STRING,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
+  uuid: {
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
     },
-    followerId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-    },
-    followingId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-    },
+  },
+  followerId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  followingId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
 });
 
 module.exports = Follows;

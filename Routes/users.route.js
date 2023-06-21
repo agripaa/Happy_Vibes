@@ -1,6 +1,12 @@
 const express = require('express');
-const {sessionUser} = require('../middleware/session.js')
-const { getUsers, createUser, updateUser, verifyUser, resendCode } = require('../Controller/user.controller.js');
+const { sessionUser } = require('../middleware/session');
+const {
+  getUsers,
+  createUser,
+  updateUser,
+  verifyUser,
+  resendCode,
+} = require('../Controller/user.controller');
 
 const router = express.Router();
 

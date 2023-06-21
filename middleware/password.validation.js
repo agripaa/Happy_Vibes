@@ -1,9 +1,9 @@
 function validatePassword(password) {
-    const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/; // Simbol regex
-    const uppercaseRegex = /[A-Z]/; // Upper case regex
-    const lowercaseRegex = /[a-z]/; // Lower case regex
-    const numberRegex = /[0-9]/; // Angka regex
-    const spaceRegex = /\s/; // Spasi regex
+  const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/; // Simbol regex
+  const uppercaseRegex = /[A-Z]/; // Upper case regex
+  const lowercaseRegex = /[a-z]/; // Lower case regex
+  const numberRegex = /[0-9]/; // Angka regex
+  const spaceRegex = /\s/; // Spasi regex
 
   if (symbolRegex.test(password)) {
     throw new Error("Password can't contain symbols ");
@@ -26,5 +26,5 @@ function validatePassword(password) {
 
   return true;
 }
-  
-  module.exports = validatePassword;
+
+module.exports = validatePassword;

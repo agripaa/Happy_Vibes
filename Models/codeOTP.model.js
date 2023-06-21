@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const db = require('../Config/database.js');
+const db = require('../Config/database');
 
 const CodeOTP = db.define('code_otp', {
   id: {
