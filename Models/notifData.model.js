@@ -50,12 +50,11 @@ const Notifications = db.define('notifs', {
     }
 })
 
-Users.hasMany(Notifications);
-Posting.hasMany(Notifications);
-Comment.hasMany(Notifications); 
-Notifications.belongsTo(Users, { foreignKey: 'userId' });
-Notifications.belongsTo(Posting, { foreignKey: 'postId' });
-Notifications.belongsTo(Comment, { foreignKey: 'commentId' });
-
+Users.hasMany(Notifications, { onDelete: 'CASCADE' });
+Posting.hasMany(Notifications, { onDelete: 'CASCADE' });
+Comment.hasMany(Notifications, { onDelete: 'CASCADE' });
+Notifications.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Notifications.belongsTo(Posting, { foreignKey: 'postId', onDelete: 'CASCADE' });
+Notifications.belongsTo(Comment, { foreignKey: 'commentId', onDelete: 'CASCADE' });
 
 module.exports = Notifications;

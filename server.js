@@ -21,7 +21,7 @@ const sessionStore = new (sequelizeStore(session.Store))({ db: db });
 
 // async function startDB(){await db.sync();};startDB();
 
-app.use(session({
+app.use(session({ 
     secret: process.env.SESS,
     resave: true,
     saveUninitialized: true,

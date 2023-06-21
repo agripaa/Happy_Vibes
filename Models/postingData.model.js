@@ -37,8 +37,7 @@ const Posting = db.define('posting_data', {
     },
 }, {freezeTableName: true})
 
-Users.hasMany(Posting);
-Posting.belongsTo(Users, {foreignKey: 'userId'});
-
+Users.hasMany(Posting, { onDelete: 'CASCADE' });
+Posting.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 module.exports = Posting;

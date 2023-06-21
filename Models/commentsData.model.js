@@ -34,7 +34,7 @@ const Comment = db.define('commentsData' , {
     }
 } , {freezeTableName: true})
 
-Comment.belongsTo(Users, { foreignKey: 'userId' });
-Comment.belongsTo(Posting, { foreignKey: 'postId' });
+Comment.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Comment.belongsTo(Posting, { foreignKey: 'postId', onDelete: 'CASCADE' });
 
 module.exports = Comment;

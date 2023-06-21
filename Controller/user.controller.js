@@ -1,11 +1,12 @@
+const validatePassword = require("../middleware/password.validation.js");
+const Posting = require("../Models/postingData.model.js");
 const Users = require("../Models/usersData.model.js");
+const nodemailer = require("nodemailer");
+const log = require("../utils/log.js");
+const { unlinkSync } = require('fs');
+const moment = require('moment');
 const argon2 = require('argon2');
 const path = require('path');
-const fs = require('fs');
-const log = require("../utils/log.js");
-const validatePassword = require("../middleware/password.validation.js");
-const moment = require('moment');
-const nodemailer = require("nodemailer");
 require('dotenv').config();
 
 module.exports = {
@@ -25,51 +26,63 @@ module.exports = {
         const files = req.files;
         const { name, username, email, password, confPassword } = req.body;
 
-        if(name.length <= 3 && name.length > 25) return res.status(403).json({status:403, msg: 'Username must be a minimum of 3 characters and a maximum of 25 characters'})
+        if(module.exports.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
         const hashPassword = await argon2.hash(password);
 
-        if(files === null) return res.status(400).json({status: 400, msg: 'No file uploaded'})
+        if(!files) return res.status(400).json({status: 400, msg: 'No file uploaded'})
         const file = files.file;
         const size = file.data.length;
-        const extend = path.extname(file.name);
-        const name_img = file.md5 + extend
-        const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
+        const ext = path.extname(file.name);
         const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
-
-        if(!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
+        
+        if(!allowedTypePhotos.includes(ext.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
         if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
+        
+        const name_img = `user_${file.md5}${ext}`
+        const bg_img = `bg_${file.md5}${ext}`;
+        const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
+        const bg_url = `${req.protocol}://${req.get("host")}/users/bg_img/${bg_img}`;
+        
+        file.mv(`./public/users/bg_img/${bg_img}`, async (err) => {
+            if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+        });
 
         file.mv(`./public/users/${name_img}`, async(err) => {
             if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
-
-            const validationEmail = await Users.findOne({ where: { email: email } });
-            if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
-            
-            try {
-                validatePassword(password)
-              
-                const OTP = module.exports.generateOTP();
-                module.exports.sendOTP(email, OTP);
-                
-                await Users.create({
-                    name: name, 
-                    username: username,
-                    email: email,
-                    password: hashPassword, 
-                    name_img: name_img, 
-                    url: url,
-                    verificationCode: OTP,
-                    createdAt: moment().toISOString()
-                });
-                
-                res.status(200).json({status: 200, msg: 'data user created successfully'});
-            } catch (err) {
-                log.error(err);
-                res.status(400).json({status: 400, msg: err.message});
-                return false;
-            }
         })
+
+        const validationEmail = await Users.findOne({ where: { email: email } });
+        if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
+        
+        try {
+            validatePassword(password)
+          
+            const OTP = module.exports.generateOTP();
+            module.exports.sendOTP(email, OTP);
+            
+            await Users.create({
+                name: name, 
+                username: username,
+                email: email,
+                password: hashPassword,                     
+                name_img: name_img, 
+                url: url,
+                bg_img: bg_img,
+                bg_url: bg_url,
+                verificationCode: OTP,
+                createdAt: moment().toISOString()
+            });
+            
+            res.status(200).json({status: 200, msg: 'data user created successfully'});
+        } catch (err) {
+            log.error(err);
+            res.status(400).json({status: 400, msg: err.message});
+            return false;
+        }
+    },
+    validateName(name, username){
+        return name.length < 3 && name.length > 25 && username.length < 3 && username.length > 25
     },
     async verifyUser(req, res){
         const { otp } = req.body;
@@ -112,10 +125,11 @@ module.exports = {
         }
     },
     async updateUser(req, res){
-        let name_img, hashPassword;
+        let name_img, bg_img, hashPassword;
         const files = req.files;
-        const { name, email, password, confPassword } = req.body;
+        const { name, username, email, password, confPassword } = req.body;
     
+        if(this.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
         try {
             const user = await Users.findOne({where: { uuid: req.params.id }});
             if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
@@ -127,34 +141,46 @@ module.exports = {
                 hashPassword = await argon2.hash(password);
             }
 
-            if (files === null) {
+            if (!files) {
                 name_img = user.name_img;
+                bg_img = user.bg_img
             } else {
                 name_img = user.name_img;
-                fs.unlinkSync(`./public/users/${name_img}`, (err) => {
+                bg_img = user.bg_img
+                unlinkSync(`./public/users/${name_img}`, (err) => {
+                    if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
+                })
+                unlinkSync(`./public/users/bg_img/${bg_img}`, (err) => {
                     if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
                 })
                 const file = files.file;
                 const size = file.data.length;
                 const extend = path.extname(file.name);
-                name_img = file.md5 + extend;
+                name_img = `user_${file.md5}${ext}`
+                bg_img = `bg_${file.md5}${ext}`;
                 const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
-
+                
                 if (!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({ msg: 'Invalid image' });
                 if (size > 5000000) return res.status(422).json({ msg: 'Images must be less than 5MB' });
-
+                
                 file.mv(`./public/users/${name_img}`, async (err) => {
                     if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
                 });
+                file.mv(`./public/users/bg_img/${bg_img}`, async (err) => {
+                    if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+                });
             }
-
-            const url = `${req.protocol}://${req.get('host')}/users/${name_img}`;
+            
+            const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
+            const bg_url = `${req.protocol}://${req.get("host")}/users/bg_img/${bg_img}`;
             await Users.update( {
                 name: name,
                 email: email,
                 password: hashPassword,
                 name_img: name_img,
-                url: url
+                url: url,
+                bg_img: bg_img,
+                bg_url: bg_url
             },{
                 where: { id: user.id },
             });
@@ -202,5 +228,40 @@ module.exports = {
               }
             });
         });
+    },
+    async deleteUser(req, res) {
+        const {userId} = req;
+
+        const user = await Users.findOne({
+            where: {id: userId}
+        });
+
+        if(userId !== user.id) return res.status(400).json({status: 400, msg: "You cannot delete this account!"})
+
+        try {
+            await unlinkSync(`./public/users/${user.name_img}`, (err) => {
+                if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
+            })
+            await unlinkSync(`./public/users/bg_img/${user.bg_img}`, (err) => {
+                if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
+            })
+
+            const postings = await Posting.findAll({
+                where: { userId: user.id }
+            });
+            
+            for (const posting of postings) {
+                if (posting.name_img) {
+                    await unlinkSync(`./public/postings/${posting.name_img}`);
+                }
+                await posting.destroy();
+            }
+
+            await user.destroy();
+            return res.status(200).json({status:200, msg: "User has been deleted"});
+        } catch (err) {
+            log.error(err);
+            res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+        }
     }
 }
