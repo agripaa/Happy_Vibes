@@ -1,0 +1,392 @@
+.Container {
+  &-ProfilePage {
+    width: 100%;
+    height: 100vh;
+  }
+}
+.WrapContainer-ProfilePage {
+  width: 65%;
+  margin: 0 auto;
+  height: 100%;
+}
+.header-ProfilePage {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttonBackProfilePage {
+  width: 28%;
+  display: flex;
+  justify-content: space-around;
+}
+.NameProfilePage {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  h1 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.main-ProfilePage {
+  width: 100%;
+}
+.ContainerNavigation-ProfilePage {
+  width: 100%;
+  height: 70px;
+}
+
+.section {
+  &-ImageProfilePage {
+    width: 100%;
+  }
+  &-NameProfilePage {
+    width: 100%;
+  }
+  &-BioProfilePage {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+.BackgroundProfilePage {
+  width: 82%;
+  display: flex;
+  justify-content: flex-end;
+  img {
+    width: 84%;
+    height: 260px;
+    object-fit: cover;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+}
+
+.FrontProfilePage {
+  width: 100%;
+  padding-left: 160px;
+  margin-top: -50px;
+  img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50px;
+    object-fit: cover;
+    border: 1px solid white;
+  }
+}
+.wrapSection-NameProfilePage {
+  width: 82%;
+  display: flex;
+  justify-content: space-between;
+}
+.OriginalName-ProfilePage {
+  width: 27.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  p {
+    font-size: 12px;
+    font-weight: 300;
+  }
+}
+.buttonFollow-ProfilePage {
+  button {
+    width: 100px;
+    height: 28px;
+    font-size: 10px;
+    font-weight: 600;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.wrapBioProfilePage {
+  padding-top: 10px;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.text-BioProfilePage {
+  width: 50%;
+
+  p {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+.amountFollowers {
+  &-activeFollowers {
+    p {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+  &-countFollowers {
+    padding-top: 5px;
+    display: flex;
+    gap: 8px;
+    p {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+}
+
+.WrapNavigation-ProfilePage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.NavigationPost-ProfilePage {
+  a {
+    text-decoration: none;
+    width: 100%;
+    p {
+      font-size: 16px;
+      color: #282828;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.NavigationMedia-ProfilePage {
+  a {
+    text-decoration: none;
+    width: 100%;
+    p {
+      font-size: 16px;
+      color: #282828;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.active-Link-ProfilePage {
+  font-weight: 600;
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    background-color: #5c9dff;
+    height: 6px;
+    margin-top: -4px;
+    border-radius: 40px;
+  }
+}
+@media screen and (max-width: 1350px) {
+  .WrapContainer-ProfilePage {
+    width: 55%;
+  }
+  .buttonBackProfilePage {
+    justify-content: flex-start;
+  }
+  .NameProfilePage {
+    justify-content: flex-end;
+  }
+  .BackgroundProfilePage {
+    width: 100%;
+    justify-content: center;
+    img {
+      width: 100%;
+    }
+  }
+  .FrontProfilePage {
+    padding-left: 30px;
+  }
+  .wrapSection-NameProfilePage {
+    width: 100%;
+  }
+  .OriginalName-ProfilePage {
+    width: auto;
+  }
+  .wrapBioProfilePage {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1250px) {
+  .WrapContainer-ProfilePage {
+    width: 45%;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .WrapContainer-ProfilePage {
+    width: 70%;
+    padding-right: 5%;
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 750px) {
+  .WrapContainer-ProfilePage {
+    width: 60%;
+    padding-right: 5%;
+    margin-right: 0;
+  }
+  .BackgroundProfilePage img {
+    height: 180px;
+  }
+  .FrontProfilePage {
+    margin-top: -40px;
+    img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+  .wrapBioProfilePage {
+    gap: 14px;
+  }
+  .text-BioProfilePage {
+    width: 70%;
+    p {
+      font-size: 10px;
+    }
+  }
+  .amountFollowers {
+    &-activeFollowers {
+      p {
+        font-size: 10px;
+      }
+    }
+    &-countFollowers {
+      padding-top: 0px;
+
+      p {
+        font-size: 10px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 620px) {
+  .WrapContainer-ProfilePage {
+    width: 58%;
+    padding-right: 3%;
+    margin-right: 0;
+  }
+  .BackgroundProfilePage img {
+    height: 140px;
+  }
+  .FrontProfilePage {
+    margin-top: -33px;
+    img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .WrapContainer-ProfilePage {
+    width: 100%;
+    padding: 0;
+    margin-right: 0;
+  }
+
+  .header-ProfilePage {
+    padding: 0 5% 0 5%;
+  }
+  .BackgroundProfilePage img {
+    height: 250px;
+  }
+  .FrontProfilePage {
+    margin-top: -40px;
+
+    img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+  .wrapSection-NameProfilePage {
+    padding: 0 5% 0 5%;
+  }
+  .wrapBioProfilePage {
+    padding: 10px 5% 0 5%;
+  }
+  .NavigationPost-ProfilePage {
+    a {
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+  .NavigationMedia-ProfilePage {
+    a {
+      p {
+        font-size: 13px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 320px) {
+  .BackgroundProfilePage img {
+    height: 190px;
+  }
+  .FrontProfilePage {
+    margin-top: -35px;
+
+    img {
+      width: 65px;
+      height: 65px;
+    }
+  }
+  .OriginalName-ProfilePage {
+    h4 {
+      font-size: 14px;
+    }
+    p {
+      font-size: 11px;
+    }
+  }
+  .buttonFollow-ProfilePage {
+    button {
+      width: 90px;
+      height: 25px;
+    }
+  }
+}
+@media screen and (min-width: 1500px) and (min-height: 800px) {
+  .WrapContainer-ProfilePage {
+    width: 47%;
+  }
+  .NameProfilePage {
+    justify-content: flex-end;
+    h1 {
+      font-size: 18px;
+    }
+  }
+  .buttonBackProfilePage {
+    width: 28%;
+    justify-content: flex-start;
+  }
+  .BackgroundProfilePage {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 100%;
+      height: 260px;
+    }
+  }
+  .FrontProfilePage {
+    padding-left: 30px;
+  }
+  .wrapSection-NameProfilePage {
+    width: 100%;
+  }
+  .OriginalName-ProfilePage {
+    width: auto;
+  }
+  .wrapBioProfilePage {
+    width: 100%;
+  }
+}
