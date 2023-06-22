@@ -44,40 +44,35 @@ function ListNavbar() {
               </Link>
             </div>
           </li>
-          {getInnerWidth > 500 ? (
-            <>
-              <li>
-                <div className="ListMessages">
-                  <Link to={"/"}>
-                    <img src={ImageListMessages} alt="" />
-                    <p>Messages</p>
-                  </Link>
-                </div>
-              </li>
-              <li>
-                <div className="ListBookmarks">
-                  <Link to={"/"}>
-                    <img src={ImageListBookmarks} alt="" />
-                    <p>Bookmarks</p>
-                  </Link>
-                </div>
-              </li>
-            </>
-          ) : (
-            <li>
-              <div className="ListPost">
-                <Link to={"/"}>
-                  <img src={ImageListPost} alt="" />
-                </Link>
-              </div>
-            </li>
-          )}
+          {/* <li>
+            <div className="ListMessages">
+              <Link to={"/"}>
+                <img src={ImageListMessages} alt="" />
+                <p>Messages</p>
+              </Link>
+            </div>
+          </li>
+          <li>
+            <div className="ListBookmarks">
+              <Link to={"/"}>
+                <img src={ImageListBookmarks} alt="" />
+                <p>Bookmarks</p>
+              </Link>
+            </div>
+          </li> */}
 
           <li>
             <div className="ListProfile">
               <Link to={"/"}>
                 <img src={ImageListProfile} alt="" />
                 <p>Profile</p>
+              </Link>
+            </div>
+          </li>
+          <li>
+            <div className="ListButtonPost">
+              <Link to={"/"}>
+                <p>Post</p>
               </Link>
             </div>
           </li>
