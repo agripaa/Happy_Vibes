@@ -10,6 +10,7 @@ module.exports = {
         })
         
         if(!user) return res.status(404).json({status: 404, msg: "User not found"});
+        if(user.verificationCode !== null) return res.status(403).json({status:403, msg: "User Must verify verification code"});
         const matchingPassword = await argon2.verify(user.password, req.body.password);
         if(!matchingPassword) return res.status(400).json({status: 400, msg: "Password do not matches"})
         const { uuid, name, email, name_img, url } = user;
