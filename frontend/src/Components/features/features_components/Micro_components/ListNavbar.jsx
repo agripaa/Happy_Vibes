@@ -44,7 +44,7 @@ function ListNavbar() {
               </Link>
             </div>
           </li>
-          <li>
+          {/* <li>
             <div className="ListMessages">
               <Link to={"/"}>
                 <img src={ImageListMessages} alt="" />
@@ -59,12 +59,20 @@ function ListNavbar() {
                 <p>Bookmarks</p>
               </Link>
             </div>
-          </li>
+          </li> */}
+
           <li>
             <div className="ListProfile">
               <Link to={"/"}>
                 <img src={ImageListProfile} alt="" />
                 <p>Profile</p>
+              </Link>
+            </div>
+          </li>
+          <li>
+            <div className="ListButtonPost">
+              <Link to={"/"}>
+                <p>Post</p>
               </Link>
             </div>
           </li>

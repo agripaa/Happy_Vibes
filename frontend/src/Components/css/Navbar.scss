@@ -142,6 +142,23 @@
       font-size: 16px;
     }
   }
+  &ButtonPost {
+    width: 100%;
+    height: 49px;
+    a {
+      width: 100%;
+      height: 100%;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      color: #282828;
+      background-color: #ffba53;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+    }
+  }
 }
 .NavbarProfile {
   display: flex;
@@ -252,6 +269,13 @@
         font-size: 13px;
       }
     }
+    &ButtonPost {
+      width: 80%;
+      height: 35px;
+      a {
+        font-size: 15px;
+      }
+    }
   }
 }
 @media screen and (max-width: 600px) {
@@ -357,6 +381,10 @@
       padding-top: 7px;
     }
   }
+  .NavbarList-Container {
+    width: 100%;
+    height: 85%;
+  }
   .mainAccountInfo {
     width: 100%;
     height: 70%;
@@ -423,6 +451,15 @@
     align-items: center;
     h1 {
       font-size: 10px;
+    }
+  }
+  .List {
+    &ButtonPost {
+      width: 70%;
+      height: 30px;
+      a {
+        font-size: 13px;
+      }
     }
   }
 }
