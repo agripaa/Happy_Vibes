@@ -4,13 +4,15 @@ const fileUpload = require('express-fileupload');
 const sequelizeStore = require('connect-session-sequelize');
 const path = require('path');
 const log = require('./utils/log.js');
-const Users = require('./Routes/users.route.js');
 const Auth = require('./Routes/auth.route.js');
+const Post = require('./Routes/posting.route.js');
+const Users = require('./Routes/users.route.js');
+const Notif = require('./Routes/notif.route.js');
+const Search = require('./Routes/search.route.js');
 const Follows = require('./Routes/follows.route.js');
 const Comments = require('./Routes/comment.route.js');
 const BugReport = require('./Routes/bugreport.route.js');
 const db = require('./Config/database.js');
-const Post = require('./Routes/posting.route.js');
 const session = require('express-session');
 require('dotenv').config();
 
@@ -19,8 +21,7 @@ const sessionStore = new (sequelizeStore(session.Store))({ db: db });
 
 // async function startDB(){await db.sync();};startDB();
 
-app.use(
-  session({
+app.use(session({ 
     secret: process.env.SESS,
     resave: true,
     saveUninitialized: true,
@@ -44,8 +45,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(Auth);
 app.use(Post);
+app.use(Notif);
 app.use(Users);
-app.use(Follows)
+app.use(Search);
+app.use(Follows);
 app.use(Comments);
 app.use(BugReport);
 
