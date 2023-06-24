@@ -7,6 +7,7 @@ import OTP from "./Components/features/OTP";
 import EmailAuth from "./Components/features/EmailAuth";
 import Homepage from "./Components/features/Homepage";
 import Profilepage from "./Components/features/Profilepage";
+import ProfilepageUsers from "./Components/features/ProfilePageUser";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/authOtp/otp" element={<OTP />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/profile/:id" element={<Profilepage />} />
+        <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
       </Routes>
     </>
   );
