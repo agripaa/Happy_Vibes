@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import imageRegister from "../img/Img-1.png";
 import "../css/Register.scss";
 import "../css/myLibrary.scss";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineGoogle } from "react-icons/ai";
 
 function Register() {
   const [displayWidth, setDisplayWitdh] = useState(innerWidth);
@@ -13,39 +13,55 @@ function Register() {
     });
   }, [displayWidth]);
 
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    confPassword: "",
+  })
+  const [randomPhoto, setRandomPhoto] = useState(null);
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleRandomPhoto = () => {
+    axios
+      .get("http://localhost:5000/random_photo") // Ganti URL dengan endpoint di backend Anda untuk mendapatkan foto acak
+      .then(({data}) => {
+        setRandomPhoto(data.randomPhoto);
+        navigate('/authOtp/otp')
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
+  useEffect(() => {
+    handleRandomPhoto();
+    handleSubmit();
+  }, []);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const changeHandler = (e) => {
+    setValues({...values, [e.target.name]: e.target.value});
+  }
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const {name, email, username, password, confPassword} = values;
+    const {name_img, url} = randomPhoto;
 
-    // console.log('Name', name);
-    // console.log('Username', username);
-    // console.log('Email', email);
-    // console.log('Password', password);
-
-    setName("");
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    await axios.post('http://localhost:5000/user/create', {
+      name,
+      email,
+      username,
+      password,
+      confPassword,
+      name_img,
+      url,
+      bg_img: null
+    }).then(({data}) => {
+      console.log(data);
+    }).catch(err => {
+      console.error(err);
+    })
   };
 
   const navigate = useNavigate();
@@ -80,9 +96,8 @@ function Register() {
                   <label className="labelForm">Name</label>
                   <input
                     type="text"
-                    id="name"
-                    value={name}
-                    onChange={handleNameChange}
+                    name="name"
+                    onChange={changeHandler}
                     className="input-field-name"
                     placeholder="Full Name"
                   />
@@ -91,9 +106,8 @@ function Register() {
                   <label className="labelForm">Username</label>
                   <input
                     type="text"
-                    id="username"
-                    value={username}
-                    onChange={handleUsernameChange}
+                    name="username"
+                    onChange={changeHandler}
                     className="input-field-username"
                     placeholder="Username"
                   />
@@ -103,9 +117,8 @@ function Register() {
                 <label className="labelForm">Email</label>
                 <input
                   type="text"
-                  id="email"
-                  value={email}
-                  onChange={handleEmailChange}
+                  name="email"
+                  onChange={changeHandler}
                   className="input-field-email"
                   placeholder="Email"
                 />
@@ -114,13 +127,21 @@ function Register() {
                 <label className="labelForm">Password</label>
                 <input
                   type="text"
-                  id="password"
-                  value={password}
-                  onChange={handlePasswordChange}
+                  name="password"
+                  onChange={changeHandler}
                   className="input-field-password"
                   placeholder="********"
                 />
               </div>
+              <div className="formWrapper2">
+                <label className="labelForm">Confirm Password</label>
+                <input
+                  type="text"
+                  name="confPassword"
+                  onChange={changeHandler}
+                  className="input-field-password"
+                  placeholder="********"
+                />
               <section className="button-Auth">
                 {displayWidth > 500 ? (
                   <div className="button-Auth-register1 flex flex-justify-center">
@@ -131,20 +152,8 @@ function Register() {
                     <button type="submit">Sign Up</button>
                   </div>
                 )}
-                <div className="formWrapper3 ">
-                  {displayWidth > 500 ? (
-                    <span>Or</span>
-                  ) : (
-                    <span>Or Register With</span>
-                  )}
-                </div>
-                <div className="button-Auth-register2 flex flex-justify-center">
-                  <button>
-                    Register With Google
-                    <AiOutlineGoogle className="button-icon"></AiOutlineGoogle>
-                  </button>
-                </div>
               </section>
+              </div>
             </form>
           </section>
           <div className="navLogin flex flex-justify-center">
