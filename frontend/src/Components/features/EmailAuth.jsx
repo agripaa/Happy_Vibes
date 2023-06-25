@@ -3,30 +3,48 @@ import "../css/myLibrary.scss";
 import "../css/EmailAuth.scss";
 import { Link, useNavigate } from "react-router-dom";
 import ImageBack from "../img/vector-back.png";
+import axios from "axios";
 function EmailAuth() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
     });
+    handleSubmit();
   }, [getWitdh]);
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+
+    await axios.patch('http://localhost:5000/user/resend/otp', {email: email})
+    .then(({data}) => {navigate('/authOtp/otp')})
+    .catch((err) => {console.error(err)});
+  }
+
   return (
     <div className="ContainerEmail">
       <div className="ContainerEmail-wrap1">
         <div className="ContainerEmail-wrap2">
           <header className="judulEmail">
             <div className="backEmail">
-              <Link to={"/"}>
+              <Link to={"/authOtp/otp"}>
                 <img src={ImageBack} alt="" />
               </Link>
             </div>
             <h1>OTP Verification</h1>
           </header>
           <main className="mainEmail">
-            <form className="formEmail">
+            <form className="formEmail" onSubmit={handleSubmit}>
               <div className="kolomInputEmail">
-                <input type="email" required placeholder="example@gmail.com" />
+                <input 
+                  type="email" 
+                  required 
+                  placeholder="example@gmail.com"
+                  onChange={e => {setEmail(e.target.value)}}
+                  />
               </div>
               <div className="ResendEmail">
                 <p>
@@ -43,9 +61,9 @@ function EmailAuth() {
               <div className="submitEmail">
                 <button
                   className="ButtonSubmitEmail"
-                  onClick={() => navigate("otp")}
+                  type="submit"
                 >
-                  Register
+                  Resend OTP
                 </button>
               </div>
             </form>
