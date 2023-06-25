@@ -3,10 +3,10 @@ const Posting = require("../Models/postingData.model.js");
 const Users = require("../Models/usersData.model.js");
 const nodemailer = require("nodemailer");
 const log = require("../utils/log.js");
-const { unlinkSync } = require('fs');
+const { unlinkSync, existsSync } = require('fs');
 const moment = require('moment');
 const argon2 = require('argon2');
-const path = require('path');
+const path = require('path');                                                                                       
 require('dotenv').config();
 
 module.exports = {
@@ -23,41 +23,17 @@ module.exports = {
         }
     },
     async createUser(req, res) {
-        const files = req.files;
-        const { name, username, email, password, confPassword } = req.body;
+        const { name, username, email, password, confPassword, name_img, url } = req.body;
 
         if(module.exports.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
         const hashPassword = await argon2.hash(password);
 
-        if(!files) return res.status(400).json({status: 400, msg: 'No file uploaded'})
-        const file = files.file;
-        const size = file.data.length;
-        const ext = path.extname(file.name);
-        const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
-        
-        if(!allowedTypePhotos.includes(ext.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
-        if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
-        
-        const name_img = `user_${file.md5}${ext}`
-        const bg_img = `bg_${file.md5}${ext}`;
-        const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
-        const bg_url = `${req.protocol}://${req.get("host")}/users/bg_img/${bg_img}`;
-        
-        file.mv(`./public/users/bg_img/${bg_img}`, async (err) => {
-            if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-        });
-
-        file.mv(`./public/users/${name_img}`, async(err) => {
-            if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
-        })
-
         const validationEmail = await Users.findOne({ where: { email: email } });
         if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
         
         try {
-            validatePassword(password)
-          
+            validatePassword(password);
             const OTP = module.exports.generateOTP();
             module.exports.sendOTP(email, OTP);
             
@@ -68,8 +44,8 @@ module.exports = {
                 password: hashPassword,                     
                 name_img: name_img, 
                 url: url,
-                bg_img: bg_img,
-                bg_url: bg_url,
+                bg_img: null,                                                                           
+                bg_url: null,
                 verificationCode: OTP,
                 createdAt: moment().toISOString()
             });
@@ -77,13 +53,14 @@ module.exports = {
             res.status(200).json({status: 200, msg: 'data user created successfully'});
         } catch (err) {
             log.error(err);
-            res.status(400).json({status: 400, msg: err.message});
+            res.status(500).json({status: 500, msg: err.message});
             return false;
         }
     },
     validateName(name, username){
         return name.length < 3 && name.length > 25 && username.length < 3 && username.length > 25
     },
+
     async verifyUser(req, res){
         const { otp } = req.body;
         
@@ -113,7 +90,6 @@ module.exports = {
 
         const OTP = module.exports.generateOTP();
         module.exports.sendOTP(email, OTP);
-        log.info(OTP)
         try {
             await Users.update({
                 verificationCode: OTP
@@ -128,6 +104,14 @@ module.exports = {
         let name_img, bg_img, hashPassword;
         const files = req.files;
         const { name, username, email, password, confPassword } = req.body;
+        const photosToKeep = [
+            'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
+            'user_053c88cf369f519d289b99d6119049f5.jpg',
+            'user_60ef0bd9ba36c2c165e00be9b9a19dcd.jpg',
+            'user_c13354bf51f1ce36d3e652b409e37f54.jpg',
+            'user_db15b37020a2fbb05b69fa1157f0bbfa.jpg',
+            'user_ff0b300a0e11132de2c89be1d79da25e.jpeg'
+        ];
     
         if(this.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
         try {
@@ -146,10 +130,15 @@ module.exports = {
                 bg_img = user.bg_img
             } else {
                 name_img = user.name_img;
-                bg_img = user.bg_img
-                unlinkSync(`./public/users/${name_img}`, (err) => {
-                    if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
-                })
+                bg_img = user.bg_img;
+
+                if (user.name_img && !photosToKeep.includes(user.name_img)) {
+                    const nameImgPath = `./public/users/${user.name_img}`;
+                    if (existsSync(nameImgPath)) {
+                        unlinkSync(nameImgPath);
+                    }
+                }
+
                 unlinkSync(`./public/users/bg_img/${bg_img}`, (err) => {
                     if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
                 })
@@ -223,7 +212,6 @@ module.exports = {
                 log.error('Error sending OTP email:', error);
                 reject(new Error('Failed to send OTP email'));
               } else {
-                log.info('OTP email sent successfully');
                 resolve();
               }
             });

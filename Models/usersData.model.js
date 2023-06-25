@@ -45,30 +45,30 @@ const Users = db.define('users_data', {
     },
     name_img : {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
         }
     },
     url : {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
         }
     },
     bg_img : {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
         }
     },
     bg_url : {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
         }
     },
     followerId: {
