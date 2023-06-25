@@ -1,22 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../css/myLibrary.scss";
 import "../css/OTP.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImageBack from "../img/vector-back.png";
+import axios from "axios";
+
 function OTP() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
+  const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
+  const inputRefs = useRef([]);
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
     });
+    handleSubmit();
   }, [getWitdh]);
+
+  const handleInputChange = async(index, e) => {
+    const {value} = e.target;
+    
+    if (value.length === 1 && index < inputRefs.current.length - 1) {
+      inputRefs.current[index + 1].focus();
+    } else if (value.length === 0 && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+
+    const otpArray = inputRefs.current.map((ref) => ref.value);
+    const otpString = otpArray.join("");
+    setOtp(otpString);
+  };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    if (otp.length === 6) {
+      try {
+        await axios.patch("http://localhost:5000/user/verify", { otp: otp })
+        .then(({data}) => {navigate('/login')})
+        .catch(err => console.error(err));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
-    <div className="ContainerOTP">
+    <div classNa me="ContainerOTP">
       <div className="ContainerOTP-wrap1">
         <div className="ContainerOTP-wrap2">
           <header className="judulOTP">
             <div className="backOTP">
-              <Link to={"/authOtp"}>
+              <Link to={"/register"}>
                 <img src={ImageBack} alt="" />
               </Link>
             </div>
@@ -25,33 +60,41 @@ function OTP() {
           <main className="mainOTP">
             <article className="articleOTP">
               <p>
-                We’ve Sent A code To{" "}
+                We’ve Sent A OTP code To{" "} 
                 {getWitdh <= 500 ? (
                   <>
                     <br />
-                    <span>example@gmail.com</span>
+                    <span>You're Email.</span>
                   </>
                 ) : (
-                  `example@gmail.com`
+                  `You're Email.`
                 )}{" "}
               </p>
             </article>
             <form className="formOTP">
-              <div className="kolomInputOTP">
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
-                <input type="text" maxLength={1} />
+            <div className="kolomInputOTP">
+                {[...Array(6)].map((_, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength={1}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    ref={(ref) => {
+                      inputRefs.current[index] = ref;
+                    }}
+                    value={otp[index] || ""}
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                ))}
               </div>
               <div className="ResendOTP">
                 <p>
-                  Didn’t Get a OTP Code? <Link to={"/"}>Resend Code</Link>{" "}
+                  Didn’t Get a OTP Code? <Link to={"/authOtp/resend"}>Resend Code</Link>{" "}
                 </p>
               </div>
               <div className="submitOTP">
-                <button className="ButtonSubmitOTP">Submit</button>
+                <button className="ButtonSubmitOTP" onClick={handleSubmit} type="submit">Submit</button>
               </div>
             </form>
           </main>

@@ -24,10 +24,9 @@ function Register() {
 
   const handleRandomPhoto = () => {
     axios
-      .get("http://localhost:5000/random_photo") // Ganti URL dengan endpoint di backend Anda untuk mendapatkan foto acak
+      .get("http://localhost:5000/random_photo") 
       .then(({data}) => {
         setRandomPhoto(data.randomPhoto);
-        navigate('/authOtp/otp')
       })
       .catch((error) => {
         console.error(error);
@@ -58,7 +57,7 @@ function Register() {
       url,
       bg_img: null
     }).then(({data}) => {
-      console.log(data);
+      navigate('/authOtp/otp');
     }).catch(err => {
       console.error(err);
     })
