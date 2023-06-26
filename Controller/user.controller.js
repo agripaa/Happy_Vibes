@@ -1,29 +1,33 @@
-const validatePassword = require("../middleware/password.validation.js");
-const Posting = require("../Models/postingData.model.js");
-const Users = require("../Models/usersData.model.js");
-const nodemailer = require("nodemailer");
-const log = require("../utils/log.js");
-const { unlinkSync, existsSync } = require('fs');
-const moment = require('moment');
+const Users = require('../Models/usersData.model.js');
 const argon2 = require('argon2');
-const path = require('path');                                                                                       
+const path = require('path');
+const fs = require('fs');
+const log = require('../utils/log.js');
+const validatePassword = require('../middleware/password.validation.js');
+const moment = require('moment');
+const nodemailer = require("nodemailer");
+const CodeOTP = require("../Models/codeOTP.model.js");
+const { P } = require("pino");
 require('dotenv').config();
 
 module.exports = {
-    async getUsers(_, res){
-        try{
-            const users = await Users.findAll();
-            res.status(200).json({
-                status: "success", 
-                result: users
-            })
-        } catch(err){
-            log.error("error: ", err);
-            res.status(500).json({status: "error", msg: "internal server error", error: err})
-        }
-    },
-    async createUser(req, res) {
-        const { name, username, email, password, confPassword, name_img, url } = req.body;
+  async getUsers(_, res) {
+    try {
+      const users = await Users.findAll();
+      res.status(200).json({
+        status: 'success',
+        result: users,
+      });
+    } catch (err) {
+      log.error('error: ', err);
+      res
+        .status(500)
+        .json({ status: 'error', msg: 'internal server error', error: err });
+    }
+  },
+  async createUser(req, res) {
+    const files = req.files;
+    const { name, username, email, password, confPassword } = req.body;
 
         if(module.exports.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
@@ -67,26 +71,36 @@ module.exports = {
         const user = await Users.findOne({where: {verificationCode: otp}})
         if(!user) return res.status(404).json({status: 404, msg: 'wrong otp code'})
 
-        if(user.verificationCode !== otp) return res.status(400).json({status: 400, msg: "code otp yang anda masukkan tidak sesuai"})
-        try {
-            await Users.update({
-                verificationCode: null
-            },{
-                where: {verificationCode: user.verificationCode}
-            })
-            res.status(200).json({status: 200, msg:"otp approved"})
-        } catch (err) {
-            log.error(err);
-            res.status(500).json({status: 500, msg: "Internal server Error"});
-            return false;
+    if (user.verificationCode !== otp)
+      return res
+        .status(400)
+        .json({ status: 400, msg: 'code otp yang anda masukkan tidak sesuai' });
+    try {
+      await Users.update(
+        {
+          verificationCode: null,
+        },
+        {
+          where: { verificationCode: user.verificationCode },
         }
-    },
-    async resendCode(req, res){
-        const { email } = req.body;
-        
-        const user = await Users.findOne({email: email});
-        if(user.verificationCode === null) return res.status(400).json({status: 400, msg: "email already registered"}) 
-        if(!user) return res.status(404).json({status: 404, msg: 'email user not found'});
+      );
+      res.status(200).json({ status: 200, msg: 'otp approved' });
+    } catch (err) {
+      log.error(err);
+      res.status(500).json({ status: 500, msg: 'Internal server Error' });
+      return false;
+    }
+  },
+  async resendCode(req, res) {
+    const { email } = req.body;
+
+    const user = await Users.findOne({ email: email });
+    if (user.verificationCode === null)
+      return res
+        .status(400)
+        .json({ status: 400, msg: 'email already registered' });
+    if (!user)
+      return res.status(404).json({ status: 404, msg: 'email user not found' });
 
         const OTP = module.exports.generateOTP();
         module.exports.sendOTP(email, OTP);
@@ -118,12 +132,16 @@ module.exports = {
             const user = await Users.findOne({where: { uuid: req.params.id }});
             if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
 
-            if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and confirm password do not match' });
-            if (password === null || password === '') {
-                hashPassword = user.password;
-            } else {
-                hashPassword = await argon2.hash(password);
-            }
+      if (password !== confPassword)
+        return res.status(400).json({
+          status: 400,
+          msg: 'Password and confirm password do not match',
+        });
+      if (password === null || password === '') {
+        hashPassword = user.password;
+      } else {
+        hashPassword = await argon2.hash(password);
+      }
 
             if (!files) {
                 name_img = user.name_img;
@@ -174,37 +192,39 @@ module.exports = {
                 where: { id: user.id },
             });
 
-            res.status(200).json({ status: 200, msg: 'User updated successfully' });
-        } catch (err) {
-            log.error(err);
-            res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-        }
-    },
-    generateOTP() {
-        const digits = '0123456789';
-        let OTP = '';
-        for (let i = 0; i < 6; i++) {
-            OTP += digits[Math.floor(Math.random() * 10)];
-        }
-        return OTP;
-    },
-    async sendOTP(email, otp) {
-        let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.EMAIL, 
-              pass: process.env.PASS_EMAIL_OTP, 
-            },
-        });
+      res.status(200).json({ status: 200, msg: 'User updated successfully' });
+    } catch (err) {
+      log.error(err);
+      res
+        .status(500)
+        .json({ status: 500, msg: 'Internal server error', err: err.message });
+    }
+  },
+  generateOTP() {
+    const digits = '0123456789';
+    let OTP = '';
+    for (let i = 0; i < 6; i++) {
+      OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP;
+  },
+  async sendOTP(email, otp) {
+    let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS_EMAIL_OTP,
+      },
+    });
 
-        const mailOptions = {
-            from: process.env.EMAIL, 
-            to: email,
-            subject: 'Verification Code',
-            text: `Your verification code is: ${otp}`,
-        };
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Verification Code',
+      text: `Your verification code is: ${otp}`,
+    };
 
         return new Promise((resolve, reject) => {
             transporter.sendMail(mailOptions, (error, info) => {
@@ -251,5 +271,49 @@ module.exports = {
             log.error(err);
             res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
         }
-    }
-}
+    },
+    async getEmail(req, res) {
+        const { email } = req.body;
+    
+        try {
+          const findEmail = await Users.findOne({
+            where: { email: email },
+            attributes: ['email'],
+          });
+    
+          if (!findEmail) {
+            return res.status(404).json({ error: 'Email tidak ditemukan.' });
+          }
+    
+          res.status(200).json({
+            massage: 'Email ditemukan',
+            email: findEmail,
+          });
+        } catch (error) {
+          res.status(500).json({ msg: 'Internal server error' });
+        }
+      },
+    async changePassword(req, res) {
+        const { email } = req.params;
+        const { newPassword, newConfirmPassword } = req.body;
+
+        try {
+        const newUserPassword = await await Users.findOne({
+            where: { email: email },
+        });
+
+        if (newPassword !== newConfirmPassword) {
+            return res.status(404).json({ error: 'Password tidak cocok' });
+        }
+        validatePassword(newPassword);
+
+        const hashPassword = await argon2.hash(newPassword);
+        newUserPassword.password = hashPassword;
+        
+        await newUserPassword.save();
+        res.status(200).json({ message: 'Password updated.' });
+        } catch (err) {
+        res.status(400).json({ msg: err.message });
+        }
+    },
+};
