@@ -8,7 +8,9 @@ const moment = require('moment');
 const nodemailer = require("nodemailer");
 const CodeOTP = require("../Models/codeOTP.model.js");
 const { P } = require("pino");
+const Token = require('../Models/tokenData.model.js');
 require('dotenv').config();
+const crypto = require('crypto');
 
 module.exports = {
   async getUsers(_, res) {
@@ -157,9 +159,12 @@ module.exports = {
                     }
                 }
 
-                unlinkSync(`./public/users/bg_img/${bg_img}`, (err) => {
-                    if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
-                })
+                if(bg_img !== null){
+                    unlinkSync(`./public/users/bg_img/${bg_img}`, (err) => {
+                        if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
+                    })
+                }
+
                 const file = files.file;
                 const size = file.data.length;
                 const extend = path.extname(file.name);
@@ -272,45 +277,86 @@ module.exports = {
             res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
         }
     },
+    async sendEmailTokenNewPassword(email, subject, text){
+        try {
+            const transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
+                auth: {
+                    user: process.env.EMAIL,
+                    pass: process.env.PASS_EMAIL_OTP,
+                },
+            });
+    
+            await transporter.sendMail({
+                from: process.env.EMAIL,
+                to: email,
+                subject: subject,
+                text: text,
+            });
+    
+            log.info("email sent sucessfully, link : ", text);
+        } catch (error) {
+            console.log(error, "email not sent");
+        }
+    },
     async getEmail(req, res) {
         const { email } = req.body;
     
         try {
-          const findEmail = await Users.findOne({
+          const user = await Users.findOne({
             where: { email: email },
-            attributes: ['email'],
           });
     
-          if (!findEmail) {
-            return res.status(404).json({ error: 'Email tidak ditemukan.' });
-          }
-    
+        if (!user) return res.status(404).json("user with given email doesn't exist");
+          
+        let token = await Token.findOne({ where: { userId: user.id } });
+        if (!token) {
+            token = await Token.create({
+                userId: user.id,
+                token: crypto.randomBytes(32).toString("hex"),
+            });
+        }
+
+        const link = `${req.protocol}://http://localhost:5173/update-pass/${user.id}/${token.token}`;
+        await module.exports.sendEmailTokenNewPassword(user.email, "Password reset", link);
+
           res.status(200).json({
-            massage: 'Email ditemukan',
-            email: findEmail,
-          });
-        } catch (error) {
-          res.status(500).json({ msg: 'Internal server error' });
+            msg: 'password reset link sent to your email account"',
+            link
+          })
+        } catch (error){ 
+            log
+          log.error(error);
+          res.status(500).json({ msg: 'Internal server error', error });
         }
       },
     async changePassword(req, res) {
-        const { email } = req.params;
-        const { newPassword, newConfirmPassword } = req.body;
+        const { password, confPassword } = req.body;
+        const { userId, token } = req.params;
 
         try {
-        const newUserPassword = await await Users.findOne({
-            where: { email: email },
-        });
+        const user = await Users.findOne({where: {id: userId}});
+        if (!user) return res.status(400).send("invalid link or expired");
 
-        if (newPassword !== newConfirmPassword) {
+        if (password !== confPassword) {
             return res.status(404).json({ error: 'Password tidak cocok' });
         }
-        validatePassword(newPassword);
 
-        const hashPassword = await argon2.hash(newPassword);
-        newUserPassword.password = hashPassword;
-        
-        await newUserPassword.save();
+        const tokenUser = await Token.findOne({
+            where: {
+                userId: user.id,
+                token: token,
+            },
+        });
+        if (!tokenUser) return res.status(400).send("Invalid link or expired");
+
+        validatePassword(password);
+        const hashPassword = await argon2.hash(password);
+    
+        await user.update({password: hashPassword});
+        await tokenUser.destroy();
         res.status(200).json({ message: 'Password updated.' });
         } catch (err) {
         res.status(400).json({ msg: err.message });

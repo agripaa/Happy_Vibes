@@ -5,9 +5,9 @@ const { getUsers, createUser, updateUser, verifyUser, resendCode, getEmail, chan
 const router = express.Router();
 
 router.get('/users', sessionUser, getUsers);
-router.post('/forgot-pass/get_email', getEmail)
-router.put('/update-pass/:email', changePassword)
 router.post('/user/create', createUser);
+router.patch('/forgot-pass/get_email', getEmail)
+router.patch('/update-pass/:userId/:token', changePassword)
 router.patch('/user/verify', verifyUser);
 router.patch('/user/resend/otp', resendCode);
 router.patch('/user/:id/edit', sessionUser, updateUser);

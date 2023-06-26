@@ -114,7 +114,7 @@ function Login() {
                       <label className="color-neutral-60">Remember Me</label>
                     </div>
                     <div className="optionsLogin-forgot">
-                      <Link to={"/"} className="color-neutral-60">
+                      <Link to={"/forgot"} className="color-neutral-60">
                         Forgot Password
                       </Link>
                     </div>

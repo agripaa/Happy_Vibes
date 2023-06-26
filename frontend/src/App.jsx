@@ -24,7 +24,7 @@ function App() {
         <Route path="/authOtp/resend" element={<EmailAuth />} />
         <Route path="/authOtp/otp" element={<OTP />} />
         <Route path="/forgot" element={<ForgotPassword />} />
-        <Route path="/forgot/newpw" element={<RenewPassword />} />
+        <Route path="/update-pass/:userId/:token" element={<RenewPassword />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/profile" element={<Profilepage />} />
         <Route path="/profileusers" element={<ProfilepageUsers />} />

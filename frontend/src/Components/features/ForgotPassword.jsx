@@ -4,15 +4,26 @@ import ImageBack from "../img/vector-back.png";
 import "../css/myLibrary.scss";
 import "../css/ForgotPassword.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function ForgotPassword() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
     });
   }, [getWitdh]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await axios.patch('http://localhost:5000/forgot-pass/get_email', {email: email})
+    .then(({data}) => {console.log(data); alert("check email")})
+    .catch((err) =>{console.error(err)})
+  }
   return (
     <div className="ContainerEmailForgotPassword">
       <div className="ContainerEmailForgotPassword-wrap1">
@@ -43,6 +54,7 @@ function ForgotPassword() {
                   required
                   placeholder="example@gmail.com"
                   className="emailCheck"
+                  onChange={e => setEmail(e.target.value)}
                 />
               </div>
               <div className="CheckMessage ">
@@ -54,7 +66,8 @@ function ForgotPassword() {
               <div className="submitEmailForgotPassword">
                 <button
                   className="ButtonSubmitEmailForgotPassword"
-                  onClick={() => navigate("otp")}
+                  onClick={handleSubmit}
+                  type="submit"
                 >
                   Register
                 </button>
