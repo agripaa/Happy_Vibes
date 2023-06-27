@@ -10,6 +10,7 @@ import RenewPassword from "./Components/features/RenewPassword";
 import Homepage from "./Components/features/Homepage";
 import Profilepage from "./Components/features/Profilepage";
 import ProfilepageUsers from "./Components/features/ProfilePageUser";
+import Explore from "./Components/features/Explore";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/forgot/newpw" element={<RenewPassword />} />
         <Route path="/homepage" element={<Homepage />} />
+        <Route path="/explore" element={<Explore />} />
         <Route path="/profile/:id" element={<Profilepage />} />
         <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
       </Routes>

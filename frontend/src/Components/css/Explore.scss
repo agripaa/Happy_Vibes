@@ -1,0 +1,352 @@
+.Container {
+  &-Explore {
+    width: 100%;
+    height: 100vh;
+  }
+}
+.WrapExplore {
+  width: 50%;
+  margin: 0 auto;
+  height: 100%;
+}
+.Container-searchExplore {
+  padding-top: 2%;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.FormSearch-Explore {
+  width: 60%;
+  height: 48px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid black;
+  padding: 0 0 0 10px;
+  border-radius: 10px;
+}
+.imageSearch-Explore {
+  width: 10%;
+  display: flex;
+  align-items: center;
+  img {
+    width: 18px;
+    height: 18px;
+  }
+}
+.inputForm {
+  width: 90%;
+  height: 100%;
+  input {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+}
+.main-Hottest-Tagar,
+.main-Trending-Today {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.HottestToday-Text,
+.TrendingToday-Text {
+  width: 80%;
+  margin-top: 15px;
+  margin-bottom: 50px;
+  h1 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.TagHottest {
+  width: 100%;
+  padding-bottom: 1%;
+  padding-left: 120px;
+}
+.wrapTagHost {
+  width: 82%;
+  padding: 12px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid black;
+  p:nth-child(1) {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  p:nth-child(2) {
+    color: #282828;
+    font-size: 12px;
+    font-weight: 300;
+  }
+}
+.ShowMore-TrendingPost {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  article {
+    width: 100%;
+    padding: 0 0 1.5% 10%;
+    p {
+      font-size: 12px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.main-ContainerPeople,
+.main-Painting {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.JudulPeople {
+  width: 80%;
+  padding-bottom: 3%;
+  h1 {
+    font-size: 16px;
+  }
+}
+.Judul-Painting {
+  width: 80%;
+  padding-bottom: 3%;
+  h1 {
+    font-size: 16px;
+  }
+}
+.FramePeople {
+  width: 70%;
+  height: 200px;
+  padding-left: 0%;
+}
+.cointainer-ListProfil {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.ProfilePeople {
+  width: 300px;
+  height: 180px;
+  background-color: #ffffff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.ContainerImagePeople {
+  width: 100%;
+  height: 110px;
+  position: relative;
+}
+.BackgroundPeople {
+  width: 100%;
+  height: 90px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.ImgPeople {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+}
+.ContainerNameAndIdPeople {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 3%;
+}
+.NameAndIdPeople {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  h5 {
+    font-size: 10px;
+  }
+  p {
+    font-size: 10px;
+    font-weight: 300;
+  }
+  .ThisNameAndId {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+  }
+}
+.ButtonFollowPeople {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+  button {
+    width: 90%;
+    height: 80%;
+    font-size: 10px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.ContainerFollowPeople {
+  width: 100%;
+  height: 20%;
+  padding-left: 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  p {
+    font-size: 10px;
+    font-weight: 300;
+  }
+}
+@media screen and (max-width: 1350px) {
+  .FormSearch-Explore {
+    width: 80%;
+  }
+  .imageSearch-Explore {
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .wrapTagHost {
+    width: 95%;
+  }
+  .cointainer-ListProfil {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .FramePeople {
+    width: 95%;
+    padding-left: 15%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .WrapExplore {
+    width: 70%;
+    margin-right: 0;
+    padding-right: 5%;
+  }
+  .FormSearch-Explore {
+    width: 70%;
+    height: 40px;
+  }
+}
+@media screen and (max-width: 990px) {
+  .Container-searchExplore {
+    padding-top: 4%;
+  }
+  .TagHottest {
+    width: 100%;
+    padding-bottom: 1%;
+    padding-left: 70px;
+  }
+}
+@media screen and (max-width: 650px) {
+  .TagHottest {
+    width: 100%;
+    padding-bottom: 1.5%;
+    padding-left: 20px;
+  }
+  .wrapTagHost {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .WrapExplore {
+    width: 100%;
+    margin-right: 0;
+    padding: 0 3% 0 3%;
+  }
+  .TagHottest {
+    padding-bottom: 1.9%;
+    padding-left: 0px;
+  }
+  .FormSearch-Explore {
+    width: 95%;
+    height: 45px;
+  }
+  .HottestToday-Text,
+  .TrendingToday-Text {
+    width: 100%;
+    h1 {
+      font-size: 16px;
+    }
+  }
+  .FramePeople {
+    padding-left: 0%;
+  }
+
+  .JudulPeople {
+    width: 100%;
+    padding-bottom: 5%;
+  }
+  .Judul-Painting {
+    width: 100%;
+    padding-bottom: 5%;
+  }
+  .ShowMore-TrendingPost {
+    article {
+      width: 100%;
+      padding: 0 0 1.5% 0;
+      display: flex;
+      justify-content: center;
+      p {
+        font-size: 12px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1351px) and (min-height: 800px) {
+  .imageSearch-Explore {
+    width: 10%;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  .inputForm {
+    input {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+  .FramePeople {
+    width: 70%;
+    padding-left: 0%;
+  }
+  .cointainer-ListProfil {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

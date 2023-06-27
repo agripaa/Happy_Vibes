@@ -10,8 +10,8 @@ import ImageChat from "../img/Vector-Chat.png";
 import ImageShare from "../img/Vector-Share.png";
 import ImageBookmarks from "../img/Vector-Save.png";
 import ImageChat2 from "../img/chat-components.svg";
+import FeaturePost_HomePage from "./features_components/Micro_ComponentHomePage/FeaturesPost_HomePage";
 
-import FeaturePost_HomePage from "./features_components/Micro_Components_ProfilePge.jsx/FeaturesPost_HomePage";
 function Homepage() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   useEffect(() => {

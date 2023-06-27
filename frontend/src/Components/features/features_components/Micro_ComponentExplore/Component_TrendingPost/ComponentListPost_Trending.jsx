@@ -1,7 +1,7 @@
 import React from "react";
-import Section_UserPosting from "./MiniMicro_Components_PageProfile/Section_UserPosting";
+import ListPost_Trending from "./ListPost-Trending";
 
-function FeaturePost_ProfilePage({
+function ComponentListPost_Trending({
   ImageDummy,
   ImageDummy2,
   ImageLove,
@@ -10,9 +10,9 @@ function FeaturePost_ProfilePage({
   ImageBookmarks,
 }) {
   return (
-    <main className="ContainerValuePosting-ProfilePage">
-      <div className="wrapContainerValuePosting-ProfilePage">
-        <Section_UserPosting
+    <main className="ContainerValuePosting-ExplorePage">
+      <div className="wrapContainerValuePosting-ExplorePage">
+        <ListPost_Trending
           ImageDummy={ImageDummy}
           ImageDummy2={ImageDummy2}
           ImageLove={ImageLove}
@@ -25,4 +25,4 @@ function FeaturePost_ProfilePage({
   );
 }
 
-export default FeaturePost_ProfilePage;
+export default ComponentListPost_Trending;

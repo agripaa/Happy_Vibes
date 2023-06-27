@@ -1,11 +1,14 @@
-.ContainerValuePosting-ProfilePage {
+.WrapPainting {
+  width: 80%;
+}
+.ContainerValuePosting-ExplorePage {
   width: 100%;
   padding: 0 3% 0 3%;
 }
-.wrapContainerValuePosting-ProfilePage {
-  width: 75%;
+.wrapContainerValuePosting-ExplorePage-Painting {
+  width: 100%;
   margin: 0 auto;
-  padding-right: 4%;
+  padding-left: 4%;
 }
 .UserPosting {
   width: 100%;
@@ -159,15 +162,21 @@
   }
 }
 @media screen and (max-width: 1350px) {
-  .wrapContainerValuePosting-ProfilePage {
+  .WrapPost-trendingPost {
+    width: 100%;
+  }
+  .wrapContainerValuePosting-ExplorePage-Painting {
     width: 100%;
     margin: 0;
-    padding-right: 0;
+    padding-left: 15%;
   }
 }
 @media screen and (max-width: 1250px) {
 }
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 990px) {
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    padding-left: 8.5%;
+  }
 }
 @media screen and (max-width: 750px) {
   .UserPosting-ArticlePosting {
@@ -179,6 +188,9 @@
   }
 }
 @media screen and (max-width: 620px) {
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    padding-left: 2%;
+  }
 }
 @media screen and (max-width: 500px) {
   .wrapLikePosting {
@@ -193,6 +205,12 @@
     width: 100%;
     height: 220px;
   }
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    padding-left: 0%;
+  }
+  .WrapPainting {
+    width: 100%;
+  }
 }
 @media screen and (max-width: 320px) {
   .UserPosting-ImagePosting {
@@ -202,9 +220,9 @@
   }
 }
 @media screen and (min-width: 1500px) and (min-height: 800px) {
-  .wrapContainerValuePosting-ProfilePage {
-    width: 100%;
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    width: 96%;
     margin: 0;
-    padding-right: 0;
+    padding-left: 0%;
   }
 }
