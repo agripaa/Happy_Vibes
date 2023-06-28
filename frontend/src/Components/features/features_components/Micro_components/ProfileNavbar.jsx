@@ -4,6 +4,7 @@ import "../../../css/Navbar.scss";
 import ImageDummmy from "../../../img/imageDummy2.png";
 function ProfileNavbar({ check }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
+  const [Options, setOptions] = useState(false);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetInnerWidth(innerWidth);
@@ -22,6 +23,16 @@ function ProfileNavbar({ check }) {
                 <h5>NameDummy</h5>
                 <p>@nameDummy</p>
               </figcaption>
+              <div className="bulletsProfile">
+                <div
+                  className="bulletsProfile-wrap"
+                  onClick={() => setOptions(!Options)}
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
             </div>
           </div>
         ) : null
