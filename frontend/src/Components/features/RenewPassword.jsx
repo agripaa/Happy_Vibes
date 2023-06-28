@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import ImageBack from "../img/vector-back.png";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import "../css/myLibrary.scss";
 import "../css/RenewPassword.scss";
-
+import EyeOpen from "../img/showPassword.svg";
+import EyeClose from "../img/closePassword.svg";
 function RenewPassword() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
+  const [ShowOldPass, setShowOldPass] = useState(false);
+  const [ShowNewPass, setShowNewPass] = useState(false);
+
   const [values, setValues] = useState({
     password: "",
-    confPassword: "" 
-  })
+    confPassword: "",
+  });
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { userId, token } = useParams();
@@ -27,12 +31,15 @@ function RenewPassword() {
     const { password, confPassword } = values;
 
     try {
-      await axios.patch(`http://localhost:5000/update-pass/${userId}/${token}`, {
-        password: password,
-        confPassword: confPassword,
-      })
-      .then(({data}) => {navigate("/login");})
-      .catch(err => console.error(err));
+      await axios
+        .patch(`http://localhost:5000/update-pass/${userId}/${token}`, {
+          password: password,
+          confPassword: confPassword,
+        })
+        .then(({ data }) => {
+          navigate("/login");
+        })
+        .catch((err) => console.error(err));
     } catch (error) {
       setErrorMessage("An error occurred. Please try again.");
       console.log(error);
@@ -40,8 +47,8 @@ function RenewPassword() {
   };
 
   const handleChange = (e) => {
-    setValues({...values, [e.target.name]: e.target.value});
-  }
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className="ContainerEmailRenewPassword">
@@ -74,32 +81,55 @@ function RenewPassword() {
                 <label>
                   <p>Enter new password</p>
                 </label>
-                <input
-                  type="password"
-                  required
-                  placeholder="********"
-                  className="emailCheck"
-                  onChange={handleChange}
-                  name="password"
-                />
-              </div>
-              <div className="CheckMessage ">
-                <article>
-                  
-                </article>
+                <div className="InputOldPassword-Renew">
+                  <input
+                    type={ShowOldPass ? "text" : "password"}
+                    required
+                    placeholder="********"
+                    onChange={handleChange}
+                    name="password"
+                  />
+                  <div
+                    className="eyeButtonRenew "
+                    onClick={() => setShowOldPass(!ShowOldPass)}
+                  >
+                    {ShowOldPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
+                  </div>
+                </div>
               </div>
               <div className="kolomInputEmailRenewPassword ">
                 <label>
                   <p>Enter new password</p>
                 </label>
-                <input
-                  type="password"
-                  required
-                  placeholder="********"
-                  className="emailCheck"
-                  onChange={handleChange}
-                  name="confPassword"
-                />
+                <div
+                  className={
+                    errorMessage
+                      ? "InputNewPassword-Renew ErrorNewPassword"
+                      : "InputNewPassword-Renew"
+                  }
+                >
+                  <input
+                    type={ShowNewPass ? "text" : "password"}
+                    required
+                    placeholder="********"
+                    onChange={handleChange}
+                    name="confPassword"
+                  />
+                  <div
+                    className="eyeButtonRenew"
+                    onClick={() => setShowNewPass(!ShowNewPass)}
+                  >
+                    {ShowNewPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
+                  </div>
+                </div>
               </div>
               <div className="CheckMessage ">
                 <article>

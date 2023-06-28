@@ -98,7 +98,32 @@
     margin: 10px 0;
   }
 }
-
+.InputPassword-Register,
+.InputConfPassword-Register {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #282828;
+  background-color: white;
+  border-radius: 5px;
+  input {
+    width: 90%;
+  }
+  .EyeButton-Register {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5px;
+    img {
+      width: 20px;
+      height: 20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
 .formWrapper3 {
   span {
     width: 100%;
@@ -196,10 +221,11 @@
 
   &-password {
     width: 380px;
-    border: 1px solid #282828;
-    border-radius: 5px;
-    margin: 0px 0px 10px 0px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
     padding: 10px 5px;
+    outline: none;
   }
 }
 

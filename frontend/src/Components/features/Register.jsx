@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import imageRegister from "../img/Img-1.png";
 import "../css/Register.scss";
 import "../css/myLibrary.scss";
 import { useNavigate } from "react-router-dom";
-
+import EyeOpen from "../img/showPassword.svg";
+import EyeClose from "../img/closePassword.svg";
 function Register() {
+  const [ShowPass, setShowPass] = useState(false);
+  const [ShowConfPass, setShowConfPass] = useState(false);
+
   const [displayWidth, setDisplayWitdh] = useState(innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -19,13 +23,13 @@ function Register() {
     username: "",
     password: "",
     confPassword: "",
-  })
+  });
   const [randomPhoto, setRandomPhoto] = useState(null);
 
   const handleRandomPhoto = () => {
     axios
-      .get("http://localhost:5000/random_photo") 
-      .then(({data}) => {
+      .get("http://localhost:5000/random_photo")
+      .then(({ data }) => {
         setRandomPhoto(data.randomPhoto);
       })
       .catch((error) => {
@@ -39,28 +43,31 @@ function Register() {
   }, []);
 
   const changeHandler = (e) => {
-    setValues({...values, [e.target.name]: e.target.value});
-  }
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const {name, email, username, password, confPassword} = values;
-    const {name_img, url} = randomPhoto;
+    const { name, email, username, password, confPassword } = values;
+    const { name_img, url } = randomPhoto;
 
-    await axios.post('http://localhost:5000/user/create', {
-      name,
-      email,
-      username,
-      password,
-      confPassword,
-      name_img,
-      url,
-      bg_img: null
-    }).then(({data}) => {
-      navigate('/authOtp/otp');
-    }).catch(err => {
-      console.error(err);
-    })
+    await axios
+      .post("http://localhost:5000/user/create", {
+        name,
+        email,
+        username,
+        password,
+        confPassword,
+        name_img,
+        url,
+        bg_img: null,
+      })
+      .then(({ data }) => {
+        navigate("/authOtp/otp");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const navigate = useNavigate();
@@ -96,6 +103,7 @@ function Register() {
                   <input
                     type="text"
                     name="name"
+                    required
                     onChange={changeHandler}
                     className="input-field-name"
                     placeholder="Full Name"
@@ -105,6 +113,7 @@ function Register() {
                   <label className="labelForm">Username</label>
                   <input
                     type="text"
+                    required
                     name="username"
                     onChange={changeHandler}
                     className="input-field-username"
@@ -116,6 +125,7 @@ function Register() {
                 <label className="labelForm">Email</label>
                 <input
                   type="text"
+                  required
                   name="email"
                   onChange={changeHandler}
                   className="input-field-email"
@@ -124,34 +134,60 @@ function Register() {
               </div>
               <div className="formWrapper2">
                 <label className="labelForm">Password</label>
-                <input
-                  type="text"
-                  name="password"
-                  onChange={changeHandler}
-                  className="input-field-password"
-                  placeholder="********"
-                />
+                <div className="InputPassword-Register">
+                  <input
+                    type={ShowPass ? "text" : "password"}
+                    required
+                    name="password"
+                    onChange={changeHandler}
+                    className="input-field-password"
+                    placeholder="********"
+                  />
+                  <div
+                    className="EyeButton-Register"
+                    onClick={() => setShowPass(!ShowPass)}
+                  >
+                    {ShowPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
+                  </div>
+                </div>
               </div>
               <div className="formWrapper2">
                 <label className="labelForm">Confirm Password</label>
-                <input
-                  type="text"
-                  name="confPassword"
-                  onChange={changeHandler}
-                  className="input-field-password"
-                  placeholder="********"
-                />
-              <section className="button-Auth">
-                {displayWidth > 500 ? (
-                  <div className="button-Auth-register1 flex flex-justify-center">
-                    <button type="submit">Register</button>
+                <div className="InputConfPassword-Register">
+                  <input
+                    type={ShowConfPass ? "text" : "password"}
+                    required
+                    name="confPassword"
+                    onChange={changeHandler}
+                    className="input-field-password"
+                    placeholder="********"
+                  />
+                  <div
+                    className="EyeButton-Register"
+                    onClick={() => setShowConfPass(!ShowConfPass)}
+                  >
+                    {ShowConfPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
                   </div>
-                ) : (
-                  <div className="button-Auth-register1 flex flex-justify-center">
-                    <button type="submit">Sign Up</button>
-                  </div>
-                )}
-              </section>
+                </div>
+                <section className="button-Auth">
+                  {displayWidth > 500 ? (
+                    <div className="button-Auth-register1 flex flex-justify-center">
+                      <button type="submit">Register</button>
+                    </div>
+                  ) : (
+                    <div className="button-Auth-register1 flex flex-justify-center">
+                      <button type="submit">Sign Up</button>
+                    </div>
+                  )}
+                </section>
               </div>
             </form>
           </section>
