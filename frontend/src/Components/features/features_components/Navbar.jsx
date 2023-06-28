@@ -6,6 +6,10 @@ import LogoNavbar from "./Micro_components/LogoNavbar";
 import ProfileNavbar from "./Micro_components/ProfileNavbar";
 import AccountInfo from "./Micro_components/AccountInfo";
 import NameBrand from "./Micro_components/NameBrand";
+import ImageBug from "../../img/bug_report.svg";
+import ImageDeleteAccount from "../../img/delete.svg";
+import ImageLogout from "../../img/logout.svg";
+
 function Navbar() {
   const [isDown, setIsDown] = useState(false);
   const reff = useRef(null);
@@ -31,7 +35,12 @@ function Navbar() {
         <AccountInfo closeNav={HandleCloseNav} />
         <ListNavbar />
         <NameBrand />
-        <ProfileNavbar check={true} />
+        <ProfileNavbar
+          check={true}
+          bugReport={ImageBug}
+          deletes={ImageDeleteAccount}
+          logout={ImageLogout}
+        />
       </div>
       <div
         className="SlideNavbar"

@@ -1,8 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "../../../css/Navbar.scss";
-
 import ImageDummmy from "../../../img/imageDummy2.png";
-function ProfileNavbar({ check }) {
+import ImageBug2 from "../../../img/bug_report2.svg";
+import ImageDeleteAccount2 from "../../../img/delete2.svg";
+import ImageLogout2 from "../../../img/logout2.svg";
+import OptionProfile from "./MiniMicro_Components/OptionProfile";
+function ProfileNavbar({ check, logout, bugReport, deletes }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
   const [Options, setOptions] = useState(false);
   useEffect(() => {
@@ -32,6 +35,16 @@ function ProfileNavbar({ check }) {
                   <span></span>
                   <span></span>
                 </div>
+                <OptionProfile
+                  Optionse={Options}
+                  responseCheck={true}
+                  bugReport={bugReport}
+                  deletes={deletes}
+                  logout={logout}
+                  bugReport2={ImageBug2}
+                  deletes2={ImageDeleteAccount2}
+                  logout2={ImageLogout2}
+                />
               </div>
             </div>
           </div>
@@ -42,11 +55,24 @@ function ProfileNavbar({ check }) {
             <figure>
               <img src={ImageDummmy} alt="" />
               <div className="bulletsProfile">
-                <div className="bulletsProfile-wrap">
+                <div
+                  className="bulletsProfile-wrap"
+                  onClick={() => setOptions(!Options)}
+                >
                   <span></span>
                   <span></span>
                   <span></span>
                 </div>
+                <OptionProfile
+                  Optionse={Options}
+                  responseCheck={false}
+                  bugReport={bugReport}
+                  deletes={deletes}
+                  logout={logout}
+                  bugReport2={ImageBug2}
+                  deletes2={ImageDeleteAccount2}
+                  logout2={ImageLogout2}
+                />
               </div>
             </figure>
             <figcaption>
