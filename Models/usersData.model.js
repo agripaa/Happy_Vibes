@@ -17,7 +17,6 @@ const Users = db.define('users_data', {
         allowNull: true,
         validate: {
             notEmpty: false,
-            len: [3, 25]
         }
     },
     username : {
@@ -25,7 +24,6 @@ const Users = db.define('users_data', {
         allowNull: true,
         validate: {
             notEmpty: false,
-            len: [3, 15]
         }
     },
     email : {
