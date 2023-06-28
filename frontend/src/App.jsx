@@ -28,8 +28,8 @@ function App() {
         <Route path="/update-pass/:userId/:token" element={<RenewPassword />} />
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/profile" element={<Profilepage />} />
-        <Route path="/profileusers" element={<ProfilepageUsers />} />
+        <Route path="/profile/:id" element={<Profilepage />} />
+        <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
       </Routes>
     </>
   );
