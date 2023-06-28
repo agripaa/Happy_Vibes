@@ -9,7 +9,7 @@ import EyeClose from "../img/closePassword.svg";
 function Register() {
   const [ShowPass, setShowPass] = useState(false);
   const [ShowConfPass, setShowConfPass] = useState(false);
-  const [alreadyEmail, setAlreadyEmail] = useState({});
+  const [inpuError, SetinputError] = useState({});
   const [displayWidth, setDisplayWitdh] = useState(innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -51,8 +51,6 @@ function Register() {
     const { name, email, username, password, confPassword } = values;
     const { name_img, url } = randomPhoto;
 
-    console.log(name_img)
-
     await axios
       .post("http://localhost:5000/user/create", {
         name,
@@ -68,8 +66,7 @@ function Register() {
         navigate("/authOtp/otp");
       })
       .catch(({response}) => {
-        console.error(response.data);
-        setAlreadyEmail(response.data);
+        SetinputError(response.data);
       });
   };
 
@@ -112,7 +109,7 @@ function Register() {
                     placeholder="Full Name"
                   />
                   <span className="error">
-                    {alreadyEmail.status === 403 ? (<p>*{alreadyEmail.msg}</p>) : ""}
+                    {inpuError.status === 403 ? (<p>*{inpuError.msg}</p>) : ""}
                   </span>
                 </div>
                 <div className="formWrapper1">
@@ -126,7 +123,7 @@ function Register() {
                     placeholder="Username"
                   />
                   <span className="error">
-                    {alreadyEmail.status === 408 ? (<p>*{alreadyEmail.msg}</p>) : ""}
+                    {inpuError.status === 408 ? (<p>*{inpuError.msg}</p>) : ""}
                   </span>
                 </div>
               </div>
@@ -141,7 +138,7 @@ function Register() {
                   placeholder="Email"
                 />
                 <span className="error">
-                  {alreadyEmail.status === 409 ? (<p>*{alreadyEmail.msg}</p>) : ""}
+                  {inpuError.status === 409 ? (<p>*{inpuError.msg}</p>) : ""}
                 </span>
               </div>
               <div className="formWrapper2">
@@ -167,7 +164,7 @@ function Register() {
                   </div>
                 </div>
                 <span className="error">
-                  {alreadyEmail.status === 500 ? (<p>*{alreadyEmail.msg}</p>) : ""}
+                  {inpuError.status === 500 ? (<p>*{inpuError.msg}</p>) : ""}
                 </span>
               </div>
               <div className="formWrapper2">
@@ -193,7 +190,7 @@ function Register() {
                   </div>
                 </div>
                   <span className="error">
-                    {alreadyEmail.status === 400 ? (<p>*{alreadyEmail.msg}</p>) : ""}
+                    {inpuError.status === 400 ? (<p>*{inpuError.msg}</p>) : ""}
                   </span>
                 <section className="button-Auth">
                   {displayWidth > 500 ? (
