@@ -3,7 +3,7 @@
   height: 400px;
   top: 0;
   position: fixed;
-  right: 100px;
+  right: 20px;
   &-components {
     width: 100%;
     height: 100%;
@@ -124,6 +124,16 @@
     cursor: pointer;
   }
 }
+.ButtonFollowed-Aside {
+  width: 80%;
+  background-color: #ffaf38;
+  border: 1px solid black;
+  height: 45%;
+  font-weight: 600;
+  &:hover {
+    cursor: pointer;
+  }
+}
 @media screen and (max-width: 1350px) {
   .AsideSearch {
     width: 250px;
@@ -155,6 +165,7 @@
     display: none;
   }
 }
+
 @media screen and (min-width: 1351px) and (min-height: 800px) {
   .AsideSearch {
     width: 350px;
@@ -218,8 +229,14 @@
   }
   .ButtonFollow-Aside {
     width: 80%;
-    //   background-color: #ffaf38;
     background-color: transparent;
+    border: 1px solid black;
+    height: 45%;
+    font-weight: 600;
+  }
+  .ButtonFollow-Aside {
+    width: 80%;
+    background-color: #ffaf38;
     border: 1px solid black;
     height: 45%;
     font-weight: 600;

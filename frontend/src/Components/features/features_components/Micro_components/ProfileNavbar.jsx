@@ -5,9 +5,12 @@ import ImageBug2 from "../../../img/bug_report2.svg";
 import ImageDeleteAccount2 from "../../../img/delete2.svg";
 import ImageLogout2 from "../../../img/logout2.svg";
 import OptionProfile from "./MiniMicro_Components/OptionProfile";
+import { useSelector } from "react-redux";
 function ProfileNavbar({ check, logout, bugReport, deletes }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
+
   const [Options, setOptions] = useState(false);
+  const { dltCheckNav } = useSelector((state) => state.CheckDeleteReducer);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetInnerWidth(innerWidth);
@@ -29,7 +32,13 @@ function ProfileNavbar({ check, logout, bugReport, deletes }) {
               <div className="bulletsProfile">
                 <div
                   className="bulletsProfile-wrap"
-                  onClick={() => setOptions(!Options)}
+                  onClick={() => {
+                    if (!dltCheckNav) {
+                      setOptions(!Options);
+                    } else {
+                      setOptions(false);
+                    }
+                  }}
                 >
                   <span></span>
                   <span></span>

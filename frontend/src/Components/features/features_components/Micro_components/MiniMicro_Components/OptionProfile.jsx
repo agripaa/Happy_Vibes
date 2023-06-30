@@ -1,4 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DELETECHECK } from "../../../../Action/CheckAcconutDelete";
 
 function OptionProfile({
   Optionse,
@@ -10,6 +12,13 @@ function OptionProfile({
   bugReport2,
   deletes2,
 }) {
+  const { dltCheckNav } = useSelector((state) => state.CheckDeleteReducer);
+  const dispath = useDispatch();
+  function HandleClickButtonDelete(e) {
+    e.preventDefault();
+    dispath(DELETECHECK(true));
+  }
+
   return (
     <Fragment>
       {responseCheck ? (
@@ -27,7 +36,10 @@ function OptionProfile({
               <img src={logout} alt="" />
               <p>Logout</p>
             </section>
-            <section className="Container-DeleteAccount">
+            <section
+              className="Container-DeleteAccount"
+              onClick={HandleClickButtonDelete}
+            >
               <img src={deletes} alt="" />
               <p>Delete Account</p>
             </section>
@@ -36,7 +48,9 @@ function OptionProfile({
       ) : (
         <div
           className={
-            Optionse ? "OptionsProfile activeOption" : "OptionsProfile"
+            Optionse && dltCheckNav
+              ? "OptionsProfile activeOption"
+              : "OptionsProfile"
           }
         >
           <div className="wrapOptionsProfile">
@@ -48,7 +62,10 @@ function OptionProfile({
               <img src={bugReport2} alt="" />
               <p>Logout</p>
             </section>
-            <section className="Container-DeleteAccount">
+            <section
+              className="Container-DeleteAccount"
+              onClick={HandleClickButtonDelete}
+            >
               <img src={deletes2} alt="" />
               <p>Delete Account</p>
             </section>
