@@ -28,10 +28,10 @@ module.exports = {
     }
   },
   async createUser(req, res) {
-    const files = req.files;
-    const { name, username, email, password, confPassword } = req.body;
+    const { name, username, email, password, confPassword, name_img, url } = req.body;
 
-        if(module.exports.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
+        if(module.exports.validateName(name)) return res.status(403).json({status:403, msg: 'Name must be a min of 3 char and a max of 25 char'})
+        if(module.exports.validateUsername(username)) return res.status(408).json({status:403, msg: 'Username must be a min of 3 char and a max of 15 char'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
         const hashPassword = await argon2.hash(password);
 
@@ -63,9 +63,12 @@ module.exports = {
             return false;
         }
     },
-    validateName(name, username){
-        return name.length < 3 && name.length > 25 && username.length < 3 && username.length > 25
+    validateName(name){
+        return name.length < 3 || name.length > 25
     },
+    validateUsername(username){
+      return username.length < 3 || username.length > 15
+  },
 
     async verifyUser(req, res){
         const { otp } = req.body;

@@ -9,7 +9,7 @@ import EyeClose from "../img/closePassword.svg";
 function Register() {
   const [ShowPass, setShowPass] = useState(false);
   const [ShowConfPass, setShowConfPass] = useState(false);
-
+  const [inpuError, SetinputError] = useState({});
   const [displayWidth, setDisplayWitdh] = useState(innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -24,7 +24,7 @@ function Register() {
     password: "",
     confPassword: "",
   });
-  const [randomPhoto, setRandomPhoto] = useState(null);
+  const [randomPhoto, setRandomPhoto] = useState({});
 
   const handleRandomPhoto = () => {
     axios
@@ -32,8 +32,8 @@ function Register() {
       .then(({ data }) => {
         setRandomPhoto(data.randomPhoto);
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(({err}) => {
+        console.error(err);
       });
   };
 
@@ -58,15 +58,15 @@ function Register() {
         username,
         password,
         confPassword,
-        name_img,
-        url,
+        name_img: name_img,
+        url: url,
         bg_img: null,
       })
       .then(({ data }) => {
         navigate("/authOtp/otp");
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(({response}) => {
+        SetinputError(response.data);
       });
   };
 
@@ -108,6 +108,9 @@ function Register() {
                     className="input-field-name"
                     placeholder="Full Name"
                   />
+                  <span className="error">
+                    {inpuError.status === 403 ? (<p>*{inpuError.msg}</p>) : ""}
+                  </span>
                 </div>
                 <div className="formWrapper1">
                   <label className="labelForm">Username</label>
@@ -119,6 +122,9 @@ function Register() {
                     className="input-field-username"
                     placeholder="Username"
                   />
+                  <span className="error">
+                    {inpuError.status === 408 ? (<p>*{inpuError.msg}</p>) : ""}
+                  </span>
                 </div>
               </div>
               <div className="formWrapper2">
@@ -131,6 +137,9 @@ function Register() {
                   className="input-field-email"
                   placeholder="Email"
                 />
+                <span className="error">
+                  {inpuError.status === 409 ? (<p>*{inpuError.msg}</p>) : ""}
+                </span>
               </div>
               <div className="formWrapper2">
                 <label className="labelForm">Password</label>
@@ -154,6 +163,9 @@ function Register() {
                     )}
                   </div>
                 </div>
+                <span className="error">
+                  {inpuError.status === 500 ? (<p>*{inpuError.msg}</p>) : ""}
+                </span>
               </div>
               <div className="formWrapper2">
                 <label className="labelForm">Confirm Password</label>
@@ -177,6 +189,9 @@ function Register() {
                     )}
                   </div>
                 </div>
+                  <span className="error">
+                    {inpuError.status === 400 ? (<p>*{inpuError.msg}</p>) : ""}
+                  </span>
                 <section className="button-Auth">
                   {displayWidth > 500 ? (
                     <div className="button-Auth-register1 flex flex-justify-center">
@@ -187,15 +202,15 @@ function Register() {
                       <button type="submit">Sign Up</button>
                     </div>
                   )}
+                  <div className="navLogin flex flex-justify-center">
+                    <p>
+                      Have An Account? <a onClick={() => navigate("/login")}>Sign In</a>
+                    </p>
+                  </div>
                 </section>
               </div>
             </form>
           </section>
-          <div className="navLogin flex flex-justify-center">
-            <p>
-              Have An Account? <a onClick={() => navigate("/login")}>Sign In</a>
-            </p>
-          </div>
         </div>
       </div>
     </div>

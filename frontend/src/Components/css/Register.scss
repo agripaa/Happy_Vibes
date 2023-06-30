@@ -28,6 +28,28 @@
   }
 }
 
+// *{
+//   border: 1px solid black;
+// }
+
+.error {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  color: red;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.err-name{
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+
 .myImageRegister {
   width: 100%;
   height: 100%;
@@ -63,7 +85,7 @@
   width: 100%;
 }
 .formRegister-container {
-  width: 450px;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -162,8 +184,8 @@
     button {
       font-size: 14px;
       font-weight: 600;
-      width: 380px;
-      height: 35px;
+      width: 100%;
+      height: 40px;
       background-color: #ffc56d;
       border: 1px solid #282828;
       &:hover {

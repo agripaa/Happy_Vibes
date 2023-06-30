@@ -137,10 +137,6 @@ function Login() {
                     {wrongPass.status === 400 ? <p>{wrongPass.msg}</p> : ""}
                   </div>
                   <div className="optionsLogin">
-                    <div className="optionsLogin-remember">
-                      <input type="checkbox" name="" id="" />
-                      <label className="color-neutral-60">Remember Me</label>
-                    </div>
                     <div className="optionsLogin-forgot">
                       <Link to={"/forgot"} className="color-neutral-60">
                         Forgot Password
@@ -155,16 +151,7 @@ function Login() {
                 </div>
               </form>
             </section>
-            <div className="orLogin">
-              {displayWidth > 500 ? <p>Or</p> : <p>Or Login With</p>}
-            </div>
             <section className="ContainerLogin2">
-              <div className="Button-Login-google">
-                <button>
-                  Login With Google
-                  <img src={GoogleLogin} alt="" />
-                </button>
-              </div>
               <div className="ContainerLogin2-Register">
                 <p>
                   Don’t have an account?
