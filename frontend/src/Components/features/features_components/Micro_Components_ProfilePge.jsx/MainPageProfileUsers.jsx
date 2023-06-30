@@ -4,13 +4,10 @@ import Section_BioPageProfile from "./MiniMicro_Components_PageProfile/Section_B
 import Section_ImagePageProfile from "./MiniMicro_Components_PageProfile/Section_ImagePageProfile";
 import Section_NamePageProfileUsers from "./MiniMicro_Components_PageProfile/Section_NamePageProfileUsers";
 
-function MainPageProfileUsers({ ImageProfilePage, ImageProfilePage2 }) {
+function MainPageProfileUsers() {
   return (
     <main className="main-ProfilePage">
-      <Section_ImagePageProfile
-        ImageProfilePage={ImageProfilePage}
-        ImageProfilePage2={ImageProfilePage2}
-      />
+      <Section_ImagePageProfile />
       <Section_NamePageProfileUsers />
       <Section_BioPageProfile />
     </main>

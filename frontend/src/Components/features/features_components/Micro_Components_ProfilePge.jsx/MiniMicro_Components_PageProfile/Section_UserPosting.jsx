@@ -1,19 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
-function Section_UserPosting({
-  ImageDummy,
-  ImageDummy2,
-  ImageLove,
-  ImageChat,
-  ImageShare,
-  ImageBookmarks,
-}) {
+function Section_UserPosting() {
+  const components = useSelector((state) => state.ComponentImagePostReducer);
+
   return (
     <section className="UserPosting">
       <article className="UserPosting-NameProfile">
         <div className="NameProfileText">
           <figure className="ImageProfile-NameProfile">
-            <img src={ImageDummy} alt="" />
+            <img src={components.ImageDummy} alt="" />
           </figure>
           <div className="TextProfile-NameProfile">
             <p> NameDummy</p>
@@ -30,7 +26,7 @@ function Section_UserPosting({
       </article>
       <article className="UserPosting-ImagePosting">
         <figure className="Image-ImagePosting">
-          <img src={ImageDummy2} alt="" />
+          <img src={components.ImageDummy2} alt="" />
         </figure>
       </article>
       <article className="UserPosting-ArticlePosting">
@@ -48,22 +44,22 @@ function Section_UserPosting({
       <article className="UserPosting-LikePosting">
         <div className="wrapLikePosting">
           <figure className="Love-LikePosting">
-            <img src={ImageLove} alt="" />
+            <img src={components.ImageLove} alt="" />
             <figcaption>
               <p>12</p>
             </figcaption>
           </figure>
           <figure className="Chat-LikePosting">
-            <img src={ImageChat} alt="" />
+            <img src={components.ImageChat} alt="" />
             <figcaption>
               <p>12</p>
             </figcaption>
           </figure>
           <figure className="Share-LikePosting">
-            <img src={ImageShare} alt="" />
+            <img src={components.ImageShare} alt="" />
           </figure>
           <figure className="Bookmarks-LikePosting">
-            <img src={ImageBookmarks} alt="" />
+            <img src={components.ImageBookmarks} alt="" />
           </figure>
         </div>
       </article>

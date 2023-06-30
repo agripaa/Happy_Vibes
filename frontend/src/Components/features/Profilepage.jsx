@@ -28,14 +28,7 @@ function Profilepage() {
             ImageProfilePage2={ImageProfilePage2}
           />
           <Navigation_ProfilePage />
-          <FeaturePost_ProfilePage
-            ImageDummy={ImageDummy}
-            ImageDummy2={ImageDummy2}
-            ImageLove={ImageLove}
-            ImageChat={ImageChat}
-            ImageShare={ImageShare}
-            ImageBookmarks={ImageBookmarks}
-          />
+          <FeaturePost_ProfilePage />
         </div>
       </div>
       <AsideSearch />

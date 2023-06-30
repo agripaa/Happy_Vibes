@@ -171,6 +171,13 @@
     height: 17.5px;
   }
 }
+.LikeLove {
+  transform: scale(0);
+  animation-name: AnimateLove;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 @media screen and (max-width: 1350px) {
   .WrapContainer-HomePage {
     width: 55%;
@@ -268,5 +275,24 @@
     width: 100%;
     margin: 0;
     padding-right: 0;
+  }
+}
+
+@keyframes AnimateLove {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(2);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  70% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    transform: scale(1.3);
   }
 }
