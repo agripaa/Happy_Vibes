@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Navbar from "./features_components/Navbar";
 import "../css/Homepage.scss";
+
 import "../css/myLibrary.scss";
 import AsideSearch from "./features_components/AsideSearch";
 import ImageChat2 from "../img/chat-components.svg";
 import FeaturePost_HomePage from "./features_components/Micro_ComponentHomePage/FeaturesPost_HomePage";
+import { useSelector } from "react-redux";
 
 function Homepage() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
@@ -28,10 +30,10 @@ function Homepage() {
               </figure>
             </div>
           ) : null}
-
           <FeaturePost_HomePage />
         </div>
       </div>
+
       <AsideSearch />
     </Fragment>
   );

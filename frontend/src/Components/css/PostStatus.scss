@@ -1,0 +1,148 @@
+.ContainerPostStatus {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+  z-index: 20;
+}
+.wrapPostStatus {
+  width: 100%;
+  height: 100%;
+}
+.SquarePostStatus {
+  width: 480px;
+  height: 470px;
+  background-color: white;
+  border-radius: 10px;
+}
+.HeaderPostStatus {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+.ImageProfilPost {
+  width: 50%;
+  justify-content: flex-start;
+  padding: 10px 0 0 5px;
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+}
+.CloseProfilPost {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 5px 0 0;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+.imagePostStatus {
+  width: 100%;
+  height: 75%;
+  padding: 10px 20px;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.InputTextPostStatus {
+  width: 100%;
+}
+.InputAndButton {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px 5px 20px;
+
+  input {
+    width: 90%;
+    border: none;
+    border-bottom: 1px solid #282828;
+    outline: none;
+    font-weight: 300;
+  }
+  button {
+    width: 10%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background-color: transparent;
+    border: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.InputImage {
+  width: 100%;
+  padding: 0 0 0 7px;
+}
+.ButtonPostStatus {
+  width: 60px;
+  background-color: #ffba53;
+  border-radius: 5px;
+  border: none;
+}
+@media screen and (max-width: 590px) {
+  .SquarePostStatus {
+    width: 450px;
+    height: 470px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .SquarePostStatus {
+    width: 100%;
+    height: 100%;
+  }
+  .HeaderPostStatus {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-left: 10px;
+  }
+  .imagePostStatus {
+    height: 25%;
+  }
+  .ImageProfilPost {
+    order: 2;
+  }
+  .CloseProfilPost {
+    order: 1;
+    padding-left: 10px;
+
+    justify-content: flex-start;
+
+    img {
+      width: 10px;
+      height: 15px;
+    }
+  }
+  .InputAndButton {
+    input {
+      width: 100%;
+    }
+  }
+  .InputImage {
+    width: 100%;
+    padding: 7px 7px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 330px) {
+  .HeaderPostStatus {
+    height: 17%;
+  }
+  .imagePostStatus {
+    height: 45%;
+  }
+}

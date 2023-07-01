@@ -2,17 +2,9 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DELETECHECK } from "../../../../Action/CheckAcconutDelete";
 
-function OptionProfile({
-  Optionse,
-  responseCheck,
-  logout,
-  bugReport,
-  deletes,
-  logout2,
-  bugReport2,
-  deletes2,
-}) {
+function OptionProfile({ Optionse, responseCheck }) {
   const { dltCheckNav } = useSelector((state) => state.CheckDeleteReducer);
+  const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispath = useDispatch();
   function HandleClickButtonDelete(e) {
     e.preventDefault();
@@ -29,18 +21,18 @@ function OptionProfile({
         >
           <div className="wrapOptionsProfile">
             <section className="Container-BugReport">
-              <img src={bugReport} alt="" />
+              <img src={components.ImageBug} alt="" />
               <p>Bug Report</p>
             </section>
             <section className="Container-Logout">
-              <img src={logout} alt="" />
+              <img src={components.ImageLogout} alt="" />
               <p>Logout</p>
             </section>
             <section
               className="Container-DeleteAccount"
               onClick={HandleClickButtonDelete}
             >
-              <img src={deletes} alt="" />
+              <img src={components.ImageDeleteAccount} alt="" />
               <p>Delete Account</p>
             </section>
           </div>
@@ -55,18 +47,18 @@ function OptionProfile({
         >
           <div className="wrapOptionsProfile">
             <section className="Container-BugReport">
-              <img src={logout2} alt="" />
+              <img src={components.ImageBug2} alt="" />
               <p>Bug Report</p>
             </section>
             <section className="Container-Logout">
-              <img src={bugReport2} alt="" />
+              <img src={components.ImageLogout2} alt="" />
               <p>Logout</p>
             </section>
             <section
               className="Container-DeleteAccount"
               onClick={HandleClickButtonDelete}
             >
-              <img src={deletes2} alt="" />
+              <img src={components.ImageDeleteAccount2} alt="" />
               <p>Delete Account</p>
             </section>
           </div>
