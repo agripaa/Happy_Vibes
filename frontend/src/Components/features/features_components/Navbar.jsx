@@ -6,16 +6,17 @@ import LogoNavbar from "./Micro_components/LogoNavbar";
 import ProfileNavbar from "./Micro_components/ProfileNavbar";
 import AccountInfo from "./Micro_components/AccountInfo";
 import NameBrand from "./Micro_components/NameBrand";
-import ImageBug from "../../img/bug_report.svg";
-import ImageDeleteAccount from "../../img/delete.svg";
-import ImageLogout from "../../img/logout.svg";
+
 import AlertDeleteAccount from "./Micro_components/MiniMicro_Components/AlertDeleteAccount";
 import { useDispatch, useSelector } from "react-redux";
 import { DELETECHECKNAV } from "../../Action/CheckAcconutDelete";
+import InputPostComponents from "./Micro_components/InputPostComponents";
 
 function Navbar() {
   const [isDown, setIsDown] = useState(false);
   const { dltCheck } = useSelector((state) => state.CheckDeleteReducer);
+  const { checkPost } = useSelector((state) => state.CheckMyPostReducer);
+
   const reff = useRef(null);
   const dispatch = useDispatch();
   function HandleMouseDown() {
@@ -44,18 +45,15 @@ function Navbar() {
         <AccountInfo closeNav={HandleCloseNav} />
         <ListNavbar />
         <NameBrand />
-        <ProfileNavbar
-          check={true}
-          bugReport={ImageBug}
-          deletes={ImageDeleteAccount}
-          logout={ImageLogout}
-        />
+        <ProfileNavbar check={true} />
       </div>
       <div
         className="SlideNavbar"
         onMouseDown={HandleMouseDown}
         onMouseMove={HandleMouseMove}
       ></div>
+      {checkPost ? <InputPostComponents /> : null}
+
       {dltCheck ? <AlertDeleteAccount /> : null}
     </div>
   );

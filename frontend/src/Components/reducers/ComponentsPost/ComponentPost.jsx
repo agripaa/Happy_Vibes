@@ -8,8 +8,16 @@ import ImageDummy2 from "../../img/Frame_10.png";
 import ImageDummy from "../../img/imageDummy2.png";
 import ImageProfilePage from "../../img/Background-profile.png";
 import ImageBack from "../../img/Vector-back.png";
+import ImageSend from "../../img/sendImage.png";
 import Verified from "../../img/Verified.svg";
-
+import ImageBug from "../../img/bug_report.svg";
+import ImageDeleteAccount from "../../img/delete.svg";
+import ImageLogout from "../../img/logout.svg";
+import ImageBug2 from "../../img/bug_report2.svg";
+import ImageDeleteAccount2 from "../../img/delete2.svg";
+import ImageLogout2 from "../../img/logout2.svg";
+import Close from "../../img/close-post.svg";
+import inputImage from "../../img/imageInput.svg";
 let initialImage = {
   ImageLove,
   ImageChat,
@@ -22,6 +30,15 @@ let initialImage = {
   ImageBack,
   Verified,
   ImageLikeLove,
+  ImageBug,
+  ImageDeleteAccount,
+  ImageLogout,
+  ImageBug2,
+  ImageDeleteAccount2,
+  ImageLogout2,
+  Close,
+  inputImage,
+  ImageSend,
 };
 const PostComponents = (state = initialImage, action) => {
   return state;
