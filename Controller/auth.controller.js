@@ -3,6 +3,7 @@ const argon2 = require("argon2");
 
 module.exports = {
     async Login(req, res) {
+        if(req.userId) return res.status(402).json({status: 403, msg: 'You are already logged in, please return to the dashboard'})
         const user = await Users.findOne({
             where: {
                 email: req.body.email

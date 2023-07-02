@@ -1,13 +1,10 @@
 const Users = require('../Models/usersData.model.js');
 const argon2 = require('argon2');
 const path = require('path');
-const fs = require('fs');
 const log = require('../utils/log.js');
 const validatePassword = require('../middleware/password.validation.js');
 const moment = require('moment');
 const nodemailer = require("nodemailer");
-const CodeOTP = require("../Models/codeOTP.model.js");
-const { P } = require("pino");
 const Token = require('../Models/tokenData.model.js');
 require('dotenv').config();
 const crypto = require('crypto');
@@ -123,7 +120,7 @@ module.exports = {
     async updateUser(req, res){
         let name_img, bg_img, hashPassword;
         const files = req.files;
-        const { name, username, email, password, confPassword } = req.body;
+        const { name, username, email } = req.body;
         const photosToKeep = [
             'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
             'user_053c88cf369f519d289b99d6119049f5.jpg',
@@ -137,17 +134,6 @@ module.exports = {
         try {
             const user = await Users.findOne({where: { uuid: req.params.id }});
             if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-
-      if (password !== confPassword)
-        return res.status(400).json({
-          status: 400,
-          msg: 'Password and confirm password do not match',
-        });
-      if (password === null || password === '') {
-        hashPassword = user.password;
-      } else {
-        hashPassword = await argon2.hash(password);
-      }
 
             if (!files) {
                 name_img = user.name_img;
@@ -299,8 +285,6 @@ module.exports = {
                 subject: subject,
                 text: text,
             });
-    
-            log.info("email sent sucessfully, link : ", text);
         } catch (error) {
             console.log(error, "email not sent");
         }
@@ -313,7 +297,7 @@ module.exports = {
             where: { email: email },
           });
     
-        if (!user) return res.status(404).json("user with given email doesn't exist");
+        if (!user) return res.status(404).json({status: 404, msg: "user with given email doesn't exist"});
           
         let token = await Token.findOne({ where: { userId: user.id } });
         if (!token) {
@@ -323,7 +307,7 @@ module.exports = {
             });
         }
 
-        const link = `${req.protocol}://http://localhost:5173/update-pass/${user.id}/${token.token}`;
+        const link = `${req.protocol}://localhost:5173/update-pass/${user.id}/${token.token}`;
         await module.exports.sendEmailTokenNewPassword(user.email, "Password reset", link);
 
           res.status(200).json({
@@ -331,7 +315,6 @@ module.exports = {
             link
           })
         } catch (error){ 
-            log
           log.error(error);
           res.status(500).json({ msg: 'Internal server error', error });
         }
@@ -341,29 +324,30 @@ module.exports = {
         const { userId, token } = req.params;
 
         try {
-        const user = await Users.findOne({where: {id: userId}});
-        if (!user) return res.status(400).send("invalid link or expired");
+          const user = await Users.findOne({where: {id: userId}});
+          
+          if (!user) return res.status(404).json({status: 404, msg: 'User not found'});
+          const matchingPassword = await argon2.verify(user.password, password);
+          if (matchingPassword) return res.status(430).json({status:430, msg: "The password cannot be the same as the previous password"})
+          if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and Confirm Password do not match' });
 
-        if (password !== confPassword) {
-            return res.status(404).json({ error: 'Password tidak cocok' });
-        }
+          const tokenUser = await Token.findOne({
+              where: {
+                  userId: user.id,
+                  token: token,
+              },
+            });
+          if (user.id !== tokenUser.userId) return res.status(403).json({status: 403, msg: 'Have some problem on url link in token or id user'});
+          if (!tokenUser) return res.status(404).json({status: 403, msg: "Tokens don't match"});
 
-        const tokenUser = await Token.findOne({
-            where: {
-                userId: user.id,
-                token: token,
-            },
-        });
-        if (!tokenUser) return res.status(400).send("Invalid link or expired");
-
-        validatePassword(password);
-        const hashPassword = await argon2.hash(password);
-    
-        await user.update({password: hashPassword});
-        await tokenUser.destroy();
-        res.status(200).json({ message: 'Password updated.' });
-        } catch (err) {
-        res.status(400).json({ msg: err.message });
+          validatePassword(password);
+          const hashPassword = await argon2.hash(password);
+      
+          await user.update({password: hashPassword});
+          await tokenUser.destroy();
+          res.status(200).json({ message: 'Password updated.' });
+          } catch (err) {
+          res.status(400).json({ msg: err.message });
         }
     },
 };

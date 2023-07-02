@@ -15,6 +15,7 @@ import Profilepage from "./Components/features/Profilepage";
 import ProfilepageUsers from "./Components/features/ProfilePageUser";
 import Explore from "./Components/features/Explore";
 import Notifications from "./Components/features/Notifications";
+import NotFound from "./Components/features/NotFound";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/profile/:id" element={<Profilepage />} />
         <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
+        <Route path="/*" element={<NotFound />}/>
       </Routes>
     </>
   );

@@ -11,6 +11,7 @@ import axios from "axios";
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
   const [displayHeight, setDisplayHeight] = React.useState(innerHeight);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isError, setIsError] = React.useState("");
   const [ShowPass, setShowPass] = React.useState(false);
   const [values, setValues] = React.useState({
@@ -43,6 +44,7 @@ function Login() {
           }
         )
         .then((_) => {
+          setIsLoggedIn(true);
           navigate("/homepage");
         })
         .catch(({response}) => {
@@ -55,6 +57,7 @@ function Login() {
 
   React.useEffect(() => {
     loginHandler();
+    console.log(isLoggedIn)
   });
 
   React.useEffect(() => {
@@ -63,6 +66,9 @@ function Login() {
       setDisplayHeight(innerHeight);
     });
   }, [displayWidth, displayHeight]);
+
+  if (isLoggedIn == true) {navigate('/homepage');}
+
   return (
     <div className="ContainerLogin">
       <div className="ContainerLogin-Form bcolor-neutral-5">
@@ -152,7 +158,7 @@ function Login() {
               <div className="ContainerLogin2-Register">
                 <p>
                   Don’t have an account?
-                  <Link to={"/register"}>Register now</Link>
+                  <Link to={"/register"}> Register now</Link>
                 </p>
               </div>
             </section>

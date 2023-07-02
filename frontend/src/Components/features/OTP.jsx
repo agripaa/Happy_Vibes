@@ -8,6 +8,7 @@ import axios from "axios";
 function OTP() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [otp, setOtp] = useState("");
+  const [otpNotFound, setOtpNotFound] = useState({});
   const navigate = useNavigate();
   const inputRefs = useRef([]);
 
@@ -38,7 +39,7 @@ function OTP() {
       try {
         await axios.patch("http://localhost:5000/user/verify", { otp: otp })
         .then(({data}) => {navigate('/login')})
-        .catch(err => console.error(err));
+        .catch(({response}) => setOtpNotFound(response.data));
       } catch (error) {
         console.error(error);
       }
@@ -88,6 +89,7 @@ function OTP() {
                   />
                 ))}
               </div>
+                <span className={otpNotFound.status === 404 ? "activeErrorOtp" : "hideError"}>{otpNotFound.msg}</span>
               <div className="ResendOTP">
                 <p>
                   Didn’t Get a OTP Code? <Link to={"/authOtp/resend"}>Resend Code</Link>{" "}
