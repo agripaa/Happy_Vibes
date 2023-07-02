@@ -4,7 +4,7 @@ import "../../css/AsideSearch-Explore.scss";
 import Recomend_user from "./Micro_components/recomend_user";
 function AsideSearchExplore() {
   return (
-    <aside className="AsideSearch">
+    <aside className="AsideSearch-Explore">
       <div className="AsideSearch-components">
         <Recomend_user />
       </div>

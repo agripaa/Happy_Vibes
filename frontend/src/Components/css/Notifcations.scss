@@ -28,10 +28,201 @@
     font-weight: 600;
   }
 }
+.main-Notifications {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.ThisNotifications {
+  width: 100%;
+  height: 100px;
+  background-color: #e53773;
+  border-radius: 6px;
+  display: flex;
+  z-index: 10;
+  justify-content: space-between;
+}
+.BlockNameUser {
+  width: 70%;
+  padding-left: 10px;
+}
+.CircleNotifications {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  overflow-x: hidden;
+}
+.ThisCircle {
+  position: absolute;
+  right: -50px;
+  width: 100px;
+  height: 100px;
+  background-color: yellow;
+  border-radius: 50%;
+}
+.Nameuser-Notifications {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  figure {
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+  }
+  figcaption {
+    p:nth-child(1) {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    p:nth-child(2) {
+      font-size: 12px;
+      font-weight: 300;
+      color: #f5f5f5;
+      letter-spacing: 0.2px;
+    }
+  }
+}
+.Text-Notifications {
+  width: 100%;
+  height: 30px;
+  p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+}
+@media screen and (max-width: 1350px) {
+  .main-Notifications {
+    width: 98%;
+  }
+  .ThisNotifications {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 1250px) {
+  .wrapNotifications {
+    width: 45%;
+  }
+  .NameNotifications {
+    justify-content: flex-end;
+  }
+  .buttonBackNotifications {
+    justify-content: flex-start;
+  }
+  .main-Notifications {
+    width: 100%;
+  }
+  .ThisNotifications {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .wrapNotifications {
+    width: 70%;
+    padding-right: 5%;
+    margin-right: 0;
+  }
+}
+@media screen and (max-width: 750px) {
+  .wrapNotifications {
+    width: 60%;
+  }
+  .Nameuser-Notifications {
+    figcaption {
+      p:nth-child(1) {
+        font-size: 14px;
+      }
+      p:nth-child(2) {
+        font-size: 10px;
+      }
+    }
+  }
+  .Text-Notifications {
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (max-width: 620px) {
+  .wrapNotifications {
+    width: 58%;
+    padding-right: 3%;
+  }
+}
 @media screen and (max-width: 500px) {
+  .wrapNotifications {
+    width: 100%;
+    padding: 0;
+  }
+  .main-Notifications {
+    padding: 0 5%;
+  }
+  .header-Notifications {
+    padding: 0 5%;
+  }
+  .buttonBackNotifications {
+    justify-content: flex-start;
+  }
+}
+@media screen and (max-width: 330px) {
+  .Nameuser-Notifications {
+    figcaption {
+      p:nth-child(1) {
+        font-size: 12px;
+      }
+      p:nth-child(2) {
+        font-size: 8px;
+      }
+    }
+  }
+  .Text-Notifications {
+    p {
+      font-size: 12px;
+    }
+  }
+}
+@media screen and (min-width: 1340px) {
+  .main-Notifications {
+    width: 98%;
+  }
+  .ThisNotifications {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .wrapNotifications {
+    width: 50%;
+  }
+  .NameNotifications {
+    justify-content: flex-end;
+  }
+  .buttonBackNotifications {
+    justify-content: flex-start;
+  }
+  .main-Notifications {
+    width: 100%;
+  }
+  .ThisNotifications {
+    width: 100%;
+  }
 }
 @media screen and (min-width: 1500px) and (min-height: 800px) {
   .wrapNotifications {
     width: 47%;
+  }
+  .NameNotifications {
+    justify-content: flex-end;
+  }
+  .buttonBackNotifications {
+    justify-content: center;
   }
 }
