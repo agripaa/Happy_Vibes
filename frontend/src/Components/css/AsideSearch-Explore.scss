@@ -1,4 +1,4 @@
-.AsideSearch {
+.AsideSearch-Explore {
   width: 350px;
   height: 400px;
   top: 0;
@@ -89,7 +89,7 @@
   }
 }
 @media screen and (max-width: 1350px) {
-  .AsideSearch {
+  .AsideSearch-Explore {
     width: 250px;
     right: 30px;
 
@@ -112,12 +112,12 @@
   }
 }
 @media screen and (max-width: 1100px) {
-  .AsideSearch {
+  .AsideSearch-Explore {
     display: none;
   }
 }
 @media screen and (min-width: 1351px) and (min-height: 800px) {
-  .AsideSearch {
+  .AsideSearch-Explore {
     width: 350px;
     height: 500px;
     position: fixed;
