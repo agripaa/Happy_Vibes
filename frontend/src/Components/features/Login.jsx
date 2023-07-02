@@ -11,8 +11,7 @@ import axios from "axios";
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
   const [displayHeight, setDisplayHeight] = React.useState(innerHeight);
-  const [isNotFound, setIsNotFound] = React.useState("");
-  const [wrongPass, setWrongPass] = React.useState("");
+  const [isError, setIsError] = React.useState("");
   const [ShowPass, setShowPass] = React.useState(false);
   const [values, setValues] = React.useState({
     email: "",
@@ -29,7 +28,6 @@ function Login() {
   async function loginHandler(e) {
     e.preventDefault();
     const { email, password } = values;
-    const URL = import.meta.env.API_URL;
 
     try {
       await axios
@@ -44,13 +42,11 @@ function Login() {
             withCredentials: true,
           }
         )
-        .then(({ data }) => {
+        .then((_) => {
           navigate("/homepage");
         })
-        .catch((err) => {
-          console.error(err.response.data);
-          setIsNotFound(err.response.data);
-          setWrongPass(err.response.data);
+        .catch(({response}) => {
+          setIsError(response.data);
         });
     } catch (err) {
       console.error(err);
@@ -99,18 +95,18 @@ function Login() {
                     onChange={changeHandler}
                     name="email"
                     className={
-                      isNotFound.status === 404 ? "activeErrorLogin" : ""
+                      isError.status === 404 ? "activeErrorLogin" : ""
                     }
                   />
                   <div className="errorLogin1">
-                    {isNotFound.status === 404 ? <p>{isNotFound.msg}</p> : ""}
+                    {isError.status === 404 ? <p>{isError.msg}</p> : ""}
                   </div>
                 </div>
                 <div className="Container-Password-Login">
                   <label className="labelPasswordLogin">Password</label>
                   <div
                     className={
-                      wrongPass.status === 400
+                      isError.status === 400
                         ? "InputPassword-Login activeErrorLogin"
                         : "InputPassword-Login"
                     }
@@ -121,6 +117,7 @@ function Login() {
                       required
                       onChange={changeHandler}
                       name="password"
+                      className="inputPass"
                     />
                     <div
                       className="eyeButton"
@@ -134,7 +131,7 @@ function Login() {
                     </div>
                   </div>
                   <div className="errorLogin2">
-                    {wrongPass.status === 400 ? <p>{wrongPass.msg}</p> : ""}
+                    {isError.status === 400 ? <p>{isError.msg}</p> : ""}
                   </div>
                   <div className="optionsLogin">
                     <div className="optionsLogin-forgot">

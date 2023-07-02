@@ -62,7 +62,7 @@ function Register() {
         url: url,
         bg_img: null,
       })
-      .then(({ data }) => {
+      .then((_) => {
         navigate("/authOtp/otp");
       })
       .catch(({response}) => {
@@ -164,7 +164,7 @@ function Register() {
                   </div>
                 </div>
                 <span className="error">
-                  {inpuError.status === 500 ? (<p>*{inpuError.msg}</p>) : ""}
+                  {inpuError.status === 402 ? (<p>*{inpuError.msg}</p>) : ""}
                 </span>
               </div>
               <div className="formWrapper2">

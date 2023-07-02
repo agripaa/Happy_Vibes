@@ -29,9 +29,11 @@ module.exports = {
   },
   async createUser(req, res) {
     const { name, username, email, password, confPassword, name_img, url } = req.body;
-
-        if(module.exports.validateName(name)) return res.status(403).json({status:403, msg: 'Name must be a min of 3 char and a max of 25 char'})
-        if(module.exports.validateUsername(username)) return res.status(408).json({status:403, msg: 'Username must be a min of 3 char and a max of 15 char'})
+    
+    const validatePass = validatePassword(password);
+    if(validatePass['regex'] === "false" || validatePass['regex_symbol'] === 'false') return res.status(402).json({status: 400, msg: "The password must be at least 8 characters, there is one capital, one number and certain symbols are prohibited"})
+    if(module.exports.validateName(name)) return res.status(403).json({status:403, msg: 'Name must be a min of 3 char and a max of 25 char'})
+    if(module.exports.validateUsername(username)) return res.status(408).json({status:403, msg: 'Username must be a min of 3 char and a max of 15 char'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
         const hashPassword = await argon2.hash(password);
 
@@ -39,7 +41,6 @@ module.exports = {
         if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
         
         try {
-            validatePassword(password);
             const OTP = module.exports.generateOTP();
             module.exports.sendOTP(email, OTP);
             
