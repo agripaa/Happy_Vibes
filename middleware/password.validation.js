@@ -1,4 +1,4 @@
-function validatePassword(password) {
+function validate(password) {
     const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/; // Simbol regex
     const uppercaseRegex = /[A-Z]/; // Upper case regex
     const lowercaseRegex = /[a-z]/; // Lower case regex
@@ -6,25 +6,38 @@ function validatePassword(password) {
     const spaceRegex = /\s/; // Spasi regex
 
   if (symbolRegex.test(password)) {
-    throw new Error("Password can't contain symbols ");
+    return { isValid: false, error: "Password can't contain symbols" }
   }
   if (!uppercaseRegex.test(password)) {
-    throw new Error('Password must contain at least one capital letter.');
+    return { isValid: false, error: "Password must contain at least one capital letter." }
   }
   if (!lowercaseRegex.test(password)) {
-    throw new Error('Password must contain at least one lowercase letter.');
+    return { isValid: false, error: "Password must contain at least one lowercase letter." }
   }
   if (!numberRegex.test(password)) {
-    throw new Error('Password must contain at least one digit.');
+    return { isValid: false, error: "Password must contain at least one digit." }
   }
   if (spaceRegex.test(password)) {
-    throw new Error('Password cannot contain spaces.');
+    return { isValid: false, error: "Password can't contain spaces" }
   }
   if (password.length < 8) {
-    throw new Error('The password must consist of a minimum of 8 characters.');
+    return { isValid: false, error: "The password must consist of a minimum of 8 characters." }
   }
-
-  return true;
+  return { isValid: true };
 }
+
   
-  module.exports = validatePassword;
+  module.exports = { validate }
+
+  // function validate(password) {
+  //   if (password.length < 8) {
+  //     return { isValid: false, error: 'Password harus memiliki setidaknya 8 karakter' };
+  //   }
+  
+  //   // Tambahkan validasi lainnya sesuai kebutuhan
+  //   // ...
+  
+  //   return { isValid: true };
+  // }
+  
+  // module.exports = { validate };

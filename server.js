@@ -14,6 +14,7 @@ const Post = require('./Routes/posting.route.js');
 const session = require('express-session');
 const bodyparser = require('body-parser');
 const bodyParser = require('body-parser');
+const validatePassword = require('./middleware/password.validation.js');
 require('dotenv').config();
 
 const app = express();

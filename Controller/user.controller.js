@@ -3,7 +3,7 @@ const argon2 = require('argon2');
 const path = require('path');
 const fs = require('fs');
 const log = require("../utils/log.js");
-const validatePassword = require("../middleware/password.validation.js");
+const passwordValidator = require("../middleware/password.validation.js");
 const moment = require('moment');
 const nodemailer = require("nodemailer");
 const CodeOTP = require("../Models/codeOTP.model.js");
@@ -48,10 +48,15 @@ module.exports = {
             const validationEmail = await Users.findOne({ where: { email: email } });
             if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
             
-            try {
-                validatePassword(password)
-              
-                const OTP = module.exports.generateOTP();
+            
+                try {
+                    const validationResult = passwordValidator.validate(password);
+                    
+                    if (!validationResult.isValid) {
+                        return res.status(400).json({ status: 400, error: validationResult.error });
+                    }
+                    
+                    const OTP = module.exports.generateOTP();
                 module.exports.sendOTP(email, OTP);
                 log.info(OTP)
                 
