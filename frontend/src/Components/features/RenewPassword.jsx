@@ -1,32 +1,69 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ImageBack from "../img/vector-back.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "../css/myLibrary.scss";
 import "../css/RenewPassword.scss";
-
+import EyeOpen from "../img/showPassword.svg";
+import EyeClose from "../img/closePassword.svg";
 function RenewPassword() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
+  const [ShowOldPass, setShowOldPass] = useState(false);
+  const [ShowNewPass, setShowNewPass] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({});
+  const [values, setValues] = useState({
+    password: "",
+    confPassword: "",
+  });
   const navigate = useNavigate();
+  const { userId, token } = useParams();
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
     });
   }, [getWitdh]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { password, confPassword } = values;
+
+    try {
+      await axios
+        .patch(`http://localhost:5000/update-pass/${userId}/${token}`, {
+          password: password,
+          confPassword: confPassword,
+        })
+        .then(({ data }) => {
+          navigate("/login");
+        })
+        .catch(({response}) => {
+          setErrorMessage(response.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className="ContainerEmailRenewPassword">
       <div className="ContainerEmailRenewPassword-wrap1">
         <div className="ContainerEmailRenewPassword-wrap2">
           <header className="judulEmailRenewPassword">
             <div className="backEmailRenewPassword">
-              <Link to={"/"}>
+              <Link to={"/forgot"}>
                 <img src={ImageBack} alt="" />
               </Link>
             </div>
-            <h1>Renew Password</h1>
+            <h1>Reset Password</h1>
           </header>
           <main className="mainEmailRenewPassword">
-            <form className="formEmailRenewPassword">
+            <form onSubmit={handleSubmit} className="formEmailRenewPassword">
               <div className="ResendEmailRenewPassword">
                 <header>
                   <h2>Enter Email</h2>
@@ -44,41 +81,60 @@ function RenewPassword() {
                 <label>
                   <p>Enter new password</p>
                 </label>
-                <input
-                  type="email"
-                  required
-                  placeholder="example@gmail.com"
-                  className="emailCheck"
-                />
-              </div>
-              <div className="CheckMessage ">
-                <article>
-                  <p>Your email is not existed</p>
-                </article>
+                <div className="InputOldPassword-Renew">
+                  <input
+                    type={ShowOldPass ? "text" : "password"}
+                    required
+                    placeholder="********"
+                    onChange={handleChange}
+                    name="password"
+                  />
+                  <div
+                    className="eyeButtonRenew "
+                    onClick={() => setShowOldPass(!ShowOldPass)}
+                  >
+                    {ShowOldPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
+                  </div>
+                </div>
               </div>
               <div className="kolomInputEmailRenewPassword ">
                 <label>
                   <p>Enter new password</p>
                 </label>
-                <input
-                  type="email"
-                  required
-                  placeholder="example@gmail.com"
-                  className="emailCheck"
-                />
+                <div className="InputNewPassword-Renew">
+                  <input
+                    type={ShowNewPass ? "text" : "password"}
+                    required
+                    placeholder="********"
+                    onChange={handleChange}
+                    name="confPassword"
+                  />
+                  <div
+                    className="eyeButtonRenew"
+                    onClick={() => setShowNewPass(!ShowNewPass)}
+                  >
+                    {ShowNewPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="CheckMessage ">
-                <article>
-                  <p>Your email is not existed</p>
-                </article>
-              </div>
-
+                  <p className={errorMessage.status === 400 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
+                  <p className={errorMessage.status === 403 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
+                  <p className={errorMessage.status === 404 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
+                  <p className={errorMessage.status === 430 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
               <div className="submitEmailRenewPassword">
                 <button
                   className="ButtonSubmitEmailRenewPassword"
-                  onClick={() => navigate("otp")}
+                  type="submit"
                 >
-                  Register
+                  Reset Password
                 </button>
               </div>
             </form>

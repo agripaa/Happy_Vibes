@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageDummmy from "../../../img/imageDummy2.png";
 import "../../../css/Aside-Search.scss";
 function ListUser() {
+  const [follow, setFollow] = useState(false);
+
   return (
     <div className="ThisUser">
       <div className="imageProfile-Aside">
@@ -16,7 +18,21 @@ function ListUser() {
         </figcaption>
       </div>
       <div className="FollowProfile-Aside">
-        <button className="ButtonFollow-Aside">Follow</button>
+        {follow ? (
+          <button
+            className="ButtonFollowed-Aside"
+            onClick={() => setFollow(false)}
+          >
+            Followed
+          </button>
+        ) : (
+          <button
+            className="ButtonFollow-Aside"
+            onClick={() => setFollow(true)}
+          >
+            Follow
+          </button>
+        )}
       </div>
     </div>
   );

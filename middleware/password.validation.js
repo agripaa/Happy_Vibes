@@ -1,30 +1,18 @@
-function validatePassword(password) {
-    const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/; // Simbol regex
-    const uppercaseRegex = /[A-Z]/; // Upper case regex
-    const lowercaseRegex = /[a-z]/; // Lower case regex
-    const numberRegex = /[0-9]/; // Angka regex
-    const spaceRegex = /\s/; // Spasi regex
+module.exports = function validatePassword(pass) {
+  let response, result;
 
-  if (symbolRegex.test(password)) {
-    throw new Error("Password can't contain symbols ");
-  }
-  if (!uppercaseRegex.test(password)) {
-    throw new Error('Password must contain at least one capital letter.');
-  }
-  if (!lowercaseRegex.test(password)) {
-    throw new Error('Password must contain at least one lowercase letter.');
-  }
-  if (!numberRegex.test(password)) {
-    throw new Error('Password must contain at least one digit.');
-  }
-  if (spaceRegex.test(password)) {
-    throw new Error('Password cannot contain spaces.');
-  }
-  if (password.length < 8) {
-    throw new Error('The password must consist of a minimum of 8 characters.');
-  }
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const resRegex = regex.test(pass);
+  const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
+  const hasSymbol = !symbolRegex.test(pass);
 
-  return true;
-}
-  
-  module.exports = validatePassword;
+  if (!resRegex || hasSymbol) {
+    response = `{"status": "402", "msg": "Password at least 8 characters, 1 lowercase letter, 1 uppercase letter, 1 digit, and no symbols.", "regex": "${resRegex}", "regex_symbol": "${hasSymbol}"}`;
+    result = JSON.parse(response);
+    return result;
+  }else{   
+    response = `{"status": "200", "msg": "password and confirm password clean!", "regex": "${resRegex}", "regex_symbol": "${hasSymbol}"}`;
+    result = JSON.parse(response);
+    return result;
+  }
+} 

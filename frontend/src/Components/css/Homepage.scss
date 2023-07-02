@@ -15,13 +15,13 @@
   width: 100%;
   padding: 0 3% 0 3%;
 }
-.wrapContainerValuePosting {
+.wrapContainerValuePosting-HomePage {
   width: 75%;
   margin: 0 auto;
   padding-right: 4%;
 }
 .UserPosting {
-  width: 100%;
+  width: 90%;
   padding: 0 0 5% 0;
   position: relative;
 }
@@ -171,11 +171,18 @@
     height: 17.5px;
   }
 }
+.LikeLove {
+  transform: scale(0);
+  animation-name: AnimateLove;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 @media screen and (max-width: 1350px) {
   .WrapContainer-HomePage {
     width: 55%;
   }
-  .wrapContainerValuePosting {
+  .wrapContainerValuePosting-HomePage {
     width: 100%;
     margin: 0;
     padding-right: 0;
@@ -264,9 +271,28 @@
   .WrapContainer-HomePage {
     width: 47%;
   }
-  .wrapContainerValuePosting {
+  .wrapContainerValuePosting-HomePage {
     width: 100%;
     margin: 0;
     padding-right: 0;
+  }
+}
+
+@keyframes AnimateLove {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(2);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  70% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    transform: scale(1.3);
   }
 }

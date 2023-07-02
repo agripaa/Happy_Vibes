@@ -3,48 +3,53 @@ import "../css/Login.scss";
 import "../css/myLibrary.scss";
 import ImageLogin from "../img/img-1.png";
 import GoogleLogin from "../img/Vector-google.png";
+import EyeOpen from "../img/showPassword.svg";
+import EyeClose from "../img/closePassword.svg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
   const [displayHeight, setDisplayHeight] = React.useState(innerHeight);
-  const [isNotFound, setIsNotFound] = React.useState("");
-  const [wrongPass, setWrongPass] = React.useState("");
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isError, setIsError] = React.useState("");
+  const [ShowPass, setShowPass] = React.useState(false);
   const [values, setValues] = React.useState({
     email: "",
-    password: ""
+    password: "",
   });
   const navigate = useNavigate();
-
-  function changeHandler(e){
+  function changeHandler(e) {
     setValues({
-      ...values, 
-      [e.target.name]: e.target.value
+      ...values,
+      [e.target.name]: e.target.value,
     });
   }
 
-  async function loginHandler(e){
+  async function loginHandler(e) {
     e.preventDefault();
     const { email, password } = values;
-    const URL =  import.meta.env.API_URL
 
     try {
-      await axios.post(`http://localhost:5000/auth/login`,{
-        email,
-        password
-      },{
-        headers: { 'Content-Type': 'multipart/form-data' },
-        withCredentials: true
-      })
-      .then(({data}) => {
-        navigate('/homepage')
-      })
-      .catch(err => {
-        console.error(err.response.data);
-        setIsNotFound(err.response.data)
-        setWrongPass(err.response.data);
-      });
+      await axios
+        .post(
+          `http://localhost:5000/auth/login`,
+          {
+            email,
+            password,
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        )
+        .then((_) => {
+          setIsLoggedIn(true);
+          navigate("/homepage");
+        })
+        .catch(({response}) => {
+          setIsError(response.data);
+        });
     } catch (err) {
       console.error(err);
     }
@@ -52,7 +57,8 @@ function Login() {
 
   React.useEffect(() => {
     loginHandler();
-  })
+    console.log(isLoggedIn)
+  });
 
   React.useEffect(() => {
     window.addEventListener("resize", () => {
@@ -60,6 +66,9 @@ function Login() {
       setDisplayHeight(innerHeight);
     });
   }, [displayWidth, displayHeight]);
+
+  if (isLoggedIn == true) {navigate('/homepage');}
+
   return (
     <div className="ContainerLogin">
       <div className="ContainerLogin-Form bcolor-neutral-5">
@@ -91,30 +100,48 @@ function Login() {
                     required
                     onChange={changeHandler}
                     name="email"
+                    className={
+                      isError.status === 404 ? "activeErrorLogin" : ""
+                    }
                   />
                   <div className="errorLogin1">
-                    {isNotFound.status === 404 ? (<p>{isNotFound.msg}</p>) : ""}
+                    {isError.status === 404 ? <p>{isError.msg}</p> : ""}
                   </div>
                 </div>
                 <div className="Container-Password-Login">
                   <label className="labelPasswordLogin">Password</label>
-                  <input
-                    type="password"
-                    placeholder="********"
-                    required
-                    onChange={changeHandler}
-                    name="password"
-                  />
+                  <div
+                    className={
+                      isError.status === 400
+                        ? "InputPassword-Login activeErrorLogin"
+                        : "InputPassword-Login"
+                    }
+                  >
+                    <input
+                      type={ShowPass ? "text" : "password"}
+                      placeholder="********"
+                      required
+                      onChange={changeHandler}
+                      name="password"
+                      className="inputPass"
+                    />
+                    <div
+                      className="eyeButton"
+                      onClick={() => setShowPass(!ShowPass)}
+                    >
+                      {ShowPass ? (
+                        <img src={EyeOpen} alt="" />
+                      ) : (
+                        <img src={EyeClose} alt="" />
+                      )}
+                    </div>
+                  </div>
                   <div className="errorLogin2">
-                    {wrongPass.status === 400 ? (<p>{wrongPass.msg}</p>) : ""}
+                    {isError.status === 400 ? <p>{isError.msg}</p> : ""}
                   </div>
                   <div className="optionsLogin">
-                    <div className="optionsLogin-remember">
-                      <input type="checkbox" name="" id="" />
-                      <label className="color-neutral-60">Remember Me</label>
-                    </div>
                     <div className="optionsLogin-forgot">
-                      <Link to={"/"} className="color-neutral-60">
+                      <Link to={"/forgot"} className="color-neutral-60">
                         Forgot Password
                       </Link>
                     </div>
@@ -127,20 +154,11 @@ function Login() {
                 </div>
               </form>
             </section>
-            <div className="orLogin">
-              {displayWidth > 500 ? <p>Or</p> : <p>Or Login With</p>}
-            </div>
             <section className="ContainerLogin2">
-              <div className="Button-Login-google">
-                <button>
-                  Login With Google
-                  <img src={GoogleLogin} alt="" />
-                </button>
-              </div>
               <div className="ContainerLogin2-Register">
                 <p>
                   Don’t have an account?
-                  <Link to={"/register"}>Register now</Link>
+                  <Link to={"/register"}> Register now</Link>
                 </p>
               </div>
             </section>

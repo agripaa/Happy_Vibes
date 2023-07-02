@@ -1,14 +1,13 @@
 const Users = require('../Models/usersData.model.js');
 const argon2 = require('argon2');
 const path = require('path');
-const fs = require('fs');
 const log = require('../utils/log.js');
 const validatePassword = require('../middleware/password.validation.js');
 const moment = require('moment');
 const nodemailer = require("nodemailer");
-const CodeOTP = require("../Models/codeOTP.model.js");
-const { P } = require("pino");
+const Token = require('../Models/tokenData.model.js');
 require('dotenv').config();
+const crypto = require('crypto');
 
 module.exports = {
   async getUsers(_, res) {
@@ -26,10 +25,12 @@ module.exports = {
     }
   },
   async createUser(req, res) {
-    const files = req.files;
-    const { name, username, email, password, confPassword } = req.body;
-
-        if(module.exports.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
+    const { name, username, email, password, confPassword, name_img, url } = req.body;
+    
+    const validatePass = validatePassword(password);
+    if(validatePass['regex'] === "false" || validatePass['regex_symbol'] === 'false') return res.status(402).json({status: 400, msg: "The password must be at least 8 characters, there is one capital, one number and certain symbols are prohibited"})
+    if(module.exports.validateName(name)) return res.status(403).json({status:403, msg: 'Name must be a min of 3 char and a max of 25 char'})
+    if(module.exports.validateUsername(username)) return res.status(408).json({status:403, msg: 'Username must be a min of 3 char and a max of 15 char'})
         if(password !== confPassword) return res.status(400).json({status: 400, msg: 'Password and Confirm Password do not match'})
         const hashPassword = await argon2.hash(password);
 
@@ -37,7 +38,6 @@ module.exports = {
         if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
         
         try {
-            validatePassword(password);
             const OTP = module.exports.generateOTP();
             module.exports.sendOTP(email, OTP);
             
@@ -61,9 +61,12 @@ module.exports = {
             return false;
         }
     },
-    validateName(name, username){
-        return name.length < 3 && name.length > 25 && username.length < 3 && username.length > 25
+    validateName(name){
+        return name.length < 3 || name.length > 25
     },
+    validateUsername(username){
+      return username.length < 3 || username.length > 15
+  },
 
     async verifyUser(req, res){
         const { otp } = req.body;
@@ -117,7 +120,7 @@ module.exports = {
     async updateUser(req, res){
         let name_img, bg_img, hashPassword;
         const files = req.files;
-        const { name, username, email, password, confPassword } = req.body;
+        const { name, username, email } = req.body;
         const photosToKeep = [
             'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
             'user_053c88cf369f519d289b99d6119049f5.jpg',
@@ -131,17 +134,6 @@ module.exports = {
         try {
             const user = await Users.findOne({where: { uuid: req.params.id }});
             if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-
-      if (password !== confPassword)
-        return res.status(400).json({
-          status: 400,
-          msg: 'Password and confirm password do not match',
-        });
-      if (password === null || password === '') {
-        hashPassword = user.password;
-      } else {
-        hashPassword = await argon2.hash(password);
-      }
 
             if (!files) {
                 name_img = user.name_img;
@@ -157,9 +149,12 @@ module.exports = {
                     }
                 }
 
-                unlinkSync(`./public/users/bg_img/${bg_img}`, (err) => {
-                    if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
-                })
+                if(bg_img !== null){
+                    unlinkSync(`./public/users/bg_img/${bg_img}`, (err) => {
+                        if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
+                    })
+                }
+
                 const file = files.file;
                 const size = file.data.length;
                 const extend = path.extname(file.name);
@@ -272,48 +267,87 @@ module.exports = {
             res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
         }
     },
+    async sendEmailTokenNewPassword(email, subject, text){
+        try {
+            const transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
+                auth: {
+                    user: process.env.EMAIL,
+                    pass: process.env.PASS_EMAIL_OTP,
+                },
+            });
+    
+            await transporter.sendMail({
+                from: process.env.EMAIL,
+                to: email,
+                subject: subject,
+                text: text,
+            });
+        } catch (error) {
+            console.log(error, "email not sent");
+        }
+    },
     async getEmail(req, res) {
         const { email } = req.body;
     
         try {
-          const findEmail = await Users.findOne({
+          const user = await Users.findOne({
             where: { email: email },
-            attributes: ['email'],
           });
     
-          if (!findEmail) {
-            return res.status(404).json({ error: 'Email tidak ditemukan.' });
-          }
-    
+        if (!user) return res.status(404).json({status: 404, msg: "user with given email doesn't exist"});
+          
+        let token = await Token.findOne({ where: { userId: user.id } });
+        if (!token) {
+            token = await Token.create({
+                userId: user.id,
+                token: crypto.randomBytes(32).toString("hex"),
+            });
+        }
+
+        const link = `${req.protocol}://localhost:5173/update-pass/${user.id}/${token.token}`;
+        await module.exports.sendEmailTokenNewPassword(user.email, "Password reset", link);
+
           res.status(200).json({
-            massage: 'Email ditemukan',
-            email: findEmail,
-          });
-        } catch (error) {
-          res.status(500).json({ msg: 'Internal server error' });
+            msg: 'password reset link sent to your email account"',
+            link
+          })
+        } catch (error){ 
+          log.error(error);
+          res.status(500).json({ msg: 'Internal server error', error });
         }
       },
     async changePassword(req, res) {
-        const { email } = req.params;
-        const { newPassword, newConfirmPassword } = req.body;
+        const { password, confPassword } = req.body;
+        const { userId, token } = req.params;
 
         try {
-        const newUserPassword = await await Users.findOne({
-            where: { email: email },
-        });
+          const user = await Users.findOne({where: {id: userId}});
+          
+          if (!user) return res.status(404).json({status: 404, msg: 'User not found'});
+          const matchingPassword = await argon2.verify(user.password, password);
+          if (matchingPassword) return res.status(430).json({status:430, msg: "The password cannot be the same as the previous password"})
+          if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and Confirm Password do not match' });
 
-        if (newPassword !== newConfirmPassword) {
-            return res.status(404).json({ error: 'Password tidak cocok' });
-        }
-        validatePassword(newPassword);
+          const tokenUser = await Token.findOne({
+              where: {
+                  userId: user.id,
+                  token: token,
+              },
+            });
+          if (user.id !== tokenUser.userId) return res.status(403).json({status: 403, msg: 'Have some problem on url link in token or id user'});
+          if (!tokenUser) return res.status(404).json({status: 403, msg: "Tokens don't match"});
 
-        const hashPassword = await argon2.hash(newPassword);
-        newUserPassword.password = hashPassword;
-        
-        await newUserPassword.save();
-        res.status(200).json({ message: 'Password updated.' });
-        } catch (err) {
-        res.status(400).json({ msg: err.message });
+          validatePassword(password);
+          const hashPassword = await argon2.hash(password);
+      
+          await user.update({password: hashPassword});
+          await tokenUser.destroy();
+          res.status(200).json({ message: 'Password updated.' });
+          } catch (err) {
+          res.status(400).json({ msg: err.message });
         }
     },
 };

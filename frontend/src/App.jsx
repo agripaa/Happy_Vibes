@@ -13,6 +13,9 @@ import RenewPassword from "./Components/features/RenewPassword";
 import Homepage from "./Components/features/Homepage";
 import Profilepage from "./Components/features/Profilepage";
 import ProfilepageUsers from "./Components/features/ProfilePageUser";
+import Explore from "./Components/features/Explore";
+import Notifications from "./Components/features/Notifications";
+import NotFound from "./Components/features/NotFound";
 
 function App() {
   return (
@@ -24,10 +27,13 @@ function App() {
         <Route path="/authOtp/resend" element={<EmailAuth />} />
         <Route path="/authOtp/otp" element={<OTP />} />
         <Route path="/forgot" element={<ForgotPassword />} />
-        <Route path="/forgot/newpw" element={<RenewPassword />} />
+        <Route path="/update-pass/:userId/:token" element={<RenewPassword />} />
         <Route path="/homepage" element={<Homepage />} />
-        <Route path="/profile" element={<Profilepage />} />
-        <Route path="/profileusers" element={<ProfilepageUsers />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/profile/:id" element={<Profilepage />} />
+        <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
+        <Route path="/*" element={<NotFound />}/>
       </Routes>
     </>
   );

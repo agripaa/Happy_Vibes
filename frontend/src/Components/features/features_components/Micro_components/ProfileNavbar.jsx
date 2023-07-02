@@ -1,9 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "../../../css/Navbar.scss";
 
-import ImageDummmy from "../../../img/imageDummy2.png";
+import OptionProfile from "./MiniMicro_Components/OptionProfile";
+import { useSelector } from "react-redux";
 function ProfileNavbar({ check }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
+
+  const [Options, setOptions] = useState(false);
+  const { dltCheckNav } = useSelector((state) => state.CheckDeleteReducer);
+  const components = useSelector((state) => state.ComponentImagePostReducer);
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetInnerWidth(innerWidth);
@@ -16,12 +22,29 @@ function ProfileNavbar({ check }) {
           <div className="NavbarProfile">
             <div className="NavbarProfile-Container">
               <figure>
-                <img src={ImageDummmy} alt="" />
+                <img src={components.ImageDummy} alt="" />
               </figure>
               <figcaption>
                 <h5>NameDummy</h5>
                 <p>@nameDummy</p>
               </figcaption>
+              <div className="bulletsProfile">
+                <div
+                  className="bulletsProfile-wrap"
+                  onClick={() => {
+                    if (!dltCheckNav) {
+                      setOptions(!Options);
+                    } else {
+                      setOptions(false);
+                    }
+                  }}
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <OptionProfile Optionse={Options} responseCheck={true} />
+              </div>
             </div>
           </div>
         ) : null
@@ -29,13 +52,17 @@ function ProfileNavbar({ check }) {
         <div className="NavbarProfile">
           <div className="NavbarProfile-Container">
             <figure>
-              <img src={ImageDummmy} alt="" />
+              <img src={components.ImageDummy} alt="" />
               <div className="bulletsProfile">
-                <div className="bulletsProfile-wrap">
+                <div
+                  className="bulletsProfile-wrap"
+                  onClick={() => setOptions(!Options)}
+                >
                   <span></span>
                   <span></span>
                   <span></span>
                 </div>
+                <OptionProfile Optionse={Options} responseCheck={false} />
               </div>
             </figure>
             <figcaption>

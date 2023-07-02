@@ -15,7 +15,12 @@ function AccountInfo({ closeNav }) {
           <div className="WrappingAccountInfo">
             <header className="HeaderAccountInfo">
               <h1>Account Info</h1>
-              <img src={CloseNavbar} alt="" onClick={closeNav} />
+              <img
+                src={CloseNavbar}
+                alt=""
+                onClick={closeNav}
+                style={{ cursor: "pointer" }}
+              />
             </header>
             <main className="mainAccountInfo">
               <ProfileNavbar check={false} />

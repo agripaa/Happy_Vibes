@@ -2,7 +2,7 @@
   width: 100%;
   padding: 0 3% 0 3%;
 }
-.wrapContainerValuePosting {
+.wrapContainerValuePosting-ProfilePage {
   width: 75%;
   margin: 0 auto;
   padding-right: 4%;
@@ -159,7 +159,7 @@
   }
 }
 @media screen and (max-width: 1350px) {
-  .wrapContainerValuePosting {
+  .wrapContainerValuePosting-ProfilePage {
     width: 100%;
     margin: 0;
     padding-right: 0;
@@ -202,7 +202,7 @@
   }
 }
 @media screen and (min-width: 1500px) and (min-height: 800px) {
-  .wrapContainerValuePosting {
+  .wrapContainerValuePosting-ProfilePage {
     width: 100%;
     margin: 0;
     padding-right: 0;
