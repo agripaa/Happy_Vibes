@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import "../../css/Navbar.scss";
 
 import ListNavbar from "./Micro_components/ListNavbar";
@@ -7,15 +7,11 @@ import ProfileNavbar from "./Micro_components/ProfileNavbar";
 import AccountInfo from "./Micro_components/AccountInfo";
 import NameBrand from "./Micro_components/NameBrand";
 
-import AlertDeleteAccount from "./Micro_components/MiniMicro_Components/AlertDeleteAccount";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { DELETECHECKNAV } from "../../Action/CheckAcconutDelete";
-import InputPostComponents from "./Micro_components/InputPostComponents";
 
 function Navbar() {
   const [isDown, setIsDown] = useState(false);
-  const { dltCheck } = useSelector((state) => state.CheckDeleteReducer);
-  const { checkPost } = useSelector((state) => state.CheckMyPostReducer);
 
   const reff = useRef(null);
   const dispatch = useDispatch();
@@ -52,9 +48,6 @@ function Navbar() {
         onMouseDown={HandleMouseDown}
         onMouseMove={HandleMouseMove}
       ></div>
-      {checkPost ? <InputPostComponents /> : null}
-
-      {dltCheck ? <AlertDeleteAccount /> : null}
     </div>
   );
 }

@@ -8,6 +8,8 @@ import HeaderPageProfile from "./features_components/Micro_Components_ProfilePge
 import MainPageProfile from "./features_components/Micro_Components_ProfilePge.jsx/MainPageProfile";
 import Navigation_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/Navigation_ProfilePage";
 import FeaturePost_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/FeaturePost_ProfilePage";
+
+import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
 function Profilepage() {
   return (
     <Fragment>
@@ -20,6 +22,9 @@ function Profilepage() {
           <FeaturePost_ProfilePage />
         </div>
       </div>
+
+      <OptionBugReport />
+
       <AsideSearch />
     </Fragment>
   );
