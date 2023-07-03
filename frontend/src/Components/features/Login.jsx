@@ -2,7 +2,6 @@ import * as React from "react";
 import "../css/Login.scss";
 import "../css/myLibrary.scss";
 import ImageLogin from "../img/img-1.png";
-import GoogleLogin from "../img/Vector-google.png";
 import EyeOpen from "../img/showPassword.svg";
 import EyeClose from "../img/closePassword.svg";
 import { Link, useNavigate } from "react-router-dom";
@@ -57,7 +56,6 @@ function Login() {
 
   React.useEffect(() => {
     loginHandler();
-    console.log(isLoggedIn)
   });
 
   React.useEffect(() => {
