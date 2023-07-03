@@ -4,6 +4,7 @@ import AsideSearch from "./features_components/AsideSearch";
 import "../css/Notifcations.scss";
 import Section_Notification from "./features_components/Micro_ComponentNotifcation/Section_Notification";
 import { useSelector } from "react-redux";
+import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
 
 function Notifications() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -29,6 +30,8 @@ function Notifications() {
           </main>
         </div>
       </div>
+      <OptionBugReport />
+
       <AsideSearch />
     </Fragment>
   );

@@ -14,6 +14,7 @@ import Component_TagHot from "./features_components/Micro_ComponentExplore/Compo
 import Component_TrendingPost from "./features_components/Micro_ComponentExplore/Component_TrendingToday";
 import Component_People from "./features_components/Micro_ComponentExplore/Component_People";
 import Component_Paingting from "./features_components/Micro_ComponentExplore/Component_Paingting";
+import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
 function Explore() {
   return (
     <Fragment>
@@ -27,6 +28,7 @@ function Explore() {
           <Component_Paingting />
         </div>
       </div>
+      <OptionBugReport />
       <AsideSearchExplore />
     </Fragment>
   );

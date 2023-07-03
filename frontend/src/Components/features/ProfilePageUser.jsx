@@ -16,6 +16,7 @@ import ImageShare from "../img/Vector-Share.png";
 import ImageBookmarks from "../img/Vector-Save.png";
 import FeaturePost_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/FeaturePost_ProfilePage";
 import MainPageProfileUsers from "./features_components/Micro_Components_ProfilePge.jsx/MainPageProfileUsers";
+import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
 function ProfilepageUsers() {
   return (
     <Fragment>
@@ -23,22 +24,12 @@ function ProfilepageUsers() {
       <div className="Container-ProfilePage">
         <div className="WrapContainer-ProfilePage">
           <HeaderPageProfile ImageBack={ImageBack} />
-          <MainPageProfileUsers
-            ImageProfilePage={ImageProfilePage}
-            ImageProfilePage2={ImageProfilePage2}
-          />
-
+          <MainPageProfileUsers />
           <Navigation_ProfilePage />
-          <FeaturePost_ProfilePage
-            ImageDummy={ImageDummy}
-            ImageDummy2={ImageDummy2}
-            ImageLove={ImageLove}
-            ImageChat={ImageChat}
-            ImageShare={ImageShare}
-            ImageBookmarks={ImageBookmarks}
-          />
+          <FeaturePost_ProfilePage />
         </div>
       </div>
+      <OptionBugReport />
       <AsideSearch />
     </Fragment>
   );

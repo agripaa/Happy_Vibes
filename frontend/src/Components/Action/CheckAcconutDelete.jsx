@@ -1,4 +1,5 @@
 import {
+  CHECKBUGREPORTNAV,
   CHECKDELETE,
   CHECKDELETENAV,
 } from "../reducers/CheckDelete/CheckDelete";
@@ -19,6 +20,16 @@ export const DELETECHECKNAV = (check) => {
       type: CHECKDELETENAV,
       payload: {
         checkdltNav: check,
+      },
+    });
+  };
+};
+export const CHECKBUG = (check) => {
+  return (dispatch) => {
+    dispatch({
+      type: CHECKBUGREPORTNAV,
+      payload: {
+        checkBug: check,
       },
     });
   };
