@@ -37,7 +37,7 @@ const getContentById = async (req,res) => {
         
         const posting = await Posting.findOne({
             where: {
-              uuid : req.params.id
+              id : req.params.id
             },
             include: [{
                     model: Users,
@@ -72,29 +72,54 @@ const createNewPosting = async (req, res) => {
     const size = file.data.length;
     const extend = path.extname(file.name);
     const name_img = file.md5 + extend
-    const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
+    const url = `${req.protocol}://${req.get("host")}/postings/${name_img}`;
     const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
     if(!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
     if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
     file.mv(`./public/postings/${name_img}`, async(err) => {
         if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
+        
+        try {
+            const posting = await Posting.create({
+                name_img: name_img,
+                url: url,
+                desc: desc,
+                like: like,
+                liked: false,
+                userId: req.userId
+            });
+            const createdAt = moment(posting.createdAt).fromNow();
+            return res.status(200).json({ status: 200, msg: 'Posting created successfully', createdAt });
+        } catch (error) {
+            log.error(error);
+            return res.status(500).json({ status: 500, msg: 'Internal server error' });
+        }
     })
-    
+}
+
+const updateLike = async (req, res) => {
+    const { postId } = req.params;
+    const { liked } = req.body;
+  
     try {
-        const posting = await Posting.create({
-            name_img: name_img,
-            url: url,
-            desc: desc,
-            like: like,
-            userId: req.userId
-        });
-        const createdAt = moment(posting.createdAt).fromNow();
-        return res.status(200).json({ status: 200, msg: 'Posting created successfully', createdAt });
+        const posting = await Posting.findByPk(postId);
+        if (!posting) return res.status(404).json({ status: 404, msg: 'Posting not found' });
+  
+        let likeCount = posting.like;
+        if (liked) {
+            likeCount++;
+        } else {
+            likeCount--;
+        }
+
+        await posting.update({ like: likeCount });
+        return res.status(200).json({status: 200, result: posting});
     } catch (error) {
         log.error(error);
-        return res.status(500).json({ status: 500, msg: 'Internal server error' });
+        return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
     }
-}
+  }
+  
 
 const getHotPost = async (req, res) => {
     try {
@@ -119,29 +144,26 @@ const getHotPost = async (req, res) => {
 const deletePosting = async (req, res) => {
     const {postId}  = req.params;
     const {userId} = req;
-    
+
   try {
     const post = await Posting.findOne({
         include: [{
           model: Users,
-          where: {uuid: userId}
+          where: {id: userId}
       }],
         where: { uuid: postId },
     });
 
     if (!post) {
-      return res.status(404).json({ error: 'Postingan tidak ditemukan.' });
+      return res.status(404).json({ status: 404, msg: 'Postingan tidak ditemukan.' });
     }
-    unlinkSync(`./public/postings/${post.name_img}`, (err) => {
-        if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
-    })
     await post.destroy();
 
-    return res.status(200).json({ message: 'Postingan berhasil dihapus.' });
+    return res.status(200).json({ status: 200, msg: 'Postingan berhasil dihapus.' });
   } catch (error) {
-    conslogole.error(error);
+    log.error(error);
     return res.status(500).json({ error: 'Terjadi kesalahan saat menghapus postingan.' });
   }
 };
 
-module.exports = {getAllContent , getContentById , createNewPosting, getHotPost, deletePosting }
+module.exports = {getAllContent , getContentById, createNewPosting, updateLike, getHotPost, deletePosting }
