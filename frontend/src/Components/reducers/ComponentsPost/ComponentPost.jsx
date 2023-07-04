@@ -19,6 +19,7 @@ import ImageLogout2 from "../../img/logout2.svg";
 import Close from "../../img/close-post.svg";
 import inputImage from "../../img/imageInput.svg";
 import PenPost from "../../img/pen.svg";
+import LogoNavbar from "../../img/LogoHappyVibesTransparant.png";
 let initialImage = {
   ImageLove,
   ImageChat,
@@ -41,6 +42,7 @@ let initialImage = {
   inputImage,
   ImageSend,
   PenPost,
+  LogoNavbar,
 };
 const PostComponents = (state = initialImage, action) => {
   return state;

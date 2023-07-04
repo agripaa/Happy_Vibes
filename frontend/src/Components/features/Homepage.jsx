@@ -7,11 +7,11 @@ import AsideSearch from "./features_components/AsideSearch";
 import ImageChat2 from "../img/chat-components.svg";
 import FeaturePost_HomePage from "./features_components/Micro_ComponentHomePage/FeaturesPost_HomePage";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
-import BugReport from "./features_components/Micro_components/MiniMicro_Components/BugReport";
+import { useSelector } from "react-redux";
 
 function Homepage() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
-
+  const components = useSelector((state) => state.ComponentImagePostReducer);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
@@ -25,10 +25,10 @@ function Homepage() {
           {getWitdh <= 500 ? (
             <div className="NavbarHomePage">
               <header>
-                <h1>HV</h1>
+                <img src={components.LogoNavbar} alt="" />
               </header>
               <figure className="featuresChat">
-                <img src={ImageChat2} alt="" />
+                <img src={components.ImageChat2} alt="" />
               </figure>
             </div>
           ) : null}
