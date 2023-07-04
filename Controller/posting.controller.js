@@ -1,4 +1,3 @@
-const { unlinkSync } = require('fs');
 const Posting = require('../Models/postingData.model.js');
 const Users = require('../Models/usersData.model.js');
 const log = require('../utils/log.js');
@@ -7,31 +6,43 @@ const path = require('path');
 
 const attributesUser = ['id', 'uuid', 'name', 'username', 'url', 'name_img'];
 
-const getAllContent = async (_,res) => {
+const getAllContent = async (_, res) => {
     try {
-        const postings = await Posting.findAll({
-            include: [{
-                model: Users,
-                attributes: attributesUser
-            }]
-        });
-        const formattedPostings = postings.map((postings) => {
-            const createdAt = moment(postings.createdAt).fromNow();
-            return {
-              ...postings.toJSON(),
-              createdAt: createdAt
-            };
-          });
-
-        res.status(200).json({
-            status: "200", 
-            result: formattedPostings
-        })
+      const postings = await Posting.findAll({
+        include: [{
+          model: Users,
+          attributes: attributesUser
+        }]
+      });
+  
+      const shuffledPostings = shuffleArray(postings);
+  
+      const formattedPostings = shuffledPostings.map((posting) => {
+        const createdAt = moment(posting.createdAt).fromNow();
+        return {
+          ...posting.toJSON(),
+          createdAt: createdAt
+        };
+      });
+  
+      res.status(200).json({
+        status: "200",
+        result: formattedPostings
+      });
     } catch (error) {
-        log.error(error)
-        return res.status(500).json({ status: 500, msg: 'Internal server error' });
+      log.error(error);
+      return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
-}
+  };
+  
+  function shuffleArray(array) {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  }
 const getContentById = async (req,res) => {
     try {
         

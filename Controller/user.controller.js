@@ -24,6 +24,29 @@ module.exports = {
         .json({ status: 'error', msg: 'internal server error', error: err });
     }
   },
+  async getRandomUsers(_, res) {
+    try {
+      const users = await Users.findAll();
+      const shuffledUsers = module.exports.shuffleArray(users);
+      const randomUsers = shuffledUsers.slice(0, 1);
+  
+      res.status(200).json({
+        status: 'success',
+        result: randomUsers,
+      });
+    } catch (err) {
+      log.error('error: ', err);
+      res.status(500).json({ status: 'error', msg: 'internal server error', error: err });
+    }
+  },
+  shuffleArray(array) {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  },
   async createUser(req, res) {
     const { name, username, email, password, confPassword, name_img, url } = req.body;
     
