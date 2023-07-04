@@ -1,7 +1,5 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import "./Components/css/OptionBug.scss";
 import { Route, Routes } from "react-router";
 import Home from "./Components/features/Home";
 import Login from "./Components/features/Login";
@@ -16,10 +14,12 @@ import ProfilepageUsers from "./Components/features/ProfilePageUser";
 import Explore from "./Components/features/Explore";
 import Notifications from "./Components/features/Notifications";
 import NotFound from "./Components/features/NotFound";
+import PopOptions from "./Components/features/PopOptions";
 
 function App() {
   return (
     <>
+      <PopOptions />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -33,7 +33,7 @@ function App() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/profile/:id" element={<Profilepage />} />
         <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
-        <Route path="/*" element={<NotFound />}/>
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
   );
