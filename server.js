@@ -4,17 +4,17 @@ const fileUpload = require('express-fileupload');
 const sequelizeStore = require('connect-session-sequelize');
 const path = require('path');
 const log = require('./utils/log.js');
-const Users = require('./Routes/users.route.js');
 const Auth = require('./Routes/auth.route.js');
+const Post = require('./Routes/posting.route.js');
+const Users = require('./Routes/users.route.js');
+const Notif = require('./Routes/notif.route.js');
+const Search = require('./Routes/search.route.js');
 const Follows = require('./Routes/follows.route.js');
 const Comments = require('./Routes/comment.route.js');
 const BugReport = require('./Routes/bugreport.route.js');
+const RandomPhoto = require('./Routes/randomPhoto.route.js');
 const db = require('./Config/database.js');
-const Post = require('./Routes/posting.route.js');
 const session = require('express-session');
-const bodyparser = require('body-parser');
-const bodyParser = require('body-parser');
-const validatePassword = require('./middleware/password.validation.js');
 require('dotenv').config();
 
 const app = express();
@@ -22,7 +22,7 @@ const sessionStore = new (sequelizeStore(session.Store))({ db: db });
 
 // async function startDB(){await db.sync();};startDB();
 
-app.use(session({
+app.use(session({ 
     secret: process.env.SESS,
     resave: true,
     saveUninitialized: true,
@@ -35,7 +35,7 @@ app.use(session({
 );
 
 const corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:5173',
   credentials: true
 };
 
@@ -46,10 +46,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(Auth);
 app.use(Post);
+app.use(Notif);
 app.use(Users);
-app.use(Follows)
+app.use(Search);
+app.use(Follows);
 app.use(Comments);
 app.use(BugReport);
+app.use(RandomPhoto);
 
 app.listen(process.env.PORT, () => {
   log.info(`listening on port http://localhost:${process.env.PORT}`);

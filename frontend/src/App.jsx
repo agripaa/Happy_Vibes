@@ -8,6 +8,13 @@ import Login from "./Components/features/Login";
 import Register from "./Components/features/Register";
 import OTP from "./Components/features/OTP";
 import EmailAuth from "./Components/features/EmailAuth";
+import ForgotPassword from "./Components/features/ForgotPassword";
+import RenewPassword from "./Components/features/RenewPassword";
+import Homepage from "./Components/features/Homepage";
+import Profilepage from "./Components/features/Profilepage";
+import ProfilepageUsers from "./Components/features/ProfilePageUser";
+import Explore from "./Components/features/Explore";
+import Notifications from "./Components/features/Notifications";
 
 function App() {
   return (
@@ -16,8 +23,15 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/authOtp" element={<EmailAuth />} />
+        <Route path="/authOtp/resend" element={<EmailAuth />} />
         <Route path="/authOtp/otp" element={<OTP />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/update-pass/:userId/:token" element={<RenewPassword />} />
+        <Route path="/homepage" element={<Homepage />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/profile/:id" element={<Profilepage />} />
+        <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
       </Routes>
     </>
   );

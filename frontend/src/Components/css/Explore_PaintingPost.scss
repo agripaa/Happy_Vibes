@@ -1,0 +1,253 @@
+.WrapPainting {
+  width: 80%;
+}
+.ContainerValuePosting-ExplorePage {
+  width: 100%;
+  padding: 0 3% 0 3%;
+}
+.wrapContainerValuePosting-ExplorePage-Painting {
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 4%;
+}
+.UserPosting {
+  width: 100%;
+  padding: 0 0 5% 0;
+  position: relative;
+}
+.UserPosting-NameProfile {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5px;
+}
+.NameProfileText {
+  width: 70%;
+  display: flex;
+  gap: 10px;
+}
+.ImageProfile-NameProfile {
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+.TextProfile-NameProfile {
+  height: 100%;
+  align-items: center;
+  display: flex;
+  width: 60%;
+  gap: 3%;
+  p:nth-child(1) {
+    font-size: 12px;
+    font-weight: 400;
+  }
+  p:nth-child(2) {
+    font-size: 10px;
+    color: #757575;
+    font-weight: 300;
+  }
+}
+.ButtonList-NameProfile {
+  width: 25px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-self: center;
+  span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: black;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
+.UserPosting-ImagePosting {
+  padding-top: 10px;
+  width: 100%;
+  height: 270px;
+}
+.Image-ImagePosting {
+  width: 100%;
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+}
+.UserPosting-ArticlePosting {
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  figcaption {
+    p {
+      font-size: 16px;
+      font-weight: 300;
+      color: #282828;
+    }
+  }
+}
+.UserPosting-LikePosting {
+  width: 100%;
+  height: 50px;
+}
+.wrapLikePosting {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10%;
+}
+.Love-LikePosting,
+.Chat-LikePosting {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 5px;
+
+  img {
+    width: 16px;
+    height: 16px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  p {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+.Share-LikePosting {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-top: 3px;
+  img {
+    width: 16px;
+    height: 16px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.Bookmarks-LikePosting {
+  display: flex;
+  align-items: center;
+  padding-top: 3px;
+
+  img {
+    width: 16px;
+    height: 17.5px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.Love-LikePosting {
+  img {
+    padding-top: 2px;
+    height: 17.5px;
+  }
+}
+.LikeLovePainting {
+  transform: scale(0);
+  animation-name: AnimateLove;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+@media screen and (max-width: 1350px) {
+  .WrapPost-trendingPost {
+    width: 100%;
+  }
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    width: 100%;
+    margin: 0;
+    padding-left: 15%;
+  }
+}
+@media screen and (max-width: 1250px) {
+}
+@media screen and (max-width: 990px) {
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    padding-left: 8.5%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .UserPosting-ArticlePosting {
+    figcaption {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 620px) {
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    padding-left: 2%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .wrapLikePosting {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .UserPosting-ImagePosting {
+    padding-top: 10px;
+    width: 100%;
+    height: 220px;
+  }
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    padding-left: 0%;
+  }
+  .WrapPainting {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 320px) {
+  .UserPosting-ImagePosting {
+    padding-top: 10px;
+    width: 100%;
+    height: 200px;
+  }
+}
+@media screen and (min-width: 1500px) and (min-height: 800px) {
+  .wrapContainerValuePosting-ExplorePage-Painting {
+    width: 96%;
+    margin: 0;
+    padding-left: 0%;
+  }
+}
+@keyframes AnimateLove {
+  0% {
+    transform: scale(0);
+  }
+  25% {
+    transform: scale(2);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  70% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+    transform: scale(1.3);
+  }
+}

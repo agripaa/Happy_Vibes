@@ -28,6 +28,28 @@
   }
 }
 
+// *{
+//   border: 1px solid black;
+// }
+
+.error {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  color: red;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.err-name{
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+
 .myImageRegister {
   width: 100%;
   height: 100%;
@@ -58,11 +80,12 @@
 }
 
 .formRegister {
-  margin-top: 20px;
-  height: 400px;
+  justify-content: center;
+  padding-top: 70px;
+  width: 100%;
 }
 .formRegister-container {
-  width: 350px;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -97,7 +120,32 @@
     margin: 10px 0;
   }
 }
-
+.InputPassword-Register,
+.InputConfPassword-Register {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #282828;
+  background-color: white;
+  border-radius: 5px;
+  input {
+    width: 90%;
+  }
+  .EyeButton-Register {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5px;
+    img {
+      width: 20px;
+      height: 20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
 .formWrapper3 {
   span {
     width: 100%;
@@ -136,8 +184,8 @@
     button {
       font-size: 14px;
       font-weight: 600;
-      width: 380px;
-      height: 35px;
+      width: 100%;
+      height: 40px;
       background-color: #ffc56d;
       border: 1px solid #282828;
       &:hover {
@@ -170,37 +218,41 @@
 
 .input-field {
   width: 100%;
-  height: 120px;
   padding-top: 20px;
   &-name {
-    width: 170px;
+    width: 220px;
     border: 1px solid #282828;
     border-radius: 5px;
+    margin: 0px 0px 10px 0px;
     padding: 10px 5px;
   }
   &-username {
-    width: 170px;
+    width: 220px;
     border: 1px solid #282828;
     border-radius: 5px;
+    margin: 0px;
     padding: 10px 5px;
   }
   &-email {
-    width: 380px;
+    width: 440px;
     border: 1px solid #282828;
     border-radius: 5px;
+    margin: 0px 0px 10px 0px;
     padding: 10px 5px;
   }
 
   &-password {
     width: 380px;
-    border: 1px solid #282828;
-    border-radius: 5px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
     padding: 10px 5px;
+    outline: none;
   }
 }
 
 .navLogin {
-  height: 150px;
+  height: 40px;
   align-items: flex-end;
   p {
     font-size: 12px;
@@ -294,7 +346,7 @@
   }
 
   .formRegister {
-    margin-top: 0;
+    margin-top: 40px;
     height: 450px;
   }
   .formRegister-container {
@@ -361,7 +413,7 @@
   }
 
   .navLogin {
-    height: 80px;
+    height: 40px;
     margin-left: 0;
     p {
       font-size: 13px;
@@ -383,7 +435,7 @@
     }
   }
 }
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 360px) {
   .titleRegister {
     &1 {
       h1 {

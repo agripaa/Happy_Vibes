@@ -1,43 +1,18 @@
-function validate(password) {
-    const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/; // Simbol regex
-    const uppercaseRegex = /[A-Z]/; // Upper case regex
-    const lowercaseRegex = /[a-z]/; // Lower case regex
-    const numberRegex = /[0-9]/; // Angka regex
-    const spaceRegex = /\s/; // Spasi regex
+module.exports = function validatePassword(pass) {
+  let response, result;
 
-  if (symbolRegex.test(password)) {
-    return { isValid: false, error: "Password can't contain symbols" }
-  }
-  if (!uppercaseRegex.test(password)) {
-    return { isValid: false, error: "Password must contain at least one capital letter." }
-  }
-  if (!lowercaseRegex.test(password)) {
-    return { isValid: false, error: "Password must contain at least one lowercase letter." }
-  }
-  if (!numberRegex.test(password)) {
-    return { isValid: false, error: "Password must contain at least one digit." }
-  }
-  if (spaceRegex.test(password)) {
-    return { isValid: false, error: "Password can't contain spaces" }
-  }
-  if (password.length < 8) {
-    return { isValid: false, error: "The password must consist of a minimum of 8 characters." }
-  }
-  return { isValid: true };
-}
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const resRegex = regex.test(pass);
+  const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
+  const hasSymbol = !symbolRegex.test(pass);
 
-  
-  module.exports = { validate }
-
-  // function validate(password) {
-  //   if (password.length < 8) {
-  //     return { isValid: false, error: 'Password harus memiliki setidaknya 8 karakter' };
-  //   }
-  
-  //   // Tambahkan validasi lainnya sesuai kebutuhan
-  //   // ...
-  
-  //   return { isValid: true };
-  // }
-  
-  // module.exports = { validate };
+  if (!resRegex || hasSymbol) {
+    response = `{"status": "402", "msg": "Password at least 8 characters, 1 lowercase letter, 1 uppercase letter, 1 digit, and no symbols.", "regex": "${resRegex}", "regex_symbol": "${hasSymbol}"}`;
+    result = JSON.parse(response);
+    return result;
+  }else{   
+    response = `{"status": "200", "msg": "password and confirm password clean!", "regex": "${resRegex}", "regex_symbol": "${hasSymbol}"}`;
+    result = JSON.parse(response);
+    return result;
+  }
+} 

@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import imageRegister from "../img/Img-1.png";
 import "../css/Register.scss";
 import "../css/myLibrary.scss";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineGoogle } from "react-icons/ai";
-
+import EyeOpen from "../img/showPassword.svg";
+import EyeClose from "../img/closePassword.svg";
 function Register() {
+  const [ShowPass, setShowPass] = useState(false);
+  const [ShowConfPass, setShowConfPass] = useState(false);
+  const [inpuError, SetinputError] = useState({});
   const [displayWidth, setDisplayWitdh] = useState(innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -13,39 +17,57 @@ function Register() {
     });
   }, [displayWidth]);
 
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    confPassword: "",
+  });
+  const [randomPhoto, setRandomPhoto] = useState({});
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
+  const handleRandomPhoto = () => {
+    axios
+      .get("http://localhost:5000/random_photo")
+      .then(({ data }) => {
+        setRandomPhoto(data.randomPhoto);
+      })
+      .catch(({err}) => {
+        console.error(err);
+      });
   };
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  useEffect(() => {
+    handleRandomPhoto();
+    handleSubmit();
+  }, []);
+
+  const changeHandler = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const { name, email, username, password, confPassword } = values;
+    const { name_img, url } = randomPhoto;
 
-    // console.log('Name', name);
-    // console.log('Username', username);
-    // console.log('Email', email);
-    // console.log('Password', password);
-
-    setName("");
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    await axios
+      .post("http://localhost:5000/user/create", {
+        name,
+        email,
+        username,
+        password,
+        confPassword,
+        name_img: name_img,
+        url: url,
+        bg_img: null,
+      })
+      .then((_) => {
+        navigate("/authOtp/otp");
+      })
+      .catch(({response}) => {
+        SetinputError(response.data);
+      });
   };
 
   const navigate = useNavigate();
@@ -80,78 +102,115 @@ function Register() {
                   <label className="labelForm">Name</label>
                   <input
                     type="text"
-                    id="name"
-                    value={name}
-                    onChange={handleNameChange}
+                    name="name"
+                    required
+                    onChange={changeHandler}
                     className="input-field-name"
                     placeholder="Full Name"
                   />
+                  <span className="error">
+                    {inpuError.status === 403 ? (<p>*{inpuError.msg}</p>) : ""}
+                  </span>
                 </div>
                 <div className="formWrapper1">
                   <label className="labelForm">Username</label>
                   <input
                     type="text"
-                    id="username"
-                    value={username}
-                    onChange={handleUsernameChange}
+                    required
+                    name="username"
+                    onChange={changeHandler}
                     className="input-field-username"
                     placeholder="Username"
                   />
+                  <span className="error">
+                    {inpuError.status === 408 ? (<p>*{inpuError.msg}</p>) : ""}
+                  </span>
                 </div>
               </div>
               <div className="formWrapper2">
                 <label className="labelForm">Email</label>
                 <input
                   type="text"
-                  id="email"
-                  value={email}
-                  onChange={handleEmailChange}
+                  required
+                  name="email"
+                  onChange={changeHandler}
                   className="input-field-email"
                   placeholder="Email"
                 />
+                <span className="error">
+                  {inpuError.status === 409 ? (<p>*{inpuError.msg}</p>) : ""}
+                </span>
               </div>
               <div className="formWrapper2">
                 <label className="labelForm">Password</label>
-                <input
-                  type="text"
-                  id="password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  className="input-field-password"
-                  placeholder="********"
-                />
+                <div className="InputPassword-Register">
+                  <input
+                    type={ShowPass ? "text" : "password"}
+                    required
+                    name="password"
+                    onChange={changeHandler}
+                    className="input-field-password"
+                    placeholder="********"
+                  />
+                  <div
+                    className="EyeButton-Register"
+                    onClick={() => setShowPass(!ShowPass)}
+                  >
+                    {ShowPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
+                  </div>
+                </div>
+                <span className="error">
+                  {inpuError.status === 402 ? (<p>*{inpuError.msg}</p>) : ""}
+                </span>
               </div>
-              <section className="button-Auth">
-                {displayWidth > 500 ? (
-                  <div className="button-Auth-register1 flex flex-justify-center">
-                    <button type="submit">Register</button>
+              <div className="formWrapper2">
+                <label className="labelForm">Confirm Password</label>
+                <div className="InputConfPassword-Register">
+                  <input
+                    type={ShowConfPass ? "text" : "password"}
+                    required
+                    name="confPassword"
+                    onChange={changeHandler}
+                    className="input-field-password"
+                    placeholder="********"
+                  />
+                  <div
+                    className="EyeButton-Register"
+                    onClick={() => setShowConfPass(!ShowConfPass)}
+                  >
+                    {ShowConfPass ? (
+                      <img src={EyeOpen} alt="" />
+                    ) : (
+                      <img src={EyeClose} alt="" />
+                    )}
                   </div>
-                ) : (
-                  <div className="button-Auth-register1 flex flex-justify-center">
-                    <button type="submit">Sign Up</button>
-                  </div>
-                )}
-                <div className="formWrapper3 ">
+                </div>
+                  <span className="error">
+                    {inpuError.status === 400 ? (<p>*{inpuError.msg}</p>) : ""}
+                  </span>
+                <section className="button-Auth">
                   {displayWidth > 500 ? (
-                    <span>Or</span>
+                    <div className="button-Auth-register1 flex flex-justify-center">
+                      <button type="submit">Register</button>
+                    </div>
                   ) : (
-                    <span>Or Register With</span>
+                    <div className="button-Auth-register1 flex flex-justify-center">
+                      <button type="submit">Sign Up</button>
+                    </div>
                   )}
-                </div>
-                <div className="button-Auth-register2 flex flex-justify-center">
-                  <button>
-                    Register With Google
-                    <AiOutlineGoogle className="button-icon"></AiOutlineGoogle>
-                  </button>
-                </div>
-              </section>
+                  <div className="navLogin flex flex-justify-center">
+                    <p>
+                      Have An Account? <a onClick={() => navigate("/login")}>Sign In</a>
+                    </p>
+                  </div>
+                </section>
+              </div>
             </form>
           </section>
-          <div className="navLogin flex flex-justify-center">
-            <p>
-              Have An Account? <a onClick={() => navigate("/login")}>Sign In</a>
-            </p>
-          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,8 @@
 const Comment = require('../Models/commentsData.model.js');
+const Notifications = require('../Models/notifData.model.js');
 const Posting = require('../Models/postingData.model.js');
 const Users = require('../Models/usersData.model.js');
+const log = require('../utils/log.js');
 
 const attributesUser = ['name', 'url', 'name_img'];
 const attributePosting = ['url', 'name_img', 'desc'];
@@ -29,11 +31,24 @@ module.exports = {
         const postId = req.params.id;
         const { comment } = req.body;
 
-        const post = await Posting.findByPk(postId);
+        const post = await Posting.findByPk(postId,
+            {include: [{
+                model: Users,
+                attributes: ['id', 'uuid']
+            }]});
         if (!post) return res.status(404).json({ error: 'Posting not found' });
 
         try {
-        await Comment.create({ comment: comment , postId: post.id, userId: req.userId });
+        const createdComment = await Comment.create({ comment: comment , postId: post.id, userId: req.userId });
+
+        await Notifications.create({
+            content_notif: `User ${req.user.name} commented on your post : ${comment}`,
+            type_notif: 'comment',
+            userId: post.users_datum.id,
+            postId: post.id,
+            commentId: createdComment.id
+          });
+
         return res.status(200).json({ status: 200, msg: 'Comment posted successfully' });
         } catch (error) {
             console.error(error);

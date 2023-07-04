@@ -17,7 +17,6 @@ const Users = db.define('users_data', {
         allowNull: true,
         validate: {
             notEmpty: false,
-            len: [3, 25]
         }
     },
     username : {
@@ -25,7 +24,6 @@ const Users = db.define('users_data', {
         allowNull: true,
         validate: {
             notEmpty: false,
-            len: [3, 15]
         }
     },
     email : {
@@ -45,16 +43,30 @@ const Users = db.define('users_data', {
     },
     name_img : {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
         }
     },
     url : {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
+        }
+    },
+    bg_img : {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            notEmpty: false,
+        }
+    },
+    bg_url : {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            notEmpty: false,
         }
     },
     followerId: {
@@ -79,11 +91,12 @@ const Users = db.define('users_data', {
       }
 }, {freezeTableName: true})
 
-Follows.belongsTo(Users, { foreignKey: 'followerId', as: 'follower', targetKey: 'id' });
-Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey: 'id' });
-CodeOTP.belongsTo(Users, { foreignKey: 'userId' });
-Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers' });
-Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings' });
-Users.hasOne(CodeOTP, { foreignKey: 'userId', as: 'codeOTP' });
+Follows.belongsTo(Users, { foreignKey: 'followerId', as: 'follower', targetKey: 'id', onDelete: 'CASCADE' });
+Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey: 'id', onDelete: 'CASCADE' });
+CodeOTP.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers', onDelete: 'CASCADE' });
+Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings', onDelete: 'CASCADE' });
+Users.hasOne(CodeOTP, { foreignKey: 'userId', as: 'codeOTP', onDelete: 'CASCADE' });
+
 
 module.exports = Users;

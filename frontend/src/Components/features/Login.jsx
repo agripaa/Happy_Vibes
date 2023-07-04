@@ -1,14 +1,63 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
 import "../css/Login.scss";
 import "../css/myLibrary.scss";
 import ImageLogin from "../img/img-1.png";
 import GoogleLogin from "../img/Vector-google.png";
-import { Link } from "react-router-dom";
-function Login() {
-  const [displayWidth, setDisplayWidth] = useState(innerWidth);
-  const [displayHeight, setDisplayHeight] = useState(innerHeight);
+import EyeOpen from "../img/showPassword.svg";
+import EyeClose from "../img/closePassword.svg";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-  useEffect(() => {
+function Login() {
+  const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
+  const [displayHeight, setDisplayHeight] = React.useState(innerHeight);
+  const [isError, setIsError] = React.useState("");
+  const [ShowPass, setShowPass] = React.useState(false);
+  const [values, setValues] = React.useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+  function changeHandler(e) {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  async function loginHandler(e) {
+    e.preventDefault();
+    const { email, password } = values;
+
+    try {
+      await axios
+        .post(
+          `http://localhost:5000/auth/login`,
+          {
+            email,
+            password,
+          },
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        )
+        .then((_) => {
+          navigate("/homepage");
+        })
+        .catch(({response}) => {
+          setIsError(response.data);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  React.useEffect(() => {
+    loginHandler();
+  });
+
+  React.useEffect(() => {
     window.addEventListener("resize", () => {
       setDisplayWidth(innerWidth);
       setDisplayHeight(innerHeight);
@@ -31,44 +80,62 @@ function Login() {
               {displayWidth < 500 ? (
                 <p>
                   Oh, Hi! Welcome back to HappyVibes! We hopes you always in
-                  happy vibe!
+                  happy vibes!
                 </p>
               ) : null}
             </header>
             <section className="myFormLogin">
-              <form>
+              <form onSubmit={loginHandler}>
                 <div className="Container-Email-Login">
                   <label>Email</label>
                   <input
                     type="email"
                     placeholder="example123@gmail.com"
                     required
-                    name=""
-                    id=""
+                    onChange={changeHandler}
+                    name="email"
+                    className={
+                      isError.status === 404 ? "activeErrorLogin" : ""
+                    }
                   />
                   <div className="errorLogin1">
-                    {/* <p>Email Tidak Sesuai !!</p> */}
+                    {isError.status === 404 ? <p>{isError.msg}</p> : ""}
                   </div>
                 </div>
                 <div className="Container-Password-Login">
                   <label className="labelPasswordLogin">Password</label>
-                  <input
-                    type="password"
-                    placeholder="****"
-                    required
-                    name=""
-                    id=""
-                  />
+                  <div
+                    className={
+                      isError.status === 400
+                        ? "InputPassword-Login activeErrorLogin"
+                        : "InputPassword-Login"
+                    }
+                  >
+                    <input
+                      type={ShowPass ? "text" : "password"}
+                      placeholder="********"
+                      required
+                      onChange={changeHandler}
+                      name="password"
+                      className="inputPass"
+                    />
+                    <div
+                      className="eyeButton"
+                      onClick={() => setShowPass(!ShowPass)}
+                    >
+                      {ShowPass ? (
+                        <img src={EyeOpen} alt="" />
+                      ) : (
+                        <img src={EyeClose} alt="" />
+                      )}
+                    </div>
+                  </div>
                   <div className="errorLogin2">
-                    {/* <p>password salah !!</p> */}
+                    {isError.status === 400 ? <p>{isError.msg}</p> : ""}
                   </div>
                   <div className="optionsLogin">
-                    <div className="optionsLogin-remember">
-                      <input type="checkbox" name="" id="" />
-                      <label className="color-neutral-60">Remember Me</label>
-                    </div>
                     <div className="optionsLogin-forgot">
-                      <Link to={"/"} className="color-neutral-60">
+                      <Link to={"/forgot"} className="color-neutral-60">
                         Forgot Password
                       </Link>
                     </div>
@@ -81,16 +148,7 @@ function Login() {
                 </div>
               </form>
             </section>
-            <div className="orLogin">
-              {displayWidth > 500 ? <p>Or</p> : <p>Or Login With</p>}
-            </div>
             <section className="ContainerLogin2">
-              <div className="Button-Login-google">
-                <button>
-                  Login With Google
-                  <img src={GoogleLogin} alt="" />
-                </button>
-              </div>
               <div className="ContainerLogin2-Register">
                 <p>
                   Don’t have an account?
