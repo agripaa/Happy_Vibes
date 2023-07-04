@@ -24,7 +24,7 @@ function ListNavbar() {
           <ul className="NavbarList-Container">
             <li>
               <div className="Listhome">
-                <Link to={"/"}>
+                <Link to={"/homepage"}>
                   <img src={ImageListHome} alt="" />
                   <p>Home</p>
                 </Link>
@@ -32,7 +32,7 @@ function ListNavbar() {
             </li>
             <li>
               <div className="ListExplore">
-                <Link to={"/"}>
+                <Link to={"/explore"}>
                   <img src={ImageListExplore} alt="" />
                   <p>Explore</p>
                 </Link>
@@ -40,7 +40,7 @@ function ListNavbar() {
             </li>
             <li>
               <div className="ListNotifications">
-                <Link to={"/"}>
+                <Link to={"/notifications"}>
                   <img src={ImageListNotifications} alt="" />
                   <p>Notifications</p>
                 </Link>
@@ -65,7 +65,7 @@ function ListNavbar() {
 
             <li>
               <div className="ListProfile">
-                <Link to={"/"}>
+                <Link to={"/profileusers/1"}>
                   <img src={ImageListProfile} alt="" />
                   <p>Profile</p>
                 </Link>

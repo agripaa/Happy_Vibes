@@ -1,16 +1,21 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DELETECHECK } from "../../../../Action/CheckAcconutDelete";
+import { CHECKBUG, DELETECHECK } from "../../../../Action/CheckAcconutDelete";
 
 function OptionProfile({ Optionse, responseCheck }) {
   const { dltCheckNav } = useSelector((state) => state.CheckDeleteReducer);
   const components = useSelector((state) => state.ComponentImagePostReducer);
+  const [getWitdh, setGetWidth] = useState(innerWidth);
   const dispath = useDispatch();
   function HandleClickButtonDelete(e) {
     e.preventDefault();
     dispath(DELETECHECK(true));
   }
-
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setGetWidth(innerWidth);
+    });
+  }, [getWitdh]);
   return (
     <Fragment>
       {responseCheck ? (
@@ -20,10 +25,6 @@ function OptionProfile({ Optionse, responseCheck }) {
           }
         >
           <div className="wrapOptionsProfile">
-            <section className="Container-BugReport">
-              <img src={components.ImageBug} alt="" />
-              <p>Bug Report</p>
-            </section>
             <section className="Container-Logout">
               <img src={components.ImageLogout} alt="" />
               <p>Logout</p>
@@ -46,7 +47,10 @@ function OptionProfile({ Optionse, responseCheck }) {
           }
         >
           <div className="wrapOptionsProfile">
-            <section className="Container-BugReport">
+            <section
+              className="Container-BugReport"
+              onClick={() => dispath(CHECKBUG(true))}
+            >
               <img src={components.ImageBug2} alt="" />
               <p>Bug Report</p>
             </section>

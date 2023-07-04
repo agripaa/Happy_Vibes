@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import ImageBack from "../img/vector-back.png";
 import "../css/myLibrary.scss";
 import "../css/ForgotPassword.scss";
@@ -9,7 +8,7 @@ import axios from "axios";
 function ForgotPassword() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [email, setEmail] = useState("");
-  const navigate = useNavigate();
+  const [emailNotFound, setEmailNotFound] = useState({})
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -21,8 +20,10 @@ function ForgotPassword() {
     e.preventDefault();
 
     await axios.patch('http://localhost:5000/forgot-pass/get_email', {email: email})
-    .then(({data}) => {console.log(data); alert("check email")})
-    .catch((err) =>{console.error(err)})
+    .then(({data}) => {alert("check your email")})
+    .catch(({response}) => {
+      setEmailNotFound(response.data);
+    })
   }
   return (
     <div className="ContainerEmailForgotPassword">
@@ -30,7 +31,7 @@ function ForgotPassword() {
         <div className="ContainerEmailForgotPassword-wrap2">
           <header className="judulEmailForgotPassword">
             <div className="backEmailForgotPassword">
-              <Link to={"/"}>
+              <Link to={"/login"}>
                 <img src={ImageBack} alt="" />
               </Link>
             </div>
@@ -57,6 +58,7 @@ function ForgotPassword() {
                   onChange={e => setEmail(e.target.value)}
                 />
               </div>
+                <span className={emailNotFound.status === 404 ? "errorForgotPass" : "hideError"}>{emailNotFound.msg}</span>
               <div className="CheckMessage ">
                 <article>
                   <p>Your email is not existed</p>

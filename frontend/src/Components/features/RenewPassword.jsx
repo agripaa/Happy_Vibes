@@ -11,12 +11,11 @@ function RenewPassword() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [ShowOldPass, setShowOldPass] = useState(false);
   const [ShowNewPass, setShowNewPass] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState({});
   const [values, setValues] = useState({
     password: "",
     confPassword: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { userId, token } = useParams();
 
@@ -39,9 +38,10 @@ function RenewPassword() {
         .then(({ data }) => {
           navigate("/login");
         })
-        .catch((err) => console.error(err));
+        .catch(({response}) => {
+          setErrorMessage(response.data);
+        });
     } catch (error) {
-      setErrorMessage("An error occurred. Please try again.");
       console.log(error);
     }
   };
@@ -56,14 +56,14 @@ function RenewPassword() {
         <div className="ContainerEmailRenewPassword-wrap2">
           <header className="judulEmailRenewPassword">
             <div className="backEmailRenewPassword">
-              <Link to={"/"}>
+              <Link to={"/forgot"}>
                 <img src={ImageBack} alt="" />
               </Link>
             </div>
             <h1>Reset Password</h1>
           </header>
           <main className="mainEmailRenewPassword">
-            <form className="formEmailRenewPassword">
+            <form onSubmit={handleSubmit} className="formEmailRenewPassword">
               <div className="ResendEmailRenewPassword">
                 <header>
                   <h2>Enter Email</h2>
@@ -105,13 +105,7 @@ function RenewPassword() {
                 <label>
                   <p>Enter new password</p>
                 </label>
-                <div
-                  className={
-                    errorMessage
-                      ? "InputNewPassword-Renew ErrorNewPassword"
-                      : "InputNewPassword-Renew"
-                  }
-                >
+                <div className="InputNewPassword-Renew">
                   <input
                     type={ShowNewPass ? "text" : "password"}
                     required
@@ -131,17 +125,14 @@ function RenewPassword() {
                   </div>
                 </div>
               </div>
-              <div className="CheckMessage ">
-                <article>
-                  <p>{errorMessage}</p>
-                </article>
-              </div>
-
+                  <p className={errorMessage.status === 400 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
+                  <p className={errorMessage.status === 403 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
+                  <p className={errorMessage.status === 404 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
+                  <p className={errorMessage.status === 430 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
               <div className="submitEmailRenewPassword">
                 <button
                   className="ButtonSubmitEmailRenewPassword"
                   type="submit"
-                  onClick={handleSubmit}
                 >
                   Reset Password
                 </button>
