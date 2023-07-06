@@ -1,4 +1,5 @@
 const Users = require('../Models/usersData.model.js');
+const db = require('../Config/database.js')
 const argon2 = require('argon2');
 const path = require('path');
 const log = require('../utils/log.js');
@@ -26,17 +27,15 @@ module.exports = {
   },
   async getRandomUsers(_, res) {
     try {
-      const users = await Users.findAll();
-      const shuffledUsers = module.exports.shuffleArray(users);
-      const randomUsers = shuffledUsers.slice(0, 1);
-  
-      res.status(200).json({
-        status: 'success',
-        result: randomUsers,
+      const user = await Users.findAll({
+        order: db.random(),
+        limit: 5
       });
-    } catch (err) {
-      log.error('error: ', err);
-      res.status(500).json({ status: 'error', msg: 'internal server error', error: err });
+  
+      res.json(user);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Terjadi kesalahan saat mengambil data pengguna' });
     }
   },
   shuffleArray(array) {
