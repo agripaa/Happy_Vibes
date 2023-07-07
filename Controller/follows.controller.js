@@ -22,45 +22,55 @@ module.exports = {
   async followUser(req, res) {
     const followerId = req.params.id;
     const followingId = req.userId;
-
+  
     try {
-      const follower = await Users.findOne({where: {id: followerId}});
+      const follower = await Users.findOne({ where: { id: followerId } });
       const following = await Users.findByPk(followingId);
-      if (!follower || !following) return res.status(404).json({ status: 404, msg: 'User not found' });
-
+      if (!follower || !following) {
+        return res.status(404).json({ status: 404, msg: "User not found" });
+      }
+  
       const existingFollow = await Follows.findOne({
         where: {
           followerId: followerId,
           followingId: followingId,
         },
       });
-
-      if (existingFollow) return res.status(400).json({ status: 400, msg: 'User already followed' });
-
+  
+      if (existingFollow) {
+        return res
+          .status(400)
+          .json({ status: 400, msg: "User already followed" });
+      }
+  
       await Follows.create({
         followerId: followerId,
         followingId: followingId,
       });
-
-      await following.increment('followingCount');
-      await follower.increment('followerCount');
-
+  
+      await following.increment("followingCount");
+      await follower.increment("followerCount");
+  
       await Notifications.create({
         content_notif: `${following.name} started following you!`,
-        type_notif: 'follow',
+        type_notif: "follow",
         userId: followerId,
-        followsId: followerId
+        followsId: followerId,
       });
-
-      res.status(200).json({ status: 200, msg: 'User followed successfully' });
+  
+      res.status(200).json({ status: 200, msg: "User followed successfully" });
     } catch (err) {
       log.error(err);
-      res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+      res
+        .status(500)
+        .json({ status: 500, msg: "Internal server error", err: err.message });
     }
   },
+  
   async unfollowUser(req, res) {
     const followerId = req.params.id;
     const followingId = req.userId;
+    
     try {
       const existingFollow = await Follows.findOne({
         where: {
@@ -68,23 +78,30 @@ module.exports = {
           followingId: followingId,
         },
       });
-
-      if (!existingFollow) res.status(404).json({ status: 404, msg: 'Follow relationship not found' });
-      await existingFollow.destroy();
-
+  
+      if (!existingFollow) {
+        return res
+          .status(404)
+          .json({ status: 404, msg: "Follow relationship not found" });
+      }
+      
       const follower = await Users.findOne({
         where: {
           id: followerId,
         },
       });
       const following = await Users.findByPk(followingId);
-      await following.decrement('followingCount');
-      await follower.decrement('followerCount');
-
-      res.status(200).json({ status: 200, msg: 'User unfollowed successfully' });
+      await following.decrement("followingCount");
+      await follower.decrement("followerCount");
+  
+      await existingFollow.destroy();
+  
+      res.status(200).json({ status: 200, msg: "User unfollowed successfully" });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+      res
+        .status(500)
+        .json({ status: 500, msg: "Internal server error", err: err.message });
     }
   },
 }

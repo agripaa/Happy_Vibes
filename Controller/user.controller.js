@@ -29,10 +29,10 @@ module.exports = {
     try {
       const user = await Users.findAll({
         order: db.random(),
-        limit: 5
+        limit: 1
       });
   
-      res.json(user);
+      res.status(200).json({status:200, result: user});
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Terjadi kesalahan saat mengambil data pengguna' });
