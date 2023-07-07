@@ -18,6 +18,8 @@ import ImageDeleteAccount2 from "../../img/delete2.svg";
 import ImageLogout2 from "../../img/logout2.svg";
 import Close from "../../img/close-post.svg";
 import inputImage from "../../img/imageInput.svg";
+import ImgTesting from "../../img/img-3.png";
+import ImgTesting2 from "../../img/img-2.png";
 import PenPost from "../../img/pen.svg";
 let initialImage = {
   ImageLove,
@@ -41,6 +43,8 @@ let initialImage = {
   inputImage,
   ImageSend,
   PenPost,
+  ImgTesting,
+  ImgTesting2,
 };
 const PostComponents = (state = initialImage, action) => {
   return state;
