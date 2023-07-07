@@ -44,9 +44,10 @@
     height: 24px;
   }
 }
+
 .imagePostStatus {
   width: 100%;
-  height: 75%;
+  height: auto;
   padding: 10px 20px;
   img {
     width: 100%;
@@ -92,10 +93,89 @@
   border-radius: 5px;
   border: none;
 }
+.SquareCropPost {
+  width: 480px;
+  height: auto;
+  background-color: white;
+  border-radius: 10px;
+  padding-bottom: 10px;
+}
+.HeaderCropImage {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+.CloseCropImage {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0px 0px 0 10px;
+  align-items: center;
+  gap: 10px;
+  img {
+    width: 10px;
+    height: 15px;
+  }
+}
+.TeksCrop {
+  p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.buttonCropImage {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 5px 10px 0 0;
+  button {
+    width: 60%;
+    height: 55%;
+    font-size: 12px;
+    font-weight: 600;
+    outline: none;
+    border: none;
+    background-color: #ffba53;
+  }
+}
+.imageCropPost {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+.chooseSize {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.textImg {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
 @media screen and (max-width: 590px) {
   .SquarePostStatus {
     width: 450px;
     height: 470px;
+  }
+  .SquareCropPost {
+    width: 450px;
+    height: auto;
   }
 }
 @media screen and (max-width: 500px) {
@@ -110,7 +190,7 @@
     padding-left: 10px;
   }
   .imagePostStatus {
-    height: 25%;
+    height: auto;
   }
   .ImageProfilPost {
     order: 2;
@@ -137,12 +217,30 @@
     display: flex;
     justify-content: space-between;
   }
+  .SquareCropPost {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  .chooseSize {
+    width: 100%;
+    height: 40px;
+  }
 }
 @media screen and (max-width: 330px) {
   .HeaderPostStatus {
     height: 17%;
   }
   .imagePostStatus {
-    height: 45%;
+    height: auto;
+  }
+  .imageCropPost {
+    width: 100%;
+    height: 75%;
+    padding: 0 10px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
