@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
 
 function ListPost_Trending() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [Like, setLike] = useState(false);
-
+  const dispatch = useDispatch();
   return (
     <section className="UserPosting">
       <article className="UserPosting-NameProfile">
@@ -64,7 +65,11 @@ function ListPost_Trending() {
             </figcaption>
           </figure>
           <figure className="Chat-LikePosting">
-            <img src={components.ImageChat} alt="" />
+            <img
+              src={components.ImageChat}
+              alt=""
+              onClick={() => dispatch(CheckImageUserComment(true))}
+            />
             <figcaption>
               <p>12</p>
             </figcaption>

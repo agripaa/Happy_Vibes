@@ -1,11 +1,11 @@
 .ContainerPostStatus {
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   backdrop-filter: blur(5px);
-  z-index: 30;
+  z-index: 5;
 }
 .wrapPostStatus {
   width: 100%;

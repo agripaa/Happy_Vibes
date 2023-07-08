@@ -1,6 +1,8 @@
 export const CHECKPOST = "CHECKPOST";
+export const CHECKCOMMENT = "CHECKCOMMENT";
 let InitialState = {
   checkPost: false,
+  checkImageComment: false,
 };
 
 const CheckMyPost = (state = InitialState, action) => {
@@ -9,6 +11,11 @@ const CheckMyPost = (state = InitialState, action) => {
       return {
         ...state,
         checkPost: action.payload.checkpst,
+      };
+    case CHECKCOMMENT:
+      return {
+        ...state,
+        checkImageComment: action.payload.checkImageComment,
       };
     default:
       return state;

@@ -21,6 +21,11 @@ import inputImage from "../../img/imageInput.svg";
 import ImgTesting from "../../img/img-3.png";
 import ImgTesting2 from "../../img/img-2.png";
 import PenPost from "../../img/pen.svg";
+import DeleteImgBackground from "../../img/deleteImage.svg";
+import AddImageBackground from "../../img/addImage.svg";
+import AddImagePP from "../../img/pencil.svg";
+import EditDesc from "../../img/edit.svg";
+import IconSearchExplore from "../../img/search-line.svg";
 let initialImage = {
   ImageLove,
   ImageChat,
@@ -45,6 +50,11 @@ let initialImage = {
   PenPost,
   ImgTesting,
   ImgTesting2,
+  DeleteImgBackground,
+  AddImageBackground,
+  AddImagePP,
+  EditDesc,
+  IconSearchExplore,
 };
 const PostComponents = (state = initialImage, action) => {
   return state;
