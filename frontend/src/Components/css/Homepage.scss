@@ -254,12 +254,9 @@
     padding: 0 3% 0 3%;
     height: 50px;
     header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img {
-        width: 44px;
-        height: 54px;
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
       }
     }
     figure {

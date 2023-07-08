@@ -26,7 +26,9 @@ function Homepage() {
         <div className="WrapContainer-HomePage">
           {getWitdh <= 500 ? (
             <div className="NavbarHomePage">
-              <header></header>
+              <header>
+                <h1>HV</h1>
+              </header>
               <figure className="featuresChat">
                 <img src={components.ImageChat2} alt="" />
               </figure>

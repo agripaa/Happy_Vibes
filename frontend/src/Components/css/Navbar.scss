@@ -35,8 +35,27 @@
 
 .Navbar {
   &Logo {
+    width: 100%;
+    height: 10%;
+  }
+}
+.Navbar {
+  &Logo {
     display: flex;
     justify-content: flex-start;
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      &::after {
+        content: "";
+        display: block;
+        width: 100%;
+        margin-top: -12px;
+        border-radius: 40px;
+        height: 13px;
+        background-color: #ffba53;
+      }
+    }
   }
 }
 .navTags {

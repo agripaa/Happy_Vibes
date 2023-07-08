@@ -21,15 +21,12 @@ import inputImage from "../../img/imageInput.svg";
 import ImgTesting from "../../img/img-3.png";
 import ImgTesting2 from "../../img/img-2.png";
 import PenPost from "../../img/pen.svg";
-<<<<<<< HEAD
 import LogoNavbar from "../../img/LogoHappyVibesTransparant.png";
-=======
 import DeleteImgBackground from "../../img/deleteImage.svg";
 import AddImageBackground from "../../img/addImage.svg";
 import AddImagePP from "../../img/pencil.svg";
 import EditDesc from "../../img/edit.svg";
 import IconSearchExplore from "../../img/search-line.svg";
->>>>>>> 1b758a657f1db45e2c7a0b21690be2cfde8f7723
 let initialImage = {
   ImageLove,
   ImageChat,

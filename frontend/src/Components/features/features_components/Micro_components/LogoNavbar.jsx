@@ -16,7 +16,7 @@ function LogoNavbar({ myClass }) {
       {" "}
       {getInnerWidth > 500 ? (
         <div className={myClass}>
-          <img src={components.LogoNavbar} alt="" />
+          <h1>HyV</h1>
         </div>
       ) : null}
     </Fragment>
