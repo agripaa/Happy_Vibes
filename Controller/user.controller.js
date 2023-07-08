@@ -1,5 +1,4 @@
 const Users = require('../Models/usersData.model.js');
-const db = require('../Config/database.js')
 const argon2 = require('argon2');
 const path = require('path');
 const log = require('../utils/log.js');
@@ -11,6 +10,8 @@ require('dotenv').config();
 const crypto = require('crypto');
 const Posting = require('../Models/postingData.model.js');
 const { unlinkSync, existsSync } = require('fs');
+const { Sequelize } = require('sequelize');
+const db = require('../Config/database.js');
 
 module.exports = {
   async getUsers(_, res) {
@@ -27,17 +28,24 @@ module.exports = {
         .json({ status: 'error', msg: 'internal server error', error: err });
     }
   },
-  async getRandomUsers(_, res) {
+  async getRandomUsers(req, res) {
     try {
+      const { userId } = req;
+  
       const user = await Users.findAll({
+        where: {
+          id: {
+            [Sequelize.Op.not]: userId
+          }
+        },
         order: db.random(),
         limit: 1
       });
   
-      res.status(200).json({status:200, result: user});
+      res.status(200).json({ status: 200, result: user });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Terjadi kesalahan saat mengambil data pengguna' });
+      res.status(500).json({ status: 500, result: 'Terjadi kesalahan saat mengambil data pengguna' });
     }
   },
   shuffleArray(array) {
