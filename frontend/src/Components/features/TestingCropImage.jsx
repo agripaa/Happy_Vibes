@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../css/TestCrop.scss";
 function TestingCropImage() {
   const [imgcrop, setImgCrop] = useState(null);
   async function handleImage(e) {

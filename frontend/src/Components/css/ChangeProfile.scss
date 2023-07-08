@@ -1,0 +1,222 @@
+.ChangeProfile {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+  z-index: 5;
+}
+.wrapChangeProfile {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.SquareChangeProfile {
+  width: 550px;
+  height: 480px;
+  background-color: white;
+  border-radius: 10px;
+}
+.headerChangeProfile {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 5px;
+}
+.backChangeProfile {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 3px 0px 3px 5px;
+}
+.buttonChangeProfile {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 3px 5px 3px 0px;
+
+  button {
+    width: 35%;
+    height: 60%;
+    font-size: 10px;
+    font-weight: 600;
+    background-color: #ffba53;
+    border-radius: 10px;
+    border: none;
+  }
+}
+.MainChangeProfile {
+  width: 100%;
+  height: 90%;
+}
+.ImageProfileChange {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+.imageBackgroundChange {
+  width: 100%;
+  height: 260px;
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+.AboutChangeBackground {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  top: 0;
+  left: 0;
+  img {
+    width: auto;
+    height: auto;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.ImagePPChange {
+  width: 100%;
+  height: auto;
+  padding: 0 20px;
+  display: flex;
+  position: absolute;
+  bottom: -35px;
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+}
+.AboutChangePP {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: rgba($color: #000000, $alpha: 0.2);
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}
+.ArticleNameAndDesc {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  align-items: center;
+}
+.wrapArticleNameAndDesc {
+  width: 100%;
+  height: 50%;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.NameArticleChange {
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  p {
+    font-size: 12px;
+    font-weight: 300;
+  }
+}
+.ChangeDesc {
+  width: 100%;
+}
+.desc {
+  display: flex;
+  gap: 6px;
+  p {
+    font-size: 12px;
+    font-weight: 300;
+  }
+  img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+.inputDesc {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  input {
+    width: 80%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    font-size: 12px;
+    padding: 0 5px;
+  }
+  button {
+    width: 15%;
+    font-size: 10px;
+    font-weight: 600;
+    background-color: #ffba53;
+    border-radius: 5px;
+    border: none;
+  }
+}
+@media screen and (max-width: 620px) {
+  .SquareChangeProfile {
+    width: 450px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .SquareChangeProfile {
+    width: 300px;
+    height: 580px;
+  }
+  .imageBackgroundChange {
+    height: 190px;
+  }
+
+  .ImagePPChange {
+    bottom: -20px;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+  .AboutChangePP {
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 15px;
+      height: 15px;
+    }
+  }
+  .wrapArticleNameAndDesc {
+    height: 75%;
+  }
+}
+@media screen and (max-width: 330px) {
+  .SquareChangeProfile {
+    width: 300px;
+    height: 410px;
+  }
+}

@@ -6,6 +6,8 @@ function FeaturePost_HomePage() {
     <main className="ContainerValuePosting-HomePage">
       <div className="wrapContainerValuePosting-HomePage">
         <Section_UserPostingHomePage />
+        <Section_UserPostingHomePage />
+        <Section_UserPostingHomePage />
       </div>
     </main>
   );

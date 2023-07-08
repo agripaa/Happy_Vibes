@@ -8,16 +8,17 @@ import ImageProfilePage from "../img/Background-profile.png";
 import ImageProfilePage2 from "../img/imageDummy2.png";
 import HeaderPageProfile from "./features_components/Micro_Components_ProfilePge.jsx/HeaderPageProfile";
 import Navigation_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/Navigation_ProfilePage";
-import ImageDummy from "../img/imageDummy2.png";
-import ImageDummy2 from "../img/Frame_10.png";
-import ImageLove from "../img/Vector-Like.png";
-import ImageChat from "../img/Vector-Chat.png";
-import ImageShare from "../img/Vector-Share.png";
-import ImageBookmarks from "../img/Vector-Save.png";
+
 import FeaturePost_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/FeaturePost_ProfilePage";
 import MainPageProfileUsers from "./features_components/Micro_Components_ProfilePge.jsx/MainPageProfileUsers";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
+import CommentComponents from "./features_components/Micro_components/Comment";
+import { useSelector } from "react-redux";
+import ChangeProfileImage from "./features_components/Micro_components/ChangeProfileImage";
 function ProfilepageUsers() {
+  const myComment = useSelector((state) => state.CheckMyPostReducer);
+  const myEdit = useSelector((state) => state.CheckDeleteReducer);
+
   return (
     <Fragment>
       <Navbar />
@@ -29,6 +30,9 @@ function ProfilepageUsers() {
           <FeaturePost_ProfilePage />
         </div>
       </div>
+      {myEdit.checkEdit ? <ChangeProfileImage /> : null}
+      {myComment.checkImageComment ? <CommentComponents /> : null}
+
       <OptionBugReport />
       <AsideSearch />
     </Fragment>

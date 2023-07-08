@@ -15,7 +15,11 @@ import Component_TrendingPost from "./features_components/Micro_ComponentExplore
 import Component_People from "./features_components/Micro_ComponentExplore/Component_People";
 import Component_Paingting from "./features_components/Micro_ComponentExplore/Component_Paingting";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
+import CommentComponents from "./features_components/Micro_components/Comment";
+import { useSelector } from "react-redux";
 function Explore() {
+  const myComment = useSelector((state) => state.CheckMyPostReducer);
+
   return (
     <Fragment>
       <Navbar />
@@ -28,6 +32,8 @@ function Explore() {
           <Component_Paingting />
         </div>
       </div>
+      {myComment.checkImageComment ? <CommentComponents /> : null}
+
       <OptionBugReport />
       <AsideSearchExplore />
     </Fragment>

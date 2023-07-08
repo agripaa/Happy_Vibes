@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 import React, { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from 'axios';
+=======
+import React, { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { CheckImageUserComment } from "../../../Action/CheckMyPost";
+>>>>>>> 1b758a657f1db45e2c7a0b21690be2cfde8f7723
 
 function Section_UserPostingHomePage() {
   const [Like, setLike] = useState(false);
   const [isPosts, setPosts] = useState([]);
   const components = useSelector((state) => state.ComponentImagePostReducer);
+<<<<<<< HEAD
 
   const getPostings = async (e)=> {
     try {
@@ -51,6 +58,9 @@ function Section_UserPostingHomePage() {
       handleLike(post.id, true);
     }
   };
+=======
+  const dispatch = useDispatch();
+>>>>>>> 1b758a657f1db45e2c7a0b21690be2cfde8f7723
 
   return (
     <Fragment>
@@ -96,6 +106,7 @@ function Section_UserPostingHomePage() {
                   className="LikeLove"
                   onClick={() => toggleLike(post)}
                 />
+<<<<<<< HEAD
                 <figcaption>
                   <p>{post.like}</p>
                 </figcaption>
@@ -116,6 +127,38 @@ function Section_UserPostingHomePage() {
           </article>
         </section>
       ))}
+=======
+              ) : (
+                <img
+                  src={components.ImageLove}
+                  alt=""
+                  onClick={() => setLike(true)}
+                />
+              )}
+              <figcaption>
+                <p>12</p>
+              </figcaption>
+            </figure>
+            <figure className="Chat-LikePosting">
+              <img
+                src={components.ImageChat}
+                alt=""
+                onClick={() => dispatch(CheckImageUserComment(true))}
+              />
+              <figcaption>
+                <p>12</p>
+              </figcaption>
+            </figure>
+            <figure className="Share-LikePosting">
+              <img src={components.ImageShare} alt="" />
+            </figure>
+            <figure className="Bookmarks-LikePosting">
+              <img src={components.ImageBookmarks} alt="" />
+            </figure>
+          </div>
+        </article>
+      </section>
+>>>>>>> 1b758a657f1db45e2c7a0b21690be2cfde8f7723
     </Fragment>
   );
 }

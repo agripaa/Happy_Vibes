@@ -10,7 +10,11 @@ import Navigation_ProfilePage from "./features_components/Micro_Components_Profi
 import FeaturePost_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/FeaturePost_ProfilePage";
 
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
+import CommentComponents from "./features_components/Micro_components/Comment";
+import { useSelector } from "react-redux";
 function Profilepage() {
+  const myComment = useSelector((state) => state.CheckMyPostReducer);
+
   return (
     <Fragment>
       <Navbar />
@@ -22,6 +26,7 @@ function Profilepage() {
           <FeaturePost_ProfilePage />
         </div>
       </div>
+      {myComment.checkImageComment ? <CommentComponents /> : null}
 
       <OptionBugReport />
 
