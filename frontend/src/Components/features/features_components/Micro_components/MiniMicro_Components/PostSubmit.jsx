@@ -4,15 +4,18 @@ import {
   HandleGetWidth,
   HandleSaveImage,
 } from "../../../../Action/ActionPostSubmit";
-import { CheckMyPostUser } from "../../../../Action/CheckMyPost";
+import {
+  CheckCropImageUser,
+  CheckMyPostUser,
+} from "../../../../Action/CheckMyPost";
 
 function PostSubmit() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const postComponent = useSelector((state) => state.PostReducer);
-
   const dispatch = useDispatch();
   function handleImageSubmit(e) {
     dispatch(HandleSaveImage(URL.createObjectURL(e.target.files[0])));
+    dispatch(CheckCropImageUser(false));
   }
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -20,7 +23,19 @@ function PostSubmit() {
     });
   }, [dispatch]);
   return (
-    <form className="SquarePostStatus">
+    <form
+      className="SquarePostStatus"
+      style={{
+        height:
+          postComponent.getImage && postComponent.getwidth <= 500
+            ? "100%"
+            : !postComponent.getImage && postComponent.getwidth <= 500
+            ? "100%"
+            : postComponent.getImage && postComponent.getwidth > 500
+            ? "auto"
+            : "470px",
+      }}
+    >
       <header className="HeaderPostStatus">
         <figure className="ImageProfilPost">
           <img src={components.ImageDummy} alt="" />
@@ -28,7 +43,11 @@ function PostSubmit() {
         <figure
           className="CloseProfilPost"
           style={{ cursor: "pointer" }}
-          onClick={() => dispatch(CheckMyPostUser(false))}
+          onClick={() => {
+            dispatch(CheckMyPostUser(false));
+            dispatch(HandleSaveImage(null));
+            dispatch(CheckCropImageUser(false));
+          }}
         >
           <img
             src={
@@ -41,7 +60,7 @@ function PostSubmit() {
         </figure>
       </header>
       <main className="imagePostStatus">
-        {/* <img src={components.ImageDummy2} alt="" /> */}
+        <img src={postComponent.getImage} alt="" />
       </main>
       <footer className="InputTextPostStatus">
         <div className="InputAndButton">

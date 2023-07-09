@@ -13,7 +13,7 @@
 }
 .SquarePostStatus {
   width: 480px;
-  height: 470px;
+  height: auto;
   background-color: white;
   border-radius: 10px;
 }
@@ -143,16 +143,13 @@
 }
 .imageCropPost {
   width: 100%;
-  height: auto;
+  height: 400px;
   padding: 20px;
-  img {
-    width: 100%;
-    height: auto;
-  }
+  position: relative;
 }
 .chooseSize {
   width: 100%;
-  height: 20px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;

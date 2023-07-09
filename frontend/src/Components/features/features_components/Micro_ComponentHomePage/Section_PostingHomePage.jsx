@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckImageUserComment } from "../../../Action/CheckMyPost";
 
@@ -6,14 +6,36 @@ function Section_UserPostingHomePage() {
   const [Like, setLike] = useState(false);
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispatch = useDispatch();
-
+  const [getSizeImage, setGetSizeImage] = useState({
+    xwidth: 0,
+    yheight: 0,
+  });
+  function sizeGet() {
+    return new Promise((resolve) => {
+      resolve(document.querySelector(".ImageHomepage"));
+    });
+  }
+  async function getSize() {
+    let sizeImage = await sizeGet();
+    setGetSizeImage({
+      xwidth: sizeImage.clientWidth,
+      yheight: sizeImage.clientHeight,
+    });
+  }
+  useEffect(() => {
+    if (getSizeImage.xwidth <= 0) {
+      getSize();
+    } else {
+      return;
+    }
+  }, [getSizeImage]);
   return (
     <Fragment>
       <section className="UserPosting">
         <article className="UserPosting-NameProfile">
           <div className="NameProfileText">
             <figure className="ImageProfile-NameProfile">
-              <img src={components.ImageDummy} alt="" />
+              <img src={components.ImgTesting2} alt="" />
             </figure>
             <div className="TextProfile-NameProfile">
               <p> NameDummy</p>
@@ -30,7 +52,23 @@ function Section_UserPostingHomePage() {
         </article>
         <article className="UserPosting-ImagePosting">
           <figure className="Image-ImagePosting">
-            <img src={components.ImageDummy2} alt="" />
+            <img
+              src={components.ImgTesting2}
+              alt=""
+              className="ImageHomepage"
+              style={{
+                width: `${
+                  getSizeImage.xwidth > 450
+                    ? `100%`
+                    : `${getSizeImage.xwidth}px`
+                }`,
+                height: `${
+                  getSizeImage.yheight > 550
+                    ? `100%`
+                    : `${getSizeImage.yheight}px`
+                }`,
+              }}
+            />
           </figure>
         </article>
         <article className="UserPosting-ArticlePosting">
