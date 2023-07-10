@@ -21,7 +21,6 @@ function ListUser() {
     try {
       axios.post(`http://localhost:5000/follow/${userId}/user/`, null, {withCredentials: true})
       .then(({data}) => {
-        console.log(data);
       }).catch(({response}) => {
         console.error(response);
       })
@@ -34,7 +33,6 @@ function ListUser() {
     try {
       axios.post(`http://localhost:5000/unfollow/${userId}/user/`, null, {withCredentials: true})
       .then(({data}) => {
-        console.log(data);
       }).catch(({response}) => {
         console.error(response);
       })

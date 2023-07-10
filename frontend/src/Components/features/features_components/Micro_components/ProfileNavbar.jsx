@@ -23,7 +23,6 @@ function ProfileNavbar({ check }) {
     try {
       await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
       .then(({data}) => {
-        console.log(data);
         setDataProfile(data.result);
       }).catch(err => console.error(err));
     } catch (err) {

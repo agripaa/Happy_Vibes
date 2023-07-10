@@ -11,7 +11,6 @@ function Section_UserPostingHomePage() {
     try {
       await axios.get(`http://localhost:5000/posting/all_content/`, {withCredentials: true})
       .then(({data}) => {
-        console.log(data.result);
         setPosts(data.result);
       })
       .catch((err) => console.error(err))
