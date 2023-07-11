@@ -32,7 +32,7 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/profile/:id" element={<Profilepage />} />
-        <Route path="/profileusers/:id" element={<ProfilepageUsers />} />
+        <Route path="/profile/user" element={<ProfilepageUsers />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </>

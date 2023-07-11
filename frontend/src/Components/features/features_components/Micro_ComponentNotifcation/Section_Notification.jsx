@@ -39,7 +39,7 @@ function Section_Notification() {
     <>
     {notifs.map((notif, i) => {
       return (
-        <section className="ThisNotifications">
+        <section className="ThisNotifications" key={i}>
             <div className="BlockNameUser">
               <div className="Nameuser-Notifications">
                 <figure>

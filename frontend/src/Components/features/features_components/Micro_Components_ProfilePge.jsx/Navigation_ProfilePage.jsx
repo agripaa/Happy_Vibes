@@ -27,11 +27,9 @@ function Navigation_ProfilePage() {
           </Link>
         </section>
         <section className="NavigationMedia-ProfilePage">
-          <Link to={"/"}>
-            <p className="textNavigation" onClick={handleClickNavigation}>
-              Media
-            </p>
-          </Link>
+          <p className="textNavigation blur" onClick={handleClickNavigation}>
+            Media
+          </p>
         </section>
       </div>
     </main>
