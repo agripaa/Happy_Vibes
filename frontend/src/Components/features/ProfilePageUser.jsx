@@ -42,6 +42,9 @@ function ProfilepageUsers() {
           <FeaturePost_ProfilePage />
         </div>
       </div>
+      {myEdit.checkEdit ? <ChangeProfileImage /> : null}
+      {myComment.checkImageComment ? <CommentComponents /> : null}
+
       <OptionBugReport />
       <AsideSearch />
     </Fragment>

@@ -15,6 +15,8 @@ import Explore from "./Components/features/Explore";
 import Notifications from "./Components/features/Notifications";
 import NotFound from "./Components/features/NotFound";
 import PopOptions from "./Components/features/PopOptions";
+import TestingCropImage from "./Components/features/TestingCropImage";
+import CommentComponents from "./Components/features/features_components/Micro_components/Comment";
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
         <Route path="/profile/:id" element={<Profilepage />} />
         <Route path="/profile/user" element={<ProfilepageUsers />} />
         <Route path="/*" element={<NotFound />} />
+        <Route path="/testcrop" element={<TestingCropImage />} />
       </Routes>
     </>
   );

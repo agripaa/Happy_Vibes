@@ -18,8 +18,14 @@ import ImageDeleteAccount2 from "../../img/delete2.svg";
 import ImageLogout2 from "../../img/logout2.svg";
 import Close from "../../img/close-post.svg";
 import inputImage from "../../img/imageInput.svg";
+import ImgTesting from "../../img/img-3.png";
+import ImgTesting2 from "../../img/img-2.png";
 import PenPost from "../../img/pen.svg";
-import LogoNavbar from "../../img/LogoHappyVibesTransparant.png";
+import DeleteImgBackground from "../../img/deleteImage.svg";
+import AddImageBackground from "../../img/addImage.svg";
+import AddImagePP from "../../img/pencil.svg";
+import EditDesc from "../../img/edit.svg";
+import IconSearchExplore from "../../img/search-line.svg";
 let initialImage = {
   ImageLove,
   ImageChat,
@@ -42,7 +48,13 @@ let initialImage = {
   inputImage,
   ImageSend,
   PenPost,
-  LogoNavbar,
+  ImgTesting,
+  ImgTesting2,
+  DeleteImgBackground,
+  AddImageBackground,
+  AddImagePP,
+  EditDesc,
+  IconSearchExplore,
 };
 const PostComponents = (state = initialImage, action) => {
   return state;

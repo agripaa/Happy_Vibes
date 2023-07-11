@@ -29,6 +29,34 @@
   padding: 0 0 0 10px;
   border-radius: 10px;
 }
+.FindSearch {
+  width: 30%;
+  height: auto;
+  padding: 0 10px 10px 10px;
+  top: 65px;
+  position: absolute;
+  background-color: #ffffff;
+}
+.SearchInputUser,
+.SearchFindInputUser {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+  p {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgba($color: #bdbdbd, $alpha: 0.2);
+  }
+}
 .imageSearch-Explore {
   width: 10%;
   display: flex;
@@ -259,6 +287,10 @@
     display: flex;
     justify-content: center;
   }
+  .FindSearch {
+    width: 40%;
+    top: 63px;
+  }
 }
 
 @media screen and (max-width: 1100px) {
@@ -271,6 +303,10 @@
     width: 70%;
     height: 40px;
   }
+  .FindSearch {
+    width: 45%;
+    top: 55px;
+  }
 }
 @media screen and (max-width: 990px) {
   .Container-searchExplore {
@@ -281,6 +317,10 @@
     padding-bottom: 1%;
     padding-left: 70px;
   }
+  .FindSearch {
+    width: 45%;
+    top: 65px;
+  }
 }
 @media screen and (max-width: 650px) {
   .TagHottest {
@@ -290,6 +330,9 @@
   }
   .wrapTagHost {
     width: 100%;
+  }
+  .FindSearch {
+    top: 60px;
   }
 }
 @media screen and (max-width: 500px) {
@@ -339,8 +382,16 @@
       }
     }
   }
+  .FindSearch {
+    width: 90%;
+    top: 65px;
+  }
 }
-
+@media screen and (max-width: 330px) {
+  .FindSearch {
+    top: 60px;
+  }
+}
 @media screen and (min-width: 1351px) and (min-height: 800px) {
   .imageSearch-Explore {
     width: 10%;
@@ -364,5 +415,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+  .FindSearch {
+    top: 70px;
   }
 }

@@ -1,120 +1,129 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import { CheckImageUserComment } from "../../../Action/CheckMyPost";
 
 function Section_UserPostingHomePage() {
   const [Like, setLike] = useState(false);
   const [isPosts, setPosts] = useState([]);
   const components = useSelector((state) => state.ComponentImagePostReducer);
-
-  const getPostings = async (e)=> {
-    try {
-      await axios.get(`http://localhost:5000/posting/all_content/`, {withCredentials: true})
-      .then(({data}) => {
-        setPosts(data.result);
-      })
-      .catch((err) => console.error(err))
-    } catch (err) {
-      
-    }
+  const dispatch = useDispatch();
+  const [getSizeImage, setGetSizeImage] = useState({
+    xwidth: 0,
+    yheight: 0,
+  });
+  function sizeGet() {
+    return new Promise((resolve) => {
+      resolve(document.querySelector(".ImageHomepage"));
+    });
   }
-
-  const handleLike = async (postId, liked) => {
-    try {
-      await axios.patch(`http://localhost:5000/posting/like/${postId}`, { liked }, { withCredentials: true });
-  
-      const response = await axios.get(`http://localhost:5000/${postId}/posting`, { withCredentials: true });
-      const updatedPost = response.data.result;
-  
-      const updatedPosts = isPosts.map(post => {
-        if (post.id === postId) {
-          return updatedPost;
-        }
-        return post;
-      });
-  
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.error(error);
-    }
+  async function getSize() {
+    let sizeImage = await sizeGet();
+    setGetSizeImage({
+      xwidth: sizeImage.clientWidth,
+      yheight: sizeImage.clientHeight,
+    });
   }
-  
   useEffect(() => {
-    getPostings();
-  }, [])
-
-  const toggleLike = (post) => {
-    if (post.liked) {
-      handleLike(post.id, false);
+    if (getSizeImage.xwidth <= 0) {
+      getSize();
     } else {
-      handleLike(post.id, true);
+      return;
     }
-  };
-
+  }, [getSizeImage]);
   return (
     <Fragment>
-      {isPosts.map((post, i) => (
-        <section className="UserPosting" key={i}>
-          <article className="UserPosting-NameProfile">
-            <div className="NameProfileText">
-              <figure className="ImageProfile-NameProfile">
-                <img className="img_users" src={post.users_datum.url} alt={post.users_datum.name_img} />
-              </figure>
-              <div className="TextProfile-NameProfile">
-                <p>{post.users_datum.name}</p>
-                <p>@{post.users_datum.username}</p>
-                <p> - {post.createdAt}  - </p>
-              </div>
-            </div>
-            <div className="ButtonList-NameProfile">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            {/* Fitur tambahan */}
-            {/* <div className="ShowMoreFitur"></div> */}
-          </article>
-          <article className="UserPosting-ImagePosting">
-            <figure className="Image-ImagePosting">
-              <img src={post.url} alt={post.name_img} />
+      <section className="UserPosting">
+        <article className="UserPosting-NameProfile">
+          <div className="NameProfileText">
+            <figure className="ImageProfile-NameProfile">
+              <img src={components.ImgTesting2} alt="" />
             </figure>
-          </article>
-          <article className="UserPosting-ArticlePosting">
-            <figcaption>
-              <p>
-                {post.desc}
-              </p>
-            </figcaption>
-          </article>
-          <article className="UserPosting-LikePosting">
-            <div className="wrapLikePosting">
-              <figure className="Love-LikePosting">
-              <img
-                  src={components.ImageLikeLove }
+            <div className="TextProfile-NameProfile">
+              <p> NameDummy</p>
+              <p>@nameDummy</p>
+            </div>
+          </div>
+          <div className="ButtonList-NameProfile">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          {/* Fitur tambahan */}
+          {/* <div className="ShowMoreFitur"></div> */}
+        </article>
+        <article className="UserPosting-ImagePosting">
+          <figure className="Image-ImagePosting">
+            <img
+              src={components.ImgTesting2}
+              alt=""
+              className="ImageHomepage"
+              style={{
+                width: `${
+                  getSizeImage.xwidth > 450
+                    ? `100%`
+                    : `${getSizeImage.xwidth}px`
+                }`,
+                height: `${
+                  getSizeImage.yheight > 550
+                    ? `100%`
+                    : `${getSizeImage.yheight}px`
+                }`,
+              }}
+            />
+          </figure>
+        </article>
+        <article className="UserPosting-ArticlePosting">
+          <figcaption>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam
+              libero perferendis modi culpa aliquam reiciendis doloremque ad
+              magni laborum exercitationem dolore esse asperiores deserunt saepe
+              reprehenderit consequatur accusamus, rerum laudantium quo.
+              Necessitatibus debitis, maxime minima facere aut nesciunt quisquam
+              cupiditate.
+            </p>
+          </figcaption>
+        </article>
+        <article className="UserPosting-LikePosting">
+          <div className="wrapLikePosting">
+            <figure className="Love-LikePosting">
+              {Like ? (
+                <img
+                  src={components.ImageLikeLove}
                   alt=""
                   className="LikeLove"
                   onClick={() => toggleLike(post)}
                 />
-                <figcaption>
-                  <p>{post.like}</p>
-                </figcaption>
-              </figure>
-              <figure className="Chat-LikePosting">
-                <img src={components.ImageChat} alt="" />
-                <figcaption>
-                  <p>12</p>
-                </figcaption>
-              </figure>
-              <figure className="Share-LikePosting">
-                <img src={components.ImageShare} alt="" />
-              </figure>
-              <figure className="Bookmarks-LikePosting">
-                <img src={components.ImageBookmarks} alt="" />
-              </figure>
-            </div>
-          </article>
-        </section>
-      ))}
+              ) : (
+                <img
+                  src={components.ImageLove}
+                  alt=""
+                  onClick={() => setLike(true)}
+                />
+              )}
+              <figcaption>
+                <p>12</p>
+              </figcaption>
+            </figure>
+            <figure className="Chat-LikePosting">
+              <img
+                src={components.ImageChat}
+                alt=""
+                onClick={() => dispatch(CheckImageUserComment(true))}
+              />
+              <figcaption>
+                <p>12</p>
+              </figcaption>
+            </figure>
+            <figure className="Share-LikePosting">
+              <img src={components.ImageShare} alt="" />
+            </figure>
+            <figure className="Bookmarks-LikePosting">
+              <img src={components.ImageBookmarks} alt="" />
+            </figure>
+          </div>
+        </article>
+      </section>
     </Fragment>
   );
 }

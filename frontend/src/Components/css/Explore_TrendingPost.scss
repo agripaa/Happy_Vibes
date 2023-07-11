@@ -75,15 +75,16 @@
   padding-top: 10px;
   width: 100%;
   height: 270px;
+  position: relative;
 }
 .Image-ImagePosting {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  position: relative;
   img {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
     border-radius: 10px;
-    object-fit: cover;
   }
 }
 .UserPosting-ArticlePosting {
