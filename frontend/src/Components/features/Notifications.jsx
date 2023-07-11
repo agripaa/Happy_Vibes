@@ -24,9 +24,6 @@ function Notifications() {
           </header>
           <main className="main-Notifications">
             <Section_Notification />
-            <Section_Notification />
-            <Section_Notification />
-            <Section_Notification />
           </main>
         </div>
       </div>

@@ -14,7 +14,6 @@ function Section_UserPostingHomePage() {
           withCredentials: true,
         })
         .then(({ data }) => {
-          console.log(data.result);
           setPosts(data.result);
         })
         .catch((err) => console.error(err));

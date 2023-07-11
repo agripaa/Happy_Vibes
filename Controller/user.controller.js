@@ -1,5 +1,4 @@
 const Users = require('../Models/usersData.model.js');
-const db = require('../Config/database.js')
 const argon2 = require('argon2');
 const path = require('path');
 const log = require('../utils/log.js');
@@ -9,6 +8,10 @@ const nodemailer = require("nodemailer");
 const Token = require('../Models/tokenData.model.js');
 require('dotenv').config();
 const crypto = require('crypto');
+const Posting = require('../Models/postingData.model.js');
+const { unlinkSync, existsSync } = require('fs');
+const { Sequelize } = require('sequelize');
+const db = require('../Config/database.js');
 
 module.exports = {
   async getUsers(_, res) {
@@ -25,17 +28,24 @@ module.exports = {
         .json({ status: 'error', msg: 'internal server error', error: err });
     }
   },
-  async getRandomUsers(_, res) {
+  async getRandomUsers(req, res) {
     try {
+      const { userId } = req;
+  
       const user = await Users.findAll({
+        where: {
+          id: {
+            [Sequelize.Op.not]: userId
+          }
+        },
         order: db.random(),
-        limit: 5
+        limit: 1
       });
   
-      res.json(user);
+      res.status(200).json({ status: 200, result: user });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Terjadi kesalahan saat mengambil data pengguna' });
+      res.status(500).json({ status: 500, result: 'Terjadi kesalahan saat mengambil data pengguna' });
     }
   },
   shuffleArray(array) {
@@ -264,12 +274,27 @@ module.exports = {
         if(userId !== user.id) return res.status(400).json({status: 400, msg: "You cannot delete this account!"})
 
         try {
-            await unlinkSync(`./public/users/${user.name_img}`, (err) => {
-                if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
-            })
-            await unlinkSync(`./public/users/bg_img/${user.bg_img}`, (err) => {
-                if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
-            })
+          const photosToKeep = [
+            'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
+            'user_053c88cf369f519d289b99d6119049f5.jpg',
+            'user_60ef0bd9ba36c2c165e00be9b9a19dcd.jpg',
+            'user_c13354bf51f1ce36d3e652b409e37f54.jpg',
+            'user_db15b37020a2fbb05b69fa1157f0bbfa.jpg',
+            'user_ff0b300a0e11132de2c89be1d79da25e.jpeg'
+        ];
+
+              if (user.name_img && !photosToKeep.includes(user.name_img)) {
+                const nameImgPath = `./public/users/${user.name_img}`;
+                if (existsSync(nameImgPath)) {
+                    unlinkSync(nameImgPath);
+                }
+            }
+
+            if(user.bg_img !== null){
+                unlinkSync(`./public/users/bg_img/${user.bg_img}`, (err) => {
+                    if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
+                })
+            }
 
             const postings = await Posting.findAll({
                 where: { userId: user.id }

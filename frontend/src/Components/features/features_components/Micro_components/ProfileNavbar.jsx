@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
+import axios from 'axios';
 import "../../../css/Navbar.scss";
 
 import OptionProfile from "./MiniMicro_Components/OptionProfile";
 import { useSelector } from "react-redux";
+
 function ProfileNavbar({ check }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
-
+  const [dataProfile, setDataProfile] = useState({});
   const [Options, setOptions] = useState(false);
   const { dltCheckNav } = useSelector((state) => state.CheckDeleteReducer);
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -14,7 +16,20 @@ function ProfileNavbar({ check }) {
     window.addEventListener("resize", () => {
       setGetInnerWidth(innerWidth);
     });
+    getProfileUser();
   }, [getInnerWidth]);
+
+  async function getProfileUser(){
+    try {
+      await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
+      .then(({data}) => {
+        setDataProfile(data.result);
+      }).catch(err => console.error(err));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <Fragment>
       {check ? (
@@ -22,11 +37,11 @@ function ProfileNavbar({ check }) {
           <div className="NavbarProfile">
             <div className="NavbarProfile-Container">
               <figure>
-                <img src={components.ImageDummy} alt="" />
+                <img src={dataProfile.url} alt={dataProfile.name_img} />
               </figure>
               <figcaption>
-                <h5>NameDummy</h5>
-                <p>@nameDummy</p>
+                <h5>{dataProfile.name}</h5>
+                <p>@{dataProfile.username}</p>
               </figcaption>
               <div className="bulletsProfile">
                 <div

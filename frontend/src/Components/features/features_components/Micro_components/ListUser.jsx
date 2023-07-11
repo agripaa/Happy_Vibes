@@ -17,6 +17,30 @@ function ListUser() {
     }
   }
 
+  async function handleFollows(userId){
+    try {
+      axios.post(`http://localhost:5000/follow/${userId}/user/`, null, {withCredentials: true})
+      .then(({data}) => {
+      }).catch(({response}) => {
+        console.error(response);
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function handleUnFollows(userId){
+    try {
+      axios.post(`http://localhost:5000/unfollow/${userId}/user/`, null, {withCredentials: true})
+      .then(({data}) => {
+      }).catch(({response}) => {
+        console.error(response);
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     getRandomUsers();
   },[])
@@ -40,14 +64,20 @@ function ListUser() {
             {follow ? (
               <button
                 className="ButtonFollowed-Aside"
-                onClick={() => setFollow(false)}
-              >
+                onClick={() => {
+                  setFollow(false);
+                  handleUnFollows(user.id);
+                }}
+                >
                 Followed
               </button>
             ) : (
               <button
-                className="ButtonFollow-Aside"
-                onClick={() => setFollow(true)}
+              className="ButtonFollow-Aside"
+              onClick={() => {
+                setFollow(true);
+                handleFollows(user.id);
+                }}
               >
                 Follow
               </button>
