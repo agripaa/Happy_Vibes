@@ -18,7 +18,6 @@ function ProfilepageUsers() {
     try {
       await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
       .then(({data}) => {
-        // console.log(data.result);
         setUser(data.result);
       }) .catch(({response}) => {
         console.error(response);
