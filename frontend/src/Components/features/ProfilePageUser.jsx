@@ -12,7 +12,7 @@ import OptionBugReport from "./features_components/Micro_components/MiniMicro_Co
 import axios from 'axios';
 
 function ProfilepageUsers() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
 
   async function getDataUser() {
     try {
@@ -36,14 +36,14 @@ function ProfilepageUsers() {
       <Navbar />
       <div className="Container-ProfilePage">
         <div className="WrapContainer-ProfilePage">
-          <HeaderPageProfile ImageBack={ImageBack}/>
-          <MainPageProfileUsers />
+          <HeaderPageProfile ImageBack={ImageBack} userName={user.name}/>
+          <MainPageProfileUsers users={user} />
           <Navigation_ProfilePage />
           <FeaturePost_ProfilePage />
         </div>
       </div>
-      {myEdit.checkEdit ? <ChangeProfileImage /> : null}
-      {myComment.checkImageComment ? <CommentComponents /> : null}
+      {/* {myEdit.checkEdit ? <ChangeProfile  Image /> : null}
+      {myComment.checkImageComment ? <CommentComponents /> : null} */}
 
       <OptionBugReport />
       <AsideSearch />

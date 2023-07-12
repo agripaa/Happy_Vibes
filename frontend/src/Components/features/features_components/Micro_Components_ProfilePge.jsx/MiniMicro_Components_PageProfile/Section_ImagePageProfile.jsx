@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-function Section_ImagePageProfile() {
+function Section_ImagePageProfile({urlProfile, nameProfile, urlBackground, nameBackground}) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   return (
     <section className="section-ImageProfilePage">
       <figure className="BackgroundProfilePage">
-        <img src={components.ImageProfilePage} alt="" />
+        <img src={!urlBackground ? components.ImageProfilePage : urlBackground} alt={!nameBackground ? "default img background" : nameBackground} />
       </figure>
       <figure className="FrontProfilePage">
-        <img src={components.ImageDummy} alt="" />
+        <img src={urlProfile} alt={nameProfile} />
       </figure>
     </section>
   );
