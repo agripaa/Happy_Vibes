@@ -4,12 +4,11 @@ import "../css/Homepage.scss";
 import "../css/Comment.scss";
 import "../css/myLibrary.scss";
 import AsideSearch from "./features_components/AsideSearch";
-import ImageChat2 from "../img/chat-components.svg";
 import FeaturePost_HomePage from "./features_components/Micro_ComponentHomePage/FeaturesPost_HomePage";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
+import BugReport from "./features_components/Micro_components/MiniMicro_Components/BugReport";
 import { useSelector } from "react-redux";
 import CommentComponents from "./features_components/Micro_components/Comment";
-
 function Homepage() {
   const myComment = useSelector((state) => state.CheckMyPostReducer);
   const [getWitdh, setGetWidth] = useState(innerWidth);
@@ -28,7 +27,7 @@ function Homepage() {
           {getWitdh <= 500 ? (
             <div className="NavbarHomePage">
               <header>
-                <img src={components.LogoNavbar} alt="" />
+                <h1>HV</h1>
               </header>
               <figure className="featuresChat">
                 <img src={components.ImageChat2} alt="" />

@@ -21,6 +21,7 @@ import inputImage from "../../img/imageInput.svg";
 import ImgTesting from "../../img/img-3.png";
 import ImgTesting2 from "../../img/img-2.png";
 import PenPost from "../../img/pen.svg";
+import LogoNavbar from "../../img/LogoHappyVibesTransparant.png";
 import DeleteImgBackground from "../../img/deleteImage.svg";
 import AddImageBackground from "../../img/addImage.svg";
 import AddImagePP from "../../img/pencil.svg";
@@ -48,6 +49,7 @@ let initialImage = {
   inputImage,
   ImageSend,
   PenPost,
+  LogoNavbar,
   ImgTesting,
   ImgTesting2,
   DeleteImgBackground,
