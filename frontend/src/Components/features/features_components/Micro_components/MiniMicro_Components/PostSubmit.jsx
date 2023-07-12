@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   HandleGetWidth,
@@ -8,8 +8,11 @@ import {
   CheckCropImageUser,
   CheckMyPostUser,
 } from "../../../../Action/CheckMyPost";
+import axios from "axios";
+
 
 function PostSubmit() {
+  const [values, setValues] = useState([]);
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const postComponent = useSelector((state) => state.PostReducer);
   const dispatch = useDispatch();
