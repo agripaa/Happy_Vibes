@@ -85,7 +85,7 @@ const createNewPosting = async (req, res) => {
     const name_img = file.md5 + extend
     const url = `${req.protocol}://${req.get("host")}/postings/${name_img}`;
     const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
-    if(!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
+    // if(!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
     if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
     file.mv(`./public/postings/${name_img}`, async(err) => {
         if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});

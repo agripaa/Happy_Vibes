@@ -1,5 +1,6 @@
 export const GETWIDTH = "GETWIDTH";
 export const SAVEIMAGE = "SAVEIMAGE";
+export const SAVEFILEIMAGE = "SAVEFILEIMAGE";
 export const SETCREDENTIALIMAGE = "SETCREATEDENTIALIMAGE";
 
 const initialState = {
@@ -20,6 +21,11 @@ const PostRdc = (state = initialState, action) => {
         ...state,
         getImage: action.payload.getImage,
       };
+      case SAVEFILEIMAGE:
+        return{
+          ...state,
+          getFileImage: action.payload.getFileImage
+        }
 
     case SETCREDENTIALIMAGE:
       return {
