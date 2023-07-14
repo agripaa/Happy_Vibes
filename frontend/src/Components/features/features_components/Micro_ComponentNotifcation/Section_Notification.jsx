@@ -12,7 +12,6 @@ function Section_Notification() {
     try {
       await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
       .then(({data}) => {
-        console.log(data);
         setUser(data.result)
       }).catch((err) => console.error(err));
     } catch (err) {
@@ -23,7 +22,6 @@ function Section_Notification() {
     try {
       await axios.get('http://localhost:5000/notif/get_all/', { withCredentials: true})
       .then(({data}) => {
-        console.log(data);
         setNotifs(data.result);
       }).catch(({response}) => {console.error(response)})
     } catch (error) {

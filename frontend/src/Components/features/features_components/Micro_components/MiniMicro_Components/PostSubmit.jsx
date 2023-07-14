@@ -21,6 +21,7 @@ function PostSubmit() {
   const [file, setUploadFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [crop, setCropPhoto] = useState(false);
+  const [profile, setProfile] = useState({});
   const navigate = useNavigate();
 
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -29,7 +30,6 @@ function PostSubmit() {
 
   function handleImageSubmit(e) {
     const file = e.target.files[0];
-    console.log(file);
     if(file){
       setUploadFile(file);
       setPreview(URL.createObjectURL(file));
@@ -37,11 +37,24 @@ function PostSubmit() {
     }
   }
 
+  async function getUserProfile() {
+    try {
+      await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
+      .then(({data}) => {
+        setProfile(data.result);
+      }).catch(({response}) => {
+        console.error(response);
+      })
+      
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   async function handleSubmit(e){
     e.preventDefault();
     const {desc, like} = values;
     const formData = new FormData();
-    console.log(file)
     formData.append("desc", desc);
     formData.append("like", like);
     formData.append("file", file);
@@ -53,7 +66,7 @@ function PostSubmit() {
         withCredentials: true,
       })
       .then((res) => {
-        navigate('/homepage')
+        window.location.reload();
       }).catch(({response}) => {});
     } catch (err) {
       console.error(err);
@@ -65,6 +78,7 @@ function PostSubmit() {
     window.addEventListener("resize", () => {
       dispatch(HandleGetWidth(innerWidth));
     });
+    getUserProfile();
   }, [dispatch]);
 
   function handleChange(e) {
@@ -92,7 +106,7 @@ function PostSubmit() {
     >
       <header className="HeaderPostStatus">
         <figure className="ImageProfilPost">
-          <img src={components.ImageDummy} alt="" />
+          <img src={profile.url} alt={profile.name_img} />
         </figure>
         <figure
           className="CloseProfilPost"
