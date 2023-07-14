@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ImageSearchAside from "../../../img/Vector-Explore.png";
-import dummyImg from '../../../img/imageDummy2.png';
+import '../../../css/Explore.scss';
 import "../../../css/Aside-Search.scss";
 
 function ComponentsSearch() {
-  const [searchQuery, setSearchQuery] = useState([]);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [resultSearch, setResultSearch] = useState([]);
+  const [notFound, setNotFound] = useState([]);
   const handleSearch = async (e) => {
     e.preventDefault();
 
@@ -14,10 +15,9 @@ function ComponentsSearch() {
       await axios.get(
         `http://localhost:5000/users/search?name=${searchQuery}`
       ).then(({data}) => {
-        console.log(data);
-        setSearchQuery(data);
+        setResultSearch(data.result);
       }).catch(({response}) => {
-        console.error(response);
+        setNotFound(response.data);
       })
     } catch (error) {
       console.error(error);
@@ -44,26 +44,32 @@ function ComponentsSearch() {
           </div>
         </form>
       </div>
-      <div className="result-search">
-        <div className="Container-recomendUser">
-          <div className="WrapUser">
-            <div className="ThisUser">
-                <div className="imageProfile-Aside">
-                  <figure>
-                    <img src={dummyImg} alt="" />
-                  </figure>
+      {resultSearch.map((user, i) => {
+        return (
+          <>
+          {notFound.status === 404 ? (
+            <div className="result_search" key={i}>
+              <div className="FindSearchAside">
+                <div className="SearchInputUser">
+                  <p className="notfound">
+                    {notFound.msg}!
+                  </p>
                 </div>
-                <div className="NameProfile-Aside">
-                  <figcaption>
-                    <h5>dummy</h5>
-                    <p>@dummy</p>
-                  </figcaption>
-                </div>
-              <div className="FollowProfile-Aside"></div>
               </div>
-          </div>
-        </div>
-      </div>
+            </div>
+          ) : (
+            <div className="result_search" key={i}>
+              <div className="FindSearchAside">
+                <div className="SearchInputUser">
+                  <img src={user.url} alt={user.name_img} />
+                  <p>{user.name}</p>
+                </div>
+              </div>
+            </div>
+          )}
+          </>
+        )
+      })}
     </div>
   );
 }

@@ -51,13 +51,6 @@ function Section_UserPostingHomePage() {
     getPostings();
   }, []);
 
-  const toggleLike = (post) => {
-    if (post.liked) {
-      handleLike(post.id, false);
-    } else {
-      return;
-    }
-  };
 
   return (
     <Fragment>
@@ -103,7 +96,7 @@ function Section_UserPostingHomePage() {
                   src={components.ImageLikeLove}
                   alt=""
                   className="LikeLove"
-                  onClick={() => toggleLike(post)}
+                  onClick={() => handleLike(post.id, true)}
                 />
                 <figcaption>
                   <p>{post.like}</p>

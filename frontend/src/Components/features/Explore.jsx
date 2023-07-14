@@ -26,7 +26,7 @@ function Explore() {
       <div className="Container-Explore">
         <div className="WrapExplore">
           <ComponentsSearchExplore />
-          <Component_TagHot />
+          {/* <Component_TagHot /> */}
           <Component_TrendingPost />
           <Component_People />
           <Component_Paingting />
