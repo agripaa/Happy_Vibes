@@ -26,26 +26,40 @@ function Section_UserPostingHomePage() {
         `http://localhost:5000/posting/like/${postId}`,
         { liked },
         { withCredentials: true }
-      );
-
-      const response = await axios.get(
-        `http://localhost:5000/${postId}/posting`,
-        { withCredentials: true }
-      );
-      const updatedPost = response.data.result;
-
-      const updatedPosts = isPosts.map((post) => {
-        if (post.id === postId) {
-          return updatedPost;
-        }
-        return post;
-      });
-
-      setPosts(updatedPosts);
+      ).then(() => {
+        setPosts(prevPosts => {
+          return prevPosts.map(post => {
+            if (post.id === postId) {
+              return { ...post, liked: !post.liked };
+            }
+            return post;
+          });
+        });
+      }).catch(err => {console.error(err)});
     } catch (error) {
       console.error(error);
     }
   };
+
+  async function updatePost(postId){
+    try {
+      await axios.get(
+        `http://localhost:5000/${postId}/posting`,
+        { withCredentials: true }
+      ).then(({data}) => {
+        const updatedPost = data.result;
+        const updatedPosts = isPosts.map((post) => {
+          if (post.id === postId) {
+            return updatedPost;
+          }
+          return post;
+        });
+        setPosts(updatedPosts);
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   useEffect(() => {
     getPostings();
@@ -92,12 +106,26 @@ function Section_UserPostingHomePage() {
           <article className="UserPosting-LikePosting">
             <div className="wrapLikePosting">
               <figure className="Love-LikePosting">
-                <img
-                  src={components.ImageLikeLove}
-                  alt=""
-                  className="LikeLove"
-                  onClick={() => handleLike(post.id, true)}
-                />
+                {post.liked ? (
+                  <img
+                    src={components.ImageLikeLove}
+                    alt=""
+                    onClick={async () => {
+                      await handleLike(post.id, false);
+                      await updatePost(post.id);
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={components.ImageLove}
+                    alt=""
+                    className="LikeLove"
+                    onClick={async () => {
+                      await handleLike(post.id, true);
+                      await updatePost(post.id);
+                    }}
+                  />
+                )}
                 <figcaption>
                   <p>{post.like}</p>
                 </figcaption>
@@ -105,7 +133,7 @@ function Section_UserPostingHomePage() {
               <figure className="Chat-LikePosting">
                 <img src={components.ImageChat} alt="" />
                 <figcaption>
-                  <p>12</p>
+                  
                 </figcaption>
               </figure>
               <figure className="Share-LikePosting">

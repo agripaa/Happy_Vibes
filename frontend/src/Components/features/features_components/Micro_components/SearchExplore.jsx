@@ -18,7 +18,7 @@ function ComponentsSearchExplore() {
       ).then(({data}) => {
         setResultSearch(data.result);
       }).catch(({response}) => {
-
+        console.error(response);
         setNotFound(response.data);
       })
     } catch (error) {

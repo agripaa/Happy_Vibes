@@ -31,32 +31,38 @@ function ListPost_Trending() {
         `http://localhost:5000/posting/like/${postId}`,
         { liked },
         { withCredentials: true }
-      );
-
-      const response = await axios.get(
-        `http://localhost:5000/${postId}/posting`,
-        { withCredentials: true }
-      );
-      setLike(liked);
-      const updatedPost = response.data.result;
-
-      const updatedPosts = isPosts.map((post) => {
-        if (post.id === postId) {
-          return updatedPost;
-        }
-        return post;
-      });
-
-      setPost(updatedPosts);
+      ).then(() =>{
+        setLike(liked);
+      }).catch(err => {console.error(err)});
     } catch (error) {
       console.error(error);
     }
   };
 
+  async function updatePost(postId){
+    try {
+      await axios.get(
+        `http://localhost:5000/${postId}/posting`,
+        { withCredentials: true }
+      ).then(({data}) => {
+        const updatedPost = data.result;
+        const updatedPosts = post.map((post) => {
+          if (post.id === postId) {
+            return updatedPost;
+          }
+          return post;
+        });
+        setPost(updatedPosts);
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
 
   useEffect(() => {
     HotPosting();
-  }, []);
+  }, [Like]);
 
   return (
     <section className="UserPosting">
@@ -93,19 +99,25 @@ function ListPost_Trending() {
       <article className="UserPosting-LikePosting">
         <div className="wrapLikePosting">
           <figure className="Love-LikePosting">
-            {Like ? (
-              <img
-                src={components.ImageLikeLove}
+            {!Like ? (
+                <img
+                src={components.ImageLove}
                 alt=""
                 className="LikeLove"
-                onClick={() => toggleLike(post)}
-              />
-            ): (
-              <img
+                onClick={async() => { 
+                  await handleLike(post.id, true);
+                  await updatePost(post.id);
+                }}
+                />
+              ): (
+                <img
                 src={components.ImageLikeLove}
                 alt=""
-                onClick={() => handleLike(post.id, true)}
-              />
+                onClick={async() => {
+                  await handleLike(post.id, false);
+                  await updatePost();
+                }}
+                />
               )}
             <figcaption>
               <p>{post.like}</p>
