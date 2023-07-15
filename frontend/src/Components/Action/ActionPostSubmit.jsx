@@ -1,5 +1,6 @@
 import {
   GETWIDTH,
+  SAVEFILEIMAGE,
   SAVEIMAGE,
   SETCREDENTIALIMAGE,
 } from "../reducers/PosttRdc/PostRdc";
@@ -20,6 +21,16 @@ export const HandleSaveImage = (image) => {
       type: SAVEIMAGE,
       payload: {
         getImage: image,
+      },
+    });
+  };
+};
+export const HandleFileImage = (file) => {
+  return (dispatch) => {
+    dispatch({
+      type: SAVEFILEIMAGE,
+      payload: {
+        getFileImage: file,
       },
     });
   };

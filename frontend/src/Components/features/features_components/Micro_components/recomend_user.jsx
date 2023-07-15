@@ -13,7 +13,6 @@ function Recomend_user() {
         <ListUser />
         <ListUser />
         <ListUser />
-        <ListUser />
       </div>
     </div>
   );

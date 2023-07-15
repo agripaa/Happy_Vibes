@@ -28,6 +28,10 @@ const Posting = db.define('posting_data', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    liked : {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
     userId : {
         type: DataTypes.INTEGER,
         allowNull: false,

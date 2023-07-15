@@ -4,16 +4,15 @@ import "../css/Homepage.scss";
 import "../css/Comment.scss";
 import "../css/myLibrary.scss";
 import AsideSearch from "./features_components/AsideSearch";
-import ImageChat2 from "../img/chat-components.svg";
 import FeaturePost_HomePage from "./features_components/Micro_ComponentHomePage/FeaturesPost_HomePage";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
+import BugReport from "./features_components/Micro_components/MiniMicro_Components/BugReport";
 import { useSelector } from "react-redux";
 import CommentComponents from "./features_components/Micro_components/Comment";
-
 function Homepage() {
   const myComment = useSelector((state) => state.CheckMyPostReducer);
   const [getWitdh, setGetWidth] = useState(innerWidth);
-
+  const components = useSelector((state) => state.ComponentImagePostReducer);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
@@ -31,7 +30,7 @@ function Homepage() {
                 <h1>HV</h1>
               </header>
               <figure className="featuresChat">
-                <img src={ImageChat2} alt="" />
+                <img src={components.ImageChat2} alt="" />
               </figure>
             </div>
           ) : null}

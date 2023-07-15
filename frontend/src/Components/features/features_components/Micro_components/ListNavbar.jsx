@@ -65,7 +65,7 @@ function ListNavbar() {
 
             <li>
               <div className="ListProfile">
-                <Link to={"/profileusers/1"}>
+                <Link to={"/profile/user"}>
                   <img src={ImageListProfile} alt="" />
                   <p>Profile</p>
                 </Link>

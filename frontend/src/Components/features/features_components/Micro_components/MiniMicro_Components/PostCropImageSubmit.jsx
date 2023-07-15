@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  HandleFileImage,
   HandleSaveCredential,
   HandleSaveImage,
 } from "../../../../Action/ActionPostSubmit";
@@ -8,7 +9,7 @@ import Cropper from "react-easy-crop";
 import { CheckCropImageUser } from "../../../../Action/CheckMyPost";
 import getCroppedImg from "../../../../fnQuery/CropFunc";
 
-function PostCropImageSubmit() {
+function PostCropImageSubmit({ preview, setCropPhoto, setPreview, setUploadFile }) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const postComponent = useSelector((state) => state.PostReducer);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -40,15 +41,20 @@ function PostCropImageSubmit() {
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
+
   async function handleSubmitCrop(e) {
     e.preventDefault();
-    const { file, url } = await getCroppedImg(
-      postComponent.getImage,
-      croppedAreaPixels
-    );
-
-    dispatch(HandleSaveImage(url));
-    dispatch(CheckCropImageUser(true));
+    try {
+      const {file, url} = await getCroppedImg(
+        preview,
+        croppedAreaPixels,
+      );
+      setPreview(url);
+      setUploadFile(file);
+      setCropPhoto(false);
+    } catch (err) {
+      console.error(err);
+    }
   }
   return (
     <form className="SquareCropPost" onSubmit={handleSubmitCrop}>
@@ -59,8 +65,9 @@ function PostCropImageSubmit() {
             alt=""
             style={{ cursor: "pointer" }}
             onClick={() => {
-              dispatch(HandleSaveImage(null));
-              dispatch(CheckCropImageUser(false));
+              setPreview(null);
+              setUploadFile(null);
+              setCropPhoto(false);
             }}
           />
           <figcaption className="TeksCrop">
@@ -73,7 +80,7 @@ function PostCropImageSubmit() {
       </header>
       <main className="imageCropPost">
         <Cropper
-          image={postComponent.getImage}
+          image={preview}
           crop={crop}
           zoom={zoom}
           aspect={postComponent.getCredentialImage.squareSet ? 1.5 / 2 : 2 / 1}

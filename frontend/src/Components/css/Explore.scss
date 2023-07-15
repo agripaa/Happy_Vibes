@@ -30,7 +30,17 @@
   border-radius: 10px;
 }
 .FindSearch {
-  width: 30%;
+  width: 29%;
+  border-radius: 0px 0px 10px 10px;
+  height: auto;
+  padding: 0 10px 10px 10px;
+  top: 65px;
+  position: absolute;
+  background-color: #ffffff;
+}
+.FindSearchAside {
+  width: 100%;
+  border-radius: 0px 0px 10px 10px;
   height: auto;
   padding: 0 10px 10px 10px;
   top: 65px;

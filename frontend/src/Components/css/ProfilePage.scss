@@ -22,7 +22,7 @@
   justify-content: space-around;
 }
 .NameProfilePage {
-  width: 45%;
+  width: 50%;
   display: flex;
   justify-content: center;
   h1 {
@@ -88,6 +88,7 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
+  margin: 0 0 0 20px;
   h4 {
     font-size: 16px;
     font-weight: 600;
@@ -148,6 +149,11 @@
       font-weight: 400;
     }
   }
+}
+
+.blur {
+  color: silver;
+  cursor:no-drop;
 }
 
 .WrapNavigation-ProfilePage {

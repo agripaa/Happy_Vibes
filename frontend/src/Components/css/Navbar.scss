@@ -35,6 +35,12 @@
 
 .Navbar {
   &Logo {
+    width: 100%;
+    height: 10%;
+  }
+}
+.Navbar {
+  &Logo {
     display: flex;
     justify-content: flex-start;
     h1 {

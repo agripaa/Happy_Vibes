@@ -26,6 +26,13 @@ const Users = db.define('users_data', {
             notEmpty: false,
         }
     },
+    desc : {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+            notEmpty: false,
+        }
+    },
     email : {
         type: DataTypes.STRING,
         allowNull: true,

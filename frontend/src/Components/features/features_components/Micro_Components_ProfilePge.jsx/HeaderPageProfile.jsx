@@ -1,6 +1,5 @@
-import React from "react";
 import { useSelector } from "react-redux";
-function HeaderPageProfile() {
+function HeaderPageProfile({userName}) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
 
   return (
@@ -9,7 +8,7 @@ function HeaderPageProfile() {
         <img src={components.ImageBack} alt="" />
       </figure>
       <div className="NameProfilePage">
-        <h1>NameDummy</h1>
+        <h1>{userName}</h1>
       </div>
     </header>
   );

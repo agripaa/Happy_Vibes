@@ -10,11 +10,6 @@ function Component_TrendingPost() {
       <section className="WrapPost-trendingPost">
         <ComponentListPost_Trending />
       </section>
-      <div className="ShowMore-TrendingPost">
-        <article>
-          <p className="color-primary-40">Show More...</p>
-        </article>
-      </div>
     </main>
   );
 }
