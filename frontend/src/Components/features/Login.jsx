@@ -6,11 +6,13 @@ import EyeOpen from "../img/showPassword.svg";
 import EyeClose from "../img/closePassword.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "./Loading";
 
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
   const [displayHeight, setDisplayHeight] = React.useState(innerHeight);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLogged, setIsLogged] = React.useState(false);
   const [isError, setIsError] = React.useState("");
   const [ShowPass, setShowPass] = React.useState(false);
   const [values, setValues] = React.useState({
@@ -28,7 +30,7 @@ function Login() {
   async function loginHandler(e) {
     e.preventDefault();
     const { email, password } = values;
-
+    setIsLogged(true);
     try {
       await axios
         .post(
@@ -44,9 +46,12 @@ function Login() {
         )
         .then((_) => {
           setIsLoggedIn(true);
+          setIsLogged(false);
           navigate("/homepage");
         })
-        .catch(({response}) => {
+        .catch(({ response }) => {
+          setIsLogged(false);
+
           setIsError(response.data);
         });
     } catch (err) {
@@ -65,7 +70,9 @@ function Login() {
     });
   }, [displayWidth, displayHeight]);
 
-  if (isLoggedIn == true) {navigate('/homepage');}
+  if (isLoggedIn == true) {
+    navigate("/homepage");
+  }
 
   return (
     <div className="ContainerLogin">
@@ -98,9 +105,7 @@ function Login() {
                     required
                     onChange={changeHandler}
                     name="email"
-                    className={
-                      isError.status === 404 ? "activeErrorLogin" : ""
-                    }
+                    className={isError.status === 404 ? "activeErrorLogin" : ""}
                   />
                   <div className="errorLogin1">
                     {isError.status === 404 ? <p>{isError.msg}</p> : ""}
@@ -147,7 +152,7 @@ function Login() {
                 </div>
                 <div className="buttonLogin">
                   <button type="submit" className="bcolor-primary-30">
-                    Login
+                    {isLogged ? <Loading size="smallThin" /> : "Login"}
                   </button>
                 </div>
               </form>

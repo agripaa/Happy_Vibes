@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "../../../css/Navbar.scss";
 
 import OptionProfile from "./MiniMicro_Components/OptionProfile";
@@ -19,12 +19,14 @@ function ProfileNavbar({ check }) {
     getProfileUser();
   }, [getInnerWidth]);
 
-  async function getProfileUser(){
+  async function getProfileUser() {
     try {
-      await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
-      .then(({data}) => {
-        setDataProfile(data.result);
-      }).catch(err => console.error(err));
+      await axios
+        .get("http://localhost:5000/auth/profile", { withCredentials: true })
+        .then(({ data }) => {
+          setDataProfile(data.result);
+        })
+        .catch((err) => console.error(err));
     } catch (err) {
       console.error(err);
     }
@@ -67,7 +69,8 @@ function ProfileNavbar({ check }) {
         <div className="NavbarProfile">
           <div className="NavbarProfile-Container">
             <figure>
-              <img src={components.ImageDummy} alt="" />
+              <img src={dataProfile.url} alt={dataProfile.name_img} />
+
               <div className="bulletsProfile">
                 <div
                   className="bulletsProfile-wrap"
@@ -81,8 +84,8 @@ function ProfileNavbar({ check }) {
               </div>
             </figure>
             <figcaption>
-              <h5>NameDummy</h5>
-              <p>@nameDummy</p>
+              <h5>{dataProfile.name}</h5>
+              <p>@{dataProfile.username}</p>
             </figcaption>
           </div>
         </div>

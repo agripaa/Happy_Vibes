@@ -14,7 +14,7 @@
     gap: 15px;
   }
 }
-.content_search{
+.content_search {
   width: 100%;
   height: 100%;
 }
@@ -27,7 +27,7 @@
   justify-content: flex-start;
   align-items: center;
 }
-.notfound{
+.notfound {
   text-align: center;
 }
 
@@ -62,7 +62,7 @@
   }
 }
 
-.result-search{
+.result-search {
   width: 100px;
   height: 50%;
 }
@@ -85,6 +85,8 @@
   width: 100%;
   height: 90%;
   overflow-x: auto;
+  display: flex;
+  flex-direction: column;
 }
 .ThisUser {
   width: 100%;
@@ -149,6 +151,11 @@
   &:hover {
     cursor: pointer;
   }
+}
+.LoadingAside {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 @media screen and (max-width: 1350px) {
   .AsideSearch {

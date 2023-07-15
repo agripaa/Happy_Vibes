@@ -11,10 +11,10 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 6px solid #ffc46b;
+  border: 6px solid black;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #ffc46b transparent transparent transparent;
+  border-color: black transparent transparent transparent;
 }
 .lds-ring.big div:nth-child(1) {
   animation-delay: -0.45s;
@@ -37,10 +37,10 @@
   position: absolute;
   width: 44px;
   height: 44px;
-  border: 4px solid #ffc46b;
+  border: 4px solid black;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #ffc46b transparent transparent transparent;
+  border-color: black transparent transparent transparent;
 }
 .lds-ring.medium div:nth-child(1) {
   animation-delay: -0.45s;
@@ -63,10 +63,10 @@
   position: absolute;
   width: 24px;
   height: 24px;
-  border: 2px solid #ffc46b;
+  border: 2px solid black;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #ffc46b transparent transparent transparent;
+  border-color: black transparent transparent transparent;
 }
 .lds-ring.small div:nth-child(1) {
   animation-delay: -0.45s;
@@ -89,10 +89,10 @@
   position: absolute;
   width: 14px;
   height: 14px;
-  border: 2px solid #ffc46b;
+  border: 2px solid black;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #ffc46b transparent transparent transparent;
+  border-color: black transparent transparent transparent;
 }
 .lds-ring.smallThin div:nth-child(1) {
   animation-delay: -0.45s;

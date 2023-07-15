@@ -6,9 +6,11 @@ import "../css/myLibrary.scss";
 import { useNavigate } from "react-router-dom";
 import EyeOpen from "../img/showPassword.svg";
 import EyeClose from "../img/closePassword.svg";
+import Loading from "./Loading";
 function Register() {
   const [ShowPass, setShowPass] = useState(false);
   const [ShowConfPass, setShowConfPass] = useState(false);
+  const [doneRegister, setDoneRegister] = useState(false);
   const [inpuError, SetinputError] = useState({});
   const [displayWidth, setDisplayWitdh] = useState(innerWidth);
   useEffect(() => {
@@ -32,7 +34,7 @@ function Register() {
       .then(({ data }) => {
         setRandomPhoto(data.randomPhoto);
       })
-      .catch(({err}) => {
+      .catch(({ err }) => {
         console.error(err);
       });
   };
@@ -50,7 +52,7 @@ function Register() {
     e.preventDefault();
     const { name, email, username, password, confPassword } = values;
     const { name_img, url } = randomPhoto;
-
+    setDoneRegister(true);
     await axios
       .post("http://localhost:5000/user/create", {
         name,
@@ -64,9 +66,11 @@ function Register() {
       })
       .then((_) => {
         navigate("/authOtp/otp");
+        setDoneRegister(false);
       })
-      .catch(({response}) => {
+      .catch(({ response }) => {
         SetinputError(response.data);
+        setDoneRegister(false);
       });
   };
 
@@ -109,7 +113,7 @@ function Register() {
                     placeholder="Full Name"
                   />
                   <span className="error">
-                    {inpuError.status === 403 ? (<p>*{inpuError.msg}</p>) : ""}
+                    {inpuError.status === 403 ? <p>*{inpuError.msg}</p> : ""}
                   </span>
                 </div>
                 <div className="formWrapper1">
@@ -123,7 +127,7 @@ function Register() {
                     placeholder="Username"
                   />
                   <span className="error">
-                    {inpuError.status === 408 ? (<p>*{inpuError.msg}</p>) : ""}
+                    {inpuError.status === 408 ? <p>*{inpuError.msg}</p> : ""}
                   </span>
                 </div>
               </div>
@@ -138,7 +142,7 @@ function Register() {
                   placeholder="Email"
                 />
                 <span className="error">
-                  {inpuError.status === 409 ? (<p>*{inpuError.msg}</p>) : ""}
+                  {inpuError.status === 409 ? <p>*{inpuError.msg}</p> : ""}
                 </span>
               </div>
               <div className="formWrapper2">
@@ -164,7 +168,7 @@ function Register() {
                   </div>
                 </div>
                 <span className="error">
-                  {inpuError.status === 402 ? (<p>*{inpuError.msg}</p>) : ""}
+                  {inpuError.status === 402 ? <p>*{inpuError.msg}</p> : ""}
                 </span>
               </div>
               <div className="formWrapper2">
@@ -189,22 +193,35 @@ function Register() {
                     )}
                   </div>
                 </div>
-                  <span className="error">
-                    {inpuError.status === 400 ? (<p>*{inpuError.msg}</p>) : ""}
-                  </span>
+                <span className="error">
+                  {inpuError.status === 400 ? <p>*{inpuError.msg}</p> : ""}
+                </span>
                 <section className="button-Auth">
                   {displayWidth > 500 ? (
                     <div className="button-Auth-register1 flex flex-justify-center">
-                      <button type="submit">Register</button>
+                      <button type="submit">
+                        {doneRegister ? (
+                          <Loading size="smallThin" />
+                        ) : (
+                          "Register"
+                        )}
+                      </button>
                     </div>
                   ) : (
                     <div className="button-Auth-register1 flex flex-justify-center">
-                      <button type="submit">Sign Up</button>
+                      <button type="submit">
+                        {doneRegister ? (
+                          <Loading size="smallThin" />
+                        ) : (
+                          "Sign Up"
+                        )}
+                      </button>
                     </div>
                   )}
                   <div className="navLogin flex flex-justify-center">
                     <p>
-                      Have An Account? <a onClick={() => navigate("/login")}>Sign In</a>
+                      Have An Account?{" "}
+                      <a onClick={() => navigate("/login")}>Sign In</a>
                     </p>
                   </div>
                 </section>

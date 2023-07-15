@@ -1,5 +1,4 @@
 import React from "react";
-import ImageDummmy from "../../../img/imageDummy2.png";
 import "../../../css/Aside-Search.scss";
 import ListUser from "./ListUser";
 

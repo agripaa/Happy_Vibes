@@ -81,7 +81,6 @@
   width: 100%;
   height: 100%;
   position: relative;
-;
   img {
     width: 100%;
     height: 100%;
@@ -169,6 +168,11 @@
   animation-duration: 1s;
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.LoadingPainting {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 @media screen and (max-width: 1350px) {
   .WrapPost-trendingPost {
