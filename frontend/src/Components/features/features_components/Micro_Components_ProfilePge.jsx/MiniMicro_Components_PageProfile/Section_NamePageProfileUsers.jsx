@@ -5,6 +5,8 @@ import { CheckEditProfil } from "../../../../Action/CheckAcconutDelete";
 function Section_NamePageProfileUsers({ name, username }) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispach = useDispatch();
+  const components = useSelector((state) => state.ComponentImagePostReducer);
+
   return (
     <section className="section-NameProfilePage">
       <div className="wrapSection-NameProfilePage">

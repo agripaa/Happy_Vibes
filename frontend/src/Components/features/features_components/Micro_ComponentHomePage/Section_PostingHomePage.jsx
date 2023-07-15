@@ -17,7 +17,9 @@ function Section_UserPostingHomePage() {
           setPosts(data.result);
         })
         .catch((err) => console.error(err));
-    } catch (err) {console.error(err)}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleLike = async (postId, liked) => {
@@ -64,7 +66,6 @@ function Section_UserPostingHomePage() {
   useEffect(() => {
     getPostings();
   }, []);
-
 
   return (
     <Fragment>

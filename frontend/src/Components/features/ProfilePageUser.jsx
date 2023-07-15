@@ -21,12 +21,14 @@ function ProfilepageUsers() {
 
   async function getDataUser() {
     try {
-      await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
-      .then(({data}) => {
-        setUser(data.result);
-      }) .catch(({response}) => {
-        console.error(response);
-      })
+      await axios
+        .get("http://localhost:5000/auth/profile", { withCredentials: true })
+        .then(({ data }) => {
+          setUser(data.result);
+        })
+        .catch(({ response }) => {
+          console.error(response);
+        });
     } catch (err) {
       console.error(err);
     }
@@ -35,13 +37,13 @@ function ProfilepageUsers() {
   useEffect(() => {
     getDataUser();
   }, []);
-  
+
   return (
     <Fragment>
       <Navbar />
       <div className="Container-ProfilePage">
         <div className="WrapContainer-ProfilePage">
-          <HeaderPageProfile ImageBack={ImageBack} userName={user.name}/>
+          <HeaderPageProfile ImageBack={ImageBack} userName={user.name} />
           <MainPageProfileUsers users={user} />
           <Navigation_ProfilePage />
           <FeaturePost_ProfilePage />
