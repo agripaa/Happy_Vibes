@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CheckEditProfil } from "../../../../Action/CheckAcconutDelete";
 
 function Section_NamePageProfileUsers({ name, username }) {
+  const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispach = useDispatch();
   return (
     <section className="section-NameProfilePage">

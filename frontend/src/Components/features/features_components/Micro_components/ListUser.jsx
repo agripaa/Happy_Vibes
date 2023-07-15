@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ImageDummmy from "../../../img/imageDummy2.png";
 import "../../../css/Aside-Search.scss";
-
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 function ListUser() {
   const [follow, setFollow] = useState(false);
   const [isUsers, setUsers] = useState([]);
+  const components = useSelector((state) => state.ComponentImagePostReducer);
 
   async function getRandomUsers() {
     try {

@@ -10,9 +10,14 @@ import FeaturePost_ProfilePage from "./features_components/Micro_Components_Prof
 import MainPageProfileUsers from "./features_components/Micro_Components_ProfilePge.jsx/MainPageProfileUsers";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
 import axios from 'axios';
+import { useSelector } from "react-redux";
+import ChangeProfileImage from "./features_components/Micro_components/ChangeProfileImage";
+import CommentComponents from "./features_components/Micro_components/Comment";
 
 function ProfilepageUsers() {
   const [user, setUser] = useState({});
+  const myEdit = useSelector((state) => state.CheckDeleteReducer);
+  const myComment = useSelector((state) => state.CheckMyPostReducer);
 
   async function getDataUser() {
     try {
@@ -42,9 +47,8 @@ function ProfilepageUsers() {
           <FeaturePost_ProfilePage />
         </div>
       </div>
-      {/* {myEdit.checkEdit ? <ChangeProfile  Image /> : null}
-      {myComment.checkImageComment ? <CommentComponents /> : null} */}
-
+      {myEdit.checkEdit ? <ChangeProfileImage /> : null}
+      {myComment.checkImageComment ? <CommentComponents /> : null}
       <OptionBugReport />
       <AsideSearch />
     </Fragment>

@@ -22,13 +22,13 @@ module.exports = {
   async sendReport(req, res) {
     const { title, type_bug, report } = req.body;
 
-     let transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+    let transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: process.env.EMAIL_SECURE,
       auth: {
-        user: process.env.EMAIL_SEND, 
-        pass: process.env.EMAIL_SEND_PASSWORD, 
+        user: process.env.EMAIL,
+        pass: process.env.PASS_EMAIL_OTP,
       },
     });
 

@@ -237,9 +237,9 @@ module.exports = {
   },
   async sendOTP(email, otp) {
     let transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: process.env.EMAIL_SECURE,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASS_EMAIL_OTP,
@@ -316,15 +316,15 @@ module.exports = {
     },
     async sendEmailTokenNewPassword(email, subject, text){
         try {
-            const transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
-                auth: {
-                    user: process.env.EMAIL,
-                    pass: process.env.PASS_EMAIL_OTP,
-                },
-            });
+          let transporter = nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            secure: process.env.EMAIL_SECURE,
+            auth: {
+              user: process.env.EMAIL,
+              pass: process.env.PASS_EMAIL_OTP,
+            },
+          });
     
             await transporter.sendMail({
                 from: process.env.EMAIL,
