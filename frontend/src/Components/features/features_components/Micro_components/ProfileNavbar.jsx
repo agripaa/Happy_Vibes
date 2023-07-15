@@ -67,7 +67,7 @@ function ProfileNavbar({ check }) {
         <div className="NavbarProfile">
           <div className="NavbarProfile-Container">
             <figure>
-              <img src={components.ImageDummy} alt="" />
+            <img src={dataProfile.url} alt={dataProfile.name_img} />
               <div className="bulletsProfile">
                 <div
                   className="bulletsProfile-wrap"
@@ -81,8 +81,8 @@ function ProfileNavbar({ check }) {
               </div>
             </figure>
             <figcaption>
-              <h5>NameDummy</h5>
-              <p>@nameDummy</p>
+              <h5>{dataProfile.name}</h5>
+              <p>@{dataProfile.username}</p>
             </figcaption>
           </div>
         </div>

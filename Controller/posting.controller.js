@@ -34,6 +34,33 @@ const getAllContent = async (_, res) => {
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
   };
+
+  const getPostUser = async(req, res) => {
+    try {
+      const postings = await Posting.findAll({
+        where: {userId: req.userId},
+        include: [{
+          model: Users,
+          attributes: attributesUser
+        }]
+      })
+      if(!postings) return res.status(404).json({status: 404, msg: "user hasn't posted anything"})
+
+      const shuffledPostings = shuffleArray(postings);
+  
+      const formattedPostings = shuffledPostings.map((posting) => {
+        const createdAt = moment(posting.createdAt).fromNow();
+        return {
+          ...posting.toJSON(),
+          createdAt: createdAt
+        };
+      });
+      res.status(200).json({status: 200, result: formattedPostings})
+    } catch (err) {
+      log.error(err);
+      return res.status(500).json({ status: 500, msg: 'Internal server error' });
+    }
+  }
   
   function shuffleArray(array) {
     const shuffledArray = [...array];
@@ -177,4 +204,4 @@ const deletePosting = async (req, res) => {
   }
 };
 
-module.exports = {getAllContent , getContentById, createNewPosting, updateLike, getHotPost, deletePosting }
+module.exports = {getAllContent, getPostUser, getContentById, createNewPosting, updateLike, getHotPost, deletePosting }

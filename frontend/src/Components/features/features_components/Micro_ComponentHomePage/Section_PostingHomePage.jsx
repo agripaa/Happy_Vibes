@@ -7,7 +7,7 @@ function Section_UserPostingHomePage() {
   const [isPosts, setPosts] = useState([]);
   const components = useSelector((state) => state.ComponentImagePostReducer);
 
-  const getPostings = async (e) => {
+  const getPostings = async () => {
     try {
       await axios
         .get(`http://localhost:5000/posting/all_content/`, {
