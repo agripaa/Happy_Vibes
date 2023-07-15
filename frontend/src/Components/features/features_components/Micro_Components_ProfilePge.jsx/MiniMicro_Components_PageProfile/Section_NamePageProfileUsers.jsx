@@ -1,16 +1,23 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CheckEditProfil } from "../../../../Action/CheckAcconutDelete";
 
 function Section_NamePageProfileUsers() {
+  const components = useSelector((state) => state.ComponentImagePostReducer);
+
   const dispach = useDispatch();
   return (
     <section className="section-NameProfilePage">
       <div className="wrapSection-NameProfilePage">
         <div className="OriginalName-ProfilePage">
           <div className="WrapOriginalName">
-            <h4>NameDummy</h4>
-            <p>@namedummy</p>
+            <div className="NameProfilePageUser">
+              <h4>NameDummy</h4>
+              <p>@namedummy</p>
+            </div>
+            <figure className="VerifiedClass">
+              <img src={components.Verified} alt="" />
+            </figure>
           </div>
         </div>
         <div className="buttonFollow-ProfilePage">

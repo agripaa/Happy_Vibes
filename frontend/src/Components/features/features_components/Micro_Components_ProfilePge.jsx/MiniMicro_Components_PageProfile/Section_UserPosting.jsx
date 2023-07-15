@@ -17,6 +17,11 @@ function Section_UserPosting() {
           <div className="TextProfile-NameProfile">
             <p> NameDummy</p>
             <p>@nameDummy</p>
+            <img
+              src={components.Verified}
+              alt=""
+              style={{ paddingTop: "1px" }}
+            />
           </div>
         </div>
         <div className="ButtonList-NameProfile">
