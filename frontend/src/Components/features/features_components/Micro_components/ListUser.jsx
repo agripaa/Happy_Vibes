@@ -1,41 +1,49 @@
 import React, { useEffect, useState } from "react";
 import ImageDummmy from "../../../img/imageDummy2.png";
 import "../../../css/Aside-Search.scss";
+
 import axios from "axios";
 
 function ListUser() {
   const [follow, setFollow] = useState(false);
   const [isUsers, setUsers] = useState([]);
 
-  async function getRandomUsers(){
+  async function getRandomUsers() {
     try {
-      axios.get('http://localhost:5000/users/random', {withCredentials: true})
-      .then(({data}) => setUsers(data.result))
-      .catch(err => console.error(err))
+      axios
+        .get("http://localhost:5000/users/random", { withCredentials: true })
+        .then(({ data }) => setUsers(data.result))
+        .catch((err) => console.error(err));
     } catch (err) {
       console.error(err);
     }
   }
 
-  async function handleFollows(userId){
+  async function handleFollows(userId) {
     try {
-      axios.post(`http://localhost:5000/follow/${userId}/user/`, null, {withCredentials: true})
-      .then(({data}) => {
-      }).catch(({response}) => {
-        console.error(response);
-      })
+      axios
+        .post(`http://localhost:5000/follow/${userId}/user/`, null, {
+          withCredentials: true,
+        })
+        .then(({ data }) => {})
+        .catch(({ response }) => {
+          console.error(response);
+        });
     } catch (err) {
       console.error(err);
     }
   }
 
-  async function handleUnFollows(userId){
+  async function handleUnFollows(userId) {
     try {
-      axios.post(`http://localhost:5000/unfollow/${userId}/user/`, null, {withCredentials: true})
-      .then(({data}) => {
-      }).catch(({response}) => {
-        console.error(response);
-      })
+      axios
+        .post(`http://localhost:5000/unfollow/${userId}/user/`, null, {
+          withCredentials: true,
+        })
+        .then(({ data }) => {})
+        .catch(({ response }) => {
+          console.error(response);
+        });
     } catch (err) {
       console.error(err);
     }
@@ -43,7 +51,7 @@ function ListUser() {
 
   useEffect(() => {
     getRandomUsers();
-  },[])
+  }, []);
 
   return (
     <>
@@ -59,6 +67,9 @@ function ListUser() {
               <h5>{user.name}</h5>
               <p>@{user.username}</p>
             </figcaption>
+            <figure>
+              <img src={components.Verified} alt="" />
+            </figure>
           </div>
           <div className="FollowProfile-Aside">
             {follow ? (
@@ -68,15 +79,15 @@ function ListUser() {
                   setFollow(false);
                   handleUnFollows(user.id);
                 }}
-                >
+              >
                 Followed
               </button>
             ) : (
               <button
-              className="ButtonFollow-Aside"
-              onClick={() => {
-                setFollow(true);
-                handleFollows(user.id);
+                className="ButtonFollow-Aside"
+                onClick={() => {
+                  setFollow(true);
+                  handleFollows(user.id);
                 }}
               >
                 Follow

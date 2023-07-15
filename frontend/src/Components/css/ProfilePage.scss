@@ -83,7 +83,7 @@
   justify-content: space-between;
 }
 .OriginalName-ProfilePage {
-  width: 27.5%;
+  width: 29.5%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -97,6 +97,15 @@
     font-size: 12px;
     font-weight: 300;
   }
+}
+.WrapOriginalName {
+  width: auto;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.VerifiedClass {
+  padding-top: 2px;
 }
 .buttonFollow-ProfilePage {
   button {
