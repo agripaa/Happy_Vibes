@@ -12,18 +12,22 @@ function ListPost_Trending() {
 
   async function HotPosting() {
     try {
-      axios.get('http://localhost:5000/posting/get/hot_postings', {withCredentials: true})
-      .then(({data}) => {
-        console.log(data);
-        setPost(data.result[0]);
-        setUser(data.result[0].users_datum);
-      }).catch(({response}) => {
-        console.error(response);
-      })
+      axios
+        .get("http://localhost:5000/posting/get/hot_postings", {
+          withCredentials: true,
+        })
+        .then(({ data }) => {
+          console.log(data);
+          setPost(data.result[0]);
+          setUser(data.result[0].users_datum);
+        })
+        .catch(({ response }) => {
+          console.error(response);
+        });
     } catch (err) {
       console.error(err);
     }
-  };
+  }
 
   const handleLike = async (postId, liked) => {
     try {
@@ -53,7 +57,6 @@ function ListPost_Trending() {
     }
   };
 
-
   useEffect(() => {
     HotPosting();
   }, []);
@@ -68,6 +71,7 @@ function ListPost_Trending() {
           <div className="TextProfile-NameProfile">
             <p> {user.name}</p>
             <p>@{user.username}</p>
+            <img src={components.Verified} alt="" />
           </div>
         </div>
         <div className="ButtonList-NameProfile">
@@ -85,9 +89,7 @@ function ListPost_Trending() {
       </article>
       <article className="UserPosting-ArticlePosting">
         <figcaption>
-          <p>
-            {post.desc}
-          </p>
+          <p>{post.desc}</p>
         </figcaption>
       </article>
       <article className="UserPosting-LikePosting">
@@ -100,13 +102,13 @@ function ListPost_Trending() {
                 className="LikeLove"
                 onClick={() => toggleLike(post)}
               />
-            ): (
+            ) : (
               <img
                 src={components.ImageLikeLove}
                 alt=""
                 onClick={() => handleLike(post.id, true)}
               />
-              )}
+            )}
             <figcaption>
               <p>{post.like}</p>
             </figcaption>

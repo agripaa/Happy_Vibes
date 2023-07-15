@@ -16,6 +16,7 @@ function ListPost_Painting() {
           <div className="TextProfile-NameProfile">
             <p> NameDummy</p>
             <p>@nameDummy</p>
+            <img src={components.Verified} alt="" />
           </div>
         </div>
         <div className="ButtonList-NameProfile">
