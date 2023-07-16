@@ -150,8 +150,9 @@ module.exports = {
         }
     },
     async updateUser(req, res) {
-      let profile_img, bg_img;
-      const files = req.files;
+      let name_img, bg_img;
+      let files = req.files;
+      // log.info(files)
       let { desc } = req.body;
       const photosToKeep = [
         'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
@@ -165,17 +166,16 @@ module.exports = {
       try {
         const user = await Users.findOne({ where: { id: req.userId } });
         if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-    
-        if (!desc) desc = user.desc;
-        if (!files) {
-          profile_img = user.profile_img;
+        if(!desc) desc = user.desc
+        if (!files || !files['name_img'] || !files['bg_img']) { // Periksa keberadaan file
+          name_img = user.name_img;
           bg_img = user.bg_img;
         } else {
-          profile_img = user.profile_img;
+          name_img = user.name_img;
           bg_img = user.bg_img;
     
-          if (user.profile_img && !photosToKeep.includes(user.profile_img)) {
-            let profileImgPath = `./public/users/${user.profile_img}`;
+          if (user.name_img && !photosToKeep.includes(user.name_img)) {
+            let profileImgPath = `./public/users/${user.name_img}`;
             if (existsSync(profileImgPath)) {
               unlinkSync(profileImgPath);
             }
@@ -188,16 +188,20 @@ module.exports = {
             }
           }
     
-          let profileFile = files.profile_img;
-          let bgFile = files.bg_img;
+          let profileFile = files['name_img'][0];
+          let bgFile = files['bg_img'][0];
     
-          let profileSize = profileFile.data.length;
-          let bgSize = bgFile.data.length;
+          if (!profileFile || !bgFile) { // Periksa keberadaan file
+            return res.status(422).json({ msg: 'Invalid image' });
+          }
     
-          let profileExtend = path.extname(profileFile.name);
-          let bgExtend = path.extname(bgFile.name);
+          let profileSize = profileFile.size;
+          let bgSize = bgFile.size;
     
-          profile_img = `user_${profileFile.md5}${profileExtend}`;
+          let profileExtend = path.extname(profileFile.originalname);
+          let bgExtend = path.extname(bgFile.originalname);
+    
+          name_img = `user_${profileFile.md5}${profileExtend}`;
           bg_img = `bg_${bgFile.md5}${bgExtend}`;
     
           let allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif'];
@@ -209,23 +213,15 @@ module.exports = {
           if (profileSize > 5000000 || bgSize > 5000000) {
             return res.status(422).json({ msg: 'Images must be less than 5MB' });
           }
-    
-          profileFile.mv(`./public/users/${profile_img}`, async (err) => {
-            if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-          });
-    
-          bgFile.mv(`./public/users/bg_img/${bg_img}`, async (err) => {
-            if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-          });
         }
     
-        const profile_url = `${req.protocol}://${req.get('host')}/users/${profile_img}`;
+        const profile_url = `${req.protocol}://${req.get('host')}/users/${name_img}`;
         const bg_url = `${req.protocol}://${req.get('host')}/users/bg_img/${bg_img}`;
     
         await Users.update(
           {
-            profile_img: profile_img,
-            profile_url: profile_url,
+            name_img: name_img,
+            url: profile_url,
             bg_img: bg_img,
             bg_url: bg_url,
             desc: desc

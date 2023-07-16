@@ -8,7 +8,7 @@ function ChangeProfileImage() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
-  const [profile_img, setProfile_img] = useState("");
+  const [name_img, setName_img] = useState("");
   const [bg_img, setBg_img] = useState("");
   const [previewProfile, setPreviewProfile] = useState("");
   const [previewBg, setPreviewBg] = useState("");
@@ -17,7 +17,7 @@ function ChangeProfileImage() {
 
   function handleProfileImage(e) {
     const img = e.target.files[0];
-    setProfile_img(img);
+    setName_img(img);
     setPreviewProfile(URL.createObjectURL(img));
   }
 
@@ -41,7 +41,7 @@ function ChangeProfileImage() {
     try {
       const formData = new FormData();
       formData.append('desc', desc);
-      formData.append('profile_img', profile_img);
+      formData.append('file', name_img);
       formData.append('bg_img', bg_img);
       await axios.patch('http://localhost:5000/user/edit', formData, {
         withCredentials: true,
@@ -49,7 +49,7 @@ function ChangeProfileImage() {
           "Content-Type": "multipart/form-data"
         }
       });
-      window.location.reload();
+      alert("update succesfully")
     } catch (err) {
       console.error(err);
     }
@@ -125,7 +125,7 @@ function ChangeProfileImage() {
                   <input
                     type="file"
                     id="editPP"
-                    onChange={handleProfileImage}
+                    onChange={(e) => handleProfileImage(e)}
                     style={{ display: "none" }}
                   />
                 </figcaption>
@@ -148,7 +148,6 @@ function ChangeProfileImage() {
                       <button
                         type="button"
                         onClick={() => {
-                          // updateUser();
                           setUpdateDesc(false);
                         }}
                         style={{ cursor: "pointer" }}

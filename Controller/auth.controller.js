@@ -31,7 +31,7 @@ module.exports = {
         if(!req.session.userId) return res.status(401).json({status:401, msg:"Please login your account"})
 
         const user = await Users.findOne({
-            attributes: ['uuid','username', 'name', 'email', 'name_img', 'url', 'bg_img', 'bg_url', 'followerCount', 'followingCount'],
+            attributes: ['uuid','username', 'name', 'desc', 'email', 'name_img', 'url', 'bg_img', 'bg_url', 'followerCount', 'followingCount'],
             where: {
                 uuid: req.session.userId
             }

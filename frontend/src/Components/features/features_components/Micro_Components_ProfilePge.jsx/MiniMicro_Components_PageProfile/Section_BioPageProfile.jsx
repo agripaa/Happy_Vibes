@@ -1,12 +1,13 @@
 import React from "react";
 
 function Section_BioPageProfile({followers, followings, desc, username}) {
+  console.log(desc)
   return (
     <section className="section-BioProfilePage">
       <div className="wrapBioProfilePage">
         <article className="text-BioProfilePage">
           <p>
-            {!desc ? `Hello Guys I'am @${username}, I'm a new user at HYV` : desc}
+            {desc ? desc : `Hello Guys I'am @${username}, I'm a new user at HYV`}
           </p>
         </article>
         <article className="amountFollowers">
