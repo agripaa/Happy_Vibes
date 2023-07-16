@@ -34,7 +34,6 @@ const getAllContent = async (_, res) => {
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
   };
-
   const getPostUser = async(req, res) => {
     try {
       const postings = await Posting.findAll({
@@ -72,7 +71,6 @@ const getAllContent = async (_, res) => {
   }
 const getContentById = async (req,res) => {
     try {
-        
         const posting = await Posting.findOne({
             where: {
               id : req.params.id
@@ -85,15 +83,9 @@ const getContentById = async (req,res) => {
 
           if(!posting) return res.status(404).json({"msg" : "Data tidak ditemukan"})
 
-        const createdAt = moment(posting.createdAt).fromNow();
-        const formattedPosting = {
-            ...posting.toJSON(),
-            createdAt: createdAt
-        }
-
         res.status(200).json({
-            status: "200", 
-            result: formattedPosting
+            status: 200, 
+            result: posting
         })
     } catch (error) {
         log.error(error)

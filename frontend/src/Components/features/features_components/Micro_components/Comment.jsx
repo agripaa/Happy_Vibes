@@ -3,14 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { CheckImageUserComment } from "../../../Action/CheckMyPost";
 import ListComment from "./MiniMicro_Components/ListComment";
 import InputCommentUser from "./MiniMicro_Components/InputCommentUser";
+import axios from "axios";
 
 function CommentComponents() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
+  const postID = useSelector((state) => state.CheckMyPostReducer.CHECKIDPOST);
   const [getSizeImage, setGetSizeImage] = useState({
     xwidth: 0,
     yheight: 0,
   });
   const [getWitdh, setGetWidth] = useState(innerWidth);
+  const [post, setPost] = useState({});
+  const [user, setUser] = useState({});
 
   function getSize() {
     let sizeImage = document.querySelector(".imageComment");
@@ -20,6 +24,23 @@ function CommentComponents() {
     });
   }
   const dispatch = useDispatch();
+
+  async function getPosting(){
+    try {
+      console.log(postID)
+      axios.get(`http://localhost:5000/${postID}/posting`,{withCredentials: true})
+      .then(({data}) => {
+        console.log(data);
+        setPost(data.result);
+        setUser(data.result.users_datum);
+      }).catch(({response}) => {
+        console.error(response);
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  
   useEffect(() => {
     if (getWitdh > 500) {
       if (getSizeImage.xwidth <= 0) {
@@ -33,6 +54,8 @@ function CommentComponents() {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
     });
+
+      getPosting();
   }, [getWitdh]);
   return (
     <div className="Comment">

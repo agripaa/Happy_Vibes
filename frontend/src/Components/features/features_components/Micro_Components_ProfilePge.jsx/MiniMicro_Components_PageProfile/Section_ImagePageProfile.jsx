@@ -6,7 +6,7 @@ function Section_ImagePageProfile({urlProfile, nameProfile, urlBackground, nameB
   return (
     <section className="section-ImageProfilePage">
       <figure className="BackgroundProfilePage">
-        <img src={!urlBackground ? components.ImageProfilePage : urlBackground} alt={!nameBackground ? "default img background" : nameBackground} />
+        <img src={urlBackground ? urlBackground : components.ImageProfilePage } alt={!nameBackground ? "default img background" : nameBackground} />
       </figure>
       <figure className="FrontProfilePage">
         <img src={urlProfile} alt={nameProfile} />

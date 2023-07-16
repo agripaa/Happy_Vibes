@@ -149,84 +149,98 @@ module.exports = {
             return false;
         }
     },
-    async updateUser(req, res){
-        let name_img, bg_img, hashPassword;
-        const files = req.files;
-        const { name, username, email } = req.body;
-        const photosToKeep = [
-            'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
-            'user_053c88cf369f519d289b99d6119049f5.jpg',
-            'user_60ef0bd9ba36c2c165e00be9b9a19dcd.jpg',
-            'user_c13354bf51f1ce36d3e652b409e37f54.jpg',
-            'user_db15b37020a2fbb05b69fa1157f0bbfa.jpg',
-            'user_ff0b300a0e11132de2c89be1d79da25e.jpeg'
-        ];
+    async updateUser(req, res) {
+      let profile_img, bg_img;
+      const files = req.files;
+      let { desc } = req.body;
+      const photosToKeep = [
+        'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
+        'user_053c88cf369f519d289b99d6119049f5.jpg',
+        'user_60ef0bd9ba36c2c165e00be9b9a19dcd.jpg',
+        'user_c13354bf51f1ce36d3e652b409e37f54.jpg',
+        'user_db15b37020a2fbb05b69fa1157f0bbfa.jpg',
+        'user_ff0b300a0e11132de2c89be1d79da25e.jpeg'
+      ];
     
-        if(this.validateName(name, username)) return res.status(403).json({status:403, msg: 'Name and username must be a minimum of 3 characters and a maximum of 25 characters'})
-        try {
-            const user = await Users.findOne({where: { uuid: req.params.id }});
-            if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-
-            if (!files) {
-                name_img = user.name_img;
-                bg_img = user.bg_img
-            } else {
-                name_img = user.name_img;
-                bg_img = user.bg_img;
-
-                if (user.name_img && !photosToKeep.includes(user.name_img)) {
-                    const nameImgPath = `./public/users/${user.name_img}`;
-                    if (existsSync(nameImgPath)) {
-                        unlinkSync(nameImgPath);
-                    }
-                }
-
-                if(bg_img !== null){
-                    unlinkSync(`./public/users/bg_img/${bg_img}`, (err) => {
-                        if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
-                    })
-                }
-
-                const file = files.file;
-                const size = file.data.length;
-                const extend = path.extname(file.name);
-                name_img = `user_${file.md5}${ext}`
-                bg_img = `bg_${file.md5}${ext}`;
-                const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
-                
-                if (!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({ msg: 'Invalid image' });
-                if (size > 5000000) return res.status(422).json({ msg: 'Images must be less than 5MB' });
-                
-                file.mv(`./public/users/${name_img}`, async (err) => {
-                    if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-                });
-                file.mv(`./public/users/bg_img/${bg_img}`, async (err) => {
-                    if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-                });
+      try {
+        const user = await Users.findOne({ where: { id: req.userId } });
+        if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
+    
+        if (!desc) desc = user.desc;
+        if (!files) {
+          profile_img = user.profile_img;
+          bg_img = user.bg_img;
+        } else {
+          profile_img = user.profile_img;
+          bg_img = user.bg_img;
+    
+          if (user.profile_img && !photosToKeep.includes(user.profile_img)) {
+            let profileImgPath = `./public/users/${user.profile_img}`;
+            if (existsSync(profileImgPath)) {
+              unlinkSync(profileImgPath);
             }
-            
-            const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
-            const bg_url = `${req.protocol}://${req.get("host")}/users/bg_img/${bg_img}`;
-            await Users.update( {
-                name: name,
-                email: email,
-                password: hashPassword,
-                name_img: name_img,
-                url: url,
-                bg_img: bg_img,
-                bg_url: bg_url
-            },{
-                where: { id: user.id },
-            });
-
-      res.status(200).json({ status: 200, msg: 'User updated successfully' });
-    } catch (err) {
-      log.error(err);
-      res
-        .status(500)
-        .json({ status: 500, msg: 'Internal server error', err: err.message });
-    }
-  },
+          }
+    
+          if (user.bg_img && !photosToKeep.includes(user.bg_img)) {
+            let bgImgPath = `./public/users/bg_img/${user.bg_img}`;
+            if (existsSync(bgImgPath)) {
+              unlinkSync(bgImgPath);
+            }
+          }
+    
+          let profileFile = files.profile_img;
+          let bgFile = files.bg_img;
+    
+          let profileSize = profileFile.data.length;
+          let bgSize = bgFile.data.length;
+    
+          let profileExtend = path.extname(profileFile.name);
+          let bgExtend = path.extname(bgFile.name);
+    
+          profile_img = `user_${profileFile.md5}${profileExtend}`;
+          bg_img = `bg_${bgFile.md5}${bgExtend}`;
+    
+          let allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif'];
+    
+          if (!allowedTypePhotos.includes(profileExtend.toLowerCase()) || !allowedTypePhotos.includes(bgExtend.toLowerCase())) {
+            return res.status(422).json({ msg: 'Invalid image' });
+          }
+    
+          if (profileSize > 5000000 || bgSize > 5000000) {
+            return res.status(422).json({ msg: 'Images must be less than 5MB' });
+          }
+    
+          profileFile.mv(`./public/users/${profile_img}`, async (err) => {
+            if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+          });
+    
+          bgFile.mv(`./public/users/bg_img/${bg_img}`, async (err) => {
+            if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+          });
+        }
+    
+        const profile_url = `${req.protocol}://${req.get('host')}/users/${profile_img}`;
+        const bg_url = `${req.protocol}://${req.get('host')}/users/bg_img/${bg_img}`;
+    
+        await Users.update(
+          {
+            profile_img: profile_img,
+            profile_url: profile_url,
+            bg_img: bg_img,
+            bg_url: bg_url,
+            desc: desc
+          },
+          {
+            where: { id: user.id }
+          }
+        );
+    
+        res.status(200).json({ status: 200, msg: 'User updated successfully' });
+      } catch (err) {
+        log.error(err);
+        res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+      }
+    },
   generateOTP() {
     const digits = '0123456789';
     let OTP = '';

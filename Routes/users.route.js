@@ -11,7 +11,7 @@ router.patch('/forgot-pass/get_email', getEmail)
 router.patch('/update-pass/:userId/:token', changePassword)
 router.patch('/user/verify', verifyUser);
 router.patch('/user/resend/otp', resendCode);
-router.patch('/user/:id/edit', sessionUser, updateUser);
+router.patch('/user/edit', sessionUser, updateUser);
 router.delete('/delete/user', sessionUser, deleteUser);
 
 module.exports = router;

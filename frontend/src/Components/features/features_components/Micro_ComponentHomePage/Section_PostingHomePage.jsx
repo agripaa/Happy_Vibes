@@ -2,7 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Loading from "../../Loading";
-import { CheckImageUserComment } from "../../../Action/CheckMyPost";
+import { CheckImageUserComment, CheckPostId } from "../../../Action/CheckMyPost";
+import CommentComponents from "../Micro_components/Comment";
 
 function Section_UserPostingHomePage() {
   const [isPosts, setPosts] = useState([]);
@@ -79,6 +80,12 @@ function Section_UserPostingHomePage() {
     getPostings();
   }, []);
 
+  const handleCommentClick = (postId) => {
+    dispatch(CheckPostId(postId));
+    dispatch(CheckImageUserComment(true));
+  };
+
+
   return (
     <Fragment>
       {!displayPosting ? (
@@ -149,7 +156,9 @@ function Section_UserPostingHomePage() {
                   <img
                     src={components.ImageChat}
                     alt=""
-                    onClick={() => dispatch(CheckImageUserComment(true))}
+                    onClick={() => {
+                      handleCommentClick(post.id);
+                    }}
                   />
                   <figcaption></figcaption>
                 </figure>

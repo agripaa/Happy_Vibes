@@ -1,10 +1,12 @@
 export const CHECKPOST = "CHECKPOST";
 export const CHECKCOMMENT = "CHECKCOMMENT";
 export const CHECKTRUECROP = "CHECKTRUECROP";
+export const CHECKIDPOST = "CHECKIDPOST"
 let InitialState = {
   checkPost: false,
   checkImageComment: false,
   checkImageTrueCrop: false,
+  postID: null,
 };
 
 const CheckMyPost = (state = InitialState, action) => {
@@ -19,6 +21,12 @@ const CheckMyPost = (state = InitialState, action) => {
         ...state,
         checkImageComment: action.payload.checkImageComment,
       };
+      case CHECKIDPOST:
+        return {
+          ...state,
+          postID: action.payload.postId,
+        
+      }
     case CHECKTRUECROP:
       return {
         ...state,
