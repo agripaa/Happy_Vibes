@@ -7,7 +7,8 @@ import axios from "axios";
 
 function CommentComponents() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
-  const postID = useSelector((state) => state.CheckMyPostReducer.CHECKIDPOST);
+  const { postId } = useSelector((state) => state.CheckMyPostReducer);
+  console.log(postId);
   const [getSizeImage, setGetSizeImage] = useState({
     xwidth: 0,
     yheight: 0,
@@ -25,22 +26,24 @@ function CommentComponents() {
   }
   const dispatch = useDispatch();
 
-  async function getPosting(){
+  async function getPosting() {
     try {
-      console.log(postID)
-      axios.get(`http://localhost:5000/${postID}/posting`,{withCredentials: true})
-      .then(({data}) => {
-        console.log(data);
-        setPost(data.result);
-        setUser(data.result.users_datum);
-      }).catch(({response}) => {
-        console.error(response);
-      })
+      axios
+        .get(`http://localhost:5000/${postId}/posting`, {
+          withCredentials: true,
+        })
+        .then(({ data }) => {
+          setPost(data.result);
+          setUser(data.result.users_datum);
+        })
+        .catch(({ response }) => {
+          console.error(response);
+        });
     } catch (err) {
       console.error(err);
     }
   }
-  
+
   useEffect(() => {
     if (getWitdh > 500) {
       if (getSizeImage.xwidth <= 0) {
@@ -55,7 +58,7 @@ function CommentComponents() {
       setGetWidth(innerWidth);
     });
 
-      getPosting();
+    getPosting();
   }, [getWitdh]);
   return (
     <div className="Comment">

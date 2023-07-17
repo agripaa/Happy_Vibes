@@ -2,7 +2,7 @@ import {
   CHECKCOMMENT,
   CHECKPOST,
   CHECKTRUECROP,
-  CHECKIDPOST
+  CHECKIDPOST,
 } from "../reducers/PostReducer/PostCheck";
 
 export const CheckMyPostUser = (check) => {
@@ -25,16 +25,16 @@ export const CheckImageUserComment = (check) => {
     });
   };
 };
-export const CheckPostId = (postId) => {
+export const CheckPostId = (postIds) => {
   return (dispatch) => {
     dispatch({
       type: CHECKIDPOST,
       payload: {
-        postID: postId
-      }
-    })
-  }
-}
+        postId: postIds,
+      },
+    });
+  };
+};
 export const CheckCropImageUser = (check) => {
   return (dispatch) => {
     dispatch({
