@@ -7,6 +7,8 @@ import EyeClose from "../img/closePassword.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
@@ -51,8 +53,8 @@ function Login() {
         })
         .catch(({ response }) => {
           setIsLogged(false);
-
           setIsError(response.data);
+          toast.error("Login Failed, Please Try Again.");
         });
     } catch (err) {
       console.error(err);
@@ -168,6 +170,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 }
