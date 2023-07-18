@@ -152,7 +152,6 @@ module.exports = {
     async updateUser(req, res) {
       let name_img, bg_img;
       let files = req.files;
-      // log.info(files)
       let { desc } = req.body;
       const photosToKeep = [
         'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
