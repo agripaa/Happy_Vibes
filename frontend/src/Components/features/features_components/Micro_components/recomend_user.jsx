@@ -10,8 +10,7 @@ function Recomend_user() {
       </div>
       <div className="WrapUser">
         <ListUser />
-        <ListUser />
-        <ListUser />
+
       </div>
     </div>
   );

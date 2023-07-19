@@ -7,7 +7,7 @@ import Loading from "../../Loading";
 
 function ListUser() {
   const [follow, setFollow] = useState(false);
-  const [isUsers, setUsers] = useState([]);
+  const [isUsers, setUsers] = useState({});
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [getUserRecomend, setGetUserRecomend] = useState(false);
   const [getUserFollow, setGetUserFollow] = useState(false);
@@ -17,6 +17,7 @@ function ListUser() {
       axios
         .get("http://localhost:5000/users/random", { withCredentials: true })
         .then(({ data }) => {
+          console.log(data);
           setUsers(data.result);
           setGetUserRecomend(false);
         })
@@ -76,7 +77,8 @@ function ListUser() {
   return (
     <>
       {!getUserRecomend ? (
-        isUsers.map((user, i) => (
+        <>
+       { isUsers.map((user, i) => (
           <div className="ThisUser" key={i}>
             <div className="imageProfile-Aside">
               <figure>
@@ -116,7 +118,8 @@ function ListUser() {
               )}
             </div>
           </div>
-        ))
+        ))}
+        </>
       ) : (
         <div className="LoadingAside">
           <Loading size="small" />

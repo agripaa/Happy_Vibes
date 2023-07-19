@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const db = require('../Config/database.js');
 const Follows = require('./followsData.model.js');
 const CodeOTP = require('./codeOTP.model.js');
+const Background = require('./backgroundData.model.js');
 
 const Users = db.define('users_data', {
     uuid:{
@@ -62,20 +63,6 @@ const Users = db.define('users_data', {
             notEmpty: false,
         }
     },
-    bg_img : {
-        type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-            notEmpty: false,
-        }
-    },
-    bg_url : {
-        type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-            notEmpty: false,
-        }
-    },
     followerId: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -101,9 +88,10 @@ const Users = db.define('users_data', {
 Follows.belongsTo(Users, { foreignKey: 'followerId', as: 'follower', targetKey: 'id', onDelete: 'CASCADE' });
 Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey: 'id', onDelete: 'CASCADE' });
 CodeOTP.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Background.belongsTo(Users, { foreignKey: 'userId', as: 'users_data', targetKey: 'id', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings', onDelete: 'CASCADE' });
 Users.hasOne(CodeOTP, { foreignKey: 'userId', as: 'codeOTP', onDelete: 'CASCADE' });
-
+Users.hasOne(Background, { foreignKey: 'userId', as: 'backgrounds', onDelete: 'CASCADE' });
 
 module.exports = Users;

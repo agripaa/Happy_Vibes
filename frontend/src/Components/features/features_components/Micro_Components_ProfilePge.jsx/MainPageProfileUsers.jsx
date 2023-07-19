@@ -10,8 +10,6 @@ function MainPageProfileUsers({users}) {
       <Section_ImagePageProfile 
         urlProfile={users.url}
         nameProfile={users.name_img}
-        urlBackground={users.bg_url}
-        nameBackground={users.bg_img}
       />
       <Section_NamePageProfileUsers 
         name={users.name}

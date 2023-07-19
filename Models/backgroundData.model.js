@@ -1,7 +1,7 @@
 const {DataTypes} = require('sequelize');
 const db = require('../Config/database.js');
 
-const Background = db.define('background', {
+const Background = db.define('backgrounds', {
     uuid: {
         type: DataTypes.STRING,
         defaultValue: DataTypes.UUIDV4,
@@ -19,12 +19,13 @@ const Background = db.define('background', {
         allowNull: true
     },
     userId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER ,
         allowNull: false,
         validate: {
             notEmpty: true
         }
     }
 })
+
 
 module.exports = Background;
