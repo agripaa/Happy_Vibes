@@ -14,21 +14,7 @@ const { Sequelize } = require('sequelize');
 const db = require('../Config/database.js');
 
 module.exports = {
-  async getUsers(_, res) {
-    try {
-      const users = await Users.findAll();
-      res.status(200).json({
-        status: 'success',
-        result: users,
-      });
-    } catch (err) {
-      log.error('error: ', err);
-      res
-        .status(500)
-        .json({ status: 'error', msg: 'internal server error', error: err });
-    }
-  },
-  async getRandomUsers(req, res) {
+  async getUsers(req, res) {
     try {
       const { userId } = req;
   
@@ -43,12 +29,26 @@ module.exports = {
       });
       log.info(user)
       if(!user) return res.status(404).json("No have data!")
-      return res.status(200).json({ status: 200, result: user });
+      res.status(200).json({ status: 200, result: user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ status: 500, result: 'Terjadi kesalahan saat mengambil data pengguna' });
     }
   },
+  // async getRandomUsers(req, res) {
+  //   try {
+  //     const users = await Users.findAll();
+  //     res.status(200).json({
+  //       status: 'success',
+  //       result: users,
+  //     });
+  //   } catch (err) {
+  //     log.error('error: ', err);
+  //     res
+  //       .status(500)
+  //       .json({ status: 'error', msg: 'internal server error', error: err });
+  //   }
+  // },
   async getUserById(req, res){
     const {id} = req.params;
     try {
