@@ -7,7 +7,7 @@ function AsideSearch() {
     <aside className="AsideSearch">
       <div className="AsideSearch-components">
         <ComponentsSearch />
-        {/* <Recomend_user /> */}
+        <Recomend_user />
       </div>
     </aside>
   );

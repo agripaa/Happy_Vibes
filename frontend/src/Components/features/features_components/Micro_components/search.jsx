@@ -13,7 +13,7 @@ function ComponentsSearch() {
 
     try {
       await axios.get(
-        `http://localhost:5000/users/search?name=${searchQuery}`
+        `http://localhost:5000/user/search?name=${searchQuery}`, {withCredentials: true}
       ).then(({data}) => {
         setResultSearch(data.result);
       }).catch(({response}) => {

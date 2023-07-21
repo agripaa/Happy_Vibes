@@ -27,28 +27,13 @@ module.exports = {
         order: db.random(),
         limit: 1      
       });
-      log.info(user)
-      if(!user) return res.status(404).json("No have data!")
+      if(!user) return res.status(404).json({status: 404, msg:"No have data!"})
       res.status(200).json({ status: 200, result: user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ status: 500, result: 'Terjadi kesalahan saat mengambil data pengguna' });
     }
   },
-  // async getRandomUsers(req, res) {
-  //   try {
-  //     const users = await Users.findAll();
-  //     res.status(200).json({
-  //       status: 'success',
-  //       result: users,
-  //     });
-  //   } catch (err) {
-  //     log.error('error: ', err);
-  //     res
-  //       .status(500)
-  //       .json({ status: 'error', msg: 'internal server error', error: err });
-  //   }
-  // },
   async getUserById(req, res){
     const {id} = req.params;
     try {

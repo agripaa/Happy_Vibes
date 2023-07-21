@@ -7,7 +7,7 @@ import Loading from "../../Loading";
 
 function ListUser() {
   const [follow, setFollow] = useState(false);
-  const [isUsers, setUsers] = useState({});
+  const [isUsers, setUsers] = useState([]);
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [getUserRecomend, setGetUserRecomend] = useState(false);
   const [getUserFollow, setGetUserFollow] = useState(false);
