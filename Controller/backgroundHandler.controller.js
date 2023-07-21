@@ -24,10 +24,10 @@ module.exports = {
         }
     },
     async getBackgroundUserById(req, res) {
-        const {id} = req.params;
+        const {userId} = req.params;
         try {
             const background = await Background.findOne({
-                where: {id: id},
+                where: {userId: userId},
                 include: [{
                     model: Users,
                     attributes: attributesUser,
@@ -60,18 +60,23 @@ module.exports = {
             const allowedTypePhotos = [
                 '.png',
                 '.jpg',
-                'jpeg'
+                '.jpeg'
             ];
 
             if(!allowedTypePhotos.includes(ext.toLowerCase())) return res.status(422).json({msg: "invalid images"})
             if(size > 5000000) return res.status(422).json({msg: "image must be less than 5 MB"});
+            file.mv(`./public/users/bg_img/${name_bg}`, async (err) => {
+                if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+              });
         }
         const bg_url = `${req.protocol}://${req.get('host')}/users/bg_img/${name_bg}`
         try {
-            Background.create({
+            Background.update({
                 name_bg: name_bg,
                 url_bg: bg_url,
                 userId: userId,
+            },{
+                where: {userId: userId},
             })
             res.status(200).json({status: 200, msg: "Image updated successfully"})
         } catch (error) {

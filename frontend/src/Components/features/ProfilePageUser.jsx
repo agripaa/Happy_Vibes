@@ -16,6 +16,7 @@ import CommentComponents from "./features_components/Micro_components/Comment";
 
 function ProfilepageUsers() {
   const [user, setUser] = useState({});
+  const [background, setBackground] = useState({});
   const myEdit = useSelector((state) => state.CheckDeleteReducer);
   const myComment = useSelector((state) => state.CheckMyPostReducer);
 
@@ -34,8 +35,25 @@ function ProfilepageUsers() {
     }
   }
 
+  async function getDataBackground() {
+    try {
+      await axios
+        .get("http://localhost:5000/background/user", { withCredentials: true })
+        .then(({ data }) => {
+          setBackground(data.result);
+          console.log(data.result)
+        })
+        .catch(({ response }) => {
+          console.error(response);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     getDataUser();
+    getDataBackground();
   }, []);
 
   return (
@@ -44,7 +62,7 @@ function ProfilepageUsers() {
       <div className="Container-ProfilePage">
         <div className="WrapContainer-ProfilePage">
           <HeaderPageProfile ImageBack={ImageBack} userName={user.name} />
-          <MainPageProfileUsers users={user} />
+          <MainPageProfileUsers users={user} background={background} />
           <Navigation_ProfilePage />
           <FeaturePost_ProfilePage />
         </div>

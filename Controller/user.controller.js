@@ -12,6 +12,7 @@ const Posting = require('../Models/postingData.model.js');
 const { unlinkSync, existsSync } = require('fs');
 const { Sequelize } = require('sequelize');
 const db = require('../Config/database.js');
+const Background = require('../Models/backgroundData.model.js');
 
 module.exports = {
   async getUsers(req, res) {
@@ -72,7 +73,8 @@ module.exports = {
             const OTP = module.exports.generateOTP();
             module.exports.sendOTP(email, OTP);
             
-            await Users.create({
+            
+            const user = await Users.create({
                 name: name, 
                 username: username,
                 email: email,
@@ -81,8 +83,13 @@ module.exports = {
                 url: url,
                 verificationCode: OTP,
                 createdAt: moment().toISOString()
-            });
-            
+              });
+              
+              Background.create({
+                name_bg: null,
+                url_bg: null,
+                userId: user.id,
+            })
             res.status(200).json({status: 200, msg: 'data user created successfully'});
         } catch (err) {
             log.error(err);
@@ -170,14 +177,7 @@ module.exports = {
         } else {
           profile_img = user.profile_img;
           bg_img = user.bg_img;
-    
-          if (user.profile_img && !photosToKeep.includes(user.profile_img)) {
-            let profileImgPath = `./public/users/${user.profile_img}`;
-            if (existsSync(profileImgPath)) {
-              unlinkSync(profileImgPath);
-            }
-          }
-    
+
           let {file} = files;
           let size = file.data.length;
           let profileExtend = path.extname(file.name);
