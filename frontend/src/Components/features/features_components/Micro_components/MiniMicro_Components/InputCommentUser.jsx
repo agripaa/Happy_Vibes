@@ -1,46 +1,44 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import CommentComponents from "../Comment";
 
 function InputCommentUser() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
-  const [Like, setLike] = useState(false);
+  const { postId } = useSelector((state) => state.CheckMyPostReducer);
+  const [comment, setComment] = useState("")
+  
+  async function postComment(e) {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('comment', comment);
+      await axios.post(`http://localhost:5000/posting/${postId}/comment`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {'Content-Type' : 'multipart/form-data'}
+        }
+      ).then(({data}) => {
+        console.log(data)
+        CommentComponents();
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <div className="InputcommentUser">
       <div className="ListPostUserLike">
-        <div className="groupPostLike">
-          <figure className="LikeComment-Love">
-            {Like ? (
-              <img
-                src={components.ImageLikeLove}
-                alt=""
-                className="LikeLoveComment"
-                onClick={() => setLike(false)}
-              />
-            ) : (
-              <img
-                src={components.ImageLove}
-                alt=""
-                onClick={() => setLike(true)}
-              />
-            )}
-            <figcaption>12</figcaption>
-          </figure>
-          <figure className="LikeComment-Chat">
-            <img src={components.ImageChat} alt="" />
-            <figcaption>12</figcaption>
-          </figure>
-          <figure className="LikeComment-Share">
-            <img src={components.ImageShare} alt="" />
-          </figure>
-        </div>
-        <figure className="LikeComment-Bookmarks">
-          <img src={components.ImageBookmarks} alt="" />
-        </figure>
       </div>
-      <form className="inputanUserComment">
+      <form className="inputanUserComment" onSubmit={postComment}>
         <div className="wrapInputanUser">
-          <input type="text" placeholder="Add Text" />
+          <input 
+            type="text" 
+            placeholder="Add Text" 
+            onChange={(e) => setComment(e.target.value)} 
+          />
           <button type="submit">Up</button>
         </div>
       </form>

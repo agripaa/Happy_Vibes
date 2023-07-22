@@ -8,7 +8,6 @@ import axios from "axios";
 function CommentComponents() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const { postId } = useSelector((state) => state.CheckMyPostReducer);
-  console.log(postId);
   const [getSizeImage, setGetSizeImage] = useState({
     xwidth: 0,
     yheight: 0,
@@ -16,6 +15,44 @@ function CommentComponents() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [post, setPost] = useState({});
   const [user, setUser] = useState({});
+  const [comment, setComment] = useState("")
+  const [comments, setComments] = useState([]);
+
+  async function getComment(){
+    try {
+      await axios.get(`http://localhost:5000/posting/${postId}/all_comment`, {withCredentials: true})
+      .then(({data}) => {
+        setComments(data.result);
+      }).catch((err) => {
+        console.error(err);
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    getComment();
+  }, []);
+  
+  async function postComment(e) {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('comment', comment);
+      await axios.post(`http://localhost:5000/posting/${postId}/comment`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {'Content-Type' : 'multipart/form-data'}
+        }
+      ).then(({data}) => {
+        getComment();
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   function getSize() {
     let sizeImage = document.querySelector(".imageComment");
@@ -76,8 +113,8 @@ function CommentComponents() {
             <div className="ImagePostComment">
               <figure className="flex flex-complete-center">
                 <img
-                  src={components.ImageProfilePage}
-                  alt=""
+                  src={post.url}
+                  alt={post.name_img}
                   className="imageComment"
                   style={{
                     width: `${getSizeImage.xwidth > 450 ? `100%` : null}`,
@@ -92,11 +129,11 @@ function CommentComponents() {
               <header className="UserDesc">
                 <div className="groupNameUser">
                   <figure className="ppUserDesc">
-                    <img src={components.ImageDummy} alt="" />
+                    <img src={user.url} alt={user.name_img} />
                   </figure>
                   <div className="nameUserDesc">
-                    <p>Name_Dummy</p>
-                    <p>@namedummy</p>
+                    <p>{user.name}</p>
+                    <p>@{user.username}</p>
                   </div>
                 </div>
                 <div className="optionUserDesc">
@@ -109,20 +146,49 @@ function CommentComponents() {
               </header>
               <main className="TextDesc">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Quasi nostrum laborum minus, debitis cum labore corrupti
-                  fugiat deleniti rerum corporis distinctio rem eos dolorum
-                  deserunt, iusto neque et maxime vel.
+                  {post.desc}
                 </p>
               </main>
             </div>
             <div className="commentUser">
-              <ListComment />
-              <ListComment />
-              <ListComment />
-              <ListComment />
+              {comments.map((comment, i) => (
+                <div className="ThisComment" key={i}>
+                  <header className="UserDescComment">
+                    <div className="groupNameUserComment">
+                      <figure className="ppUserDescComment">
+                        <img src={comment.users_datum.url} alt={comment.users_datum.name_img} />
+                      </figure>
+                      <div className="nameUserDescComment">
+                        <p>{comment.users_datum.name}</p>
+                      </div>
+                    </div>
+                    <div className="optionUserDescComment">
+                    </div>
+                  </header>
+                  <main className="TextDescComment">
+                    <p>
+                      {comment.comment}
+                    </p>
+                  </main>
+                </div>
+              ))}
             </div>
-            {getWitdh > 500 ? <InputCommentUser /> : null}
+            {getWitdh > 500 ? (
+            <div className="InputcommentUser">
+            <div className="ListPostUserLike">
+            </div>
+            <form className="inputanUserComment" onSubmit={postComment}>
+              <div className="wrapInputanUser">
+                <input 
+                  type="text" 
+                  placeholder="Add Text" 
+                  onChange={(e) => setComment(e.target.value)} 
+                />
+                <button type="submit">Up</button>
+              </div>
+            </form>
+          </div>
+          ) : null}
           </div>
           <div className="closePopUpComment">
             <img
