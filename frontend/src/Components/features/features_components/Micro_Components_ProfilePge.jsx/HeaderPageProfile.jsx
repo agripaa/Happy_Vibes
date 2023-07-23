@@ -1,11 +1,14 @@
 import { useSelector } from "react-redux";
-function HeaderPageProfile({userName}) {
+import { Link } from "react-router-dom";
+function HeaderPageProfile({ userName }) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
 
   return (
     <header className="header-ProfilePage">
-      <figure className="buttonBackProfilePage">
-        <img src={components.ImageBack} alt="" />
+      <figure className="buttonBackProfilePage" >
+        <Link to={'/homepage'}>
+          <img src={components.ImageBack} alt=""/>
+        </Link>
       </figure>
       <div className="NameProfilePage">
         <h1>{userName}</h1>

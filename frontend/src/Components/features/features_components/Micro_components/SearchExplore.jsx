@@ -3,6 +3,7 @@ import ImageSearchAside from "../../../img/Vector-Explore.png";
 import "../../../css/Explore.scss";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ComponentsSearchExplore() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -57,10 +58,13 @@ function ComponentsSearchExplore() {
               </div>
           ) : (
               <div className="FindSearch" key={i}>
-                <div className="SearchInputUser">
-                  <img src={user.url} alt={user.name_img} />
-                  <p>{user.name}</p>
-                </div>
+                 <Link to={`/profile/${user.uuid}`}
+                    style={{textDecoration: 'none', color: 'black'}}>
+                      <div className="SearchInputUser">
+                        <img src={user.url} alt={user.name_img} />
+                        <p>{user.name}</p>
+                      </div>
+                  </Link>
               </div>
           )}
           </>

@@ -4,6 +4,7 @@ import "../../../css/Aside-Search.scss";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Loading from "../../Loading";
+import { Link } from "react-router-dom";
 
 function ListUser() {
   const [follow, setFollow] = useState(false);
@@ -17,7 +18,6 @@ function ListUser() {
       axios
         .get("http://localhost:5000/users/random", { withCredentials: true })
         .then(({ data }) => {
-          console.log(data);
           setUsers(data.result);
           setGetUserRecomend(false);
         })
@@ -80,20 +80,25 @@ function ListUser() {
         <>
        { isUsers.map((user, i) => (
           <div className="ThisUser" key={i}>
-            <div className="imageProfile-Aside">
-              <figure>
-                <img src={user.url} alt={user.name_img} />
-              </figure>
-            </div>
-            <div className="NameProfile-Aside">
-              <figcaption>
-                <h5>{user.name}</h5>
-                <p>@{user.username}</p>
-              </figcaption>
-              <figure>
-                <img src={components.Verified} alt="" />
-              </figure>
-            </div>
+              <div className="imageProfile-Aside">
+                <figure>
+                  <img src={user.url} alt={user.name_img} />
+                </figure>
+              </div>
+              <div className="NameProfile-Aside">
+                <figcaption>
+                  <Link onClick={() => {
+                    location.href(`/profile/${user.uuid}`)
+                    window.location.reload()
+                    }} style={{textDecoration: 'none', color: 'black'}}>
+                    <h5>{user.name}</h5>
+                    <p>@{user.username}</p>
+                  </Link>
+                </figcaption>
+                <figure>
+                  <img src={components.Verified} alt="" />
+                </figure>
+              </div>
             <div className="FollowProfile-Aside">
               {follow ? (
                 <button

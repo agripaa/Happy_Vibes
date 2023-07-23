@@ -12,6 +12,7 @@ const Posting = require('../Models/postingData.model.js');
 const { unlinkSync, existsSync } = require('fs');
 const { Sequelize } = require('sequelize');
 const db = require('../Config/database.js');
+const { Op } = require('sequelize');
 const Background = require('../Models/backgroundData.model.js');
 
 module.exports = {
@@ -35,17 +36,22 @@ module.exports = {
       res.status(500).json({ status: 500, result: 'Terjadi kesalahan saat mengambil data pengguna' });
     }
   },
-  async getUserById(req, res){
-    const {id} = req.params;
+  async getUserId(req, res){
+    const { uuid } = req.params;
     try {
-      const user = Users.findOne({
-        where: {id: id},
-      })
-      res.status(200).json({status: 200, result: user})
+      const user = await Users.findOne({
+        where: {
+          uuid: {
+            [Op.eq]: uuid
+          }
+        },
+        attributes: ['id', 'uuid', 'name', 'username', 'desc', 'email', 'name_img', 'url', 'followingCount', 'followerCount'],
+      });
+      if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });
+      return res.status(200).json({ status: 200, result: user });
     } catch (err) {
       log.error(err);
-      res.status(500).json({status: 500, msg: err.message});
-      return false;
+      res.status(500).json({ status: 500, msg: err.message });
     }
   },
   shuffleArray(array) {
@@ -157,14 +163,6 @@ module.exports = {
       let name_img;
       const {files} = req;
       let { desc } = req.body;
-      const photosToKeep = [
-        'user_36da66ab4324b049f8032a2ae1cc12c4.jpeg',
-        'user_053c88cf369f519d289b99d6119049f5.jpg',
-        'user_60ef0bd9ba36c2c165e00be9b9a19dcd.jpg',
-        'user_c13354bf51f1ce36d3e652b409e37f54.jpg',
-        'user_db15b37020a2fbb05b69fa1157f0bbfa.jpg',
-        'user_ff0b300a0e11132de2c89be1d79da25e.jpeg'
-      ];
     
       try {
         const user = await Users.findOne({ where: { id: req.userId } });

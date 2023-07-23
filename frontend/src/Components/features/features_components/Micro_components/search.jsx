@@ -3,6 +3,7 @@ import axios from "axios";
 import ImageSearchAside from "../../../img/Vector-Explore.png";
 import '../../../css/Explore.scss';
 import "../../../css/Aside-Search.scss";
+import { Link } from "react-router-dom";
 
 function ComponentsSearch() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -59,12 +60,18 @@ function ComponentsSearch() {
             </div>
           ) : (
             <div className="result_search" key={i}>
+              <Link to={`/profile/${user.uuid}`}
+              onClick={() => {
+                location.href(`/profile/${user.uuid}`)
+                window.location.reload()}}
+              style={{textDecoration: 'none', color: 'black'}}>
               <div className="FindSearchAside">
                 <div className="SearchInputUser">
                   <img src={user.url} alt={user.name_img} />
                   <p>{user.name}</p>
                 </div>
               </div>
+              </Link>
             </div>
           )}
           </>
