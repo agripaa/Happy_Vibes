@@ -179,7 +179,7 @@ module.exports = {
           let {file} = files;
           let size = file.data.length;
           let profileExtend = path.extname(file.name);
-          name_img = `user_${file.md5}${profileExtend}`;
+          profile_img = `user_${file.md5}${profileExtend}`;
     
           let allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif'];
     
