@@ -48,18 +48,16 @@ module.exports = {
       });
 
       const mailOptions = {
-        from: process.env.EMAIL_SEND,
-        to: process.env.EMAIL,
+        from: process.env.EMAIL,
+        to: process.env.EMAIL_SEND,
         subject: 'Bug Report!',
         text: `Title: ${title}\nType bug: ${type_bug}\nBug Report: ${report}\nReporter: ${user.name}`,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
           res.status(500).json({ status: 500, msg: 'Error sending bug report', error: error });
         } else {
-          console.log(info);
           res.status(200).json({ status: 200, msg: 'Bug report sent' });
         }
       });
