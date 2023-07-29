@@ -32,7 +32,7 @@
   padding-right: 5px;
 }
 .NameProfileText {
-  width: 70%;
+  width: 90%;
   display: flex;
   gap: 10px;
 }
@@ -78,12 +78,7 @@
   justify-content: space-between;
   align-items: flex-end;
   align-self: center;
-  span {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: black;
-  }
+
   &:hover {
     cursor: pointer;
   }
@@ -227,6 +222,16 @@
       p {
         font-size: 12px;
       }
+    }
+  }
+  .NameProfileText {
+    width: 95%;
+  }
+  .TextProfile-NameProfile {
+    width: 70%;
+    p:nth-child(3) {
+      font-size: 9px;
+      margin: 0 0 0 0px;
     }
   }
 }

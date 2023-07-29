@@ -95,12 +95,10 @@ function ListPost_Trending() {
               </div>
             </div>
             <div className="ButtonList-NameProfile">
-              <span></span>
-              <span></span>
-              <span></span>
+              <figure className="Share-LikePosting">
+                <img src={components.ImageShare} alt="" />
+              </figure>
             </div>
-            {/* Fitur tambahan */}
-            {/* <div className="ShowMoreFitur"></div> */}
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
@@ -119,6 +117,7 @@ function ListPost_Trending() {
                   <img
                     src={components.ImageLove}
                     alt=""
+                    role="button"
                     className="LikeLove"
                     onClick={async () => {
                       await handleLike(post.id, true);
@@ -129,6 +128,7 @@ function ListPost_Trending() {
                   <img
                     src={components.ImageLikeLove}
                     alt=""
+                    role="button"
                     onClick={async () => {
                       await handleLike(post.id, false);
                       await updatePost();
@@ -143,17 +143,12 @@ function ListPost_Trending() {
                 <img
                   src={components.ImageChat}
                   alt=""
+                  role="button"
                   onClick={() => dispatch(CheckImageUserComment(true))}
                 />
                 <figcaption>
                   <p></p>
                 </figcaption>
-              </figure>
-              <figure className="Share-LikePosting">
-                <img src={components.ImageShare} alt="" />
-              </figure>
-              <figure className="Bookmarks-LikePosting">
-                <img src={components.ImageBookmarks} alt="" />
               </figure>
             </div>
           </article>

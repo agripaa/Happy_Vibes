@@ -12,7 +12,7 @@ function NameBrand() {
     <Fragment>
       {getInnerWidth < 500 ? (
         <div className="NameBrand">
-          <h1>HappyVibes</h1>
+          <h1>Version 1.0.0</h1>
         </div>
       ) : null}
     </Fragment>

@@ -13,43 +13,45 @@ import CommentComponents from "./features_components/Micro_components/Comment";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router";
+import Version from "./features_components/Micro_components/Version";
 
 function Profilepage() {
-  const {id} = useParams();
+  const { id } = useParams();
   const myComment = useSelector((state) => state.CheckMyPostReducer);
   const [user, setUser] = useState({});
 
-  async function getDataUser(){
+  async function getDataUser() {
     try {
-      axios.get(`http://localhost:5000/get/user/${id}`, {withCredentials: true})
-      .then(({data}) => {
-        setUser(data.result);
-      }).catch((err) => {
-        console.error(err);
-      })
+      axios
+        .get(`http://localhost:5000/get/user/${id}`, { withCredentials: true })
+        .then(({ data }) => {
+          setUser(data.result);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } catch (err) {
       console.error(err);
     }
   }
   useEffect(() => {
     getDataUser();
-  }, [])
+  }, []);
   return (
     <Fragment>
       <Navbar />
       <div className="Container-ProfilePage">
         <div className="WrapContainer-ProfilePage">
-          <HeaderPageProfile userName={user.username}  />
+          <HeaderPageProfile userName={user.username} />
           <MainPageProfile user={user} />
           <Navigation_ProfilePage />
-          <FeaturePost_ProfilePageUser userId={user.id} />
+          <FeaturePost_ProfilePageUser userId={id} />
         </div>
       </div>
       {myComment.checkImageComment ? <CommentComponents /> : null}
-
       <OptionBugReport />
-
       <AsideSearch />
+      <Version />
     </Fragment>
   );
 }

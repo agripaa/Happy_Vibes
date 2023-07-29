@@ -61,12 +61,7 @@
   justify-content: space-between;
   align-items: flex-end;
   align-self: center;
-  span {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: black;
-  }
+
   &:hover {
     cursor: pointer;
   }
@@ -198,6 +193,12 @@
         font-size: 12px;
       }
     }
+  }
+  .NameProfileText {
+    width: 95%;
+  }
+  .TextProfile-NameProfile {
+    width: 70%;
   }
 }
 @media screen and (max-width: 620px) {

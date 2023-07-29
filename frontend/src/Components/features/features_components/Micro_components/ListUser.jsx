@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ImageDummmy from "../../../img/imageDummy2.png";
 import "../../../css/Aside-Search.scss";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Loading from "../../Loading";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ListUser() {
   const [follow, setFollow] = useState(false);
@@ -12,6 +11,7 @@ function ListUser() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [getUserRecomend, setGetUserRecomend] = useState(false);
   const [getUserFollow, setGetUserFollow] = useState(false);
+  const navigate = useNavigate();
   async function getRandomUsers() {
     setGetUserRecomend(true);
     try {
@@ -78,52 +78,52 @@ function ListUser() {
     <>
       {!getUserRecomend ? (
         <>
-       { isUsers.map((user, i) => (
-          <div className="ThisUser" key={i}>
+          {isUsers.map((user, i) => (
+            <div className="ThisUser" key={i}>
               <div className="imageProfile-Aside">
                 <figure>
                   <img src={user.url} alt={user.name_img} />
                 </figure>
               </div>
               <div className="NameProfile-Aside">
-                <figcaption>
-                  <Link onClick={() => {
-                    location.href(`/profile/${user.uuid}`)
-                    window.location.reload()
-                    }} style={{textDecoration: 'none', color: 'black'}}>
-                    <h5>{user.name}</h5>
-                    <p>@{user.username}</p>
-                  </Link>
+                <figcaption
+                  onClick={async () => {
+                    navigate(`/profile/${user.uuid}`);
+                    await window.location.reload();
+                  }}
+                >
+                  <h5>{user.name}</h5>
+                  <p>@{user.username}</p>
                 </figcaption>
                 <figure>
                   <img src={components.Verified} alt="" />
                 </figure>
               </div>
-            <div className="FollowProfile-Aside">
-              {follow ? (
-                <button
-                  className="ButtonFollowed-Aside"
-                  onClick={() => {
-                    setFollow(false);
-                    handleUnFollows(user.id);
-                  }}
-                >
-                  {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
-                </button>
-              ) : (
-                <button
-                  className="ButtonFollow-Aside"
-                  onClick={() => {
-                    setFollow(true);
-                    handleFollows(user.id);
-                  }}
-                >
-                  Follow
-                </button>
-              )}
+              <div className="FollowProfile-Aside">
+                {follow ? (
+                  <button
+                    className="ButtonFollowed-Aside"
+                    onClick={() => {
+                      setFollow(false);
+                      handleUnFollows(user.id);
+                    }}
+                  >
+                    {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
+                  </button>
+                ) : (
+                  <button
+                    className="ButtonFollow-Aside"
+                    onClick={() => {
+                      setFollow(true);
+                      handleFollows(user.id);
+                    }}
+                  >
+                    Follow
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
         </>
       ) : (
         <div className="LoadingAside">

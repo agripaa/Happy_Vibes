@@ -17,6 +17,7 @@ import Component_Paingting from "./features_components/Micro_ComponentExplore/Co
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
 import CommentComponents from "./features_components/Micro_components/Comment";
 import { useSelector } from "react-redux";
+import Version from "./features_components/Micro_components/Version";
 function Explore() {
   const myComment = useSelector((state) => state.CheckMyPostReducer);
 
@@ -36,6 +37,7 @@ function Explore() {
 
       <OptionBugReport />
       <AsideSearchExplore />
+      <Version />
     </Fragment>
   );
 }
