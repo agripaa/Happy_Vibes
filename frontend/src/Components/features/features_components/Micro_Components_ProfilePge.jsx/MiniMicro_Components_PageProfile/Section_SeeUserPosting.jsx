@@ -2,24 +2,24 @@ import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
 import axios from "axios";
-import { useParams } from "react-router";
 
-function Section_SeeUserPosting() {
+function Section_SeeUserPosting({ userId }) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [posts, setPosts] = useState([]);
-  const {id} = useParams();
+  
 
   const dispatch = useDispatch();
 
   async function getPostsUser() {
     try {
+      console.log(userId)
       await axios
-        .get(`http://localhost:5000/posting/${id}/user`, {
+        .get(`http://localhost:5000/posting/${userId}/user`, {
           withCredentials: true,
         })
         .then(({ data }) => {
+          console.log(data);
           setPosts(data.result);
-          console.log(data)
         })
         .catch(({ response }) => {
           console.error(response);
