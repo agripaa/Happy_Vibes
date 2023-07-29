@@ -2,7 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Loading from "../../Loading";
-import { CheckImageUserComment, CheckPostId } from "../../../Action/CheckMyPost";
+import {
+  CheckImageUserComment,
+  CheckPostId,
+} from "../../../Action/CheckMyPost";
 import CommentComponents from "../Micro_components/Comment";
 
 function Section_UserPostingHomePage() {
@@ -85,7 +88,6 @@ function Section_UserPostingHomePage() {
     dispatch(CheckImageUserComment(true));
   };
 
-
   return (
     <Fragment>
       {!displayPosting ? (
@@ -93,14 +95,20 @@ function Section_UserPostingHomePage() {
           <section className="UserPosting" key={i}>
             <article className="UserPosting-NameProfile">
               <div className="NameProfileText">
-                <figure className="ImageProfile-NameProfile">
+                <figure
+                  className="ImageProfile-NameProfile"
+                  style={{ cursor: "pointer" }}
+                >
                   <img
                     className="img_users"
                     src={post.users_datum.url}
                     alt={post.users_datum.name_img}
                   />
                 </figure>
-                <div className="TextProfile-NameProfile">
+                <div
+                  className="TextProfile-NameProfile"
+                  style={{ cursor: "pointer" }}
+                >
                   <p>{post.users_datum.name}</p>
                   <p>@{post.users_datum.username}</p>
                   <p> - {post.createdAt} - </p>
@@ -108,12 +116,10 @@ function Section_UserPostingHomePage() {
                 </div>
               </div>
               <div className="ButtonList-NameProfile">
-                <span></span>
-                <span></span>
-                <span></span>
+                <figure className="Share-LikePosting">
+                  <img src={components.ImageShare} alt="" />
+                </figure>
               </div>
-              {/* Fitur tambahan */}
-              {/* <div className="ShowMoreFitur"></div> */}
             </article>
             <article className="UserPosting-ImagePosting">
               <figure className="Image-ImagePosting">
@@ -132,6 +138,7 @@ function Section_UserPostingHomePage() {
                     <img
                       src={components.ImageLikeLove}
                       alt=""
+                      role="button"
                       onClick={async () => {
                         await handleLike(post.id, false);
                         await updatePost(post.id);
@@ -141,6 +148,7 @@ function Section_UserPostingHomePage() {
                     <img
                       src={components.ImageLove}
                       alt=""
+                      role="button"
                       className="LikeLove"
                       onClick={async () => {
                         await handleLike(post.id, true);
@@ -156,17 +164,12 @@ function Section_UserPostingHomePage() {
                   <img
                     src={components.ImageChat}
                     alt=""
+                    role="button"
                     onClick={() => {
                       handleCommentClick(post.id);
                     }}
                   />
                   <figcaption></figcaption>
-                </figure>
-                <figure className="Share-LikePosting">
-                  <img src={components.ImageShare} alt="" />
-                </figure>
-                <figure className="Bookmarks-LikePosting">
-                  <img src={components.ImageBookmarks} alt="" />
                 </figure>
               </div>
             </article>

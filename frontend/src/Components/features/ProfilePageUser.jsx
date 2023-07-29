@@ -9,10 +9,11 @@ import Navigation_ProfilePage from "./features_components/Micro_Components_Profi
 import FeaturePost_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/FeaturePost_ProfilePage";
 import MainPageProfileUsers from "./features_components/Micro_Components_ProfilePge.jsx/MainPageProfileUsers";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
-import axios from 'axios';
+import axios from "axios";
 import { useSelector } from "react-redux";
 import ChangeProfileImage from "./features_components/Micro_components/ChangeProfileImage";
 import CommentComponents from "./features_components/Micro_components/Comment";
+import Version from "./features_components/Micro_components/Version";
 
 function ProfilepageUsers() {
   const [user, setUser] = useState({});
@@ -41,7 +42,7 @@ function ProfilepageUsers() {
         .get("http://localhost:5000/background/user", { withCredentials: true })
         .then(({ data }) => {
           setBackground(data.result);
-          console.log(data.result)
+          console.log(data.result);
         })
         .catch(({ response }) => {
           console.error(response);
@@ -71,6 +72,7 @@ function ProfilepageUsers() {
       {myComment.checkImageComment ? <CommentComponents /> : null}
       <OptionBugReport />
       <AsideSearch />
+      <Version />
     </Fragment>
   );
 }

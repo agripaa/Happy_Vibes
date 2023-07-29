@@ -9,10 +9,11 @@ import OptionBugReport from "./features_components/Micro_components/MiniMicro_Co
 import BugReport from "./features_components/Micro_components/MiniMicro_Components/BugReport";
 import { useSelector } from "react-redux";
 import CommentComponents from "./features_components/Micro_components/Comment";
+import Version from "./features_components/Micro_components/Version";
 function Homepage() {
   const myComment = useSelector((state) => state.CheckMyPostReducer);
-  const [getWitdh, setGetWidth] = useState(innerWidth);
   const components = useSelector((state) => state.ComponentImagePostReducer);
+  const [getWitdh, setGetWidth] = useState(innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
@@ -40,6 +41,7 @@ function Homepage() {
       {myComment.checkImageComment ? <CommentComponents /> : null}
       <OptionBugReport />
       <AsideSearch />
+      <Version />
     </Fragment>
   );
 }

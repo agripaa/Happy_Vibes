@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Loading from '../../../Loading';
+import Loading from "../../../Loading";
 function Section_NamePageProfile({ name, userName, userId }) {
   const [follow, setFollow] = useState(false);
   const [getUserFollow, setGetUserFollow] = useState(false);
@@ -9,7 +9,7 @@ function Section_NamePageProfile({ name, userName, userId }) {
 
   async function handleFollows(userId) {
     setGetUserFollow(true);
-    
+
     try {
       axios
         .post(`http://localhost:5000/follow/${userId}/user/`, null, {
@@ -35,8 +35,7 @@ function Section_NamePageProfile({ name, userName, userId }) {
           withCredentials: true,
         })
         .then(({ data }) => {})
-        .catch(({ response }) => {
-        });
+        .catch(({ response }) => {});
     } catch (err) {
       console.error(err);
     }
@@ -56,27 +55,29 @@ function Section_NamePageProfile({ name, userName, userId }) {
           </div>
         </div>
         <div className="buttonFollow-ProfilePage">
-              {follow ? (
-                <button
-                  className="ButtonFollowed-Aside"
-                  onClick={() => {
-                    setFollow(false);
-                    handleUnFollows(userId);
-                  }}
-                >
-                  {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
-                </button>
-              ) : (
-                <button
-                  className="ButtonFollow-Aside"
-                  onClick={() => {
-                    setFollow(true);
-                    handleFollows(userId);
-                  }}
-                >
-                  Follow
-                </button>
-              )}
+          {follow ? (
+            <button
+              type="button"
+              className="ButtonFollowed-Aside"
+              onClick={() => {
+                setFollow(false);
+                handleUnFollows(userId);
+              }}
+            >
+              {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="ButtonFollow-Aside"
+              onClick={() => {
+                setFollow(true);
+                handleFollows(userId);
+              }}
+            >
+              Follow
+            </button>
+          )}
         </div>
       </div>
     </section>

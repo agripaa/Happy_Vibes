@@ -15,17 +15,21 @@ function CommentComponents() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [post, setPost] = useState({});
   const [user, setUser] = useState({});
-  const [comment, setComment] = useState("")
+  const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
 
-  async function getComment(){
+  async function getComment() {
     try {
-      await axios.get(`http://localhost:5000/posting/${postId}/all_comment`, {withCredentials: true})
-      .then(({data}) => {
-        setComments(data.result);
-      }).catch((err) => {
-        console.error(err);
-      })
+      await axios
+        .get(`http://localhost:5000/posting/${postId}/all_comment`, {
+          withCredentials: true,
+        })
+        .then(({ data }) => {
+          setComments(data.result);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } catch (err) {
       console.error(err);
     }
@@ -34,21 +38,20 @@ function CommentComponents() {
   useEffect(() => {
     getComment();
   }, []);
-  
+
   async function postComment(e) {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('comment', comment);
-      await axios.post(`http://localhost:5000/posting/${postId}/comment`,
-        formData,
-        {
+      formData.append("comment", comment);
+      await axios
+        .post(`http://localhost:5000/posting/${postId}/comment`, formData, {
           withCredentials: true,
-          headers: {'Content-Type' : 'multipart/form-data'}
-        }
-      ).then(({data}) => {
-        getComment();
-      })
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then(({ data }) => {
+          getComment();
+        });
     } catch (err) {
       console.error(err);
     }
@@ -137,17 +140,11 @@ function CommentComponents() {
                   </div>
                 </div>
                 <div className="optionUserDesc">
-                  <div className="burgerOptionDesc">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
+                  <div className="burgerOptionDesc"></div>
                 </div>
               </header>
               <main className="TextDesc">
-                <p>
-                  {post.desc}
-                </p>
+                <p>{post.desc}</p>
               </main>
             </div>
             <div className="commentUser">
@@ -156,39 +153,40 @@ function CommentComponents() {
                   <header className="UserDescComment">
                     <div className="groupNameUserComment">
                       <figure className="ppUserDescComment">
-                        <img src={comment.users_datum.url} alt={comment.users_datum.name_img} />
+                        <img
+                          src={comment.users_datum.url}
+                          alt={comment.users_datum.name_img}
+                        />
                       </figure>
                       <div className="nameUserDescComment">
                         <p>{comment.users_datum.name}</p>
                       </div>
                     </div>
-                    <div className="optionUserDescComment">
-                    </div>
+                    <div className="optionUserDescComment"></div>
                   </header>
                   <main className="TextDescComment">
-                    <p>
-                      {comment.comment}
-                    </p>
+                    <p>{comment.comment}</p>
                   </main>
                 </div>
               ))}
             </div>
             {getWitdh > 500 ? (
-            <div className="InputcommentUser">
-            <div className="ListPostUserLike">
-            </div>
-            <form className="inputanUserComment" onSubmit={postComment}>
-              <div className="wrapInputanUser">
-                <input 
-                  type="text" 
-                  placeholder="Add Text" 
-                  onChange={(e) => setComment(e.target.value)} 
-                />
-                <button type="submit">Up</button>
+              <div className="InputcommentUser">
+                <div className="ListPostUserLike"></div>
+                <form className="inputanUserComment" onSubmit={postComment}>
+                  <div className="wrapInputanUser">
+                    <input
+                      type="text"
+                      placeholder="Add Text"
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <button type="submit">
+                      <img src={components.ImageSend} alt="" />
+                    </button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
-          ) : null}
+            ) : null}
           </div>
           <div className="closePopUpComment">
             <img
