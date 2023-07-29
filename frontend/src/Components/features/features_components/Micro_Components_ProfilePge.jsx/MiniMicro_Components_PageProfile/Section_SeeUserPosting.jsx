@@ -78,7 +78,7 @@ function Section_SeeUserPosting({ userId }) {
 
   useEffect(() => {
     getPostsUser();
-  }, []);
+  }, [userId]);
   return (
     <Fragment>
       {posts.map((post, i) => (

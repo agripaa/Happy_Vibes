@@ -17,7 +17,7 @@ function MainPageProfile({ user }) {
           setBackground(data.result);
         })
         .catch((err) => {
-          console.error(err);
+          
         });
     } catch (err) {
       console.error(err);
@@ -26,7 +26,7 @@ function MainPageProfile({ user }) {
 
   useEffect(() => {
     getBackgroundUser();
-  }, []);
+  }, [user.id]);
 
   return (
     <main className="main-ProfilePage">
