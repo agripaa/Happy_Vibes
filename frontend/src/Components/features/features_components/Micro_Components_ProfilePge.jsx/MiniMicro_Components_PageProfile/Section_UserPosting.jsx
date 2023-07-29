@@ -13,7 +13,9 @@ function Section_UserPosting() {
   async function getPostsUser() {
     try {
       await axios
-        .get("http://localhost:5000/posting/user", { withCredentials: true })
+        .get(`http://localhost:5000/posting/user`, {
+          withCredentials: true,
+        })
         .then(({ data }) => {
           setPosts(data.result);
         })

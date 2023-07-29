@@ -6,13 +6,14 @@ import {
   CheckImageUserComment,
   CheckPostId,
 } from "../../../Action/CheckMyPost";
-import CommentComponents from "../Micro_components/Comment";
+import { useNavigate } from "react-router";
 
 function Section_UserPostingHomePage() {
   const [isPosts, setPosts] = useState([]);
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [displayPosting, setDisplayPosting] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const getPostings = async (e) => {
     setDisplayPosting(true);
     try {
@@ -22,6 +23,7 @@ function Section_UserPostingHomePage() {
         })
         .then(({ data }) => {
           setPosts(data.result);
+          console.log(data.result);
           setDisplayPosting(false);
         })
         .catch((err) => console.error(err));
@@ -98,6 +100,7 @@ function Section_UserPostingHomePage() {
                 <figure
                   className="ImageProfile-NameProfile"
                   style={{ cursor: "pointer" }}
+                  onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
                 >
                   <img
                     className="img_users"
@@ -108,6 +111,7 @@ function Section_UserPostingHomePage() {
                 <div
                   className="TextProfile-NameProfile"
                   style={{ cursor: "pointer" }}
+                  onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
                 >
                   <p>{post.users_datum.name}</p>
                   <p>@{post.users_datum.username}</p>

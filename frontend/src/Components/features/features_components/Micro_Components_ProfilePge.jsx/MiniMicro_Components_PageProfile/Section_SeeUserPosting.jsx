@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
 import axios from "axios";
 
 function Section_SeeUserPosting({ userId }) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
-  const [Like, setLike] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [notFound, setNotFound] = useState({});
+
   const dispatch = useDispatch();
 
   async function getPostsUser() {
@@ -78,7 +77,7 @@ function Section_SeeUserPosting({ userId }) {
     getPostsUser();
   }, []);
   return (
-    <>
+    <Fragment>
       {posts.map((post, i) => (
         <section className="UserPosting" key={i}>
           <article className="UserPosting-NameProfile">
@@ -157,7 +156,7 @@ function Section_SeeUserPosting({ userId }) {
           </article>
         </section>
       ))}
-    </>
+    </Fragment>
   );
 }
 

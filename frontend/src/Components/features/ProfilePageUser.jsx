@@ -42,7 +42,6 @@ function ProfilepageUsers() {
         .get("http://localhost:5000/background/user", { withCredentials: true })
         .then(({ data }) => {
           setBackground(data.result);
-          console.log(data.result);
         })
         .catch(({ response }) => {
           console.error(response);
