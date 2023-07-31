@@ -6,8 +6,9 @@ import Loading from "../../Loading";
 import { useNavigate } from "react-router-dom";
 
 function ListUser() {
-  const [follow, setFollow] = useState(false);
+  const [follow, setFollow] = useState({});
   const [isUsers, setUsers] = useState([]);
+  const [userLogin, setUserLogin] = useState({});
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [getUserRecomend, setGetUserRecomend] = useState(false);
   const [getUserFollow, setGetUserFollow] = useState(false);
@@ -33,6 +34,42 @@ function ListUser() {
     }
   }
 
+  async function userLog() {
+    try {
+      axios
+        .get(`http://localhost:5000/auth/profile`, { withCredentials: true })
+        .then(({ data }) => {
+          setUserLogin(data.result);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const checkIfUserIsFollowed = (user) => {
+    if (user.followers) {
+      for (const follower of user.followers) {
+        if (follower.followingId === userLogin.id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    if (isUsers.length > 0 && userLogin.id) {
+      const updatedFollowState = {};
+      for (const user of isUsers) {
+        updatedFollowState[user.id] = checkIfUserIsFollowed(user);
+      }
+      setFollow(updatedFollowState);
+    }
+  }, [isUsers, userLogin.id]);
+
   async function handleFollows(userId) {
     setGetUserFollow(true);
     try {
@@ -55,23 +92,9 @@ function ListUser() {
     }
   }
 
-  async function handleUnFollows(userId) {
-    try {
-      axios
-        .post(`http://localhost:5000/unfollow/${userId}/user/`, null, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {})
-        .catch(({ response }) => {
-          console.error(response);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   useEffect(() => {
     getRandomUsers();
+    userLog();
   }, []);
 
   return (
@@ -100,27 +123,33 @@ function ListUser() {
                 </figure>
               </div>
               <div className="FollowProfile-Aside">
-                {follow ? (
-                  <button
-                    className="ButtonFollowed-Aside"
-                    onClick={() => {
-                      setFollow(false);
-                      handleUnFollows(user.id);
-                    }}
-                  >
-                    {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
-                  </button>
-                ) : (
-                  <button
-                    className="ButtonFollow-Aside"
-                    onClick={() => {
-                      setFollow(true);
-                      handleFollows(user.id);
-                    }}
-                  >
-                    Follow
-                  </button>
-                )}
+              {follow[user.id] ? (
+        <button
+          className="ButtonFollowed-Aside"
+          onClick={() => {
+            setFollow((prevState) => ({
+              ...prevState,
+              [user.id]: false,
+            }));
+            handleFollows(user.id);
+          }}
+        >
+          {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
+        </button>
+      ) : (
+        <button
+          className="ButtonFollow-Aside"
+          onClick={() => {
+            setFollow((prevState) => ({
+              ...prevState,
+              [user.id]: true,
+            }));
+            handleFollows(user.id);
+          }}
+        >
+          Follow
+        </button>
+      )}
               </div>
             </div>
           ))}

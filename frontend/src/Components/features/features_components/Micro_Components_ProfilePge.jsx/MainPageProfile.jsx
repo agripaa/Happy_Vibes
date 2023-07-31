@@ -40,6 +40,7 @@ function MainPageProfile({ user }) {
         name={user.name}
         userName={user.username}
         userId={user.id}
+        userUUID={user.uuid}
       />
       <Section_BioPageProfile
         followers={user.followerCount}
