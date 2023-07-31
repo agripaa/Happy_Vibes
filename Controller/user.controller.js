@@ -10,7 +10,7 @@ require('dotenv').config();
 const crypto = require('crypto');
 const Posting = require('../Models/postingData.model.js');
 const { unlinkSync, existsSync } = require('fs');
-const { Sequelize } = require('sequelize');
+const Follows = require('../Models/followsData.model.js');
 const db = require('../Config/database.js');
 const { Op } = require('sequelize');
 const Background = require('../Models/backgroundData.model.js');
@@ -23,11 +23,16 @@ module.exports = {
       const user = await Users.findAll({
         where: {
           id: {
-            [Sequelize.Op.not]: userId
+            [Op.not]: userId
           }
         },
         order: db.random(),
-        limit: 1      
+        limit: 3,
+        include: [{
+          model: Follows,
+          as: 'followers',
+          attributes: ['followingId']
+        }]      
       });
       if(!user) return res.status(404).json({status: 404, msg:"No have data!"})
       res.status(200).json({ status: 200, result: user });
@@ -46,6 +51,11 @@ module.exports = {
           }
         },
         attributes: ['id', 'uuid', 'name', 'username', 'desc', 'email', 'name_img', 'url', 'followingCount', 'followerCount'],
+        include: [{
+          model: Follows,
+          as: 'followers',
+          attributes: ['followingId']
+        }]    
       });
       if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });
       return res.status(200).json({ status: 200, result: user });

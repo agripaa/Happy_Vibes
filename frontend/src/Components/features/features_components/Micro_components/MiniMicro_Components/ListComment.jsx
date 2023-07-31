@@ -23,7 +23,7 @@ function ListComment() {
 
   useEffect(() => {
     getComment();
-  }, []);
+  }, [comments, setComments]);
 
   return (
     <>
