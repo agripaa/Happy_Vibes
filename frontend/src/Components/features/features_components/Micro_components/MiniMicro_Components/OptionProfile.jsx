@@ -14,7 +14,9 @@ function OptionProfile({ Optionse, responseCheck }) {
   async function handleLogout(){
     try {
       await axios.delete('http://localhost:5000/auth/logOut', {withCredentials: true})
-      navigate('/');
+      .then(() => {
+        navigate('/');
+      })
     } catch (err) {
       console.error(err);
     }

@@ -324,7 +324,7 @@ module.exports = {
                 text: text,
             });
         } catch (error) {
-            console.log(error, "email not sent");
+            console.error(error, "email not sent");
         }
     },
     async getEmail(req, res) {

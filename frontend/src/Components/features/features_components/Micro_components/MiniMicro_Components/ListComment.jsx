@@ -11,7 +11,6 @@ function ListComment() {
     try {
       await axios.get(`http://localhost:5000/posting/${postId}/all_comment`, {withCredentials: true})
       .then(({data}) => {
-        console.log(data);
         setComments(data.result);
       }).catch((err) => {
         console.error(err);

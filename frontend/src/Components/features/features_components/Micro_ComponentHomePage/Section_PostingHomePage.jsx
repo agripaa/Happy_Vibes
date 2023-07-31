@@ -23,7 +23,6 @@ function Section_UserPostingHomePage() {
         })
         .then(({ data }) => {
           setPosts(data.result);
-          console.log(data.result);
           setDisplayPosting(false);
         })
         .catch((err) => console.error(err));

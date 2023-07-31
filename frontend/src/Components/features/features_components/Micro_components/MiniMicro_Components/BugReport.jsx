@@ -26,7 +26,6 @@ function BugReport() {
         headers: { 'Content-Type' : 'multipart/form-data'},
         withCredentials: true,
       }).then(({data}) => {
-        console.log(data);
       }).catch(err => {console.error(err)});
     } catch (err) {
       console.error(err);

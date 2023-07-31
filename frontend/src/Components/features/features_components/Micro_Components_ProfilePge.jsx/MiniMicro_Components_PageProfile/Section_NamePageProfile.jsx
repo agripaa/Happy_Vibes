@@ -15,7 +15,6 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
       axios
         .get(`http://localhost:5000/get/user/${userUUID}`, { withCredentials: true })
         .then(({ data }) => {
-          console.log(data.result)
           setUser(data.result);
         })
         .catch((err) => {
@@ -31,7 +30,6 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
       axios
         .get(`http://localhost:5000/auth/profile`, { withCredentials: true })
         .then(({ data }) => {
-          console.log(data.result)
           setUserLogin(data.result);
         })
         .catch((err) => {
@@ -68,7 +66,6 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
   }
 
   const checkIfUserIsFollowed = () => {
-    console.log(user)
     if (user.followers) {
       for (const follower of user.followers) {
         if (follower.followingId === userLogin.id) {

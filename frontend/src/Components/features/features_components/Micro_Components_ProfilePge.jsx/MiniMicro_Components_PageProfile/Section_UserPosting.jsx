@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
+import { CheckImageUserComment, CheckPostId } from "../../../../Action/CheckMyPost";
 import axios from "axios";
 
 function Section_UserPosting() {
@@ -77,6 +77,12 @@ function Section_UserPosting() {
   useEffect(() => {
     getPostsUser();
   }, []);
+
+  const handleCommentClick = (postId) => {
+    dispatch(CheckPostId(postId));
+    dispatch(CheckImageUserComment(true));
+  };
+
   return (
     <>
       {posts.map((post, i) => (
@@ -149,7 +155,7 @@ function Section_UserPosting() {
                   src={components.ImageChat}
                   alt=""
                   role="button"
-                  onClick={() => dispatch(CheckImageUserComment(true))}
+                  onClick={() => handleCommentClick(post.id)}
                 />
                 <figcaption></figcaption>
               </figure>

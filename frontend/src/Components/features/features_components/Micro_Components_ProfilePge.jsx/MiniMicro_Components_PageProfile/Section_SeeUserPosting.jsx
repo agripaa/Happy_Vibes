@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
+import { CheckImageUserComment, CheckPostId } from "../../../../Action/CheckMyPost";
 import axios from "axios";
 
 function Section_SeeUserPosting({ userId }) {
@@ -12,13 +12,11 @@ function Section_SeeUserPosting({ userId }) {
 
   async function getPostsUser() {
     try {
-      console.log(userId)
       await axios
         .get(`http://localhost:5000/posting/${userId}/user`, {
           withCredentials: true,
         })
         .then(({ data }) => {
-          console.log(data);
           setPosts(data.result);
         })
         .catch(({ response }) => {
@@ -79,6 +77,11 @@ function Section_SeeUserPosting({ userId }) {
   useEffect(() => {
     getPostsUser();
   }, [userId]);
+
+  const handleCommentClick = (postId) => {
+    dispatch(CheckPostId(postId));
+    dispatch(CheckImageUserComment(true));
+  };
   return (
     <Fragment>
       {posts.map((post, i) => (
@@ -151,7 +154,7 @@ function Section_SeeUserPosting({ userId }) {
                   src={components.ImageChat}
                   alt=""
                   role="button"
-                  onClick={() => dispatch(CheckImageUserComment(true))}
+                  onClick={() => handleCommentClick(post.id)}
                 />
                 <figcaption></figcaption>
               </figure>
