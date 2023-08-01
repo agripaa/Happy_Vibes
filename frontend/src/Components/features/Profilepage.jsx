@@ -22,7 +22,6 @@ function Profilepage() {
 
   async function getDataUser() {
     try {
-      console.log(user);
       axios
         .get(`http://localhost:5000/get/user/${id}`, { withCredentials: true })
         .then(({ data }) => {

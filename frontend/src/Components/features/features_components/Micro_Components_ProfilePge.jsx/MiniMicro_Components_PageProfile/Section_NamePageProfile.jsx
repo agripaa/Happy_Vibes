@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Loading from "../../../Loading";
+
 function Section_NamePageProfile({ name, userName, userId, userUUID }) {
   const [follow, setFollow] = useState(false);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [userLogin, setUserLogin] = useState({});
   const [getUserFollow, setGetUserFollow] = useState(false);
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -39,17 +40,6 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
     }
   }
 
-  const checkIfUserIsFollowed = () => {
-    if (user.followers) {
-      for (const follower of user.followers) {
-        if (follower.followingId === userLogin.id) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-
   useEffect(() => {
     getDataUser();
     userLog();
@@ -76,9 +66,21 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
     }
   }
 
+  const checkIfUserIsFollowed = () => {
+    if (user.followers) {
+      for (const follower of user.followers) {
+        if (follower.followingId === userLogin.id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   useEffect(() => {
     setFollow(checkIfUserIsFollowed());
-  }, [user.followers, userLogin.id])
+  }, [user.followers, userLogin.id]);
+
 
   return (
     <section className="section-NameProfilePage">
@@ -103,8 +105,7 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
               }}
             >
               {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
-            </button> : 
-          <button
+            </button> : <button
               type="button"
               className="ButtonFollow-Aside"
               onClick={() => {

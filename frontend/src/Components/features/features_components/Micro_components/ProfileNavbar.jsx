@@ -4,6 +4,7 @@ import "../../../css/Navbar.scss";
 
 import OptionProfile from "./MiniMicro_Components/OptionProfile";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 function ProfileNavbar({ check }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
@@ -11,7 +12,7 @@ function ProfileNavbar({ check }) {
   const [Options, setOptions] = useState(false);
   const { dltCheckNav } = useSelector((state) => state.CheckDeleteReducer);
   const components = useSelector((state) => state.ComponentImagePostReducer);
-
+  const navigate = useNavigate()
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetInnerWidth(innerWidth);
@@ -26,9 +27,15 @@ function ProfileNavbar({ check }) {
         .then(({ data }) => {
           setDataProfile(data.result);
         })
-        .catch((err) => console.error(err));
-    } catch (err) {
-      console.error(err);
+        .catch(({response}) => {
+          const {status}  = response.data;
+          console.error(response.data)
+          if(status === 401) {
+            navigate('/')
+          }
+        });
+    } catch ({response}) {
+      console.error(response.data);
     }
   }
 

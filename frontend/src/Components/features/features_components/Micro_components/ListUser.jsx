@@ -124,32 +124,32 @@ function ListUser() {
               </div>
               <div className="FollowProfile-Aside">
               {follow[user.id] ? (
-        <button
-          className="ButtonFollowed-Aside"
-          onClick={() => {
-            setFollow((prevState) => ({
-              ...prevState,
-              [user.id]: false,
-            }));
-            handleFollows(user.id);
-          }}
-        >
-          {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
-        </button>
-      ) : (
-        <button
-          className="ButtonFollow-Aside"
-          onClick={() => {
-            setFollow((prevState) => ({
-              ...prevState,
-              [user.id]: true,
-            }));
-            handleFollows(user.id);
-          }}
-        >
-          Follow
-        </button>
-      )}
+                <button
+                  className="ButtonFollowed-Aside"
+                  onClick={() => {
+                    setFollow((prevState) => ({
+                      ...prevState,
+                      [user.id]: false,
+                    }));
+                    handleFollows(user.id);
+                  }}
+                >
+                  {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
+                </button>
+              ) : (
+                <button
+                  className="ButtonFollow-Aside"
+                  onClick={() => {
+                    setFollow((prevState) => ({
+                      ...prevState,
+                      [user.id]: true,
+                    }));
+                    handleFollows(user.id);
+                  }}
+                >
+                  Follow
+                </button>
+              )}
               </div>
             </div>
           ))}

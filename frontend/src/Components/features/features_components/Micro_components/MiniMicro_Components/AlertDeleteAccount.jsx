@@ -13,7 +13,9 @@ function AlertDeleteAccount() {
   async function deleteAccount(){
     try {
       await axios.delete('http://localhost:5000/delete/user', {withCredentials: true})
-      navigate('/');
+      .then(() => {
+        navigate('/');
+      })
     } catch (err) {
       console.error(err);
     }

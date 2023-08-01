@@ -23,7 +23,6 @@ function Section_UserPostingHomePage() {
         })
         .then(({ data }) => {
           setPosts(data.result);
-          console.log(data.result);
           setDisplayPosting(false);
         })
         .catch((err) => console.error(err));
@@ -127,7 +126,7 @@ function Section_UserPostingHomePage() {
             </article>
             <article className="UserPosting-ImagePosting">
               <figure className="Image-ImagePosting">
-                <img src={post.url} alt={post.name_img} />
+                {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
               </figure>
             </article>
             <article className="UserPosting-ArticlePosting">

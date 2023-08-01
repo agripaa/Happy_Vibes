@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
+import { CheckImageUserComment, CheckPostId, } from "../../../../Action/CheckMyPost";
 import axios from "axios";
 import Loading from "../../../Loading";
 
@@ -84,6 +84,11 @@ function ListPost_Painting() {
     HotPosting();
   }, []);
 
+  const handleCommentClick = (postId) => {
+    dispatch(CheckPostId(postId));
+    dispatch(CheckImageUserComment(true));
+  };
+
   return (
     <Fragment>
       {!getPaintingPost ? (
@@ -111,7 +116,7 @@ function ListPost_Painting() {
             </article>
             <article className="UserPosting-ImagePosting">
               <figure className="Image-ImagePosting">
-                <img src={post.url} alt={post.name_img} role="button" />
+              {post.url ? (<img src={post.url} alt={post.name_img} role="button"/>) : ("")}
               </figure>
             </article>
             <article className="UserPosting-ArticlePosting">
@@ -153,7 +158,7 @@ function ListPost_Painting() {
                     src={components.ImageChat}
                     alt=""
                     role="button"
-                    onClick={() => dispatch(CheckImageUserComment(true))}
+                    onClick={() => handleCommentClick(post.id)}
                   />
                   <figcaption></figcaption>
                 </figure>

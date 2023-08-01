@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
+import { CheckImageUserComment, CheckPostId, } from "../../../../Action/CheckMyPost";
 import axios from "axios";
 import Loading from "../../../Loading";
 
@@ -79,6 +79,11 @@ function ListPost_Trending() {
     HotPosting();
   }, [Like]);
 
+  const handleCommentClick = (postId) => {
+    dispatch(CheckPostId(postId));
+    dispatch(CheckImageUserComment(true));
+  };
+
   return (
     <Fragment>
       {!getHotPosting ? (
@@ -102,7 +107,7 @@ function ListPost_Trending() {
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
-              <img src={post.url} alt={post.name_img} />
+              {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
             </figure>
           </article>
           <article className="UserPosting-ArticlePosting">
@@ -144,7 +149,7 @@ function ListPost_Trending() {
                   src={components.ImageChat}
                   alt=""
                   role="button"
-                  onClick={() => dispatch(CheckImageUserComment(true))}
+                  onClick={() => handleCommentClick(post.id)}
                 />
                 <figcaption>
                   <p></p>
