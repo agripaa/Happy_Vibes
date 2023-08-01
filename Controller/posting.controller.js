@@ -123,35 +123,51 @@ const getContentById = async (req,res) => {
 const createNewPosting = async (req, res) => {
     const files = req.files;
     const { desc, like } = req.body; 
-    
-    if(files === null) return res.status(400).json({status: 400, msg: 'No file uploaded'})
-    const file = files.file;
-    const size = file.data.length;
-    const extend = path.extname(file.name);
-    const name_img = file.md5 + extend
-    const url = `${req.protocol}://${req.get("host")}/postings/${name_img}`;
-    const allowedTypePhotos = ['.jpg', '.png', '.jpeg', '.bmp', '.heif', '.psd', '.raw', '.gif']
-    // if(!allowedTypePhotos.includes(extend.toLowerCase())) return res.status(422).json({status: 422, msg: "Invalid image"})
-    if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
-    file.mv(`./public/postings/${name_img}`, async(err) => {
-        if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
-        
-        try {
-            const posting = await Posting.create({
-                name_img: name_img,
-                url: url,
-                desc: desc,
-                like: like,
-                liked: false,
-                userId: req.userId
-            });
-            const createdAt = moment(posting.createdAt).fromNow();
-            return res.status(200).json({ status: 200, msg: 'Posting created successfully', createdAt });
-        } catch (error) {
-            log.error(error);
-            return res.status(500).json({ status: 500, msg: 'Internal server error' });
-        }
-    })
+
+    if(files){
+      const file = files.file;
+      const size = file.data.length;
+      const extend = path.extname(file.name);
+      const name_img = file.md5 + extend
+      const url = `${req.protocol}://${req.get("host")}/postings/${name_img}`;
+
+      if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
+      file.mv(`./public/postings/${name_img}`, async(err) => {
+          if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
+          
+          try {
+              const posting = await Posting.create({
+                  name_img: name_img,
+                  url: url,
+                  desc: desc,
+                  like: like,
+                  liked: false,
+                  userId: req.userId
+              });
+              const createdAt = moment(posting.createdAt).fromNow();
+              return res.status(200).json({ status: 200, msg: 'Posting created successfully', createdAt });
+          } catch (error) {
+              log.error(error);
+              return res.status(500).json({ status: 500, msg: 'Internal server error' });
+          }
+      })
+    }else{
+      try {
+        const posting = await Posting.create({
+            name_img: null,
+            url: null,
+            desc: desc,
+            like: like,
+            liked: false,
+            userId: req.userId
+        });
+        const createdAt = moment(posting.createdAt).fromNow();
+        return res.status(200).json({ status: 200, msg: 'Posting created successfully', createdAt });
+    } catch (error) {
+        log.error(error);
+        return res.status(500).json({ status: 500, msg: 'Internal server error' });
+    }
+  }
 }
 
 const updateLike = async (req, res) => {
