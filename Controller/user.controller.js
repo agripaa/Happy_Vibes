@@ -10,7 +10,6 @@ require('dotenv').config();
 const crypto = require('crypto');
 const Posting = require('../Models/postingData.model.js');
 const { unlinkSync, existsSync } = require('fs');
-const Follows = require('../Models/followsData.model.js');
 const db = require('../Config/database.js');
 const { Op } = require('sequelize');
 const Background = require('../Models/backgroundData.model.js');
