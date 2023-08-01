@@ -50,7 +50,7 @@ function CommentComponents() {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then(({ data }) => {
-          getComment();
+          setComment("");
         });
     } catch (err) {
       console.error(err);
@@ -179,6 +179,7 @@ function CommentComponents() {
                       type="text"
                       placeholder="Add Text"
                       onChange={(e) => setComment(e.target.value)}
+                      value={comment}
                     />
                     <button type="submit">
                       <img src={components.ImageSend} alt="" />
