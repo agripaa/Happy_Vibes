@@ -1,8 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment, CheckPostId, } from "../../../../Action/CheckMyPost";
+import {
+  CheckImageUserComment,
+  CheckPostId,
+} from "../../../../Action/CheckMyPost";
 import axios from "axios";
 import Loading from "../../../Loading";
+import { useNavigate } from "react-router";
 
 function ListPost_Trending() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -11,7 +15,7 @@ function ListPost_Trending() {
   const [user, setUser] = useState({});
   const [getHotPosting, setGetHotPosting] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   async function HotPosting() {
     setGetHotPosting(true);
     try {
@@ -90,10 +94,18 @@ function ListPost_Trending() {
         <section className="UserPosting">
           <article className="UserPosting-NameProfile">
             <div className="NameProfileText">
-              <figure className="ImageProfile-NameProfile">
+              <figure
+                className="ImageProfile-NameProfile"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
+              >
                 <img src={user.url} alt={user.name_img} />
               </figure>
-              <div className="TextProfile-NameProfile">
+              <div
+                className="TextProfile-NameProfile"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
+              >
                 <p> {user.name}</p>
                 <p>@{user.username}</p>
                 <img src={components.Verified} alt="" />
@@ -107,7 +119,7 @@ function ListPost_Trending() {
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
-              {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
+              {post.url ? <img src={post.url} alt={post.name_img} /> : ""}
             </figure>
           </article>
           <article className="UserPosting-ArticlePosting">
