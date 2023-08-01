@@ -52,8 +52,6 @@ function ChangeProfileImage() {
       const formData = new FormData();
       formData.append('desc', desc);
       formData.append('file', name_img);
-      console.log(bg_img)
-
       await axios.patch('http://localhost:5000/user/edit', formData, {
         withCredentials: true,
         headers: {

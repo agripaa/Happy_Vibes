@@ -19,8 +19,8 @@ function InputCommentUser() {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then(({ data }) => {
-          console.log(data);
           CommentComponents();
+          setComment("");
         });
     } catch (err) {
       console.error(err);
@@ -36,6 +36,7 @@ function InputCommentUser() {
             type="text"
             placeholder="Add Text"
             onChange={(e) => setComment(e.target.value)}
+            value={comment}
           />
           <button type="submit">
             <img src={components.ImageSend} alt="" />

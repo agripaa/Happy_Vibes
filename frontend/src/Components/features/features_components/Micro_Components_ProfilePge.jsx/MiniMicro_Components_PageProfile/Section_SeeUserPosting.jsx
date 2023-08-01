@@ -1,11 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
+import { CheckImageUserComment, CheckPostId } from "../../../../Action/CheckMyPost";
 import axios from "axios";
 
 function Section_SeeUserPosting({ userId }) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [posts, setPosts] = useState([]);
+  
 
   const dispatch = useDispatch();
 
@@ -75,7 +76,12 @@ function Section_SeeUserPosting({ userId }) {
 
   useEffect(() => {
     getPostsUser();
-  }, []);
+  }, [userId]);
+
+  const handleCommentClick = (postId) => {
+    dispatch(CheckPostId(postId));
+    dispatch(CheckImageUserComment(true));
+  };
   return (
     <Fragment>
       {posts.map((post, i) => (
@@ -106,7 +112,7 @@ function Section_SeeUserPosting({ userId }) {
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
-              <img src={post.url} alt={post.name_img} />
+            {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
             </figure>
           </article>
           <article className="UserPosting-ArticlePosting">
@@ -148,7 +154,7 @@ function Section_SeeUserPosting({ userId }) {
                   src={components.ImageChat}
                   alt=""
                   role="button"
-                  onClick={() => dispatch(CheckImageUserComment(true))}
+                  onClick={() => handleCommentClick(post.id)}
                 />
                 <figcaption></figcaption>
               </figure>

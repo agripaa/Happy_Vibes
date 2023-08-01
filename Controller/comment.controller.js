@@ -19,7 +19,8 @@ module.exports = {
                 },{
                     model: Posting,
                     attributes: attributePosting
-                }]
+                }],
+                order: [['id', 'DESC']] 
             })
             res.status(200).json({status: 200, result: comments})
         } catch (error) {

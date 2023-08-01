@@ -36,7 +36,7 @@ function Profilepage() {
   }
   useEffect(() => {
     getDataUser();
-  }, []);
+  }, [user.id, setUser]);
   return (
     <Fragment>
       <Navbar />
@@ -45,7 +45,7 @@ function Profilepage() {
           <HeaderPageProfile userName={user.username} />
           <MainPageProfile user={user} />
           <Navigation_ProfilePage />
-          <FeaturePost_ProfilePageUser userId={id} />
+          <FeaturePost_ProfilePageUser userId={user.id} />
         </div>
       </div>
       {myComment.checkImageComment ? <CommentComponents /> : null}

@@ -62,7 +62,7 @@ module.exports = {
         }
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       res.status(500).json({ status: 500, msg: 'Error saving bug report' });
     }
   }
