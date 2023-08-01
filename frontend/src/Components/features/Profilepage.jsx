@@ -12,14 +12,14 @@ import OptionBugReport from "./features_components/Micro_components/MiniMicro_Co
 import CommentComponents from "./features_components/Micro_components/Comment";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Version from "./features_components/Micro_components/Version";
 
 function Profilepage() {
   const { id } = useParams();
   const myComment = useSelector((state) => state.CheckMyPostReducer);
   const [user, setUser] = useState({});
-
+  const navigate = useNavigate();
   async function getDataUser() {
     try {
       axios
@@ -27,8 +27,11 @@ function Profilepage() {
         .then(({ data }) => {
           setUser(data.result);
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(({response}) => {
+          const { status } = response.data;
+          if(status === 403){
+            navigate('/profile/user')
+          }
         });
     } catch (err) {
       console.error(err);

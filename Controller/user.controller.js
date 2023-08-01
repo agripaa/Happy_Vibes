@@ -43,6 +43,7 @@ module.exports = {
   },
   async getUserId(req, res){
     const { uuid } = req.params;
+    const { userId } = req;
     try {
       const user = await Users.findOne({
         where: {
@@ -57,6 +58,7 @@ module.exports = {
           attributes: ['followingId']
         }]    
       });
+      if(user.id === userId) return res.status(403).json({status: 403, msg: 'Cannot see your profile in here'})
       if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });
       return res.status(200).json({ status: 200, result: user });
     } catch (err) {
