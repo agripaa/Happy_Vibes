@@ -116,7 +116,7 @@ function ListPost_Painting() {
             </article>
             <article className="UserPosting-ImagePosting">
               <figure className="Image-ImagePosting">
-                <img src={post.url} alt={post.name_img} role="button" />
+              {post.url ? (<img src={post.url} alt={post.name_img} role="button"/>) : ("")}
               </figure>
             </article>
             <article className="UserPosting-ArticlePosting">

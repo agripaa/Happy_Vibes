@@ -112,7 +112,7 @@ function Section_SeeUserPosting({ userId }) {
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
-              <img src={post.url} alt={post.name_img} />
+            {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
             </figure>
           </article>
           <article className="UserPosting-ArticlePosting">
