@@ -1,15 +1,19 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment, CheckPostId, } from "../../../../Action/CheckMyPost";
+import {
+  CheckImageUserComment,
+  CheckPostId,
+} from "../../../../Action/CheckMyPost";
 import axios from "axios";
 import Loading from "../../../Loading";
+import { useNavigate } from "react-router";
 
 function ListPost_Painting() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [posts, setPosts] = useState([]);
   const [getPaintingPost, setGetPaintingPost] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   async function HotPosting() {
     setGetPaintingPost(true);
     try {
@@ -96,13 +100,21 @@ function ListPost_Painting() {
           <section className="UserPosting" key={i}>
             <article className="UserPosting-NameProfile">
               <div className="NameProfileText">
-                <figure className="ImageProfile-NameProfile">
+                <figure
+                  className="ImageProfile-NameProfile"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
+                >
                   <img
                     src={post.users_datum.url}
                     alt={post.users_datum.name_img}
                   />
                 </figure>
-                <div className="TextProfile-NameProfile">
+                <div
+                  className="TextProfile-NameProfile"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
+                >
                   <p> {post.users_datum.name}</p>
                   <p>@{post.users_datum.username}</p>
                   <img src={components.Verified} alt="" />
@@ -116,7 +128,11 @@ function ListPost_Painting() {
             </article>
             <article className="UserPosting-ImagePosting">
               <figure className="Image-ImagePosting">
-              {post.url ? (<img src={post.url} alt={post.name_img} role="button"/>) : ("")}
+                {post.url ? (
+                  <img src={post.url} alt={post.name_img} role="button" />
+                ) : (
+                  ""
+                )}
               </figure>
             </article>
             <article className="UserPosting-ArticlePosting">
