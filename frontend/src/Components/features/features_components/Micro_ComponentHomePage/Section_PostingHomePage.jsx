@@ -120,13 +120,13 @@ function Section_UserPostingHomePage() {
               </div>
               <div className="ButtonList-NameProfile">
                 <figure className="Share-LikePosting">
-                  <img src={components.ImageShare} alt="" />
+                  <img src={components.ImageDeleteAccount} alt="" />
                 </figure>
               </div>
             </article>
             <article className="UserPosting-ImagePosting">
               <figure className="Image-ImagePosting">
-                {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
+                {post.url ? <img src={post.url} alt={post.name_img} /> : ""}
               </figure>
             </article>
             <article className="UserPosting-ArticlePosting">
@@ -163,6 +163,7 @@ function Section_UserPostingHomePage() {
                     <p>{post.like}</p>
                   </figcaption>
                 </figure>
+
                 <figure className="Chat-LikePosting">
                   <img
                     src={components.ImageChat}
@@ -173,6 +174,9 @@ function Section_UserPostingHomePage() {
                     }}
                   />
                   <figcaption></figcaption>
+                </figure>
+                <figure className="Share-LikePosting">
+                  <img src={components.ImageShare} alt="" />
                 </figure>
               </div>
             </article>
