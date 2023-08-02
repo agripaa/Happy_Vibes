@@ -7,6 +7,7 @@ import {
   CheckPostId,
 } from "../../../Action/CheckMyPost";
 import { useNavigate } from "react-router";
+import { CheckDeletePosting } from "../../../Action/CheckAcconutDelete";
 
 function Section_UserPostingHomePage() {
   const [isPosts, setPosts] = useState([]);
@@ -120,7 +121,12 @@ function Section_UserPostingHomePage() {
               </div>
               <div className="ButtonList-NameProfile">
                 <figure className="Share-LikePosting">
-                  <img src={components.ImageDeleteAccount} alt="" />
+                  <img
+                    src={components.ImageDeleteAccount}
+                    alt=""
+                    role="button"
+                    onClick={() => dispatch(CheckDeletePosting(true))}
+                  />
                 </figure>
               </div>
             </article>

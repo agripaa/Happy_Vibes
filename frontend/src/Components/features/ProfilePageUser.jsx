@@ -69,6 +69,7 @@ function ProfilepageUsers() {
       </div>
       {myEdit.checkEdit ? <ChangeProfileImage /> : null}
       {myComment.checkImageComment ? <CommentComponents /> : null}
+      {myEdit.dltCheckPosting ? <CommentComponents /> : null}
       <OptionBugReport />
       <AsideSearch />
       <Version />
