@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const db = require('../Config/database.js');
 const Users = require('./usersData.model.js');
+const Like = require('./likeData.model.js');
 const {DataTypes} = Sequelize
 
 const Posting = db.define('posting_data', {
@@ -31,17 +32,11 @@ const Posting = db.define('posting_data', {
     liked : {
         type: DataTypes.BOOLEAN,
         allowNull: true,
-    },
-    userId : {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
+    }
 }, {freezeTableName: true})
-
-Users.hasMany(Posting, { onDelete: 'CASCADE' });
 Posting.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });
+
+Posting.hasMany(Like, { foreignKey: 'postId', onDelete: 'CASCADE' });
 
 module.exports = Posting;

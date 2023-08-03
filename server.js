@@ -4,6 +4,7 @@ const fileUpload = require('express-fileupload');
 const sequelizeStore = require('connect-session-sequelize');
 const path = require('path');
 const log = require('./utils/log.js');
+const Like = require('./Routes/like.route.js');
 const Auth = require('./Routes/auth.route.js');
 const Post = require('./Routes/posting.route.js');
 const Users = require('./Routes/users.route.js');
@@ -45,6 +46,7 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(Like);
 app.use(Auth);
 app.use(Post);
 app.use(Notif);

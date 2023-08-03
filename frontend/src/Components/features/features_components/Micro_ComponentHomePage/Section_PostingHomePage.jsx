@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Loading from "../../Loading";
+import LikeButton from "./Button_Like/LikeButton";
 import {
   CheckImageUserComment,
   CheckPostId,
@@ -10,10 +11,12 @@ import { useNavigate } from "react-router";
 
 function Section_UserPostingHomePage() {
   const [isPosts, setPosts] = useState([]);
+  const [liked, setLiked] = useState(false);
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [displayPosting, setDisplayPosting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const getPostings = async (e) => {
     setDisplayPosting(true);
     try {
@@ -30,32 +33,6 @@ function Section_UserPostingHomePage() {
       setDisplayPosting(false);
 
       console.error(err);
-    }
-  };
-
-  const handleLike = async (postId, liked) => {
-    try {
-      await axios
-        .patch(
-          `http://localhost:5000/posting/like/${postId}`,
-          { liked },
-          { withCredentials: true }
-        )
-        .then(() => {
-          setPosts((prevPosts) => {
-            return prevPosts.map((post) => {
-              if (post.id === postId) {
-                return { ...post, liked: !post.liked };
-              }
-              return post;
-            });
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -82,7 +59,17 @@ function Section_UserPostingHomePage() {
 
   useEffect(() => {
     getPostings();
+    setLiked(true);
   }, []);
+
+  const handleUpdateLikes = (postId, likedStatus) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, liked: likedStatus } : post
+      )
+    );
+  };
+
 
   const handleCommentClick = (postId) => {
     dispatch(CheckPostId(postId));
@@ -137,28 +124,14 @@ function Section_UserPostingHomePage() {
             <article className="UserPosting-LikePosting">
               <div className="wrapLikePosting">
                 <figure className="Love-LikePosting">
-                  {post.liked ? (
-                    <img
-                      src={components.ImageLikeLove}
-                      alt=""
-                      role="button"
-                      onClick={async () => {
-                        await handleLike(post.id, false);
-                        await updatePost(post.id);
-                      }}
-                    />
-                  ) : (
-                    <img
-                      src={components.ImageLove}
-                      alt=""
-                      role="button"
-                      className="LikeLove"
-                      onClick={async () => {
-                        await handleLike(post.id, true);
-                        await updatePost(post.id);
-                      }}
-                    />
-                  )}
+                <LikeButton
+                    postId={post.id}
+                    liked={post.liked}
+                    updateLikes={(likedStatus) =>
+                      handleUpdateLikes(post.id, likedStatus)
+                    }
+                    updatePost={updatePost}
+                  />
                   <figcaption>
                     <p>{post.like}</p>
                   </figcaption>

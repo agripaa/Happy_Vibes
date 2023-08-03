@@ -3,6 +3,8 @@ const db = require('../Config/database.js');
 const Follows = require('./followsData.model.js');
 const CodeOTP = require('./codeOTP.model.js');
 const Background = require('./backgroundData.model.js');
+const Like = require('./likeData.model.js');
+const Posting = require('./postingData.model.js');
 
 const Users = db.define('users_data', {
     uuid:{
@@ -89,6 +91,7 @@ Follows.belongsTo(Users, { foreignKey: 'followerId', as: 'follower', targetKey: 
 Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey: 'id', onDelete: 'CASCADE' });
 CodeOTP.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Background.belongsTo(Users, { foreignKey: 'userId', as: 'users_data', targetKey: 'id', onDelete: 'CASCADE' });
+Users.hasMany(Like, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings', onDelete: 'CASCADE' });
 Users.hasOne(CodeOTP, { foreignKey: 'userId', as: 'codeOTP', onDelete: 'CASCADE' });
