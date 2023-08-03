@@ -1,14 +1,14 @@
 const express = require('express');
 const {sessionUser} = require('../middleware/session.js')
-const { getUsers, createUser, updateUser, verifyUser, resendCode, getEmail, changePassword, deleteUser, getRandomUsers } = require('../Controller/user.controller.js');
+const { getUsers, createUser, updateUser, verifyUser, resendCode, getEmail, changePassword, deleteUser, getUserId } = require('../Controller/user.controller.js');
 
 const router = express.Router();
 
-router.get('/users', sessionUser, getUsers);
-router.get('/users/random', sessionUser, getRandomUsers);
+router.get('/users/random', sessionUser, getUsers);
+router.get('/get/user/:uuid', sessionUser, getUserId);
 router.post('/user/create', createUser);
 router.patch('/forgot-pass/get_email', getEmail)
-router.patch('/update-pass/:userId/:token', changePassword)
+router.patch('/update-pass/:userId/:token', changePassword);
 router.patch('/user/verify', verifyUser);
 router.patch('/user/resend/otp', resendCode);
 router.patch('/user/edit', sessionUser, updateUser);

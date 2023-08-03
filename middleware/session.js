@@ -2,7 +2,7 @@ const Users = require('../Models/usersData.model.js');
 
 module.exports = {
     async sessionUser(req, res, next) {
-        if(!req.session.userId) return res.status(404).json({status:404, msg: "Please Login your account"})
+        if(!req.session.userId) return res.status(489).json({status:489, msg: "Please Login your account"})
         const user = await Users.findOne({
             attribute: ['id', 'uuid', 'name', 'email', 'name_img', 'url', 'verificationCode'],
             where: {

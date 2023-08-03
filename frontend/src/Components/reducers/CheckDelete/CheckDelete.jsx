@@ -2,12 +2,14 @@ export const CHECKDELETE = "CHECKDELETE";
 export const CHECKDELETENAV = "CHECKDELETENAV";
 export const CHECKEDITPROFIL = "CHECKEDITPROFIL";
 export const CHECKBUGREPORTNAV = "CHECKBUGREPORTNAV";
+export const CHECKDELETEPOSTING = "CHECKDELETEPOSTING";
 
 let InitialState = {
   dltCheck: false,
   dltCheckNav: false,
   CheckBugReport: false,
   checkEdit: false,
+  dltCheckPosting: false,
 };
 const CheckDelete = (state = InitialState, action) => {
   switch (action.type) {
@@ -30,6 +32,11 @@ const CheckDelete = (state = InitialState, action) => {
       return {
         ...state,
         checkEdit: action.payload.checkEdit,
+      };
+    case CHECKDELETEPOSTING:
+      return {
+        ...state,
+        dltCheckPosting: action.payload.dltCheckPosting,
       };
     default:
       return state;

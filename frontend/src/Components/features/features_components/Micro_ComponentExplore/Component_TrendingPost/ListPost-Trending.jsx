@@ -1,8 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment } from "../../../../Action/CheckMyPost";
+import {
+  CheckImageUserComment,
+  CheckPostId,
+} from "../../../../Action/CheckMyPost";
 import axios from "axios";
 import Loading from "../../../Loading";
+import { useNavigate } from "react-router";
 
 function ListPost_Trending() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -11,7 +15,7 @@ function ListPost_Trending() {
   const [user, setUser] = useState({});
   const [getHotPosting, setGetHotPosting] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   async function HotPosting() {
     setGetHotPosting(true);
     try {
@@ -79,32 +83,43 @@ function ListPost_Trending() {
     HotPosting();
   }, [Like]);
 
+  const handleCommentClick = (postId) => {
+    dispatch(CheckPostId(postId));
+    dispatch(CheckImageUserComment(true));
+  };
+
   return (
     <Fragment>
       {!getHotPosting ? (
         <section className="UserPosting">
           <article className="UserPosting-NameProfile">
             <div className="NameProfileText">
-              <figure className="ImageProfile-NameProfile">
+              <figure
+                className="ImageProfile-NameProfile"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
+              >
                 <img src={user.url} alt={user.name_img} />
               </figure>
-              <div className="TextProfile-NameProfile">
+              <div
+                className="TextProfile-NameProfile"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
+              >
                 <p> {user.name}</p>
                 <p>@{user.username}</p>
                 <img src={components.Verified} alt="" />
               </div>
             </div>
             <div className="ButtonList-NameProfile">
-              <span></span>
-              <span></span>
-              <span></span>
+              <figure className="Share-LikePosting">
+                <img src={components.ImageShare} alt="" />
+              </figure>
             </div>
-            {/* Fitur tambahan */}
-            {/* <div className="ShowMoreFitur"></div> */}
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
-              <img src={post.url} alt={post.name_img} />
+              {post.url ? <img src={post.url} alt={post.name_img} /> : ""}
             </figure>
           </article>
           <article className="UserPosting-ArticlePosting">
@@ -119,6 +134,7 @@ function ListPost_Trending() {
                   <img
                     src={components.ImageLove}
                     alt=""
+                    role="button"
                     className="LikeLove"
                     onClick={async () => {
                       await handleLike(post.id, true);
@@ -129,6 +145,7 @@ function ListPost_Trending() {
                   <img
                     src={components.ImageLikeLove}
                     alt=""
+                    role="button"
                     onClick={async () => {
                       await handleLike(post.id, false);
                       await updatePost();
@@ -143,17 +160,12 @@ function ListPost_Trending() {
                 <img
                   src={components.ImageChat}
                   alt=""
-                  onClick={() => dispatch(CheckImageUserComment(true))}
+                  role="button"
+                  onClick={() => handleCommentClick(post.id)}
                 />
                 <figcaption>
                   <p></p>
                 </figcaption>
-              </figure>
-              <figure className="Share-LikePosting">
-                <img src={components.ImageShare} alt="" />
-              </figure>
-              <figure className="Bookmarks-LikePosting">
-                <img src={components.ImageBookmarks} alt="" />
               </figure>
             </div>
           </article>

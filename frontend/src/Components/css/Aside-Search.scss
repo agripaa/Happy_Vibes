@@ -52,10 +52,9 @@
 }
 .inputForm {
   width: 90%;
-  height: 100%;
+  height: 20px;
   input {
     width: 100%;
-    height: 100%;
     background-color: transparent;
     outline: none;
     border: none;
@@ -133,7 +132,6 @@
 }
 .ButtonFollow-Aside {
   width: 80%;
-  //   background-color: #ffaf38;
   background-color: transparent;
   border: 1px solid black;
   height: 45%;
@@ -202,8 +200,11 @@
   .Container-recomendUser {
     height: 85%;
   }
+  .Container-search {
+    height: 25%;
+  }
   .FormSearch-aside {
-    height: 60%;
+    height: 90%;
   }
   .imageSearch-aside {
     width: 10%;

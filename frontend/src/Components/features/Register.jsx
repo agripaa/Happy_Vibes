@@ -65,7 +65,6 @@ function Register() {
         confPassword,
         name_img: name_img,
         url: url,
-        bg_img: null,
       })
       .then((_) => {
         navigate("/authOtp/otp");

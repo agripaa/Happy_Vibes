@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CHECKBUG } from "../../../../Action/CheckAcconutDelete";
+import axios from "axios";
 
 function BugReport() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispatch = useDispatch();
+  const [values, setValues] = useState({
+    title: "",
+    type_bug: "",
+    report: ""
+  })
+
+  async function sendBugReport(e) {
+    e.preventDefault();
+    const { title, type_bug, report } = values;
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('type_bug', type_bug);
+    formData.append('report', report);
+
+    try {
+      await axios.post('http://localhost:5000/bugreport', formData, {
+        headers: { 'Content-Type' : 'multipart/form-data'},
+        withCredentials: true,
+      }).then(({data}) => {
+      }).catch(err => {console.error(err)});
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function handleChange(e){
+    setValues({...values, [e.target.name]: e.target.value});
+  }
   return (
     <div className="Container-BugReportPop">
       <div className="wrap-BugReport">
@@ -21,31 +51,47 @@ function BugReport() {
               />
             </div>
           </header>
-          <main className="main-BugReport">
-            <form action="" className="FormBugReport">
-              <div className="TitleForm-BugReport">
-                <label htmlFor="">
-                  <p>Title</p>
-                </label>
-                <div className="InputTitle">
-                  <input type="text" />
+          <form onSubmit={sendBugReport}>
+            <main className="main-BugReport">
+                <div className="TitleForm-BugReport">
+                    <label htmlFor="">
+                      <p>Title : </p>
+                    </label>
+                    <div className="InputTitle">
+                      <input 
+                        type="text"
+                        onChange={handleChange}
+                        name="title"
+                      />
+                    </div>
+                    <div className="input_type-bug">
+                      <label htmlFor="">
+                        <p>Type Bug : </p>
+                      </label>
+                      <div className="InputTitle">
+                      <select name="type_bug" id="" onChange={handleChange}>
+                          <option value=""><b>What's Trouble?</b></option>
+                          <option value="function">Function</option>
+                          <option value="design">Design</option>
+                      </select>
+                      </div>
+                    </div>
                 </div>
-              </div>
-              <div className="TextForm-BugReport">
-                <label htmlFor="">
-                  <p>What is it?</p>
-                </label>
-                <div className="InputDesc">
-                  <textarea name="" id=""></textarea>
+                <div className="TextForm-BugReport">
+                  <label htmlFor="">
+                    <p>What is it?</p>
+                  </label>
+                  <div className="InputDesc">
+                    <textarea name="report" onChange={handleChange} value={values.report} id=""></textarea>
+                  </div>
                 </div>
-              </div>
-              <div className="Button-BugReport">
-                <button type="submit" className="bcolor-primary-40">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </main>
+                <div className="Button-BugReport">
+                  <button type="submit" className="bcolor-primary-40">
+                    Submit
+                  </button>
+                </div>
+            </main>
+          </form>
         </div>
       </div>
     </div>

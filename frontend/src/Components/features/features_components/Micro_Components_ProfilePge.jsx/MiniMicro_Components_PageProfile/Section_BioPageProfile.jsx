@@ -1,7 +1,6 @@
 import React from "react";
 
 function Section_BioPageProfile({followers, followings, desc, username}) {
-  console.log(desc)
   return (
     <section className="section-BioProfilePage">
       <div className="wrapBioProfilePage">

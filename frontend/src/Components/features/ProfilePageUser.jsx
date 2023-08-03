@@ -9,13 +9,15 @@ import Navigation_ProfilePage from "./features_components/Micro_Components_Profi
 import FeaturePost_ProfilePage from "./features_components/Micro_Components_ProfilePge.jsx/FeaturePost_ProfilePage";
 import MainPageProfileUsers from "./features_components/Micro_Components_ProfilePge.jsx/MainPageProfileUsers";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
-import axios from 'axios';
+import axios from "axios";
 import { useSelector } from "react-redux";
 import ChangeProfileImage from "./features_components/Micro_components/ChangeProfileImage";
 import CommentComponents from "./features_components/Micro_components/Comment";
+import Version from "./features_components/Micro_components/Version";
 
 function ProfilepageUsers() {
   const [user, setUser] = useState({});
+  const [background, setBackground] = useState({});
   const myEdit = useSelector((state) => state.CheckDeleteReducer);
   const myComment = useSelector((state) => state.CheckMyPostReducer);
 
@@ -34,8 +36,24 @@ function ProfilepageUsers() {
     }
   }
 
+  async function getDataBackground() {
+    try {
+      await axios
+        .get("http://localhost:5000/background/user", { withCredentials: true })
+        .then(({ data }) => {
+          setBackground(data.result);
+        })
+        .catch(({ response }) => {
+          console.error(response);
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     getDataUser();
+    getDataBackground();
   }, []);
 
   return (
@@ -44,15 +62,17 @@ function ProfilepageUsers() {
       <div className="Container-ProfilePage">
         <div className="WrapContainer-ProfilePage">
           <HeaderPageProfile ImageBack={ImageBack} userName={user.name} />
-          <MainPageProfileUsers users={user} />
+          <MainPageProfileUsers users={user} background={background} />
           <Navigation_ProfilePage />
           <FeaturePost_ProfilePage />
         </div>
       </div>
       {myEdit.checkEdit ? <ChangeProfileImage /> : null}
       {myComment.checkImageComment ? <CommentComponents /> : null}
+      {myEdit.dltCheckPosting ? <CommentComponents /> : null}
       <OptionBugReport />
       <AsideSearch />
+      <Version />
     </Fragment>
   );
 }

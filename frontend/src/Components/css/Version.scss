@@ -1,0 +1,15 @@
+.Container_Version {
+  width: 60px;
+  height: 20px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+.version {
+  font-size: 10px;
+}
+@media screen and (max-width: 700px) {
+  .version {
+    font-size: 9px;
+  }
+}

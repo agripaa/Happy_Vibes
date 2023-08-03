@@ -3,11 +3,14 @@ import "../../../css/ChangeProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckEditProfil } from "../../../Action/CheckAcconutDelete";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ChangeProfileImage() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
+  const [background, setBackgrund] = useState({});
   const [name_img, setName_img] = useState("");
   const [bg_img, setBg_img] = useState("");
   const [previewProfile, setPreviewProfile] = useState("");
@@ -29,10 +32,19 @@ function ChangeProfileImage() {
 
   async function fetchUserData() {
     try {
-      const response = await axios.get('http://localhost:5000/auth/profile', { withCredentials: true });
-      setUser(response.data.result);
+      const {data} = await axios.get('http://localhost:5000/auth/profile', { withCredentials: true });
+      setUser(data.result);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+    }
+  }
+
+  async function fetchBackgroundData() {
+    try {
+      const {data} = await axios.get('http://localhost:5000/background/user', {withCredentials: true})
+      setBackgrund(data.result);
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -42,14 +54,22 @@ function ChangeProfileImage() {
       const formData = new FormData();
       formData.append('desc', desc);
       formData.append('file', name_img);
-      formData.append('bg_img', bg_img);
       await axios.patch('http://localhost:5000/user/edit', formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data"
         }
       });
-      alert("update succesfully")
+
+      await axios.patch('http://localhost:5000/background/user/update', 
+      {file: bg_img},
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+      toast.success("Update Succesfully");
     } catch (err) {
       console.error(err);
     }
@@ -57,6 +77,7 @@ function ChangeProfileImage() {
 
   useEffect(() => {
     fetchUserData();
+    fetchBackgroundData();
   }, []);
 
   return (
@@ -83,8 +104,8 @@ function ChangeProfileImage() {
                   <img src={previewBg} alt="preview background" />
                 ) : (
                   <>
-                    {user.bg_img ? (
-                      <img src={user.bg_url} alt={user.bg_img} />
+                    {background.url_bg ? (
+                      <img src={background.url_bg} alt={background.name_bg} />
                     ) : (
                       <img src={components.ImageProfilePage} alt="" />
                     )}
@@ -125,7 +146,7 @@ function ChangeProfileImage() {
                   <input
                     type="file"
                     id="editPP"
-                    onChange={(e) => handleProfileImage(e)}
+                    onChange={handleProfileImage}
                     style={{ display: "none" }}
                   />
                 </figcaption>
@@ -191,6 +212,7 @@ function ChangeProfileImage() {
           </main>
         </form>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

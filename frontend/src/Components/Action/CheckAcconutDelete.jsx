@@ -2,6 +2,7 @@ import {
   CHECKBUGREPORTNAV,
   CHECKDELETE,
   CHECKDELETENAV,
+  CHECKDELETEPOSTING,
   CHECKEDITPROFIL,
 } from "../reducers/CheckDelete/CheckDelete";
 
@@ -41,6 +42,16 @@ export const CheckEditProfil = (check) => {
       type: CHECKEDITPROFIL,
       payload: {
         checkEdit: check,
+      },
+    });
+  };
+};
+export const CheckDeletePosting = (check) => {
+  return (dispatch) => {
+    dispatch({
+      type: CHECKDELETEPOSTING,
+      payload: {
+        dltCheckPosting: check,
       },
     });
   };
