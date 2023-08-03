@@ -10,8 +10,10 @@ import BugReport from "./features_components/Micro_components/MiniMicro_Componen
 import { useSelector } from "react-redux";
 import CommentComponents from "./features_components/Micro_components/Comment";
 import Version from "./features_components/Micro_components/Version";
+import AlertDeletePosting from "./features_components/Micro_components/MiniMicro_Components/AlertDeletePosting";
 function Homepage() {
   const myComment = useSelector((state) => state.CheckMyPostReducer);
+  const myCheck = useSelector((state) => state.CheckDeleteReducer);
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [getWitdh, setGetWidth] = useState(innerWidth);
   useEffect(() => {
@@ -39,6 +41,7 @@ function Homepage() {
         </div>
       </div>
       {myComment.checkImageComment ? <CommentComponents /> : null}
+      {myCheck.dltCheckPosting ? <AlertDeletePosting /> : null}
       <OptionBugReport />
       <AsideSearch />
       <Version />
