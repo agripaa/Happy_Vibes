@@ -106,9 +106,14 @@ function Section_UserPosting() {
               </div>
             </div>
             <div className="ButtonList-NameProfile">
-              <figure className="Share-LikePosting">
-                <img src={components.ImageShare} alt="" />
-              </figure>
+            <figure className="Share-LikePosting">
+                  <img
+                    src={components.ImageDeleteAccount}
+                    alt=""
+                    role="button"
+                    onClick={() => dispatch(CheckDeletePosting(true))}
+                  />
+                </figure>
             </div>
           </article>
           <article className="UserPosting-ImagePosting">
@@ -159,6 +164,9 @@ function Section_UserPosting() {
                 />
                 <figcaption></figcaption>
               </figure>
+              <figure className="Share-LikePosting">
+                <img src={components.ImageShare} alt="" />
+              </figure>                 
             </div>
           </article>
         </section>

@@ -29,14 +29,10 @@ const Posting = db.define('posting_data', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    liked : {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-    }
 }, {freezeTableName: true})
 Posting.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
-Posting.hasMany(Like, { foreignKey: 'postId', onDelete: 'CASCADE' });
+Posting.hasMany(Like, { foreignKey: 'postId', as: 'likes', onDelete: 'CASCADE' });
 
 module.exports = Posting;

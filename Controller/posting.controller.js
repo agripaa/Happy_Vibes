@@ -1,3 +1,4 @@
+const Like = require('../Models/likeData.model.js');
 const Posting = require('../Models/postingData.model.js');
 const Users = require('../Models/usersData.model.js');
 const log = require('../utils/log.js');
@@ -12,6 +13,11 @@ const getAllContent = async (_, res) => {
         include: [{
           model: Users,
           attributes: attributesUser
+        },
+        {
+          model: Like,
+          as: 'likes',
+          attributes: ['userId']
         }]
       });
   
@@ -41,6 +47,11 @@ const getAllContent = async (_, res) => {
         include: [{
           model: Users,
           attributes: attributesUser
+        },
+        {
+          model: Like,
+          as: 'likes',
+          attributes: ['userId']
         }]
       })
       if(!postings) return res.status(404).json({status: 404, msg: "user hasn't posted anything"})
@@ -68,6 +79,11 @@ const getAllContent = async (_, res) => {
         include: [{
           model: Users,
           attributes: attributesUser
+        },
+        {
+          model: Like,
+          as: 'likes',
+          attributes: ['userId']
         }]
       })
       if(!postings) return res.status(404).json({status: 404, msg: "user hasn't posted anything"})
@@ -105,6 +121,11 @@ const getContentById = async (req,res) => {
             include: [{
                     model: Users,
                     attributes: attributesUser
+                },
+                {
+                  model: Like,
+                  as: 'likes',
+                  attributes: ['userId']
                 }]
           });
 
