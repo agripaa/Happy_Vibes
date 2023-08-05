@@ -1,43 +1,49 @@
 import axios from "axios";
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 function Section_Notification() {
   const [notifs, setNotifs] = useState([]);
   const [user, setUser] = useState({});
   const components = useSelector((state) => state.ComponentImagePostReducer);
-  
 
-  async function getProfileUser(){
+  async function getProfileUser() {
     try {
-      await axios.get('http://localhost:5000/auth/profile', {withCredentials: true})
-      .then(({data}) => {
-        setUser(data.result)
-      }).catch((err) => console.error(err));
+      await axios
+        .get("http://localhost:5000/auth/profile", { withCredentials: true })
+        .then(({ data }) => {
+          setUser(data.result);
+        })
+        .catch((err) => console.error(err));
     } catch (err) {
       console.error(err);
     }
   }
-  async function getNotification(){
+  async function getNotification() {
     try {
-      await axios.get('http://localhost:5000/notif/get_all/', { withCredentials: true})
-      .then(({data}) => {
-        setNotifs(data.result);
-      }).catch(({response}) => {console.error(response)})
+      await axios
+        .get("http://localhost:5000/notif/get_all/", { withCredentials: true })
+        .then(({ data }) => {
+          setNotifs(data.result);
+        })
+        .catch(({ response }) => {
+          console.error(response);
+        });
     } catch (error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
-    getProfileUser()
+    getProfileUser();
     getNotification();
   }, []);
   return (
     <>
-    {notifs.map((notif, i) => {
-      return (
-        <section className="ThisNotifications" key={i}>
+      {notifs.map((notif, i) => {
+        const LetterFifth = notif.content_notif.substring(0, 50);
+        return (
+          <section className="ThisNotifications" key={i}>
             <div className="BlockNameUser">
               <div className="Nameuser-Notifications">
                 <figure>
@@ -49,14 +55,18 @@ function Section_Notification() {
                 </figcaption>
               </div>
               <div className="Text-Notifications">
-                <p>{notif.content_notif}</p>
+                <p>
+                  {notif.content_notif.length <= 50
+                    ? notif.content_notif
+                    : `${LetterFifth}...`}
+                </p>
               </div>
             </div>
             <div className="CircleNotifications">
               <div className="ThisCircle"></div>
             </div>
-            </section>
-        )
+          </section>
+        );
       })}
     </>
   );
