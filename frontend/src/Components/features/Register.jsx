@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import EyeOpen from "../img/showPassword.svg";
 import EyeClose from "../img/closePassword.svg";
 import Loading from "./Loading";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Register() {
   const [ShowPass, setShowPass] = useState(false);
   const [ShowConfPass, setShowConfPass] = useState(false);
@@ -70,6 +73,7 @@ function Register() {
       .catch(({ response }) => {
         SetinputError(response.data);
         setDoneRegister(false);
+        toast.error("Register Failed, Please Try Again.")
       });
   };
 
@@ -229,6 +233,7 @@ function Register() {
           </section>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

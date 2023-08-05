@@ -3,6 +3,8 @@ import "../../../css/ChangeProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckEditProfil } from "../../../Action/CheckAcconutDelete";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ChangeProfileImage() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -67,7 +69,7 @@ function ChangeProfileImage() {
           "Content-Type": "multipart/form-data"
         }
       });
-      alert("update succesfully");
+      toast.success("Update Succesfully");
     } catch (err) {
       console.error(err);
     }
@@ -210,6 +212,7 @@ function ChangeProfileImage() {
           </main>
         </form>
       </div>
+      <ToastContainer/>
     </div>
   );
 }
