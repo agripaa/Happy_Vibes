@@ -42,7 +42,7 @@ module.exports = {
             posting.decrement("like");
 
             await exitingLike.destroy();
-            res.status(200).json({status: 200, msg: "Unlike"})
+            res.status(200).json({status: 200, msg: "Unlike", like: posting.like})
         }else{
             await posting.increment("like");
             await Like.create({ postId: postId, userId: userId });
@@ -54,7 +54,7 @@ module.exports = {
                     postId: postId,
                 })
             }
-            res.status(200).json({ status: 200, msg: 'Liked' });
+            res.status(200).json({ status: 200, msg: 'Liked', like: posting.like });
         }
 
     } catch (error) {

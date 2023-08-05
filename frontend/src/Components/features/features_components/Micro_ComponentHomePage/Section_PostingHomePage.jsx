@@ -11,14 +11,25 @@ import { useNavigate } from "react-router";
 import { CheckDeletePosting } from "../../../Action/CheckAcconutDelete";
 
 function Section_UserPostingHomePage() {
-  const [liked, setLiked] = useState(false);
-  const [post, setPost] = useState({});
+  const [liked, setLiked] = useState({});
   const [isPosts, setPosts] = useState([]);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [displayPosting, setDisplayPosting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const fetchPostLikes = async (postId) => {
+    try {
+      const { data } = await axios.get(`http://localhost:5000/like/${postId}`, {
+        withCredentials: true,
+      });
+      return data.result.like;
+    } catch (error) {
+      console.error('Error while fetching post likes:', error);
+      return 0;
+    }
+  };
 
   useEffect(() => {
     async function fetchUserProfileAndPostings() {
@@ -28,27 +39,14 @@ function Section_UserPostingHomePage() {
         });
         setUser(data.result);
 
-        const postData = await axios.get("http://localhost:5000/posting/all_content/", {
-          withCredentials: true,
-        });
+        const postData = await axios.get(
+          "http://localhost:5000/posting/all_content/",
+          {
+            withCredentials: true,
+          }
+        );
         setPosts(postData.data.result);
         setDisplayPosting(false);
-
-        function checkUserLike() {
-          const updatedPosts = postData.data.result.map((post) => {
-            if (post.likes) {
-              for (const like of post.likes) {
-                if (like.userId === user.id) {
-                  return { ...post, liked: true };
-                }
-              }
-            }
-            return post;
-          });
-          setPosts(updatedPosts);
-        }
-
-        setLiked(checkUserLike());
       } catch (error) {
         setDisplayPosting(false);
         console.error(error);
@@ -64,43 +62,50 @@ function Section_UserPostingHomePage() {
         'http://localhost:5000/like',
         { postId: postId },
         { withCredentials: true }
-      ).then(({data}) => {
-        console.log(data);
-        setPosts((prevPosts) => 
-        prevPosts.map((prevPost) =>
-          postId ? { ...prevPost, like: data.liked + 1 ? prevPost.like -1 : prevPost.like } : prevPost
-        )
-      );
+      ).then(async({data}) => {
+        const updatedLikes = await fetchPostLikes(postId);
+
+        setPosts((prevPosts) =>
+          prevPosts.map((prevPost) =>
+            prevPost.id === postId
+              ? {
+                  ...prevPost,
+                  like: updatedLikes,
+                }
+              : { ...prevPost }
+          )
+        );
       })
     } catch (error) {
       console.error('Error while handling like:', error);
     }
   };
-
-  useEffect(() => {
-    function checkUserLike() {
-      if (post.likes) {
-        for (const likes of post.likes) {
-          if (likes.userId === user.id) {
-            return true;
-          }
+  const checkIfUserIsLiked = (post) => {
+    if (post.likes) {
+      for (const likes of post.likes) {
+        if (likes.userId === user.id) {
+          return true;
         }
       }
-      return false;
     }
+    return false;
+  };
 
-    setLiked(checkUserLike());
-    console.log(checkUserLike())
-    console.log(liked)
-  }, [post, user]);
+  useEffect(() => {
+    if (isPosts.length > 0 && user.id) {
+      const updatedLikeState = {};
+      for (const post of isPosts) {
+        updatedLikeState[post.id] = checkIfUserIsLiked(post);
+      }
+      setLiked(updatedLikeState);
+    }
+  }, [isPosts, user.id]);
 
   const handleCommentClick = (postId) => {
     dispatch(CheckPostId(postId));
     dispatch(CheckImageUserComment(true));
   };
-  function handleButtonLike(postId) {
-    handleLike(postId);
-  }
+
 
   return (
     <Fragment>
@@ -150,12 +155,18 @@ function Section_UserPostingHomePage() {
             <article className="UserPosting-LikePosting">
               <div className="wrapLikePosting">
                 <figure className="Love-LikePosting">
-                {liked  ? (
+                {liked[post.id]  ? (
                     <img
                       src={components.ImageLikeLove}
                       alt=""
                       role="button"
-                      onClick={() => handleButtonLike(post.id)}
+                      onClick={() => {
+                        setLiked((prevState) => ({
+                          ...prevState,
+                          [post.id]: false,
+                        }));
+                        handleLike(post.id)
+                      }}
                     />
                   ) : (
                     <img
@@ -163,7 +174,13 @@ function Section_UserPostingHomePage() {
                       alt=""
                       role="button"
                       className="LikeLove"
-                      onClick={() => handleButtonLike(post.id)}
+                      onClick={() => {
+                        setLiked((prevState) => ({
+                          ...prevState,
+                          [post.id]: true,
+                        }));
+                        handleLike(post.id)
+                      }}
                     />
                   )}
                   <figcaption>
