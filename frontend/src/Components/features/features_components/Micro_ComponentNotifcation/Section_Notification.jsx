@@ -41,7 +41,7 @@ function Section_Notification() {
   return (
     <>
       {notifs.map((notif, i) => {
-        const LetterFifth = notif.content_notif.substring(0, 50);
+        const LetterFifth = notif.content_notif.substring(0, 60);
         return (
           <section className="ThisNotifications" key={i}>
             <div className="BlockNameUser">
@@ -56,9 +56,9 @@ function Section_Notification() {
               </div>
               <div className="Text-Notifications">
                 <p>
-                  {notif.content_notif.length <= 50
+                  {notif.content_notif.length <= 80
                     ? notif.content_notif
-                    : `${LetterFifth}...`}
+                    : `${LetterFifth}`}
                 </p>
               </div>
             </div>
