@@ -63,8 +63,13 @@ function Section_UserPostingHomePage() {
         { postId: postId },
         { withCredentials: true }
       ).then(async({data}) => {
-        const updatedLikes = await fetchPostLikes(postId);
+        setLiked((prevLiked) => ({
+          ...prevLiked,
+          [postId]: !prevLiked[postId],
+        }));
 
+        const updatedLikes = await fetchPostLikes(postId);
+  
         setPosts((prevPosts) =>
           prevPosts.map((prevPost) =>
             prevPost.id === postId
@@ -155,34 +160,23 @@ function Section_UserPostingHomePage() {
             <article className="UserPosting-LikePosting">
               <div className="wrapLikePosting">
                 <figure className="Love-LikePosting">
-                {liked[post.id]  ? (
-                    <img
-                      src={components.ImageLikeLove}
-                      alt=""
-                      role="button"
-                      onClick={() => {
-                        setLiked((prevState) => ({
-                          ...prevState,
-                          [post.id]: false,
-                        }));
-                        handleLike(post.id)
-                      }}
-                    />
-                  ) : (
-                    <img
-                      src={components.ImageLove}
-                      alt=""
-                      role="button"
-                      className="LikeLove"
-                      onClick={() => {
-                        setLiked((prevState) => ({
-                          ...prevState,
-                          [post.id]: true,
-                        }));
-                        handleLike(post.id)
-                      }}
-                    />
-                  )}
+                <img
+                  src={
+                    liked[post.id]
+                      ? components.ImageLikeLove // Use the "Liked" icon
+                      : components.ImageLove // Use the "Unliked" icon
+                  }
+                  alt=""
+                  role="button"
+
+                  onClick={() => {
+                    setLiked((prevLiked) => ({
+                      ...prevLiked,
+                      [post.id]: !prevLiked[post.id], // Toggle the value
+                    }));
+                    handleLike(post.id);
+                  }}
+                />
                   <figcaption>
                     <p>{post.like}</p>
                   </figcaption>
