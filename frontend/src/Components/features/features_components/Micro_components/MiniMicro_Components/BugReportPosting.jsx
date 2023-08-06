@@ -79,6 +79,7 @@ function BugReportPosting() {
                       <option value="bulliying">Bulliying</option>
                       <option value="hate_speech">Hate speech</option>
                       <option value="hoax">Hoax</option>
+                      <option value="other">Other...</option>
                     </select>
                   </div>
                 </div>

@@ -7,10 +7,7 @@ import "../css/Explore_TrendingPost.scss";
 import "../css/Explore_PaintingPost.scss";
 import "../css/myLibrary.scss";
 import AsideSearchExplore from "./features_components/AsideSearchExplore";
-
 import ComponentsSearchExplore from "./features_components/Micro_components/SearchExplore";
-import Component_TagHot from "./features_components/Micro_ComponentExplore/Component_TagHot";
-
 import Component_TrendingPost from "./features_components/Micro_ComponentExplore/Component_TrendingToday";
 import Component_People from "./features_components/Micro_ComponentExplore/Component_People";
 import Component_Paingting from "./features_components/Micro_ComponentExplore/Component_Paingting";
@@ -18,8 +15,10 @@ import OptionBugReport from "./features_components/Micro_components/MiniMicro_Co
 import CommentComponents from "./features_components/Micro_components/Comment";
 import { useSelector } from "react-redux";
 import Version from "./features_components/Micro_components/Version";
+import BugReportPosting from "./features_components/Micro_components/MiniMicro_Components/BugReportPosting";
 function Explore() {
   const myComment = useSelector((state) => state.CheckMyPostReducer);
+  const checkReport = useSelector((state) => state.CheckDeleteReducer);
 
   return (
     <Fragment>
@@ -34,6 +33,7 @@ function Explore() {
         </div>
       </div>
       {myComment.checkImageComment ? <CommentComponents /> : null}
+      {checkReport.CheckBugReportPosting ? <BugReportPosting /> : null}
 
       <OptionBugReport />
       <AsideSearchExplore />

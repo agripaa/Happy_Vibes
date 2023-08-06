@@ -14,10 +14,13 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import Version from "./features_components/Micro_components/Version";
+import BugReportPosting from "./features_components/Micro_components/MiniMicro_Components/BugReportPosting";
 
 function Profilepage() {
   const { id } = useParams();
   const myComment = useSelector((state) => state.CheckMyPostReducer);
+  const checkReport = useSelector((state) => state.CheckDeleteReducer);
+
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   async function getDataUser() {
@@ -27,10 +30,10 @@ function Profilepage() {
         .then(({ data }) => {
           setUser(data.result);
         })
-        .catch(({response}) => {
+        .catch(({ response }) => {
           const { status } = response.data;
-          if(status === 403){
-            navigate('/profile/user')
+          if (status === 403) {
+            navigate("/profile/user");
           }
         });
     } catch (err) {
@@ -52,6 +55,8 @@ function Profilepage() {
         </div>
       </div>
       {myComment.checkImageComment ? <CommentComponents /> : null}
+      {checkReport.CheckBugReportPosting ? <BugReportPosting /> : null}
+
       <OptionBugReport />
       <AsideSearch />
       <Version />

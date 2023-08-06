@@ -1,12 +1,15 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment, CheckPostId } from "../../../../Action/CheckMyPost";
+import {
+  CheckImageUserComment,
+  CheckPostId,
+} from "../../../../Action/CheckMyPost";
 import axios from "axios";
+import { CheckBugReportPost } from "../../../../Action/CheckAcconutDelete";
 
 function Section_SeeUserPosting({ userId }) {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const [posts, setPosts] = useState([]);
-  
 
   const dispatch = useDispatch();
 
@@ -106,13 +109,19 @@ function Section_SeeUserPosting({ userId }) {
             </div>
             <div className="ButtonList-NameProfile">
               <figure className="Share-LikePosting">
-                <img src={components.ImageShare} alt="" />
+                <img
+                  role="button"
+                  src={components.alertRed}
+                  alt=""
+                  style={{ width: "20px", height: "20px" }}
+                  onClick={() => dispatch(CheckBugReportPost(true))}
+                />
               </figure>
             </div>
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
-            {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
+              {post.url ? <img src={post.url} alt={post.name_img} /> : ""}
             </figure>
           </article>
           <article className="UserPosting-ArticlePosting">
