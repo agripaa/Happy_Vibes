@@ -8,13 +8,18 @@ import {
   CheckPostId,
 } from "../../../Action/CheckMyPost";
 import { useNavigate } from "react-router";
-import { CheckDeletePosting } from "../../../Action/CheckAcconutDelete";
+import {
+  CheckBugReportPost,
+  CheckDeletePosting,
+} from "../../../Action/CheckAcconutDelete";
+import BugReportPosting from "../Micro_components/MiniMicro_Components/BugReportPosting";
 
 function Section_UserPostingHomePage() {
   const [liked, setLiked] = useState({});
   const [isPosts, setPosts] = useState([]);
   const [user, setUser] = useState({});
   const components = useSelector((state) => state.ComponentImagePostReducer);
+  const checkReport = useSelector((state) => state.CheckDeleteReducer);
   const [displayPosting, setDisplayPosting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,7 +31,7 @@ function Section_UserPostingHomePage() {
       });
       return data.result.like;
     } catch (error) {
-      console.error('Error while fetching post likes:', error);
+      console.error("Error while fetching post likes:", error);
       return 0;
     }
   };
@@ -58,31 +63,33 @@ function Section_UserPostingHomePage() {
 
   const handleLike = async (postId) => {
     try {
-      await axios.post(
-        'http://localhost:5000/like',
-        { postId: postId },
-        { withCredentials: true }
-      ).then(async({data}) => {
-        setLiked((prevLiked) => ({
-          ...prevLiked,
-          [postId]: !prevLiked[postId],
-        }));
+      await axios
+        .post(
+          "http://localhost:5000/like",
+          { postId: postId },
+          { withCredentials: true }
+        )
+        .then(async ({ data }) => {
+          setLiked((prevLiked) => ({
+            ...prevLiked,
+            [postId]: !prevLiked[postId],
+          }));
 
-        const updatedLikes = await fetchPostLikes(postId);
-  
-        setPosts((prevPosts) =>
-          prevPosts.map((prevPost) =>
-            prevPost.id === postId
-              ? {
-                  ...prevPost,
-                  like: updatedLikes,
-                }
-              : { ...prevPost }
-          )
-        );
-      })
+          const updatedLikes = await fetchPostLikes(postId);
+
+          setPosts((prevPosts) =>
+            prevPosts.map((prevPost) =>
+              prevPost.id === postId
+                ? {
+                    ...prevPost,
+                    like: updatedLikes,
+                  }
+                : { ...prevPost }
+            )
+          );
+        });
     } catch (error) {
-      console.error('Error while handling like:', error);
+      console.error("Error while handling like:", error);
     }
   };
   const checkIfUserIsLiked = (post) => {
@@ -110,7 +117,6 @@ function Section_UserPostingHomePage() {
     dispatch(CheckPostId(postId));
     dispatch(CheckImageUserComment(true));
   };
-
 
   return (
     <Fragment>
@@ -143,7 +149,13 @@ function Section_UserPostingHomePage() {
               </div>
               <div className="ButtonList-NameProfile">
                 <figure className="Share-LikePosting">
-                  <img src={components.ImageShare} alt="" />
+                  <img
+                    role="button"
+                    src={components.alertRed}
+                    alt=""
+                    style={{ width: "20px", height: "20px" }}
+                    onClick={() => dispatch(CheckBugReportPost(true))}
+                  />
                 </figure>
               </div>
             </article>
@@ -160,23 +172,22 @@ function Section_UserPostingHomePage() {
             <article className="UserPosting-LikePosting">
               <div className="wrapLikePosting">
                 <figure className="Love-LikePosting">
-                <img
-                  src={
-                    liked[post.id]
-                      ? components.ImageLikeLove // Use the "Liked" icon
-                      : components.ImageLove // Use the "Unliked" icon
-                  }
-                  alt=""
-                  role="button"
-
-                  onClick={() => {
-                    setLiked((prevLiked) => ({
-                      ...prevLiked,
-                      [post.id]: !prevLiked[post.id], // Toggle the value
-                    }));
-                    handleLike(post.id);
-                  }}
-                />
+                  <img
+                    src={
+                      liked[post.id]
+                        ? components.ImageLikeLove // Use the "Liked" icon
+                        : components.ImageLove // Use the "Unliked" icon
+                    }
+                    alt=""
+                    role="button"
+                    onClick={() => {
+                      setLiked((prevLiked) => ({
+                        ...prevLiked,
+                        [post.id]: !prevLiked[post.id], // Toggle the value
+                      }));
+                      handleLike(post.id);
+                    }}
+                  />
                   <figcaption>
                     <p>{post.like}</p>
                   </figcaption>
@@ -202,6 +213,7 @@ function Section_UserPostingHomePage() {
           <Loading size="big" />
         </div>
       )}
+      {checkReport.CheckBugReportPosting ? <BugReportPosting /> : null}
     </Fragment>
   );
 }
