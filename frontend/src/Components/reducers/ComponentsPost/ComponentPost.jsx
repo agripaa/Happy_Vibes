@@ -27,6 +27,7 @@ import AddImageBackground from "../../img/addImage.svg";
 import AddImagePP from "../../img/pencil.svg";
 import EditDesc from "../../img/edit.svg";
 import IconSearchExplore from "../../img/search-line.svg";
+import alertRed from "../../img/alert-red2.svg";
 let initialImage = {
   ImageLove,
   ImageChat,
@@ -57,6 +58,7 @@ let initialImage = {
   AddImagePP,
   EditDesc,
   IconSearchExplore,
+  alertRed,
 };
 const PostComponents = (state = initialImage, action) => {
   return state;

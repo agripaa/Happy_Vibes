@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CHECKBUG } from "../../../../Action/CheckAcconutDelete";
+import {
+  CHECKBUG,
+  CheckBugReportPost,
+} from "../../../../Action/CheckAcconutDelete";
 import axios from "axios";
 
-function BugReport() {
+function BugReportPosting() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispatch = useDispatch();
   const [values, setValues] = useState({
@@ -51,7 +54,7 @@ function BugReport() {
               <img
                 src={components.Close}
                 alt=""
-                onClick={() => dispatch(CHECKBUG(false))}
+                onClick={() => dispatch(CheckBugReportPost(false))}
               />
             </div>
           </header>
@@ -73,8 +76,9 @@ function BugReport() {
                       <option value="">
                         <b>What's Trouble?</b>
                       </option>
-                      <option value="function">Function</option>
-                      <option value="design">Design</option>
+                      <option value="bulliying">Bulliying</option>
+                      <option value="hate_speech">Hate speech</option>
+                      <option value="hoax">Hoax</option>
                       <option value="other">Other...</option>
                     </select>
                   </div>
@@ -106,4 +110,4 @@ function BugReport() {
   );
 }
 
-export default BugReport;
+export default BugReportPosting;

@@ -7,6 +7,7 @@ import {
 import axios from "axios";
 import Loading from "../../../Loading";
 import { useNavigate } from "react-router";
+import { CheckBugReportPost } from "../../../../Action/CheckAcconutDelete";
 
 function ListPost_Trending() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -113,7 +114,13 @@ function ListPost_Trending() {
             </div>
             <div className="ButtonList-NameProfile">
               <figure className="Share-LikePosting">
-                <img src={components.ImageShare} alt="" />
+                <img
+                  role="button"
+                  src={components.alertRed}
+                  alt=""
+                  style={{ width: "20px", height: "20px" }}
+                  onClick={() => dispatch(CheckBugReportPost(true))}
+                />
               </figure>
             </div>
           </article>

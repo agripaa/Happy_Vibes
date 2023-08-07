@@ -1,5 +1,6 @@
 import {
   CHECKBUGREPORTNAV,
+  CHECKBUGREPORTPOSTING,
   CHECKDELETE,
   CHECKDELETENAV,
   CHECKDELETEPOSTING,
@@ -52,6 +53,16 @@ export const CheckDeletePosting = (check) => {
       type: CHECKDELETEPOSTING,
       payload: {
         dltCheckPosting: check,
+      },
+    });
+  };
+};
+export const CheckBugReportPost = (check) => {
+  return (dispatch) => {
+    dispatch({
+      type: CHECKBUGREPORTPOSTING,
+      payload: {
+        CheckBugReportPosting: check,
       },
     });
   };
