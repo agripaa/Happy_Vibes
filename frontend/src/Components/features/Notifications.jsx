@@ -6,10 +6,11 @@ import Section_Notification from "./features_components/Micro_ComponentNotifcati
 import { useSelector } from "react-redux";
 import OptionBugReport from "./features_components/Micro_components/MiniMicro_Components/OptionBugReport";
 import Version from "./features_components/Micro_components/Version";
+import { useNavigate } from "react-router";
 
 function Notifications() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
-
+  const navigate = useNavigate();
   return (
     <Fragment>
       <Navbar />
@@ -17,7 +18,12 @@ function Notifications() {
         <div className="wrapNotifications">
           <header className="header-Notifications">
             <figure className="buttonBackNotifications">
-              <img src={components.ImageBack} alt="" />
+              <img
+                src={components.ImageBack}
+                alt=""
+                onClick={() => navigate("/homepage")}
+                style={{ cursor: "pointer" }}
+              />
             </figure>
             <div className="NameNotifications">
               <h1>Notifications</h1>

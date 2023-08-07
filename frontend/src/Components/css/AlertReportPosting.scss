@@ -1,0 +1,183 @@
+.AlertReportPosting {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+  backdrop-filter: blur(5px);
+}
+.WrapContainerARP {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.SquareARP {
+  width: 500px;
+  height: 310px;
+  border-radius: 10px;
+}
+.HeaderARP {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 40%;
+  background-color: #ffba53;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.imgAlert {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+.TextHeaderAlert {
+  width: 80%;
+  padding-right: 3%;
+  p {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ff3b3b;
+  }
+}
+.ArticleARP {
+  width: 100%;
+  height: 55%;
+  background-color: #ffffff;
+  padding: 10px 5px 5px 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.TextArticleARP {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 20px 0 10px;
+  p {
+    font-size: 10px;
+    font-weight: 300;
+  }
+}
+.ButtonArticleARP {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 55%;
+  padding: 0 10px 0 10px;
+  align-items: flex-end;
+  gap: 10px;
+}
+.containerButtonRed {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+.containerButtonRegular {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+.ButtonRedARP {
+  width: 100%;
+  padding: 8px 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: #ff3b3b;
+  background-color: transparent;
+  border: 1px solid #ff3b3b;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.ButtonRegularARP {
+  width: 100%;
+  padding: 8px 0;
+  font-weight: 600;
+  font-size: 10px;
+  background-color: transparent;
+  border: 1px solid black;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .SquareARP {
+    width: 450px;
+    height: 310px;
+    border-radius: 10px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .AlertReportPosting {
+    width: 100vw;
+
+    backdrop-filter: blur(0);
+  }
+  .SquareARP {
+    width: 100%;
+    height: 100vh;
+  }
+  .HeaderARP {
+    height: 30%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .ArticleARP {
+    height: 70%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .TextArticleARP {
+    align-items: center;
+  }
+  .ButtonArticleARP {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .containerButtonRed {
+    width: 65%;
+  }
+  .containerButtonRegular {
+    width: 65%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .HeaderARP {
+    gap: 10px;
+  }
+  .imgAlert {
+    width: 30%;
+  }
+  .TextHeaderAlert {
+    width: 60%;
+    padding-right: 0;
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (max-width: 330px) {
+  .HeaderARP {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .TextHeaderAlert {
+    width: 90%;
+    text-align: center;
+    p {
+      font-size: 12px;
+    }
+  }
+  .TextArticleARP {
+    p {
+      font-size: 10px;
+      font-weight: 400;
+    }
+  }
+}

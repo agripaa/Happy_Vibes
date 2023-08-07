@@ -16,6 +16,7 @@ import CommentComponents from "./features_components/Micro_components/Comment";
 import { useSelector } from "react-redux";
 import Version from "./features_components/Micro_components/Version";
 import BugReportPosting from "./features_components/Micro_components/MiniMicro_Components/BugReportPosting";
+import AlertReportPosting from "./features_components/Micro_components/MiniMicro_Components/BugReportPosting";
 function Explore() {
   const myComment = useSelector((state) => state.CheckMyPostReducer);
   const checkReport = useSelector((state) => state.CheckDeleteReducer);
@@ -33,7 +34,7 @@ function Explore() {
         </div>
       </div>
       {myComment.checkImageComment ? <CommentComponents /> : null}
-      {checkReport.CheckBugReportPosting ? <BugReportPosting /> : null}
+      {checkReport.CheckBugReportPosting ? <AlertReportPosting /> : null}
 
       <OptionBugReport />
       <AsideSearchExplore />

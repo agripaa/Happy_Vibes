@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import ChangeProfileImage from "./features_components/Micro_components/ChangeProfileImage";
 import CommentComponents from "./features_components/Micro_components/Comment";
 import Version from "./features_components/Micro_components/Version";
+import AlertDeletePosting from "./features_components/Micro_components/MiniMicro_Components/AlertDeletePosting";
 
 function ProfilepageUsers() {
   const [user, setUser] = useState({});
@@ -69,7 +70,7 @@ function ProfilepageUsers() {
       </div>
       {myEdit.checkEdit ? <ChangeProfileImage /> : null}
       {myComment.checkImageComment ? <CommentComponents /> : null}
-      {myEdit.dltCheckPosting ? <CommentComponents /> : null}
+      {myEdit.dltCheckPosting ? <AlertDeletePosting /> : null}
       <OptionBugReport />
       <AsideSearch />
       <Version />

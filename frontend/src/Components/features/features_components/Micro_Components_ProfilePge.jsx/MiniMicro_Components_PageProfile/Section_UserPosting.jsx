@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckImageUserComment, CheckPostId } from "../../../../Action/CheckMyPost";
+import {
+  CheckImageUserComment,
+  CheckPostId,
+} from "../../../../Action/CheckMyPost";
 import axios from "axios";
+import { CheckDeletePosting } from "../../../../Action/CheckAcconutDelete";
 
 function Section_UserPosting() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -106,19 +110,19 @@ function Section_UserPosting() {
               </div>
             </div>
             <div className="ButtonList-NameProfile">
-            <figure className="Share-LikePosting">
-                  <img
-                    src={components.ImageDeleteAccount}
-                    alt=""
-                    role="button"
-                    onClick={() => dispatch(CheckDeletePosting(true))}
-                  />
-                </figure>
+              <figure className="Share-LikePosting">
+                <img
+                  src={components.ImageDeleteAccount}
+                  alt=""
+                  role="button"
+                  onClick={() => dispatch(CheckDeletePosting(true))}
+                />
+              </figure>
             </div>
           </article>
           <article className="UserPosting-ImagePosting">
             <figure className="Image-ImagePosting">
-            {post.url ? (<img src={post.url} alt={post.name_img} />) : ("")}
+              {post.url ? <img src={post.url} alt={post.name_img} /> : ""}
             </figure>
           </article>
           <article className="UserPosting-ArticlePosting">
@@ -164,9 +168,6 @@ function Section_UserPosting() {
                 />
                 <figcaption></figcaption>
               </figure>
-              <figure className="Share-LikePosting">
-                <img src={components.ImageShare} alt="" />
-              </figure>                 
             </div>
           </article>
         </section>
