@@ -42,6 +42,21 @@ function Register() {
       });
   };
 
+  const checkLogin = async() => {
+    try {
+      const {data} = await axios.get('http://localhost:5000/auth/profile', {withCredentials: true});
+      if(data.result) {
+        navigate('/homepage')
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  React.useEffect(() => {
+    checkLogin();
+  },[]);
+
   useEffect(() => {
     handleRandomPhoto();
     handleSubmit();

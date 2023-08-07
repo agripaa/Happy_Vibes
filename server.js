@@ -13,6 +13,7 @@ const Search = require('./Routes/search.route.js');
 const Follows = require('./Routes/follows.route.js');
 const Comments = require('./Routes/comment.route.js');
 const BugReport = require('./Routes/bugreport.route.js');
+const PostReport = require('./Routes/reportposting.route.js')
 const Background = require('./Routes/background.route.js');
 const RandomPhoto = require('./Routes/randomPhoto.route.js');
 const db = require('./Config/database.js');
@@ -55,6 +56,7 @@ app.use(Search);
 app.use(Follows);
 app.use(Comments);
 app.use(BugReport);
+app.use(PostReport);
 app.use(Background);
 app.use(RandomPhoto);
 
