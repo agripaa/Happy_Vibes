@@ -134,7 +134,10 @@ function Section_UserPosting() {
                   src={components.ImageDeleteAccount}
                   alt=""
                   role="button"
-                  onClick={() => dispatch(CheckDeletePosting(true))}
+                  onClick={() => {
+                    dispatch(CheckDeletePosting(true))
+                    dispatch(CheckPostId(post.uuid));
+                  }}
                 />
               </figure>
             </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import "../../../../css/AlertDeletePosting.scss";
 import ImageAlert from "../../../../img/alert-red.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CheckDeletePosting,
   DELETECHECK,
@@ -12,13 +12,14 @@ import { useNavigate } from "react-router";
 function AlertDeletePosting() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { postId } = useSelector((state) => state.CheckMyPostReducer);
 
   async function deletePosting() {
     try {
       await axios
-        .delete("http://localhost:5000/delete/user", { withCredentials: true })
+        .delete(`http://localhost:5000/posting/${postId}`, { withCredentials: true })
         .then(() => {
-          navigate("/");
+          window.location.reload();
         });
     } catch (err) {
       console.error(err);

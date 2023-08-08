@@ -150,7 +150,10 @@ function ListPost_Painting() {
                     src={components.alertRed}
                     alt=""
                     style={{ width: "20px", height: "20px" }}
-                    onClick={() => dispatch(CheckBugReportPost(true))}
+                    onClick={() => {
+                      dispatch(CheckBugReportPost(true))
+                      dispatch(CheckPostId(post.id));
+                    }}
                   />
                 </figure>
               </div>
