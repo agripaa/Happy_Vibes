@@ -13,7 +13,6 @@ import 'react-toastify/dist/ReactToastify.css';
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
   const [displayHeight, setDisplayHeight] = React.useState(innerHeight);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isLogged, setIsLogged] = React.useState(false);
   const [isError, setIsError] = React.useState("");
   const [ShowPass, setShowPass] = React.useState(false);
@@ -47,7 +46,6 @@ function Login() {
           }
         )
         .then((_) => {
-          setIsLoggedIn(true);
           setIsLogged(false);
           navigate("/homepage");
         })
@@ -68,7 +66,6 @@ function Login() {
         navigate('/homepage')
       }
     } catch (err) {
-      console.error(err);
     }
   }
 
@@ -86,11 +83,7 @@ function Login() {
       setDisplayHeight(innerHeight);
     });
   }, [displayWidth, displayHeight]);
-
-  if (isLoggedIn == true) {
-    navigate("/homepage");
-  }
-
+  
   return (
     <div className="ContainerLogin">
       <div className="ContainerLogin-Form bcolor-neutral-5">

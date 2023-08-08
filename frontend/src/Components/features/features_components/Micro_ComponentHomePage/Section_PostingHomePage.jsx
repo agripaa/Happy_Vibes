@@ -14,6 +14,7 @@ import {
 } from "../../../Action/CheckAcconutDelete";
 import BugReportPosting from "../Micro_components/MiniMicro_Components/BugReportPosting";
 
+
 function Section_UserPostingHomePage() {
   const [liked, setLiked] = useState({});
   const [isPosts, setPosts] = useState([]);
@@ -156,7 +157,7 @@ function Section_UserPostingHomePage() {
                     style={{ width: "20px", height: "20px" }}
                     onClick={() => {
                       dispatch(CheckBugReportPost(true));
-                      dispatch(CheckPostId(post));
+                      dispatch(CheckPostId(post.id));
                     }}
                   />
                 </figure>

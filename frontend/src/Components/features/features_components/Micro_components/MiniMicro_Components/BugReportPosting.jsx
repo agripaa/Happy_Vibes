@@ -4,21 +4,21 @@ import ImageAlert from "../../../../img/alert-red.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckBugReportPost } from "../../../../Action/CheckAcconutDelete";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AlertReportPosting() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { postId } = useSelector((state) => state.CheckMyPostReducer);
-  async function deletePosting() {
+  
+  async function handleReport() {
     try {
-      await axios
-        .delete("http://localhost:5000/delete/user", { withCredentials: true })
-        .then(() => {
-          navigate("/");
-        });
+      await axios.post(`http://localhost:5000/report/${postId}/posting`, null, {withCredentials: true})
+      .then(({data}) => {
+        toast.success(data.msg)
+      })
     } catch (err) {
-      console.error(err);
+      
     }
   }
 
@@ -45,7 +45,7 @@ function AlertReportPosting() {
             </section>
             <section className="ButtonArticleARP">
               <div className="containerButtonRed">
-                <button className="ButtonRedARP" onClick={deletePosting}>
+                <button className="ButtonRedARP" onClick={handleReport}>
                   Yes, i will Report this posting
                 </button>
               </div>
@@ -61,6 +61,7 @@ function AlertReportPosting() {
           </article>
         </main>
       </div>
+      <ToastContainer />
     </div>
   );
 }

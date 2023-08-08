@@ -1,4 +1,6 @@
 const Posting = require('../Models/postingData.model');
+const Users = require('../Models/usersData.model');
+const nodemailer = require('nodemailer');
 
 module.exports = {
     async sendReport(req, res) {
@@ -9,6 +11,9 @@ module.exports = {
                 where: {id: postId,}
             }); 
             if(!posting) return res.status(404).json({status: 404, msg: 'posting not found'});
+            const user = await Users.findOne({
+              where: {id: userId},
+            })
 
             let transporter = nodemailer.createTransport({
                 host: process.env.EMAIL_HOST,
@@ -23,7 +28,7 @@ module.exports = {
               const mailOptions = {
                 from: process.env.EMAIL,
                 to: process.env.EMAIL_SEND,
-                subject: 'Report Posting!',
+                subject: `${user.username} send report posting!`,
                 text: `something wrong with posting with uuid : ${posting.uuid}`,
               };
           
@@ -34,6 +39,7 @@ module.exports = {
                         reject(new Error('Failed to send OTP email'));
                       } else {
                         resolve();
+                        res.status(200).json({status: 200, msg: "report posting successfully"});
                       }
                     });
                 });
