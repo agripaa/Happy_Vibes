@@ -175,15 +175,15 @@ function Section_UserPostingHomePage() {
                   <img
                     src={
                       liked[post.id]
-                        ? components.ImageLikeLove // Use the "Liked" icon
-                        : components.ImageLove // Use the "Unliked" icon
+                        ? components.ImageLikeLove
+                        : components.ImageLove 
                     }
                     alt=""
                     role="button"
                     onClick={() => {
                       setLiked((prevLiked) => ({
                         ...prevLiked,
-                        [post.id]: !prevLiked[post.id], // Toggle the value
+                        [post.id]: !prevLiked[post.id],
                       }));
                       handleLike(post.id);
                     }}
