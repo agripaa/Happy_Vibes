@@ -223,6 +223,11 @@ const getHotPost = async (req, res) => {
             include: [{
                 model: Users,
                 attributes: attributesUser
+            },
+            {
+              model: Like,
+              as: 'likes',
+              attributes: ['userId']
             }]
         });
         res.status(200).json({

@@ -11,15 +11,19 @@ import { CheckBugReportPost } from "../../../../Action/CheckAcconutDelete";
 
 function ListPost_Trending() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
-  const [Like, setLike] = useState(false);
+  const [liked, setLiked] = useState({});
   const [post, setPost] = useState({});
   const [user, setUser] = useState({});
+  const [userPost, setUserPost] = useState({});
   const [getHotPosting, setGetHotPosting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   async function HotPosting() {
     setGetHotPosting(true);
     try {
+      const {data} = await axios.get('http://localhost:5000/auth/profile', {withCredentials:true})
+      setUser(data.result)
       axios
         .get("http://localhost:5000/posting/get/hot_postings", {
           withCredentials: true,
@@ -27,7 +31,7 @@ function ListPost_Trending() {
         .then(({ data }) => {
           setGetHotPosting(false);
           setPost(data.result[0]);
-          setUser(data.result[0].users_datum);
+          setUserPost(data.result[0].users_datum);
         })
         .catch(({ response }) => {
           setGetHotPosting(false);
@@ -40,49 +44,47 @@ function ListPost_Trending() {
     }
   }
 
-  const handleLike = async (postId, liked) => {
+  const handleLike = async (postId) => {
     try {
       await axios
-        .patch(
-          `http://localhost:5000/posting/like/${postId}`,
-          { liked },
+        .post(
+          "http://localhost:5000/like",
+          { postId: postId },
           { withCredentials: true }
         )
-        .then(() => {
-          setLike(liked);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  async function updatePost(postId) {
-    try {
-      await axios
-        .get(`http://localhost:5000/${postId}/posting`, {
+        .then(async ({ data }) => {
+          axios
+        .get("http://localhost:5000/posting/get/hot_postings", {
           withCredentials: true,
         })
         .then(({ data }) => {
-          const updatedPost = data.result;
-          const updatedPosts = post.map((post) => {
-            if (post.id === postId) {
-              return updatedPost;
-            }
-            return post;
-          });
-          setPost(updatedPosts);
+          setGetHotPosting(false);
+          setPost(data.result[0]);
+          setUserPost(data.result[0].users_datum);
+        })
         });
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error("Error while handling like:", error);
     }
-  }
+  };
+  const checkIfUserIsLiked = () => {
+    if (post.likes) {
+      for (const likes of post.likes) {
+        if (likes.userId === user.id) {
+          return true;
+        }
+      }                         
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    setLiked(checkIfUserIsLiked())
+  }, [post, user.id]);
 
   useEffect(() => {
     HotPosting();
-  }, [Like]);
+  }, []);
 
   const handleCommentClick = (postId) => {
     dispatch(CheckPostId(postId));
@@ -107,8 +109,8 @@ function ListPost_Trending() {
                 style={{ cursor: "pointer" }}
                 onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
               >
-                <p> {user.name}</p>
-                <p>@{user.username}</p>
+                <p> {userPost.name}</p>
+                <p>@{userPost.username}</p>
                 <img src={components.Verified} alt="" />
               </div>
             </div>
@@ -137,28 +139,35 @@ function ListPost_Trending() {
           <article className="UserPosting-LikePosting">
             <div className="wrapLikePosting">
               <figure className="Love-LikePosting">
-                {!Like ? (
-                  <img
-                    src={components.ImageLove}
+              {liked ? <img
+                    src={
+                      components.ImageLikeLove 
+                    }
                     alt=""
                     role="button"
+                    onClick={() => {
+                      setLiked((prevLiked) => ({
+                        ...prevLiked,
+                        [post.id]: !prevLiked[post.id],
+                      }));
+                      handleLike(post.id);
+                    }}
+                  /> :
+                  <img
+                    src={
+                      components.ImageLove
+                    }
+                    alt=""
+                    role="button"
+                    onClick={() => {
+                      setLiked((prevLiked) => ({
+                        ...prevLiked,
+                        [post.id]: !prevLiked[post.id],
+                      }));
+                      handleLike(post.id);
+                    }}
                     className="LikeLove"
-                    onClick={async () => {
-                      await handleLike(post.id, true);
-                      await updatePost(post.id);
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={components.ImageLikeLove}
-                    alt=""
-                    role="button"
-                    onClick={async () => {
-                      await handleLike(post.id, false);
-                      await updatePost();
-                    }}
-                  />
-                )}
+                  />}
                 <figcaption>
                   <p>{post.like}</p>
                 </figcaption>

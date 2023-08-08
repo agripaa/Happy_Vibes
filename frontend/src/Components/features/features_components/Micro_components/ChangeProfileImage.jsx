@@ -53,7 +53,11 @@ function ChangeProfileImage() {
     try {
       const formData = new FormData();
       formData.append('desc', desc);
-      formData.append('file', name_img);
+      if(name_img){
+        formData.append('file', name_img);
+      }else{
+        formData.append('file', null)
+      }
       await axios.patch('http://localhost:5000/user/edit', formData, {
         withCredentials: true,
         headers: {

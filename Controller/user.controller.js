@@ -172,21 +172,20 @@ module.exports = {
         }
     },
     async updateUser(req, res) {
-      let name_img;
+      let profile_img;
       const {files} = req;
       let { desc } = req.body;
     
       try {
         const user = await Users.findOne({ where: { id: req.userId } });
         if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-    
+        log.info(user)
         if (!desc) desc = user.desc;
         if (!files) {
-          profile_img = user.profile_img;
-          bg_img = user.bg_img;
+          profile_img = user.name_img;
+          log.info(profile_img);
         } else {
-          profile_img = user.profile_img;
-          bg_img = user.bg_img;
+          profile_img = user.name_img;
 
           let {file} = files;
           let size = file.data.length;
