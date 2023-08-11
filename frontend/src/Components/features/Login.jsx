@@ -49,9 +49,14 @@ function Login() {
           setIsLogged(false);
           navigate("/homepage");
         })
-        .catch(({ response }) => {
+        .catch(async({ response }) => {
+          const {status, msg} = response.data;
           setIsLogged(false);
           setIsError(response.data);
+          if(status === 403) {
+            await toast.error(msg);
+            await navigate('/authOtp/otp')
+          }
           toast.error("Login Failed, Please Try Again.");
         });
     } catch (err) {

@@ -18,10 +18,14 @@ function EmailAuth() {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-
-    await axios.patch('http://localhost:5000/user/resend/otp', {email: email})
-    .then(({data}) => {navigate('/authOtp/otp')})
-    .catch((err) => {console.error(err)});
+    try {
+      await axios.patch('http://localhost:5000/user/resend/otp', {email: email})
+      .then(({data}) => {
+        console.log(data)
+      }).catch(err => {console.error(err)}) 
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (

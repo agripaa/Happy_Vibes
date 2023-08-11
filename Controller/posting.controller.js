@@ -7,39 +7,57 @@ const path = require('path');
 
 const attributesUser = ['id', 'uuid', 'name', 'username', 'url', 'name_img'];
 
-const getAllContent = async (_, res) => {
+const getAllContent = async (req, res) => {
     try {
+      const totalPostings = await Posting.count(); 
+      const randomIndices = generateRandomIndices(totalPostings, 100);
+
       const postings = await Posting.findAll({
-        include: [{
-          model: Users,
-          attributes: attributesUser
+        where: {
+          id: randomIndices
         },
-        {
-          model: Like,
-          as: 'likes',
-          attributes: ['userId']
-        }]
+        include: [
+          {
+            model: Users,
+            attributes: attributesUser,
+          },
+          {
+            model: Like,
+            as: 'likes',
+            attributes: ['userId'],
+          },
+        ],
       });
-  
-      const shuffledPostings = shuffleArray(postings);
-  
-      const formattedPostings = shuffledPostings.map((posting) => {
+
+      const formattedPostings = postings.map((posting) => {
         const createdAt = moment(posting.createdAt).fromNow();
         return {
           ...posting.toJSON(),
-          createdAt: createdAt
+          createdAt: createdAt,
         };
       });
-  
+
       res.status(200).json({
-        status: "200",
-        result: formattedPostings
+        status: 200,
+        result: formattedPostings,
       });
     } catch (error) {
       log.error(error);
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
-  };
+};
+
+function generateRandomIndices(totalItems, count) {
+  const indices = [];
+  while (indices.length < count) {
+    const randomIndex = Math.floor(Math.random() * totalItems) + 1;
+    if (!indices.includes(randomIndex)) {
+      indices.push(randomIndex);
+    }
+  }
+  return indices;
+}
+
   const getPostUser = async(req, res) => {
     try {
       const postings = await Posting.findAll({

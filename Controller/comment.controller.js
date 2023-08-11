@@ -41,14 +41,15 @@ module.exports = {
 
         try {
         const createdComment = await Comment.create({ comment: comment , postId: post.id, userId: req.userId });
-
-        await Notifications.create({
-            content_notif: `User ${req.user.name} commented on your post : ${comment}`,
-            type_notif: 'comment',
-            userId: post.users_datum.id,
-            postId: post.id,
-            commentId: createdComment.id
-          });
+        if(req.userId !== post.users_datum.id) {
+            await Notifications.create({
+                content_notif: `User ${req.user.name} commented on your post : ${comment}`,
+                type_notif: 'comment',
+                userId: post.users_datum.id,
+                postId: post.id,
+                commentId: createdComment.id
+              });
+        }
 
         return res.status(200).json({ status: 200, msg: 'Comment posted successfully' });
         } catch (error) {
