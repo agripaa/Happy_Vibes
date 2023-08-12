@@ -2,14 +2,16 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CommentComponents from "../Comment";
+import Loading from "../../../Loading";
 
 function InputCommentUser() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const { postId } = useSelector((state) => state.CheckMyPostReducer);
   const [comment, setComment] = useState("");
-
+  const [doneComment, setDoneComment] = useState(false);
   async function postComment(e) {
     e.preventDefault();
+    setDoneComment(true);
     try {
       const formData = new FormData();
       formData.append("comment", comment);
@@ -21,6 +23,7 @@ function InputCommentUser() {
         .then(({ data }) => {
           CommentComponents();
           setComment("");
+          setDoneComment(false);
         });
     } catch (err) {
       console.error(err);
@@ -39,7 +42,11 @@ function InputCommentUser() {
             value={comment}
           />
           <button type="submit">
-            <img src={components.ImageSend} alt="" />
+            {!doneComment ? (
+              <img src={components.ImageSend} alt="" />
+            ) : (
+              <Loading size="smallThin" />
+            )}
           </button>
         </div>
       </form>

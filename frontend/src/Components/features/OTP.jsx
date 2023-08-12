@@ -4,10 +4,12 @@ import "../css/OTP.scss";
 import { Link, useNavigate } from "react-router-dom";
 import ImageBack from "../img/vector-back.png";
 import axios from "axios";
+import Loading from "./Loading";
 
 function OTP() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [otp, setOtp] = useState("");
+  const [DoneOtp, setDoneOtp] = useState(false);
   const [otpNotFound, setOtpNotFound] = useState({});
   const navigate = useNavigate();
   const inputRefs = useRef([]);
@@ -19,9 +21,9 @@ function OTP() {
     handleSubmit();
   }, [getWitdh]);
 
-  const handleInputChange = async(index, e) => {
-    const {value} = e.target;
-    
+  const handleInputChange = async (index, e) => {
+    const { value } = e.target;
+
     if (value.length === 1 && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
     } else if (value.length === 0 && index > 0) {
@@ -33,18 +35,23 @@ function OTP() {
     setOtp(otpString);
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setDoneOtp(true);
     if (otp.length === 6) {
       try {
-        await axios.patch("http://localhost:5000/user/verify", { otp: otp })
-        .then(({data}) => {navigate('/login')})
-        .catch(({response}) => setOtpNotFound(response.data));
+        await axios
+          .patch("http://localhost:5000/user/verify", { otp: otp })
+          .then(({ data }) => {
+            navigate("/login");
+            setDoneOtp(false);
+          })
+          .catch(({ response }) => setOtpNotFound(response.data));
       } catch (error) {
         console.error(error);
       }
     }
-  }
+  };
 
   return (
     <div classNa me="ContainerOTP">
@@ -61,7 +68,7 @@ function OTP() {
           <main className="mainOTP">
             <article className="articleOTP">
               <p>
-                We’ve Sent A OTP code To{" "} 
+                We’ve Sent A OTP code To{" "}
                 {getWitdh <= 500 ? (
                   <>
                     <br />
@@ -73,7 +80,7 @@ function OTP() {
               </p>
             </article>
             <form className="formOTP">
-            <div className="kolomInputOTP">
+              <div className="kolomInputOTP">
                 {[...Array(6)].map((_, index) => (
                   <input
                     key={index}
@@ -89,14 +96,28 @@ function OTP() {
                   />
                 ))}
               </div>
-                <span className={otpNotFound.status === 404 ? "activeErrorOtp" : "hideError"}>{otpNotFound.msg}</span>
+              <span
+                className={
+                  otpNotFound.status === 404 ? "activeErrorOtp" : "hideError"
+                }
+              >
+                {otpNotFound.msg}
+              </span>
               <div className="ResendOTP">
                 <p>
-                  Didn’t Get a OTP Code? <Link to={"/authOtp/resend"}>Resend Code</Link>{" "}
+                  Didn’t Get a OTP Code?{" "}
+                  <Link to={"/authOtp/resend"}>Resend Code</Link>{" "}
                 </p>
               </div>
               <div className="submitOTP">
-                <button className="ButtonSubmitOTP" onClick={handleSubmit} type="submit">Submit</button>
+                <button
+                  className="ButtonSubmitOTP"
+                  onClick={handleSubmit}
+                  type="submit"
+                  disabled={DoneOtp}
+                >
+                  {!DoneOtp ? "Submit" : <Loading size="small" />}
+                </button>
               </div>
             </form>
           </main>

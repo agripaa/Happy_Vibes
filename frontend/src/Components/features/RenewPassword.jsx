@@ -7,10 +7,12 @@ import "../css/myLibrary.scss";
 import "../css/RenewPassword.scss";
 import EyeOpen from "../img/showPassword.svg";
 import EyeClose from "../img/closePassword.svg";
+import Loading from "./Loading";
 function RenewPassword() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [ShowOldPass, setShowOldPass] = useState(false);
   const [ShowNewPass, setShowNewPass] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState({});
   const [values, setValues] = useState({
     password: "",
@@ -28,7 +30,7 @@ function RenewPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { password, confPassword } = values;
-
+    setUpdateDone(true);
     try {
       await axios
         .patch(`http://localhost:5000/update-pass/${userId}/${token}`, {
@@ -37,8 +39,9 @@ function RenewPassword() {
         })
         .then(({ data }) => {
           navigate("/login");
+          setUpdateDone(false);
         })
-        .catch(({response}) => {
+        .catch(({ response }) => {
           setErrorMessage(response.data);
         });
     } catch (error) {
@@ -125,16 +128,52 @@ function RenewPassword() {
                   </div>
                 </div>
               </div>
-                  <p className={errorMessage.status === 400 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
-                  <p className={errorMessage.status === 403 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
-                  <p className={errorMessage.status === 404 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
-                  <p className={errorMessage.status === 430 ? "activeErrorRePassword" : "hideError"}>{errorMessage.msg}</p>
+              <p
+                className={
+                  errorMessage.status === 400
+                    ? "activeErrorRePassword"
+                    : "hideError"
+                }
+              >
+                {errorMessage.msg}
+              </p>
+              <p
+                className={
+                  errorMessage.status === 403
+                    ? "activeErrorRePassword"
+                    : "hideError"
+                }
+              >
+                {errorMessage.msg}
+              </p>
+              <p
+                className={
+                  errorMessage.status === 404
+                    ? "activeErrorRePassword"
+                    : "hideError"
+                }
+              >
+                {errorMessage.msg}
+              </p>
+              <p
+                className={
+                  errorMessage.status === 430
+                    ? "activeErrorRePassword"
+                    : "hideError"
+                }
+              >
+                {errorMessage.msg}
+              </p>
               <div className="submitEmailRenewPassword">
                 <button
                   className="ButtonSubmitEmailRenewPassword"
                   type="submit"
                 >
-                  Reset Password
+                  {!updatePassword ? (
+                    "Reset Password"
+                  ) : (
+                    <Loading size="small" />
+                  )}
                 </button>
               </div>
             </form>
