@@ -23,7 +23,6 @@ function ListPeople() {
           >
             <div className="ThisNameAndId">
               <h5>NameDummy</h5>
-              <img src={components.Verified} alt="" />
             </div>
             <p className="color-neutral-60">@namedummy1234</p>
           </div>

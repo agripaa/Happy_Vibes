@@ -14,9 +14,7 @@ function Section_NamePageProfileUsers({ name, username }) {
               <h4>{name}</h4>
               <p>@{username}</p>
             </div>
-            <figure className="VerifiedClass">
-              <img src={components.Verified} alt="" />
-            </figure>
+            <figure className="VerifiedClass"></figure>
           </div>
         </div>
         <div className="buttonFollow-ProfilePage">

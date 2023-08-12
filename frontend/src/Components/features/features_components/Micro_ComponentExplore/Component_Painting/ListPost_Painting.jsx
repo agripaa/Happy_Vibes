@@ -30,8 +30,10 @@ function ListPost_Painting() {
     }
   };
   async function HotPosting() {
-    const {data} = await axios.get('http://localhost:5000/auth/profile', {withCredentials:true})
-    setUser(data.result)
+    const { data } = await axios.get("http://localhost:5000/auth/profile", {
+      withCredentials: true,
+    });
+    setUser(data.result);
     setGetPaintingPost(true);
     try {
       axios
@@ -106,7 +108,6 @@ function ListPost_Painting() {
     }
   }, [posts, user.id]);
 
-
   useEffect(() => {
     HotPosting();
   }, []);
@@ -140,7 +141,6 @@ function ListPost_Painting() {
                 >
                   <p> {post.users_datum.name}</p>
                   <p>@{post.users_datum.username}</p>
-                  <img src={components.Verified} alt="" />
                 </div>
               </div>
               <div className="ButtonList-NameProfile">
@@ -151,7 +151,7 @@ function ListPost_Painting() {
                     alt=""
                     style={{ width: "20px", height: "20px" }}
                     onClick={() => {
-                      dispatch(CheckBugReportPost(true))
+                      dispatch(CheckBugReportPost(true));
                       dispatch(CheckPostId(post.id));
                     }}
                   />
@@ -174,12 +174,12 @@ function ListPost_Painting() {
             </article>
             <article className="UserPosting-LikePosting">
               <div className="wrapLikePosting">
-              <figure className="Love-LikePosting">
+                <figure className="Love-LikePosting">
                   <img
                     src={
                       liked[post.id]
                         ? components.ImageLikeLove
-                        : components.ImageLove 
+                        : components.ImageLove
                     }
                     alt=""
                     role="button"

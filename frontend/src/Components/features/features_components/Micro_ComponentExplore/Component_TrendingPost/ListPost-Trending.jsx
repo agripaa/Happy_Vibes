@@ -22,8 +22,10 @@ function ListPost_Trending() {
   async function HotPosting() {
     setGetHotPosting(true);
     try {
-      const {data} = await axios.get('http://localhost:5000/auth/profile', {withCredentials:true})
-      setUser(data.result)
+      const { data } = await axios.get("http://localhost:5000/auth/profile", {
+        withCredentials: true,
+      });
+      setUser(data.result);
       axios
         .get("http://localhost:5000/posting/get/hot_postings", {
           withCredentials: true,
@@ -54,14 +56,14 @@ function ListPost_Trending() {
         )
         .then(async ({ data }) => {
           axios
-        .get("http://localhost:5000/posting/get/hot_postings", {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          setGetHotPosting(false);
-          setPost(data.result[0]);
-          setUserPost(data.result[0].users_datum);
-        })
+            .get("http://localhost:5000/posting/get/hot_postings", {
+              withCredentials: true,
+            })
+            .then(({ data }) => {
+              setGetHotPosting(false);
+              setPost(data.result[0]);
+              setUserPost(data.result[0].users_datum);
+            });
         });
     } catch (error) {
       console.error("Error while handling like:", error);
@@ -73,13 +75,13 @@ function ListPost_Trending() {
         if (likes.userId === user.id) {
           return true;
         }
-      }                         
+      }
     }
     return false;
   };
 
   useEffect(() => {
-    setLiked(checkIfUserIsLiked())
+    setLiked(checkIfUserIsLiked());
   }, [post, user.id]);
 
   useEffect(() => {
@@ -111,7 +113,6 @@ function ListPost_Trending() {
               >
                 <p> {userPost.name}</p>
                 <p>@{userPost.username}</p>
-                <img src={components.Verified} alt="" />
               </div>
             </div>
             <div className="ButtonList-NameProfile">
@@ -122,7 +123,7 @@ function ListPost_Trending() {
                   alt=""
                   style={{ width: "20px", height: "20px" }}
                   onClick={() => {
-                    dispatch(CheckBugReportPost(true))
+                    dispatch(CheckBugReportPost(true));
                     dispatch(CheckPostId(post.id));
                   }}
                 />
@@ -142,10 +143,9 @@ function ListPost_Trending() {
           <article className="UserPosting-LikePosting">
             <div className="wrapLikePosting">
               <figure className="Love-LikePosting">
-              {liked ? <img
-                    src={
-                      components.ImageLikeLove 
-                    }
+                {liked ? (
+                  <img
+                    src={components.ImageLikeLove}
                     alt=""
                     role="button"
                     onClick={() => {
@@ -155,11 +155,10 @@ function ListPost_Trending() {
                       }));
                       handleLike(post.id);
                     }}
-                  /> :
+                  />
+                ) : (
                   <img
-                    src={
-                      components.ImageLove
-                    }
+                    src={components.ImageLove}
                     alt=""
                     role="button"
                     onClick={() => {
@@ -170,7 +169,8 @@ function ListPost_Trending() {
                       handleLike(post.id);
                     }}
                     className="LikeLove"
-                  />}
+                  />
+                )}
                 <figcaption>
                   <p>{post.like}</p>
                 </figcaption>
