@@ -21,6 +21,7 @@
         const components = useSelector((state) => state.ComponentImagePostReducer);
         const checkReport = useSelector((state) => state.CheckDeleteReducer);
         const [displayPosting, setDisplayPosting] = useState(false);
+        const [scrolledDown, setScrolledDown] = useState(false);
         const dispatch = useDispatch();
         const navigate = useNavigate();
 

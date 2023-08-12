@@ -1,5 +1,6 @@
 const Like = require('../Models/likeData.model.js');
 const Posting = require('../Models/postingData.model.js');
+const db = require('../Config/database.js');
 const Users = require('../Models/usersData.model.js');
 const log = require('../utils/log.js');
 const moment = require('moment');
@@ -9,13 +10,7 @@ const attributesUser = ['id', 'uuid', 'name', 'username', 'url', 'name_img'];
 
 const getAllContent = async (req, res) => {
     try {
-      const totalPostings = await Posting.count(); 
-      const randomIndices = generateRandomIndices(totalPostings, 100);
-
       const postings = await Posting.findAll({
-        where: {
-          id: randomIndices
-        },
         include: [
           {
             model: Users,
@@ -27,6 +22,8 @@ const getAllContent = async (req, res) => {
             attributes: ['userId'],
           },
         ],
+        limit: 100,
+        order: db.random()
       });
 
       const formattedPostings = postings.map((posting) => {
