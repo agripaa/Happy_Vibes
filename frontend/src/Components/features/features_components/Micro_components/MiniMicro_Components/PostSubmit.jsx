@@ -167,7 +167,7 @@ function PostSubmit() {
           />
           {postComponent.getwidth < 500 ? (
             <button type="submit" className="ButtonPostStatus">
-              Post
+              {!doneSubmit ? " Post " : <Loading size="smallThin" />}
             </button>
           ) : null}
         </div>
