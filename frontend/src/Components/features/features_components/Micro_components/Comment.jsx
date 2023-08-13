@@ -4,10 +4,12 @@ import { CheckImageUserComment } from "../../../Action/CheckMyPost";
 import ListComment from "./MiniMicro_Components/ListComment";
 import InputCommentUser from "./MiniMicro_Components/InputCommentUser";
 import axios from "axios";
+import Loading from "../../Loading";
 
 function CommentComponents() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const { postId } = useSelector((state) => state.CheckMyPostReducer);
+  const [doneComment, setDoneComment] = useState(false);
   const [getSizeImage, setGetSizeImage] = useState({
     xwidth: 0,
     yheight: 0,
@@ -41,6 +43,7 @@ function CommentComponents() {
 
   async function postComment(e) {
     e.preventDefault();
+    setDoneComment(true);
     try {
       const formData = new FormData();
       formData.append("comment", comment);
@@ -51,6 +54,7 @@ function CommentComponents() {
         })
         .then(({ data }) => {
           setComment("");
+          setDoneComment(false);
         });
     } catch (err) {
       console.error(err);
@@ -182,7 +186,15 @@ function CommentComponents() {
                       value={comment}
                     />
                     <button type="submit">
-                      <img src={components.ImageSend} alt="" />
+                      {!doneComment ? (
+                        <img
+                          src={components.ImageSend}
+                          alt=""
+                          style={{ cursor: "pointer" }}
+                        />
+                      ) : (
+                        <Loading size="smallThin" />
+                      )}
                     </button>
                   </div>
                 </form>

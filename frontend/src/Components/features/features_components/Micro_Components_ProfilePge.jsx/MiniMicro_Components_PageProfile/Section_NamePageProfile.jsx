@@ -13,7 +13,9 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
   async function getDataUser() {
     try {
       axios
-        .get(`http://localhost:5000/get/user/${userUUID}`, { withCredentials: true })
+        .get(`http://localhost:5000/get/user/${userUUID}`, {
+          withCredentials: true,
+        })
         .then(({ data }) => {
           setUser(data.result);
         })
@@ -43,7 +45,7 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
   useEffect(() => {
     getDataUser();
     userLog();
-  }, [userUUID]); 
+  }, [userUUID]);
 
   async function handleFollows(userId) {
     setGetUserFollow(true);
@@ -81,7 +83,6 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
     setFollow(checkIfUserIsFollowed());
   }, [user.followers, userLogin.id]);
 
-
   return (
     <section className="section-NameProfilePage">
       <div className="wrapSection-NameProfilePage">
@@ -91,13 +92,12 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
               <h4>{name}</h4>
               <p>@{userName}</p>
             </div>
-            <figure className="VerifiedClass">
-              <img src={components.Verified} alt="" />
-            </figure>
+            <figure className="VerifiedClass"></figure>
           </div>
         </div>
         <div className="buttonFollow-ProfilePage">
-          {follow ? <button
+          {follow ? (
+            <button
               type="button"
               className="ButtonFollowed-Aside"
               onClick={() => {
@@ -105,7 +105,9 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
               }}
             >
               {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
-            </button> : <button
+            </button>
+          ) : (
+            <button
               type="button"
               className="ButtonFollow-Aside"
               onClick={() => {
@@ -113,8 +115,8 @@ function Section_NamePageProfile({ name, userName, userId, userUUID }) {
               }}
             >
               Follow
-            </button>}
-            
+            </button>
+          )}
         </div>
       </div>
     </section>

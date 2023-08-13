@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CHECKBUG } from "../../../../Action/CheckAcconutDelete";
 import axios from "axios";
+import Loading from "../../../Loading";
 
 function BugReport() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
   const dispatch = useDispatch();
+  const [doneBugReport, setDoneBugReport] = useState(false);
   const [values, setValues] = useState({
     title: "",
     type_bug: "",
@@ -15,7 +17,7 @@ function BugReport() {
   async function sendBugReport(e) {
     e.preventDefault();
     const { title, type_bug, report } = values;
-
+    setDoneBugReport(true);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("type_bug", type_bug);
@@ -27,7 +29,9 @@ function BugReport() {
           headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
         })
-        .then(({ data }) => {})
+        .then(({ data }) => {
+          setDoneBugReport(false);
+        })
         .catch((err) => {
           console.error(err);
         });
@@ -95,7 +99,7 @@ function BugReport() {
               </div>
               <div className="Button-BugReport">
                 <button type="submit" className="bcolor-primary-40">
-                  Submit
+                  {!doneBugReport ? "Submit" : <Loading size="small" />}
                 </button>
               </div>
             </main>

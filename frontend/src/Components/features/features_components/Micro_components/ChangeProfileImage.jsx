@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import "../../../css/ChangeProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckEditProfil } from "../../../Action/CheckAcconutDelete";
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loading from "../../Loading";
 
 function ChangeProfileImage() {
   const components = useSelector((state) => state.ComponentImagePostReducer);
@@ -17,7 +18,7 @@ function ChangeProfileImage() {
   const [previewBg, setPreviewBg] = useState("");
   const [desc, setDesc] = useState("");
   const [updateDesc, setUpdateDesc] = useState(false);
-
+  const [doneChange, setDoneChange] = useState(false);
   function handleProfileImage(e) {
     const img = e.target.files[0];
     setName_img(img);
@@ -32,7 +33,9 @@ function ChangeProfileImage() {
 
   async function fetchUserData() {
     try {
-      const {data} = await axios.get('http://localhost:5000/auth/profile', { withCredentials: true });
+      const { data } = await axios.get("http://localhost:5000/auth/profile", {
+        withCredentials: true,
+      });
       setUser(data.result);
     } catch (err) {
       console.error(err);
@@ -41,7 +44,10 @@ function ChangeProfileImage() {
 
   async function fetchBackgroundData() {
     try {
-      const {data} = await axios.get('http://localhost:5000/background/user', {withCredentials: true})
+      const { data } = await axios.get(
+        "http://localhost:5000/background/user",
+        { withCredentials: true }
+      );
       setBackgrund(data.result);
     } catch (err) {
       console.error(err);
@@ -50,30 +56,34 @@ function ChangeProfileImage() {
 
   async function updateUser(e) {
     e.preventDefault();
+    setDoneChange(true);
     try {
       const formData = new FormData();
-      formData.append('desc', desc);
-      if(name_img){
-        formData.append('file', name_img);
-      }else{
-        formData.append('file', null)
+      formData.append("desc", desc);
+      if (name_img) {
+        formData.append("file", name_img);
+      } else {
+        formData.append("file", null);
       }
-      await axios.patch('http://localhost:5000/user/edit', formData, {
+      await axios.patch("http://localhost:5000/user/edit", formData, {
         withCredentials: true,
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      await axios.patch('http://localhost:5000/background/user/update', 
-      {file: bg_img},
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data"
+      await axios.patch(
+        "http://localhost:5000/background/user/update",
+        { file: bg_img },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      });
+      );
       toast.success("Update Succesfully");
+      setDoneChange(false);
     } catch (err) {
       console.error(err);
     }
@@ -98,7 +108,9 @@ function ChangeProfileImage() {
               />
             </div>
             <div className="buttonChangeProfile">
-              <button type="submit">Post</button>
+              <button type="submit">
+                {!doneChange ? "Post" : <Loading size="smallThin" />}
+              </button>
             </div>
           </header>
           <main className="MainChangeProfile">
@@ -195,8 +207,8 @@ function ChangeProfileImage() {
                         <div className="desc">
                           {!user.desc ? (
                             <p>
-                              Hello Guys I'am @{user.username}, I'm a new user at
-                              HYV
+                              Hello Guys I'am @{user.username}, I'm a new user
+                              at HYV
                             </p>
                           ) : (
                             <p>{user.desc}</p>
@@ -216,7 +228,7 @@ function ChangeProfileImage() {
           </main>
         </form>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }
