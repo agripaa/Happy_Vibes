@@ -32,6 +32,11 @@ module.exports = {
           model: Follows,
           as: 'followers',
           attributes: ['followingId']
+        },
+        {
+          model: Background,
+          as: 'backgrounds',
+          attributes: ['name_bg', 'url_bg']
         }]      
       });
       if(!user) return res.status(404).json({status: 404, msg:"No have data!"})
@@ -52,11 +57,13 @@ module.exports = {
           }
         },
         attributes: ['id', 'uuid', 'name', 'username', 'desc', 'email', 'name_img', 'url', 'followingCount', 'followerCount'],
-        include: [{
-          model: Follows,
-          as: 'followers',
-          attributes: ['followingId']
-        }]    
+        include: [
+          {
+            model: Follows,
+            as: 'followers',
+            attributes: ['followingId']
+          }
+      ]    
       });
       if(user.id === userId) return res.status(403).json({status: 403, msg: 'Cannot see your profile in here'})
       if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });

@@ -84,6 +84,10 @@ const Users = db.define('users_data', {
       verificationCode : {
         type: DataTypes.STRING,
         allowNull: true
+      },
+      backgroundId : {
+        type: DataTypes.INTEGER,
+        allowNull: true
       }
 }, {freezeTableName: true})
 
@@ -91,6 +95,7 @@ Follows.belongsTo(Users, { foreignKey: 'followerId', as: 'follower', targetKey: 
 Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey: 'id', onDelete: 'CASCADE' });
 CodeOTP.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Background.belongsTo(Users, { foreignKey: 'userId', as: 'users_data', targetKey: 'id', onDelete: 'CASCADE' });
+Background.hasMany(Users, { foreignKey: 'backgroundId', as: 'background', targetKey: 'id', onDelete: 'CASCADE' });
 Users.hasMany(Like, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings', onDelete: 'CASCADE' });
