@@ -13,7 +13,6 @@ const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.e
         await db.authenticate();
         log.info('Database authentication successful!');
     } catch (err) {
-        log.info(process.env.DB_PASSWORD)
         log.error('Database authentication failed:', err);
     }
 })();
