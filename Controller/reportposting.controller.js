@@ -3,7 +3,7 @@ const Users = require('../Models/usersData.model');
 const nodemailer = require('nodemailer');
 
 module.exports = {
-    async sendReport(req, res) {
+    async sendReportPost(req, res) {
         const { postId }  = req.params;
         const { userId } = req;
         try {
@@ -27,7 +27,7 @@ module.exports = {
 
               const mailOptions = {
                 from: process.env.EMAIL,
-                to: process.env.EMAIL_SEND,
+                to: process.env.EMAIL,
                 subject: `${user.username} send report posting!`,
                 text: `something wrong with posting with uuid : ${posting.uuid}`,
               };
@@ -35,7 +35,7 @@ module.exports = {
                 return new Promise((resolve, reject) => {
                     transporter.sendMail(mailOptions, (error, info) => {
                       if (error) {
-                        log.error('Error sending OTP email:', error);
+                        console.error('Error sending OTP email:', error);
                         reject(new Error('Failed to send OTP email'));
                       } else {
                         resolve();

@@ -1,7 +1,7 @@
 const Follows = require("../Models/followsData.model");
 const Notifications = require("../Models/notifData.model");
 const Users = require("../Models/usersData.model");
-const log = require("../utils/log");
+
 
 module.exports = {
   async getFollowers(req, res) {
@@ -15,7 +15,7 @@ module.exports = {
 
       res.status(200).json({ status: 200, result:user });
     } catch (err) {
-      log.error(err);
+      console.error(err);
       res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
     }
   },
@@ -61,7 +61,7 @@ module.exports = {
         res.status(200).json({ status: 200, msg: 'followed' });
       }
     } catch (err) {
-      log.error(err);
+      console.error(err);
       res
         .status(500)
         .json({ status: 500, msg: "Internal server error", err: err.message });

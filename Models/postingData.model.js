@@ -29,9 +29,14 @@ const Posting = db.define('posting_data', {
         type: DataTypes.INTEGER,
         allowNull: true,
     },
+    userId : {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
 }, {freezeTableName: true})
-Posting.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
-Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 Posting.hasMany(Like, { foreignKey: 'postId', as: 'likes', onDelete: 'CASCADE' });
 

@@ -1,7 +1,6 @@
 const Users = require('../Models/usersData.model.js');
 const argon2 = require('argon2');
 const path = require('path');
-const log = require('../utils/log.js');
 const validatePassword = require('../middleware/password.validation.js');
 const moment = require('moment');
 const nodemailer = require("nodemailer");
@@ -69,7 +68,7 @@ module.exports = {
       if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });
       return res.status(200).json({ status: 200, result: user });
     } catch (err) {
-      log.error(err);
+      console.error(err);
       res.status(500).json({ status: 500, msg: err.message });
     }
   },
@@ -117,7 +116,7 @@ module.exports = {
             })
             res.status(200).json({status: 200, msg: 'data user created successfully'});
         } catch (err) {
-            log.error(err);
+            console.error(err);
             res.status(500).json({status: 500, msg: err.message});
             return false;
         }
@@ -150,7 +149,7 @@ module.exports = {
       );
       res.status(200).json({ status: 200, msg: 'otp approved' });
     } catch (err) {
-      log.error(err);
+      console.error(err);
       res.status(500).json({ status: 500, msg: 'Internal server Error' });
       return false;
     }
@@ -173,7 +172,7 @@ module.exports = {
                 verificationCode: OTP
             },{where: {email: email}})
         } catch (error) {
-            log.error(err);
+            console.error(err);
             res.status(500).json({status: 500, msg: "Internal server Error"});
             return false;
         }
@@ -186,11 +185,11 @@ module.exports = {
       try {
         const user = await Users.findOne({ where: { id: req.userId } });
         if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-        log.info(user)
+        console.log(user)
         if (!desc) desc = user.desc;
         if (!files) {
           profile_img = user.name_img;
-          log.info(profile_img);
+          console.log(profile_img);
         } else {
           profile_img = user.name_img;
 
@@ -222,7 +221,7 @@ module.exports = {
         )
         res.status(200).json({ status: 200, msg: 'User updated successfully' });
       } catch (err) {
-        log.error(err);
+        console.error(err);
         res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
       }
     },
@@ -255,7 +254,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
-                log.error('Error sending OTP email:', error);
+                console.error('Error sending OTP email:', error);
                 reject(new Error('Failed to send OTP email'));
               } else {
                 resolve();
@@ -309,7 +308,7 @@ module.exports = {
             await user.destroy();
             return res.status(200).json({status:200, msg: "User has been deleted"});
         } catch (err) {
-            log.error(err);
+            console.error(err);
             res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
         }
     },
@@ -361,7 +360,7 @@ module.exports = {
             link
           })
         } catch (error){ 
-          log.error(error);
+          console.error(error);
           res.status(500).json({ msg: 'Internal server error', error });
         }
       },

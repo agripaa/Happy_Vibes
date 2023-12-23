@@ -2,8 +2,6 @@ const Comment = require('../Models/commentsData.model.js');
 const Notifications = require('../Models/notifData.model.js');
 const Posting = require('../Models/postingData.model.js');
 const Users = require('../Models/usersData.model.js');
-const log = require('../utils/log.js');
-
 const attributesUser = ['name', 'url', 'name_img'];
 const attributePosting = ['url', 'name_img', 'desc'];
 

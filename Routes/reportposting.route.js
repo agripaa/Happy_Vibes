@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { sendReport } = require('../Controller/reportposting.controller.js');
 const { sessionUser } = require('../middleware/session.js');
 
-router.post('/report/:postId/posting', sessionUser, sendReport);
+const { sendReportPost } = require('../Controller/reportposting.controller.js');
+router.post('/report/:postId/posting', sessionUser, sendReportPost);
 
 module.exports = router;

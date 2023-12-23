@@ -1,9 +1,9 @@
 const express = require('express');
 const {sessionUser} = require('../middleware/session.js')
-const { getUsers, createUser, updateUser, verifyUser, resendCode, getEmail, changePassword, deleteUser, getUserId } = require('../Controller/user.controller.js');
 
 const router = express.Router();
 
+const { getUsers, createUser, updateUser, verifyUser, resendCode, getEmail, changePassword, deleteUser, getUserId } = require('../Controller/user.controller.js');
 router.get('/users/random', sessionUser, getUsers);
 router.get('/get/user/:uuid', sessionUser, getUserId);
 router.post('/user/create', createUser);

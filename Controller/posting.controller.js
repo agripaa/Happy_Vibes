@@ -2,7 +2,6 @@ const Like = require('../Models/likeData.model.js');
 const Posting = require('../Models/postingData.model.js');
 const db = require('../Config/database.js');
 const Users = require('../Models/usersData.model.js');
-const log = require('../utils/log.js');
 const moment = require('moment');
 const path = require('path');
 
@@ -39,7 +38,7 @@ const getAllContent = async (req, res) => {
         result: formattedPostings,
       });
     } catch (error) {
-      log.error(error);
+      console.error(error);
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
 };
@@ -82,7 +81,7 @@ function generateRandomIndices(totalItems, count) {
       });
       res.status(200).json({status: 200, result: formattedPostings})
     } catch (err) {
-      log.error(err);
+      console.error(err);
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
   }
@@ -114,7 +113,7 @@ function generateRandomIndices(totalItems, count) {
       });
       res.status(200).json({status: 200, result: formattedPostings})
     } catch (err) {
-      log.error(err);
+      console.error(err);
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
   }
@@ -151,7 +150,7 @@ const getContentById = async (req,res) => {
             result: posting
         })
     } catch (error) {
-        log.error(error)
+        console.error(error)
         return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
 }
@@ -169,7 +168,7 @@ const createNewPosting = async (req, res) => {
 
       if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
       file.mv(`./public/postings/${name_img}`, async(err) => {
-          if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});
+          if(err) return res.status(500).json({status: 500, msg: 'Internal server error', image: "image hasn't been uploaded!" ,error: err});
           
           try {
               const posting = await Posting.create({
@@ -183,7 +182,7 @@ const createNewPosting = async (req, res) => {
               const createdAt = moment(posting.createdAt).fromNow();
               return res.status(200).json({ status: 200, msg: 'Posting created successfully', createdAt });
           } catch (error) {
-              log.error(error);
+              console.error(error);
               return res.status(500).json({ status: 500, msg: 'Internal server error' });
           }
       })
@@ -200,7 +199,7 @@ const createNewPosting = async (req, res) => {
         const createdAt = moment(posting.createdAt).fromNow();
         return res.status(200).json({ status: 200, msg: 'Posting created successfully', createdAt });
     } catch (error) {
-        log.error(error);
+        console.error(error);
         return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
   }
@@ -224,7 +223,7 @@ const updateLike = async (req, res) => {
         await posting.update({ like: likeCount });
         return res.status(200).json({status: 200, result: posting});
     } catch (error) {
-        log.error(error);
+        console.error(error);
         return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
     }
   }
@@ -250,7 +249,7 @@ const getHotPost = async (req, res) => {
             result: posting
         })
     } catch (error) {
-        log.error(error)
+        console.error(error)
         return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
 } 
@@ -275,7 +274,7 @@ const deletePosting = async (req, res) => {
 
     return res.status(200).json({ status: 200, msg: 'Postingan berhasil dihapus.' });
   } catch (error) {
-    log.error(error);
+    console.error(error);
     return res.status(500).json({ error: 'Terjadi kesalahan saat menghapus postingan.' });
   }
 };

@@ -3,19 +3,7 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const sequelizeStore = require('connect-session-sequelize');
 const path = require('path');
-const log = require('./utils/log.js');
-const Like = require('./Routes/like.route.js');
-const Auth = require('./Routes/auth.route.js');
-const Post = require('./Routes/posting.route.js');
-const Users = require('./Routes/users.route.js');
-const Notif = require('./Routes/notif.route.js');
-const Search = require('./Routes/search.route.js');
-const Follows = require('./Routes/follows.route.js');
-const Comments = require('./Routes/comment.route.js');
-const BugReport = require('./Routes/bugreport.route.js');
-const PostReport = require('./Routes/reportposting.route.js')
-const Background = require('./Routes/background.route.js');
-const RandomPhoto = require('./Routes/randomPhoto.route.js');
+const RoutesApp = require('./Routes/routes.js');
 const db = require('./Config/database.js');
 const session = require('express-session');
 require('dotenv').config();
@@ -47,19 +35,14 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(Like);
-app.use(Auth);
-app.use(Post);
-app.use(Notif);
-app.use(Users);
-app.use(Search);
-app.use(Follows);
-app.use(Comments);
-app.use(BugReport);
-app.use(PostReport);
-app.use(Background);
-app.use(RandomPhoto);
+app.get('/', (req, res) => {
+  return res.status(200).json({status: 200, msg: "server is running"});
+})
+
+app.use('/v2', RoutesApp)
 
 app.listen(process.env.PORT, () => {
-  log.info(`listening on port http://localhost:${process.env.PORT}`);
+  console.log(`listening on port http://localhost:${process.env.PORT}`);
 });
+
+module.exports = app; 

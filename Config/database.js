@@ -1,20 +1,31 @@
 const { Sequelize } = require('sequelize');
-const log = require('../utils/log.js');
+const mysql2 = require('mysql2');
 require('dotenv').config();
 
-const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+// use database for productions
+
+// const db = new Sequelize(process.env.DB_URL, {
+//     dialect: process.env.DATABASE,
+//     dialectModule: mysql2,
+//     dialectOptions: {
+//         ssl: JSON.parse(process.env.DB_SSL || '{"rejectUnauthorized":true}')
+//     }
+// });
+
+// use database for development
+
+const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD,{
     dialect: process.env.DATABASE,
-    host: process.env.DB_HOST,
     port: process.env.DB_PORT,
 });
 
 (async () => {
     try {
         await db.authenticate();
-        log.info('Database authentication successful!');
+        console.log('Database authentication successful!');
     } catch (err) {
-        log.error('Database authentication failed:', err);
+        console.error('Database authentication failed:', err);
     }
 })();
 
-module.exports = db;
+module.exports = db;    

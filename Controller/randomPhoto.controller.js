@@ -11,7 +11,7 @@ module.exports = {
             });
             return res.status(200).json({ randomPhoto });
         } catch (error) {
-            log.error(err);
+            console.error(err);
             res.status(500).json({status: 500, msg: err.message});
             return false;
         }
@@ -38,7 +38,7 @@ module.exports = {
             await RandomPhoto.create({name_img, url});
             return res.status(200).json({status: 200, msg: 'successfully created'});
         } catch (err) {
-            log.error(err);
+            console.error(err);
             res.status(500).json({status: 500, msg: err.message});
             return false;
         }

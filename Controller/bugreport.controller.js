@@ -1,7 +1,7 @@
 const BugReport = require("../Models/bugreportData.model");
 const nodemailer = require('nodemailer');
 const Users = require("../Models/usersData.model");
-const log = require("../utils/log");
+
 require('dotenv').config();
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
       })
       res.status(200).json({status: 200, result: bugReport})
     } catch (err) {
-      log.error(err);
+      console.error(err);
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
   },
@@ -49,7 +49,7 @@ module.exports = {
 
       const mailOptions = {
         from: process.env.EMAIL,
-        to: process.env.EMAIL_SEND,
+        to: process.env.EMAIL,
         subject: 'Bug Report!',
         text: `Title: ${title}\nType bug: ${type_bug}\nBug Report: ${report}\nReporter: ${user.name}`,
       };
