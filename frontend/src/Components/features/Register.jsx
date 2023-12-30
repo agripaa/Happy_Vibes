@@ -33,7 +33,7 @@ function Register() {
 
   const handleRandomPhoto = () => {
     axios
-      .get("http://localhost:5000/random_photo")
+      .get("http://localhost:5000/v2/random/random_photo")
       .then(({ data }) => {
         setRandomPhoto(data.randomPhoto);
       })
@@ -44,7 +44,7 @@ function Register() {
 
   const checkLogin = async() => {
     try {
-      const {data} = await axios.get('http://localhost:5000/auth/profile', {withCredentials: true});
+      const {data} = await axios.get('http://localhost:5000/v2/auth/profile', {withCredentials: true});
       if(data.result) {
         navigate('/homepage')
       }
@@ -72,7 +72,7 @@ function Register() {
     const { name_img, url } = randomPhoto;
     setDoneRegister(true);
     await axios
-      .post("http://localhost:5000/user/create", {
+      .post("http://localhost:5000/v2/user/create", {
         name,
         email,
         username,

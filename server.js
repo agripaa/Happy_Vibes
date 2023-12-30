@@ -2,10 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const sequelizeStore = require('connect-session-sequelize');
+const session = require('express-session');
 const path = require('path');
 const RoutesApp = require('./Routes/routes.js');
 const db = require('./Config/database.js');
-const session = require('express-session');
 require('dotenv').config();
 
 const app = express();
@@ -34,6 +34,7 @@ app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/', (req, res) => {
   return res.status(200).json({status: 200, msg: "server is running"});

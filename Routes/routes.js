@@ -30,9 +30,9 @@ router.use('/follows', routeFollows);
 router.use('/like', routeLike);
 router.use('/notif', routeNotif);
 router.use('/posting', routePosting);
-router.use('/random-photo', routeRandomPhoto);
+router.use('/random', routeRandomPhoto);
 router.use('/report', routeReportPosting);
 router.use('/search', routeSearch);
-router.use('/users', routeUsers);
+router.use('/user', routeUsers);
 
 module.exports = router;

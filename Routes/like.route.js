@@ -4,7 +4,7 @@ const router = express.Router();
 const {addLike, getLike} = require('../Controller/like.controller.js');
 const { sessionUser } = require('../middleware/session.js');
 
-router.get('/like/:postId', sessionUser, getLike);
-router.post('/like', sessionUser, addLike);
+router.get('/:postId', sessionUser, getLike);
+router.post('/', sessionUser, addLike);
 
 module.exports = router;

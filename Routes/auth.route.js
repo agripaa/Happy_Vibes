@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
 const { Profile, Login, LogOut } = require('../Controller/auth.controller.js');
 
-router.get('/auth/profile', Profile);
-router.post('/auth/login', Login);
-router.delete('/auth/logOut', LogOut);
+router.get('/profile', Profile);
+router.post('/login', Login);
+router.delete('/logOut', LogOut);
 
 module.exports = router;
