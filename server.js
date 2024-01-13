@@ -6,12 +6,17 @@ const session = require('express-session');
 const path = require('path');
 const RoutesApp = require('./Routes/routes.js');
 const db = require('./Config/database.js');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const options = require('./doc/options.doc.js');
 require('dotenv').config();
 
 const app = express();
 const sessionStore = new (sequelizeStore(session.Store))({ db: db });
 
 // async function startDB(){await db.sync();};startDB();
+
+const specs = swaggerJsdoc(options);
 
 app.use(session({ 
     secret: process.env.SESS,
@@ -41,7 +46,11 @@ app.get('/', (req, res) => {
 })
 
 app.use('/v2', RoutesApp)
-
+app.use(
+  "/hyv/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs)
+)
 app.listen(process.env.PORT, () => {
   console.log(`listening on port http://localhost:${process.env.PORT}`);
 });

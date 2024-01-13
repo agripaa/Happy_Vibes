@@ -343,7 +343,8 @@ module.exports = {
           });
     
         if (!user) return res.status(404).json({status: 404, msg: "user with given email doesn't exist"});
-          
+        if (user.verificationCode) return res.status(402).json({status: 402, msg: "user is not verified!"});
+
         let token = await Token.findOne({ where: { userId: user.id } });
         if (!token) {
             token = await Token.create({
