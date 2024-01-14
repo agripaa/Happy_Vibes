@@ -74,7 +74,7 @@
  *         email: example@hyv.com
  *         password: hashing_password_with_argon2         
  *         name_img: iam.png
- *         url: http://{host}/users/{name_img}
+ *         url: /users/{name_img}
  *         followedId: null
  *         followingId: null
  *         followerCount: 0
