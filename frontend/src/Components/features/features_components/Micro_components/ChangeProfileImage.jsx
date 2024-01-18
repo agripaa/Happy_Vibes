@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../../../css/ChangeProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckEditProfil } from "../../../Action/CheckAcconutDelete";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../../Loading";
+import { CheckEditProfil } from "../../../redux/CheckReducer/Check";
 
 function ChangeProfileImage() {
-  const components = useSelector((state) => state.ComponentImagePostReducer);
+  const components = useSelector((state) => state.icons);
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const [background, setBackgrund] = useState({});
