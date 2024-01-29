@@ -4,7 +4,7 @@ import "../../css/OTP.scss";
 import { Link, useNavigate } from "react-router-dom";
 import ImageBack from "../../img/vector-back.png";
 import axios from "axios";
-import Loading from "../Loading";
+import LoadingCircle from "../Loading/LoadingCircle";
 
 function OTP() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
@@ -116,7 +116,7 @@ function OTP() {
                   type="submit"
                   disabled={DoneOtp}
                 >
-                  {!DoneOtp ? "Submit" : <Loading size="small" />}
+                  {!DoneOtp ? "Submit" : <LoadingCircle size="small" />}
                 </button>
               </div>
             </form>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Welcome from "../Welcome";
-import AboutHv from "../AboutHv";
+import Welcome from "../Other/Welcome";
+import AboutHv from "../Other/AboutHv";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/swiper-bundle.min.css";
 import "../../css/welcome.scss";
-import SwiperSlideNext from "../SwiperSlideNexr";
+import SwiperSlideNext from "../Other/SwiperSlideNexr";
 import Login from "../login/Login";
 
 function Home() {

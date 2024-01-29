@@ -7,7 +7,7 @@ import "../../css/myLibrary.scss";
 import "../../css/RenewPassword.scss";
 import EyeOpen from "../../img/showPassword.svg";
 import EyeClose from "../../img/closePassword.svg";
-import Loading from "../Loading";
+import LoadingCircle from "../Loading/LoadingCircle";
 function RenewPassword() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const [ShowOldPass, setShowOldPass] = useState(false);
@@ -172,7 +172,7 @@ function RenewPassword() {
                   {!updatePassword ? (
                     "Reset Password"
                   ) : (
-                    <Loading size="small" />
+                    <LoadingCircle size="small" />
                   )}
                 </button>
               </div>

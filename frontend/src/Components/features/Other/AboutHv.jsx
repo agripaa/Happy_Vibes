@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/AboutHv.scss";
-import "../css/myLibrary.scss";
-import ImageAbout from "../img/Img.png";
-import ImageAbout2 from "../img/Img-3.png";
+import "../../css/AboutHv.scss";
+import "../../css/myLibrary.scss";
+import ImageAbout from "../../img/Img.png";
+import ImageAbout2 from "../../img/Img-3.png";
 function AboutHv() {
   const [displayWidth, setDisplayWidth] = useState(innerWidth);
   const navigate = useNavigate();

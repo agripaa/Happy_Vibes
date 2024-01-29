@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import PostCropImageSubmit from "./PostCropImageSubmit";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../../Loading";
 import {
   HandleGetWidth,
   HandleSaveImage,
@@ -13,6 +12,7 @@ import {
   CheckCropImageUser,
   CheckMyPostUser,
 } from "../../../../redux/CheckReducer/Check";
+import LoadingCircle from "../../../Loading/LoadingCircle";
 
 function PostSubmit() {
   const [values, setValues] = useState({
@@ -149,7 +149,7 @@ function PostSubmit() {
               {!doneSubmit ? (
                 <img src={components.ImageSend} alt="" />
               ) : (
-                <Loading size="smallThin" />
+                <LoadingCircle size="smallThin" />
               )}
             </button>
           ) : null}
@@ -167,7 +167,7 @@ function PostSubmit() {
           />
           {postComponent.getwidth < 500 ? (
             <button type="submit" className="ButtonPostStatus">
-              {!doneSubmit ? " Post " : <Loading size="smallThin" />}
+              {!doneSubmit ? " Post " : <LoadingCircle size="smallThin" />}
             </button>
           ) : null}
         </div>

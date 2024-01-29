@@ -2,13 +2,13 @@ import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
-import Loading from "../../../Loading";
 import { useNavigate } from "react-router";
 import {
   CheckBugReportPost,
   CheckImageUserComment,
   CheckPostId,
 } from "../../../../redux/CheckReducer/Check";
+import LoadingCircle from "../../../Loading/LoadingCircle";
 
 function ListPost_Painting() {
   const components = useSelector((state) => state.icons);
@@ -211,7 +211,7 @@ function ListPost_Painting() {
         ))
       ) : (
         <div className="LoadingPainting">
-          <Loading size="medium" />
+          <LoadingCircle size="medium" />
         </div>
       )}
     </Fragment>

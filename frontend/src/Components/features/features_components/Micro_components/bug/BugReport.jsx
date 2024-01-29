@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import Loading from "../../../Loading";
 import { CHECKBUG } from "../../../../redux/CheckReducer/Check";
+import LoadingCircle from "../../../Loading/LoadingCircle";
 
 function BugReport() {
   const components = useSelector((state) => state.icons);
@@ -99,7 +99,7 @@ function BugReport() {
               </div>
               <div className="Button-BugReport">
                 <button type="submit" className="bcolor-primary-40">
-                  {!doneBugReport ? "Submit" : <Loading size="small" />}
+                  {!doneBugReport ? "Submit" : <LoadingCircle size="small" />}
                 </button>
               </div>
             </main>

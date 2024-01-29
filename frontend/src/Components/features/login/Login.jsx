@@ -6,9 +6,9 @@ import EyeOpen from "../../img/showPassword.svg";
 import EyeClose from "../../img/closePassword.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loading from "../Loading";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingCircle from "../Loading/LoadingCircle";
 
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
@@ -168,7 +168,7 @@ function Login() {
                 </div>
                 <div className="buttonLogin">
                   <button type="submit" className="bcolor-primary-30">
-                    {isLogged ? <Loading size="smallThin" /> : "Login"}
+                    {isLogged ? <LoadingCircle size="smallThin" /> : "Login"}
                   </button>
                 </div>
               </form>

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ListComment from "./Component_Comment/ListComment";
 import InputCommentUser from "./Component_Comment/InputCommentUser";
 import axios from "axios";
-import Loading from "../../../Loading";
 import { CheckImageUserComment } from "../../../../redux/CheckReducer/Check";
+import LoadingCircle from "../../../Loading/LoadingCircle";
 
 function CommentComponents() {
   const components = useSelector((state) => state.icons);
@@ -193,7 +193,7 @@ function CommentComponents() {
                           style={{ cursor: "pointer" }}
                         />
                       ) : (
-                        <Loading size="smallThin" />
+                        <LoadingCircle size="smallThin" />
                       )}
                     </button>
                   </div>

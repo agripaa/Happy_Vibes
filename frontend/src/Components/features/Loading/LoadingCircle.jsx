@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import "../css/Loading.scss";
-function Loading({ size = "big" }) {
+import "../../css/Loading.scss";
+function LoadingCircle({ size = "big" }) {
   return (
     <Fragment>
       {size === "big" ? (
@@ -36,4 +36,4 @@ function Loading({ size = "big" }) {
   );
 }
 
-export default Loading;
+export default LoadingCircle;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import Loading from "../../../../Loading";
+import LoadingCircle from "../../../../Loading/LoadingCircle";
 
 function Section_UserNamePageProfile({ name, userName, userId, userUUID }) {
   const [follow, setFollow] = useState(false);
@@ -102,7 +102,7 @@ function Section_UserNamePageProfile({ name, userName, userId, userUUID }) {
                 handleFollows(userId);
               }}
             >
-              {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
+              {!getUserFollow ? "Followed" : <LoadingCircle size="smallThin" />}
             </button>
           ) : (
             <button

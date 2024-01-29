@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import Loading from "../../Loading";
 
 import { useNavigate } from "react-router";
 
@@ -11,6 +10,7 @@ import {
   CheckPostId,
 } from "../../../redux/CheckReducer/Check";
 import AlertReportPosting from "../../features_components/Micro_components/alert/AlertReportPosting";
+import LoadingCircle from "../../Loading/LoadingCircle";
 
 function Section_UserPostingHomePage() {
   const [liked, setLiked] = useState({});
@@ -210,7 +210,7 @@ function Section_UserPostingHomePage() {
         ))
       ) : (
         <div className="LoadingHomePage">
-          <Loading size="big" />
+          <LoadingCircle size="big" />
         </div>
       )}
       {checkReport.CheckBugReportPosting ? <AlertReportPosting /> : null}

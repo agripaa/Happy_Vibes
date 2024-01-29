@@ -2,13 +2,13 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
-import Loading from "../../../Loading";
 import { useNavigate } from "react-router";
 import {
   CheckBugReportPost,
   CheckImageUserComment,
   CheckPostId,
 } from "../../../../redux/CheckReducer/Check";
+import LoadingCircle from "../../../Loading/LoadingCircle";
 
 function ListPost_Trending() {
   const components = useSelector((state) => state.icons);
@@ -192,7 +192,7 @@ function ListPost_Trending() {
         </section>
       ) : (
         <div className="LoadingExplore">
-          <Loading size="medium" />
+          <LoadingCircle size="medium" />
         </div>
       )}
     </Fragment>

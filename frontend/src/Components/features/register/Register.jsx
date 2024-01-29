@@ -6,9 +6,9 @@ import "../../css/myLibrary.scss";
 import { useNavigate } from "react-router-dom";
 import EyeOpen from "../../img/showPassword.svg";
 import EyeClose from "../../img/closePassword.svg";
-import Loading from "../Loading";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingCircle from "../Loading/LoadingCircle";
 
 function Register() {
   const [ShowPass, setShowPass] = useState(false);
@@ -222,7 +222,7 @@ function Register() {
                     <div className="button-Auth-register1 flex flex-justify-center">
                       <button type="submit">
                         {doneRegister ? (
-                          <Loading size="smallThin" />
+                          <LoadingCircle size="smallThin" />
                         ) : (
                           "Register"
                         )}
@@ -232,7 +232,7 @@ function Register() {
                     <div className="button-Auth-register1 flex flex-justify-center">
                       <button type="submit">
                         {doneRegister ? (
-                          <Loading size="smallThin" />
+                          <LoadingCircle size="smallThin" />
                         ) : (
                           "Sign Up"
                         )}

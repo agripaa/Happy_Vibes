@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import CommentComponents from "../Comment";
-import Loading from "../../../../Loading";
+import LoadingCircle from "../../../../Loading/LoadingCircle";
 
 function InputCommentUser() {
   const components = useSelector((state) => state.icons);
@@ -45,7 +45,7 @@ function InputCommentUser() {
             {!doneComment ? (
               <img src={components.ImageSend} alt="" />
             ) : (
-              <Loading size="smallThin" />
+              <LoadingCircle size="smallThin" />
             )}
           </button>
         </div>

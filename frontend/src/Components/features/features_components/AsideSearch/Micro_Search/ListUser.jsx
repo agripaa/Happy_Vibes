@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../../../../css/Aside-Search.scss";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Loading from "../../../Loading";
 import { useNavigate } from "react-router-dom";
+import LoadingCircle from "../../../Loading/LoadingCircle";
 
 function ListUser() {
   const [follow, setFollow] = useState({});
@@ -134,7 +134,11 @@ function ListUser() {
                       handleFollows(user.id);
                     }}
                   >
-                    {!getUserFollow ? "Followed" : <Loading size="smallThin" />}
+                    {!getUserFollow ? (
+                      "Followed"
+                    ) : (
+                      <LoadingCircle size="smallThin" />
+                    )}
                   </button>
                 ) : (
                   <button
@@ -156,7 +160,7 @@ function ListUser() {
         </>
       ) : (
         <div className="LoadingAside">
-          <Loading size="small" />
+          <LoadingCircle size="small" />
         </div>
       )}
     </>
