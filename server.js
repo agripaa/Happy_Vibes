@@ -47,10 +47,10 @@ app.get('/', (req, res) => {
 
 app.use('/v2', RoutesApp)
 app.use(
-  "/hyv/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(specs)
 )
+
 app.listen(process.env.PORT, () => {
   console.log(`listening on port http://localhost:${process.env.PORT}`);
 });

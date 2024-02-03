@@ -11,6 +11,8 @@ const routeRandomPhoto = require('./randomPhoto.route');
 const routeReportPosting = require('./reportposting.route');
 const routeSearch = require('./search.route');
 const routeUsers = require('./users.route');
+const routeOtp = require('./otp.route');
+const routeForgotPass = require('./forgotPassword.route');
 
 const router = express.Router();
 
@@ -34,5 +36,7 @@ router.use('/random', routeRandomPhoto);
 router.use('/report', routeReportPosting);
 router.use('/search', routeSearch);
 router.use('/user', routeUsers);
+router.use('/otp', routeOtp);
+router.use('/forgot-pass', routeForgotPass);
 
 module.exports = router;

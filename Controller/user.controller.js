@@ -3,16 +3,16 @@ const argon2 = require('argon2');
 const path = require('path');
 const validatePassword = require('../middleware/password.validation.js');
 const moment = require('moment');
-const nodemailer = require("nodemailer");
-const Token = require('../Models/tokenData.model.js');
 require('dotenv').config();
-const crypto = require('crypto');
 const Posting = require('../Models/postingData.model.js');
 const { unlinkSync, existsSync } = require('fs');
 const db = require('../Config/database.js');
 const { Op } = require('sequelize');
 const Background = require('../Models/backgroundData.model.js');
 const Follows = require('../Models/followsData.model.js');
+const CodeOTP = require('../Models/codeOTP.model.js');
+const { generateOTP, sendOTP } = require('./otp.controller.js');
+const ImageProfile = require('../Models/imageProfileData.model.js');
 
 module.exports = {
   async getUsers(req, res) {
@@ -94,26 +94,35 @@ module.exports = {
         if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
         
         try {
-            const OTP = module.exports.generateOTP();
-            module.exports.sendOTP(email, OTP);
+            const OTP = generateOTP();
+            sendOTP(email, OTP);
+
+            const image_profile = ImageProfile.create({
+              url_image: url,
+              name_image: name_img
+            })
+
+            Background.create({
+              name_bg: null,
+              url_bg: null,
+              userId: user.id,
+            })
             
+            const otp = CodeOTP.create({
+              otp: OTP,
+              userId: user.id,
+            })
             
             const user = await Users.create({
                 name: name, 
                 username: username,
                 email: email,
                 password: hashPassword,                     
-                name_img: name_img, 
-                url: url,
-                verificationCode: OTP,
+                image_profile: image_profile.id,
+                verify_id: otp.id,
                 createdAt: moment().toISOString()
               });
-              
-              Background.create({
-                name_bg: null,
-                url_bg: null,
-                userId: user.id,
-            })
+
             res.status(200).json({status: 200, msg: 'data user created successfully'});
         } catch (err) {
             console.error(err);
@@ -127,56 +136,6 @@ module.exports = {
     validateUsername(username){
       return username.length < 3 || username.length > 15
   },
-
-    async verifyUser(req, res){
-        const { otp } = req.body;
-        
-        const user = await Users.findOne({where: {verificationCode: otp}})
-        if(!user) return res.status(404).json({status: 404, msg: 'wrong otp code'})
-
-    if (user.verificationCode !== otp)
-      return res
-        .status(400)
-        .json({ status: 400, msg: 'code otp yang anda masukkan tidak sesuai' });
-    try {
-      await Users.update(
-        {
-          verificationCode: null,
-        },
-        {
-          where: { verificationCode: user.verificationCode },
-        }
-      );
-      res.status(200).json({ status: 200, msg: 'otp approved' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ status: 500, msg: 'Internal server Error' });
-      return false;
-    }
-  },
-  async resendCode(req, res) {
-    const { email } = req.body;
-
-    const user = await Users.findOne({ email: email });
-    if (!user)
-      return res.status(404).json({ status: 404, msg: 'email user not found' });
-    if (!user)
-      return res
-        .status(400)
-        .json({ status: 400, msg: 'email already registered' });
-
-        const OTP = module.exports.generateOTP();
-        module.exports.sendOTP(email, OTP);
-        try {
-            await Users.update({
-                verificationCode: OTP
-            },{where: {email: email}})
-        } catch (error) {
-            console.error(err);
-            res.status(500).json({status: 500, msg: "Internal server Error"});
-            return false;
-        }
-    },
     async updateUser(req, res) {
       let profile_img;
       const {files} = req;
@@ -225,43 +184,7 @@ module.exports = {
         res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
       }
     },
-  generateOTP() {
-    const digits = '0123456789';
-    let OTP = '';
-    for (let i = 0; i < 6; i++) {
-      OTP += digits[Math.floor(Math.random() * 10)];
-    }
-    return OTP;
-  },
-  async sendOTP(email, otp) {
-    let transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      secure: process.env.EMAIL_SECURE,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS_EMAIL_OTP,
-      },
-    });
 
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: email,
-      subject: 'Verification Code',
-      text: `Your verification code is: ${otp}`,
-    };
-
-        return new Promise((resolve, reject) => {
-            transporter.sendMail(mailOptions, (error, info) => {
-              if (error) {
-                console.error('Error sending OTP email:', error);
-                reject(new Error('Failed to send OTP email'));
-              } else {
-                resolve();
-              }
-            });
-        });
-    },
     async deleteUser(req, res) {
         const {userId} = req;
 
@@ -310,90 +233,6 @@ module.exports = {
         } catch (err) {
             console.error(err);
             res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-        }
-    },
-    async sendEmailTokenNewPassword(email, subject, text){
-        try {
-          let transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
-            secure: process.env.EMAIL_SECURE,
-            auth: {
-              user: process.env.EMAIL,
-              pass: process.env.PASS_EMAIL_OTP,
-            },
-          });
-    
-            await transporter.sendMail({
-                from: process.env.EMAIL,
-                to: email,
-                subject: subject,
-                text: text,
-            });
-        } catch (error) {
-            console.error(error, "email not sent");
-        }
-    },
-    async getEmail(req, res) {
-        const { email } = req.body;
-    
-        try {
-          const user = await Users.findOne({
-            where: { email: email },
-          });
-    
-        if (!user) return res.status(404).json({status: 404, msg: "user with given email doesn't exist"});
-        if (user.verificationCode) return res.status(402).json({status: 402, msg: "user is not verified!"});
-
-        let token = await Token.findOne({ where: { userId: user.id } });
-        if (!token) {
-            token = await Token.create({
-                userId: user.id,
-                token: crypto.randomBytes(32).toString("hex"),
-            });
-        }
-
-        const link = `${req.protocol}://localhost:5173/update-pass/${user.id}/${token.token}`;
-        await module.exports.sendEmailTokenNewPassword(user.email, "Password reset", link);
-
-          res.status(200).json({
-            msg: 'password reset link sent to your email account"',
-            link
-          })
-        } catch (error){ 
-          console.error(error);
-          res.status(500).json({ msg: 'Internal server error', error });
-        }
-      },
-    async changePassword(req, res) {
-        const { password, confPassword } = req.body;
-        const { userId, token } = req.params;
-
-        try {
-          const user = await Users.findOne({where: {id: userId}});
-          
-          if (!user) return res.status(404).json({status: 404, msg: 'User not found'});
-          const matchingPassword = await argon2.verify(user.password, password);
-          if (matchingPassword) return res.status(430).json({status:430, msg: "The password cannot be the same as the previous password"})
-          if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and Confirm Password do not match' });
-
-          const tokenUser = await Token.findOne({
-              where: {
-                  userId: user.id,
-                  token: token,
-              },
-            });
-          if (user.id !== tokenUser.userId) return res.status(403).json({status: 403, msg: 'Have some problem on url link in token or id user'});
-          if (!tokenUser) return res.status(404).json({status: 403, msg: "Tokens don't match"});
-
-          validatePassword(password);
-          const hashPassword = await argon2.hash(password);
-      
-          await user.update({password: hashPassword});
-          await tokenUser.destroy();
-          res.status(200).json({ message: 'Password updated.' });
-          } catch (err) {
-          res.status(400).json({ msg: err.message });
         }
     },
 };

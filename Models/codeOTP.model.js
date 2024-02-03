@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../Config/database.js');
+const Users = require('./usersData.model.js');
 
 const CodeOTP = db.define('code_otp', {
   id: {
