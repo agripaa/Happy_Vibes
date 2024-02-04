@@ -13,6 +13,8 @@ const routeSearch = require('./search.route');
 const routeUsers = require('./users.route');
 const routeOtp = require('./otp.route');
 const routeForgotPass = require('./forgotPassword.route');
+const routeReportUser = require('./reportUser.route.js');
+const routeCategoryReportUser = require('./categoryReportUser.route.js');
 
 const router = express.Router();
 
@@ -38,5 +40,7 @@ router.use('/search', routeSearch);
 router.use('/user', routeUsers);
 router.use('/otp', routeOtp);
 router.use('/forgot-pass', routeForgotPass);
+router.use('/report-user', routeReportUser);
+router.use('/category-report-user', routeCategoryReportUser);
 
 module.exports = router;

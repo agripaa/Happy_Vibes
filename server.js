@@ -14,7 +14,7 @@ require('dotenv').config();
 const app = express();
 const sessionStore = new (sequelizeStore(session.Store))({ db: db });
 
-// async function startDB(){await db.sync();};startDB();
+async function startDB(){await db.sync();};startDB();
 
 const specs = swaggerJsdoc(options);
 
