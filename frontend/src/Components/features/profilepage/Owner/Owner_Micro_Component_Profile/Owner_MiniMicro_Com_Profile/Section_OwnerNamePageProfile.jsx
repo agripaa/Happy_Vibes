@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { CheckEditProfil } from "../../../../../redux/CheckReducer/Check";
+import { CheckEditProfil } from "../../../../../libs/redux/CheckReducer/Check";
 
 function Section_OwnerNamePageProfile({ name, username }) {
   const dispach = useDispatch();

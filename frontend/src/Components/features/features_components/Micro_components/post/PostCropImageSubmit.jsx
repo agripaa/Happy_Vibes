@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../../../../fnQuery/CropFunc";
-import { HandleSaveCredential } from "../../../../redux/ImageReducer/imageReduce";
+import { HandleSaveCredential } from "../../../../libs/redux/ImageReducer/imageReduce";
 
 function PostCropImageSubmit({
   preview,

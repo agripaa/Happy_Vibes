@@ -2,7 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { CHECKBUG, DELETECHECK } from "../../../../redux/CheckReducer/Check";
+import {
+  CHECKBUG,
+  DELETECHECK,
+} from "../../../../libs/redux/CheckReducer/Check";
 
 function OptionProfile({ Optionse, responseCheck }) {
   const { dltCheckNav } = useSelector((state) => state.check);

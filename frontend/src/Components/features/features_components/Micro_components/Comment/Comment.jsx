@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ListComment from "./Component_Comment/ListComment";
 import InputCommentUser from "./Component_Comment/InputCommentUser";
 import axios from "axios";
-import { CheckImageUserComment } from "../../../../redux/CheckReducer/Check";
 import LoadingCircle from "../../../Loading/LoadingCircle";
+import { CheckImageUserComment } from "../../../../libs/redux/CheckReducer/Check";
 
 function CommentComponents() {
   const components = useSelector((state) => state.icons);

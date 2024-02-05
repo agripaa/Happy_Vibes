@@ -6,7 +6,7 @@ import {
   CheckDeletePosting,
   CheckImageUserComment,
   CheckPostId,
-} from "../../../../../redux/CheckReducer/Check";
+} from "../../../../../libs/redux/CheckReducer/Check";
 
 function Section_OwnerPosting() {
   const components = useSelector((state) => state.icons);

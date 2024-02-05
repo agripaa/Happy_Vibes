@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CheckBugReportPost } from "../../../../redux/CheckReducer/Check";
+import { CheckBugReportPost } from "../../../../libs/redux/CheckReducer/Check";
 
 function AlertReportPosting() {
   const dispatch = useDispatch();

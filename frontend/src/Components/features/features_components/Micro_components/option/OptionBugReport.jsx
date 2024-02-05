@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   CHECKBUG,
   CheckMyPostUser,
-} from "../../../../redux/CheckReducer/Check";
+} from "../../../../libs/redux/CheckReducer/Check";
 
 function OptionBugReport() {
   const components = useSelector((state) => state.icons);

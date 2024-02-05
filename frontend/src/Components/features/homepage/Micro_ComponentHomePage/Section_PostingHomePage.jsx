@@ -4,13 +4,13 @@ import axios from "axios";
 
 import { useNavigate } from "react-router";
 
+import AlertReportPosting from "../../features_components/Micro_components/alert/AlertReportPosting";
+import LoadingCircle from "../../Loading/LoadingCircle";
 import {
   CheckBugReportPost,
   CheckImageUserComment,
   CheckPostId,
-} from "../../../redux/CheckReducer/Check";
-import AlertReportPosting from "../../features_components/Micro_components/alert/AlertReportPosting";
-import LoadingCircle from "../../Loading/LoadingCircle";
+} from "../../../libs/redux/CheckReducer/Check";
 
 function Section_UserPostingHomePage() {
   const [liked, setLiked] = useState({});

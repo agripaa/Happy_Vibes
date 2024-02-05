@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CheckEditProfil } from "../../../redux/CheckReducer/Check";
 import LoadingCircle from "../../Loading/LoadingCircle";
+import { CheckEditProfil } from "../../../libs/redux/CheckReducer/Check";
 
 function ChangeProfileImage() {
   const components = useSelector((state) => state.icons);

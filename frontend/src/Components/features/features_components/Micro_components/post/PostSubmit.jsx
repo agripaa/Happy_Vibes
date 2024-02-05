@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import PostCropImageSubmit from "./PostCropImageSubmit";
 import { useNavigate } from "react-router-dom";
-import {
-  HandleGetWidth,
-  HandleSaveImage,
-} from "../../../../redux/ImageReducer/imageReduce";
+
+import LoadingCircle from "../../../Loading/LoadingCircle";
 import {
   CheckCropImageUser,
   CheckMyPostUser,
-} from "../../../../redux/CheckReducer/Check";
-import LoadingCircle from "../../../Loading/LoadingCircle";
+} from "../../../../libs/redux/CheckReducer/Check";
+import {
+  HandleGetWidth,
+  HandleSaveImage,
+} from "../../../../libs/redux/ImageReducer/imageReduce";
 
 function PostSubmit() {
   const [values, setValues] = useState({

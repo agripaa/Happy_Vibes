@@ -6,7 +6,7 @@ import {
   CheckBugReportPost,
   CheckImageUserComment,
   CheckPostId,
-} from "../../../../../redux/CheckReducer/Check";
+} from "../../../../../libs/redux/CheckReducer/Check";
 
 function Section_UserPosting({ userId }) {
   const components = useSelector((state) => state.icons);

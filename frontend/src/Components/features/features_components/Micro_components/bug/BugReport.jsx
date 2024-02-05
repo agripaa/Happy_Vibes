@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { CHECKBUG } from "../../../../redux/CheckReducer/Check";
 import LoadingCircle from "../../../Loading/LoadingCircle";
+import { CHECKBUG } from "../../../../libs/redux/CheckReducer/Check";
 
 function BugReport() {
   const components = useSelector((state) => state.icons);

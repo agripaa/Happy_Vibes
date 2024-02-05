@@ -8,7 +8,7 @@ import AccountInfo from "./Micro_Navbar/AccountInfo";
 import NameBrand from "./Micro_Navbar/NameBrand";
 
 import { useDispatch } from "react-redux";
-import { DELETECHECKNAV } from "../../../redux/CheckReducer/Check";
+import { DELETECHECKNAV } from "../../../libs/redux/CheckReducer/Check";
 
 function Navbar() {
   const [isDown, setIsDown] = useState(false);

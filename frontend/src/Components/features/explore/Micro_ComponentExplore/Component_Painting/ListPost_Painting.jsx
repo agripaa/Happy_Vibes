@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
 import { useNavigate } from "react-router";
+
+import LoadingCircle from "../../../Loading/LoadingCircle";
 import {
   CheckBugReportPost,
   CheckImageUserComment,
   CheckPostId,
-} from "../../../../redux/CheckReducer/Check";
-import LoadingCircle from "../../../Loading/LoadingCircle";
+} from "../../../../libs/redux/CheckReducer/Check";
 
 function ListPost_Painting() {
   const components = useSelector((state) => state.icons);

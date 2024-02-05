@@ -7,7 +7,7 @@ import ImageListProfile from "../../../../img/Vector-Profile.png";
 
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { CheckMyPostUser } from "../../../../redux/CheckReducer/Check";
+import { CheckMyPostUser } from "../../../../libs/redux/CheckReducer/Check";
 
 function ListNavbar() {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);

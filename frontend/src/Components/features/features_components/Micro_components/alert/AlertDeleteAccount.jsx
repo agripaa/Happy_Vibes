@@ -4,7 +4,7 @@ import ImageAlert from "../../../../img/alert-red.svg";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { DELETECHECK } from "../../../../redux/CheckReducer/Check";
+import { DELETECHECK } from "../../../../libs/redux/CheckReducer/Check";
 
 function AlertDeleteAccount() {
   const dispatch = useDispatch();
