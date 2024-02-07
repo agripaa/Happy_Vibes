@@ -10,4 +10,4 @@ module.exports = {
             res.status(500).json({status: 500, msg: error.message});
         }
     }
-}
+}                                                                                                                                                                                                                       

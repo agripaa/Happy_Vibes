@@ -15,6 +15,8 @@ const routeOtp = require('./otp.route');
 const routeForgotPass = require('./forgotPassword.route');
 const routeReportUser = require('./reportUser.route.js');
 const routeCategoryReportUser = require('./categoryReportUser.route.js');
+const routeStories = require('./stories.route.js')
+const routeCategoryStories = require('./categoryStories.route.js');
 
 const router = express.Router();
 
@@ -42,5 +44,7 @@ router.use('/otp', routeOtp);
 router.use('/forgot-pass', routeForgotPass);
 router.use('/report-user', routeReportUser);
 router.use('/category-report-user', routeCategoryReportUser);
+router.use('/stories', routeStories);
+router.use('/category-stories', routeCategoryStories);
 
 module.exports = router;
