@@ -5,10 +5,11 @@ import ImageLogin from "../../img/img-1.png";
 import EyeOpen from "../../img/showPassword.svg";
 import EyeClose from "../../img/closePassword.svg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoadingCircle from "../Loading/LoadingCircle";
+import { AuthProfile } from "../../libs/react-query/Auth/profile";
+import { AuthLogin } from "../../libs/react-query/Auth/login";
 
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
@@ -20,6 +21,24 @@ function Login() {
     email: "",
     password: "",
   });
+  const { data } = AuthProfile();
+  const { mutate } = AuthLogin((v) => {
+    setIsLogged(v.isLogged);
+    if (!v.isErrorLogin) {
+      if (v.data.status === 404) {
+        setIsError(v.data);
+        toast.error("Login Failed, Please Try Again.");
+      } else if (v.data.status === 403) {
+        toast.error(v.data.msg);
+        navigate("/authOtp/otp");
+      } else {
+        navigate("/homepage");
+      }
+    } else {
+      toast.error(v.message);
+    }
+  });
+
   const navigate = useNavigate();
   function changeHandler(e) {
     setValues({
@@ -32,56 +51,52 @@ function Login() {
     e.preventDefault();
     const { email, password } = values;
     setIsLogged(true);
-    try {
-      await axios
-        .post(
-          `http://localhost:5000/auth/login`,
-          {
-            email,
-            password,
-          },
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-            withCredentials: true,
-          }
-        )
-        .then((_) => {
-          setIsLogged(false);
-          navigate("/homepage");
-        })
-        .catch(async ({ response }) => {
-          const { status, msg } = response.data;
-          setIsLogged(false);
-          setIsError(response.data);
-          if (status === 403) {
-            await toast.error(msg);
-            await navigate("/authOtp/otp");
-          }
-          toast.error("Login Failed, Please Try Again.");
-        });
-    } catch (err) {
-      console.error(err);
-    }
+    mutate({
+      email,
+      password,
+    });
+    // try {
+    //   await axios
+    //     .post(
+    //       `http://localhost:5000/auth/login`,
+    //       {
+    //         email,
+    //         password,
+    //       },
+    //       {
+    //         headers: { "Content-Type": "multipart/form-data" },
+    //         withCredentials: true,
+    //       }
+    //     )
+    //     .then((_) => {
+    //       setIsLogged(false);
+    //       navigate("/homepage");
+    //     })
+    //     .catch(async ({ response }) => {
+    //       const { status, msg } = response.data;
+    //       setIsLogged(false);
+    //       setIsError(response.data);
+    //       if (status === 403) {
+    //         await toast.error(msg);
+    //         await navigate("/authOtp/otp");
+    //       }
+    //       toast.error("Login Failed, Please Try Again.");
+    //     });
+    // } catch (err) {
+    //   console.error(err);
+    // }
   }
 
-  const checkLogin = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:5000/auth/profile", {
-        withCredentials: true,
-      });
-      if (data.result) {
-        navigate("/homepage");
-      }
-    } catch (err) {}
-  };
-
-  React.useEffect(() => {
-    checkLogin();
-  }, []);
-
-  React.useEffect(() => {
-    loginHandler();
-  });
+  // const checkLogin = async () => {
+  //   try {
+  //     const { data } = await axios.get("http://localhost:5000/auth/profile", {
+  //       withCredentials: true,
+  //     });
+  //     if (data.result) {
+  //       navigate("/homepage");
+  //     }
+  //   } catch (err) {}
+  // };
 
   React.useEffect(() => {
     window.addEventListener("resize", () => {
