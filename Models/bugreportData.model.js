@@ -46,7 +46,7 @@ Users.hasMany(BugReport);
 BugReport.belongsTo(Users, {foreignKey: 'userId'});
 
 BugReport.belongsTo(TypeBug, { foreignKey: 'type_bug_id'})
-TypeBug.hasMany(BugReport, { foreignKey: 'type_bug_id', onDelete: 'CASCADE '})
+TypeBug.hasMany(BugReport, { foreignKey: 'type_bug_id', onDelete: 'CASCADE'})
 
 
 module.exports = BugReport;     

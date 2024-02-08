@@ -9,6 +9,8 @@ module.exports = {
             const randomPhoto = await RandomPhoto.findOne({
                 offset: randomIndex,
             });
+
+            if (!randomPhoto) return res.status(404).json({status: 404, msg: "Random photo not found", randomPhoto})
             return res.status(200).json({ randomPhoto });
         } catch (error) {
             console.error(err);

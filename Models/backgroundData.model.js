@@ -17,13 +17,6 @@ const Background = db.define('backgrounds', {
     name_bg : {
         type: DataTypes.STRING,
         allowNull: true
-    },
-    userId: {
-        type: DataTypes.INTEGER ,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
     }
 })
 

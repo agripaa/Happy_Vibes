@@ -97,37 +97,36 @@ module.exports = {
             const OTP = generateOTP();
             sendOTP(email, OTP);
 
-            const image_profile = ImageProfile.create({
+            const image_profile = await ImageProfile.create({
               url_image: url,
               name_image: name_img
             })
 
-            Background.create({
-              name_bg: null,
-              url_bg: null,
-              userId: user.id,
-            })
-            
-            const otp = CodeOTP.create({
+            const otp = await CodeOTP.create({
               otp: OTP,
-              userId: user.id,
             })
             
-            const user = await Users.create({
+            const background = await Background.create({
+              name_bg: null,
+              url_bg: null
+            })
+            
+            await Users.create({
                 name: name, 
                 username: username,
                 email: email,
                 password: hashPassword,                     
                 image_profile: image_profile.id,
                 verify_id: otp.id,
+                backgroundId: background.id,
                 createdAt: moment().toISOString()
               });
-
+              
             res.status(200).json({status: 200, msg: 'data user created successfully'});
         } catch (err) {
             console.error(err);
-            res.status(500).json({status: 500, msg: err.message});
-            return false;
+            res.status(500).json({status: 500, msg: err.message, err});
+            return false; 
         }
     },
     validateName(name){

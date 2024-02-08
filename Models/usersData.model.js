@@ -79,8 +79,11 @@ const Users = db.define('users_data', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
-      
       backgroundId : {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      verify_id: {
         type: DataTypes.INTEGER,
         allowNull: true
       }
@@ -91,14 +94,11 @@ Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey
 Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings', onDelete: 'CASCADE' });
 
-CodeOTP.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
-CodeOTP.hasMany(Users, { foreignKey: 'verify_id', onDelete: 'CASCADE' })
-Users.belongsTo(CodeOTP, { foreignKey: 'verify_id', onDelete: 'CASCADE' });
-Users.hasOne(CodeOTP, { foreignKey: 'userId', as: 'codeOTP', onDelete: 'CASCADE' });
+CodeOTP.hasMany(Users, { foreignKey: 'verify_id'})
+Users.belongsTo(CodeOTP, { foreignKey: 'verify_id'});
 
-Background.belongsTo(Users, { foreignKey: 'userId', as: 'users_data', targetKey: 'id', onDelete: 'CASCADE' });
-Background.hasMany(Users, { foreignKey: 'backgroundId', as: 'background', targetKey: 'id', onDelete: 'CASCADE' });
-Users.hasOne(Background, { foreignKey: 'userId', as: 'backgrounds', onDelete: 'CASCADE' });
+Users.belongsTo(Background, { foreignKey: 'backgroundId', onDelete: 'CASCADE' });
+Background.hasMany(Users, { foreignKey: 'backgroundId', as: 'background', onDelete: 'CASCADE' });
 
 Posting.belongsTo(Users, {foreignKey: 'userId', onDelete: 'CASCADE' });
 Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });
@@ -106,8 +106,6 @@ Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Users.belongsTo(ImageProfile, {foreignKey: 'image_profile', onDelete: 'CASCADE'});
 ImageProfile.hasOne(Users, {foreignKey: 'image_profile', onDelete: 'CASCADE'});
 
-
 Users.hasMany(Like, { foreignKey: 'userId', onDelete: 'CASCADE' });
-
 
 module.exports = Users;

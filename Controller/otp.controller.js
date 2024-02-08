@@ -1,12 +1,13 @@
 const CodeOTP = require('../Models/codeOTP.model.js');
 const Users = require('../Models/usersData.model.js');
+const nodemailer = require('nodemailer')
 require('dotenv').config();
 
 module.exports = {
     async verifyUser(req, res){
         const { otp } = req.body;
         
-        const userOtp = await CodeOTP.findOne({otp})
+        const userOtp = await CodeOTP.findOne({otp});        
         if(!userOtp) return res.status(404).json({status: 404, msg: 'wrong otp code'})
 
         if (userOtp.otp !== otp)
@@ -14,6 +15,10 @@ module.exports = {
             .status(400)
             .json({ status: 400, msg: 'code otp yang anda masukkan tidak sesuai' });
         try {
+        await Users.update({
+          verify: true,
+        }, {where: {verify_id: userOtp.id}});
+
         await CodeOTP.destroy({
             where: { otp }
         })
