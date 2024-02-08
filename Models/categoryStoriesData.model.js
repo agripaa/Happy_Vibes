@@ -18,7 +18,7 @@ const CategoryStories = db.define('category_stories', {
             notEmpty: true
         }
     }
-})
+}, {freezeTableName: true});
 
 Stories.belongsTo(CategoryStories, {foreignKey: 'category_stories_id', onDelete: 'RESTRICT'})
 CategoryStories.hasMany(Stories, {foreignKey: 'category_stories_id', onDelete: 'RESTRICT'})
