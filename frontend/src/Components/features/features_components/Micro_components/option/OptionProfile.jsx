@@ -1,11 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import {
   CHECKBUG,
   DELETECHECK,
 } from "../../../../libs/redux/CheckReducer/Check";
+import { AuthLogout } from "../../../../libs/react-query/Auth/logout";
 
 function OptionProfile({ Optionse, responseCheck }) {
   const { dltCheckNav } = useSelector((state) => state.check);
@@ -13,18 +13,20 @@ function OptionProfile({ Optionse, responseCheck }) {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const dispath = useDispatch();
   const navigate = useNavigate();
-
-  async function handleLogout() {
-    try {
-      await axios
-        .delete("http://localhost:5000/auth/logOut", { withCredentials: true })
-        .then(() => {
-          navigate("/");
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  const { mutate } = AuthLogout((v) => {
+    navigate(v.navigate && "/");
+  });
+  // async function handleLogout() {
+  //   try {
+  //     await axios
+  //       .delete("http://localhost:5000/auth/logOut", { withCredentials: true })
+  //       .then(() => {
+  //         navigate("/");
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   function HandleClickButtonDelete(e) {
     e.preventDefault();
@@ -46,7 +48,7 @@ function OptionProfile({ Optionse, responseCheck }) {
           <div className="wrapOptionsProfile">
             <section className="Container-Logout">
               <img src={components.ImageLogout} alt="" />
-              <p onClick={handleLogout}>Logout</p>
+              <p onClick={() => mutate()}>Logout</p>
             </section>
             <section
               className="Container-DeleteAccount"

@@ -21,7 +21,7 @@ function Login() {
     email: "",
     password: "",
   });
-  const { data } = AuthProfile();
+  const { isLoading } = AuthProfile();
   const { mutate } = AuthLogin((v) => {
     setIsLogged(v.isLogged);
     if (!v.isErrorLogin) {

@@ -1,0 +1,37 @@
+Dokumentasi Folder pada react-query
+
+Dokumentasi ini diperuntukkan mempermudah kita dalam melakukan migrasi code fetching dan pembuatan code fetching pada project ini.
+Sebelum itu saya akan menjelaskan flow dari folder dan file yang ingin dibuat:
+
+Jadi di dalam folder react-query ini berisi beberapa folder yang dimana penamaan folder ini masing2 dari endpoint pertama dari api yang dibuat dan penamaan file nya masing2 dari endpoint yang kedua ,
+sebagai contoh : {url_dev_v2}/auth/login
+disini terdapat endpoint pertama yaitu auth dan endpoint kedua yaitu login maka dibuatkan folder bernama auth dan didalam folder tersebut di bikin file login.js
+
+Baik disini saya akan menjelaskan beberapa name uniq yang terdapat pada file didalam folder react query, dan name uniq ini juga berguna jika ada penambahan file baru:
+
+- userid, uuid, postid = userId, uuId, postid
+contoh pada endpoint : {url_dev_v2}/user/get/uuId
+
+- getEmail, getFollowers = get_email, get_followers
+contoh pada endpoint : {url_dev_v2}/follows/get_followers
+
+- user_update, resend_otp = user/update, resend/otp
+contoh pada endpoint : {url_dev_v2}/background/user/update
+
+- user~name = user?name
+contoh pada endpoint : {url_dev_v2}/search/user?name=a
+
+nb: untuk mengetahui macam2 endpoint nya bisa di cek langsung pada postman
+
+dan disini saya ingin memberikan penjelasan sedikit untuk method yang terdapat pada react query untuk menyesuaikan method yang terdapat pada API:
+- useQuery = GET 
+penjelasan = digunakan untuk mengambil data 
+- useMutation = POST, PATCH, PUT
+penjelasan = digunakan jika ingin melakukan mutasi terhadap data
+
+Jika ada pertanyaan boleh langsung wa ataupun komentar dibawah ini.
+Semoga Dokumentasi ini dapat mempermudah kita dalam pembuatan project ini.
+
+
+
+
