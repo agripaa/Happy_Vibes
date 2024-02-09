@@ -98,7 +98,7 @@ CodeOTP.hasMany(Users, { foreignKey: 'verify_id'})
 Users.belongsTo(CodeOTP, { foreignKey: 'verify_id'});
 
 Users.belongsTo(Background, { foreignKey: 'backgroundId', onDelete: 'CASCADE' });
-Background.hasMany(Users, { foreignKey: 'backgroundId', as: 'background', onDelete: 'CASCADE' });
+Background.hasMany(Users, { foreignKey: 'backgroundId', onDelete: 'CASCADE' });
 
 Posting.belongsTo(Users, {foreignKey: 'userId', onDelete: 'CASCADE' });
 Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });

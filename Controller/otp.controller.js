@@ -71,7 +71,7 @@ module.exports = {
           },
         });
     
-        const mailOptions = {
+        const mailOptions = {   
           from: process.env.EMAIL,
           to: email,
           subject: 'Verification Code',

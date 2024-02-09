@@ -13,6 +13,7 @@ const Follows = require('../Models/followsData.model.js');
 const CodeOTP = require('../Models/codeOTP.model.js');
 const { generateOTP, sendOTP } = require('./otp.controller.js');
 const ImageProfile = require('../Models/imageProfileData.model.js');
+const { profile } = require('console');
 
 module.exports = {
   async getUsers(req, res) {
@@ -22,21 +23,27 @@ module.exports = {
       const user = await Users.findAll({
         where: {
           id: {
-            [Op.not]: userId
-          }
+            [Op.not]: userId,
+          },
+          verify: true
         },
         order: db.random(),
         limit: 3,
-        include: [{
-          model: Follows,
-          as: 'followers',
-          attributes: ['followingId']
-        },
-        {
-          model: Background,
-          as: 'backgrounds',
-          attributes: ['name_bg', 'url_bg']
-        }]      
+        include: [
+          {
+            model: Follows,
+            as: 'followers',
+            attributes: ['followingId']
+          },
+          {
+            model: Background,
+            attributes: ['name_bg', 'url_bg']
+          },
+          {
+            model: ImageProfile,
+            attributes: ['url_image', 'name_image']
+          }
+        ]      
       });
       if(!user) return res.status(404).json({status: 404, msg:"No have data!"})
       res.status(200).json({ status: 200, result: user });
@@ -55,17 +62,21 @@ module.exports = {
             [Op.eq]: uuid
           }
         },
-        attributes: ['id', 'uuid', 'name', 'username', 'desc', 'email', 'name_img', 'url', 'followingCount', 'followerCount'],
         include: [
           {
-            model: Follows,
-            as: 'followers',
-            attributes: ['followingId']
+            model: Background,
+            attributes: ['name_bg', 'url_bg']
+          },
+          {
+            model: ImageProfile,
+            attributes: ['url_image', 'name_image']
           }
-      ]    
+        ]    
       });
+
       if(user.id === userId) return res.status(403).json({status: 403, msg: 'Cannot see your profile in here'})
       if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });
+
       return res.status(200).json({ status: 200, result: user });
     } catch (err) {
       console.error(err);
@@ -143,11 +154,10 @@ module.exports = {
       try {
         const user = await Users.findOne({ where: { id: req.userId } });
         if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-        console.log(user)
+
         if (!desc) desc = user.desc;
         if (!files) {
           profile_img = user.name_img;
-          console.log(profile_img);
         } else {
           profile_img = user.name_img;
 
@@ -169,14 +179,17 @@ module.exports = {
 
         await Users.update(
           {
-            name_img: profile_img,
-            url: profile_url,
             desc: desc
           },
           {
             where: { id: user.id }
           }
         )
+        await ImageProfile.update({
+          url_image: profile_url,
+          name_image: profile_img,
+        }, {where: { id: user.image_profile }})
+
         res.status(200).json({ status: 200, msg: 'User updated successfully' });
       } catch (err) {
         console.error(err);
@@ -191,6 +204,14 @@ module.exports = {
             where: {id: userId}
         });
 
+        const image_profile = await ImageProfile.findOne({
+          where: {id: user.image_profile}
+        });
+
+        const background_image = await Background.findOne({
+          where: {id: user.backgroundId}
+        });
+
         if(userId !== user.id) return res.status(400).json({status: 400, msg: "You cannot delete this account!"})
 
         try {
@@ -203,15 +224,15 @@ module.exports = {
             'user_ff0b300a0e11132de2c89be1d79da25e.jpeg'
         ];
 
-              if (user.name_img && !photosToKeep.includes(user.name_img)) {
-                const nameImgPath = `./public/users/${user.name_img}`;
+              if (image_profile.name_image && !photosToKeep.includes(image_profile.name_image)) {
+                const nameImgPath = `./public/users/${image_profile.name_image}`;
                 if (existsSync(nameImgPath)) {
                     unlinkSync(nameImgPath);
                 }
             }
 
-            if(user.bg_img !== null){
-                unlinkSync(`./public/users/bg_img/${user.bg_img}`, (err) => {
+            if(background_image.name_bg !== null){
+                unlinkSync(`./public/users/bg_img/${background_image.name_bg}`, (err) => {
                     if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
                 })
             }
@@ -220,11 +241,13 @@ module.exports = {
                 where: { userId: user.id }
             });
             
-            for (const posting of postings) {
-                if (posting.name_img) {
-                    await unlinkSync(`./public/postings/${posting.name_img}`);
-                }
-                await posting.destroy();
+            if(postings){
+              for (const posting of postings) {
+                  if (posting.name_img) {
+                      await unlinkSync(`./public/postings/${posting.name_img}`);
+                  }
+                  await posting.destroy();
+              }
             }
 
             await user.destroy();
