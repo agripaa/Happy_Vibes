@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import "../../../../css/Navbar.scss";
+import "../../../../css/Navbar/Navbar.scss";
 
 function NameBrand() {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "../../css/Notifcations.scss";
+import "../../css/Notifications/Notifcations.scss";
 import Section_Notification from "./Micro_ComponentNotifcation/Section_Notification";
 import { useSelector } from "react-redux";
 

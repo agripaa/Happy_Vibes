@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import "../../../../css/Navbar.scss";
+import "../../../../css/Navbar/Navbar.scss";
 
 function LogoNavbar({ myClass }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "../../../css/Navbar.scss";
+import "../../../css/Navbar/Navbar.scss";
 
 import ListNavbar from "./Micro_Navbar/ListNavbar";
 import LogoNavbar from "./Micro_Navbar/LogoNavbar";

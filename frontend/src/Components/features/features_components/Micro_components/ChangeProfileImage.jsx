@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../../css/ChangeProfile.scss";
+import "../../../css/Profile/ChangeProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";

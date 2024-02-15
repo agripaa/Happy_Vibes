@@ -1,0 +1,117 @@
+.OptionsProfile {
+  width: 150px;
+  height: 80px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(0, 0%, 96%);
+  border-radius: 10px;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.1);
+  transform: scale(0);
+  transition: all 0.3s ease-in-out;
+}
+.activeOption {
+  transform: scale(1);
+}
+.wrapOptionsProfile {
+  width: 80%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+.Container {
+  &-Logout {
+    width: 100%;
+    display: flex;
+    gap: 5%;
+    padding: 10px 3px;
+
+    align-items: center;
+    p {
+      font-size: 12px;
+      letter-spacing: 0.24px;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: #dbdbdb;
+      border-radius: 5px;
+    }
+  }
+  &-DeleteAccount {
+    width: 100%;
+    display: flex;
+    gap: 5%;
+    padding: 10px 3px;
+    align-items: center;
+    border: 1px solid red;
+    border-radius: 5px;
+    p {
+      font-size: 12px;
+      letter-spacing: 0.24px;
+      color: red;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .OptionsProfile {
+    width: 140px;
+    height: 120px;
+    top: -70px;
+    right: -150px;
+  }
+  .wrapOptionsProfile {
+    width: 90%;
+    height: 80%;
+    background-color: #f5f5f5;
+    justify-content: space-around;
+    .Container {
+      &-BugReport {
+        width: 100%;
+        display: flex;
+        padding: 0;
+        gap: 5%;
+        p {
+          font-size: 12px;
+        }
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+      &-Logout {
+        padding: 0;
+        p {
+          font-size: 12px;
+        }
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+      &-DeleteAccount {
+        padding: 6px 0px;
+        p {
+          font-size: 10px;
+        }
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 330px) {
+  .OptionsProfile {
+    width: 140px;
+    height: 120px;
+    top: auto;
+    bottom: -120px;
+    right: -70px;
+  }
+}

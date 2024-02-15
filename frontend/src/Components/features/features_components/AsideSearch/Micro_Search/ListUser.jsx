@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../../../css/Aside-Search.scss";
+import "../../../../css/Aside/Aside-Search.scss";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

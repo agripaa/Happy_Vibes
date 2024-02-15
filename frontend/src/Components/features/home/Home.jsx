@@ -6,7 +6,6 @@ import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/swiper-bundle.min.css";
-import "../../css/welcome.scss";
 import SwiperSlideNext from "../Other/SwiperSlideNexr";
 import Login from "../login/Login";
 

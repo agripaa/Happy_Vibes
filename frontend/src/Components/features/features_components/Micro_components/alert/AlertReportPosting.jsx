@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/AlertReportPosting.scss";
+import "../../../../css/Alert/AlertReportPosting.scss";
 import ImageAlert from "../../../../img/alert-red.svg";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";

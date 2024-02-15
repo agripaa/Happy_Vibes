@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../../css/Login.scss";
+import "../../css/Auth/Login.scss";
 import "../../css/myLibrary.scss";
 import ImageLogin from "../../img/img-1.png";
 import EyeOpen from "../../img/showPassword.svg";

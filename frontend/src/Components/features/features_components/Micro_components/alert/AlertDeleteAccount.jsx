@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/AlertDeleteAccount.scss";
+import "../../../../css/Alert/AlertDeleteAccount.scss";
 import ImageAlert from "../../../../img/alert-red.svg";
 import { useDispatch } from "react-redux";
 import axios from "axios";

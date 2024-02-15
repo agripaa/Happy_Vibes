@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ImageSearchAside from "../../../../img/Vector-Explore.png";
-import "../../../../css/Explore.scss";
-import "../../../../css/Aside-Search.scss";
+import "../../../../css/Explore/Explore.scss";
+import "../../../../css/Aside/Aside-Search.scss";
 import { Link } from "react-router-dom";
 
 function ComponentsSearch() {

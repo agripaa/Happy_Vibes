@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ImageBack from "../../img/vector-back.png";
 import "../../css/myLibrary.scss";
-import "../../css/ForgotPassword.scss";
+import "../../css/Auth/ForgotPassword.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 

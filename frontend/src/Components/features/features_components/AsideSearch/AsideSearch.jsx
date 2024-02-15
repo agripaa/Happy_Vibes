@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../css/Aside-Search.scss";
+import "../../../css/Aside/Aside-Search.scss";
 import ComponentsSearch from "./Micro_Search/search";
 import Recomend_user from "./Micro_Search/recomend_user";
 function AsideSearch() {

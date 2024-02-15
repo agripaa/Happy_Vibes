@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import imageRegister from "../../img/Img-1.png";
-import "../../css/Register.scss";
+import "../../css/Auth/Register.scss";
 import "../../css/myLibrary.scss";
 import { useNavigate } from "react-router-dom";
 import EyeOpen from "../../img/showPassword.svg";

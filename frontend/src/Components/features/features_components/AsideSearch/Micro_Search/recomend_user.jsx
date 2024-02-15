@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/Aside-Search.scss";
+import "../../../../css/Aside/Aside-Search.scss";
 import ListUser from "./ListUser";
 
 function Recomend_user() {

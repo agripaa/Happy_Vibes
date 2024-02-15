@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../../css/Version.scss";
+import "../../../css/Other/Version.scss";
 function Version() {
   const [getWitdh, setGetWidth] = useState(innerWidth);
   useEffect(() => {

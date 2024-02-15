@@ -4,7 +4,7 @@ import ImageBack from "../../img/vector-back.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../../css/myLibrary.scss";
-import "../../css/RenewPassword.scss";
+import "../../css/Auth/RenewPassword.scss";
 import EyeOpen from "../../img/showPassword.svg";
 import EyeClose from "../../img/closePassword.svg";
 import LoadingCircle from "../Loading/LoadingCircle";

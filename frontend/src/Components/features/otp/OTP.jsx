@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../../css/myLibrary.scss";
-import "../../css/OTP.scss";
+import "../../css/Auth/OTP.scss";
 import { Link, useNavigate } from "react-router-dom";
 import ImageBack from "../../img/vector-back.png";
 import axios from "axios";

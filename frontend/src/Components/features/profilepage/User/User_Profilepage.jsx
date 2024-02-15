@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import "../../../css/ProfilePage.scss";
-import "../../../css/Posting_ProfilePage.scss";
+import "../../../css/Profile/ProfilePage.scss";
+import "../../../css/Profile/Posting_ProfilePage.scss";
 import HeaderPageProfile from "../Micro_Components_ProfilePge.jsx/HeaderPageProfile";
 import Navigation_ProfilePage from "../Micro_Components_ProfilePge.jsx/Navigation_ProfilePage";
 

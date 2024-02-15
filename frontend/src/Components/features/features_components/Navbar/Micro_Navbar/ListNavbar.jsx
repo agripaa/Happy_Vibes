@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import "../../../../css/Navbar.scss";
+import "../../../../css/Navbar/Navbar.scss";
 import ImageListHome from "../../../../img/Vector-Home.png";
 import ImageListExplore from "../../../../img/Vector-Explore.png";
 import ImageListNotifications from "../../../../img/Vector-Notifications.png";

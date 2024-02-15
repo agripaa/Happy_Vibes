@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
-import "../../css/Homepage.scss";
-import "../../css/Comment.scss";
+import "../../css/Homepage/Homepage.scss";
+import "../../css/Status/Comment.scss";
 import "../../css/myLibrary.scss";
 import FeaturePost_HomePage from "./Micro_ComponentHomePage/FeaturesPost_HomePage";
 

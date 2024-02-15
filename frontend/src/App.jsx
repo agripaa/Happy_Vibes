@@ -1,5 +1,5 @@
 import "./App.css";
-import "./Components/css/OptionBug.scss";
+import "./Components/css/Option/OptionBug.scss";
 import PopOptions from "./Components/features/popOptions/PopOptions";
 import RootRouting from "./route/route";
 

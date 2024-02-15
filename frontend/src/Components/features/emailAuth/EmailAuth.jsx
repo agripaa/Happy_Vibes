@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../css/myLibrary.scss";
-import "../../css/EmailAuth.scss";
+import "../../css/Auth/EmailAuth.scss";
 import { Link, useNavigate } from "react-router-dom";
 import ImageBack from "../../img/vector-back.png";
 import axios from "axios";

@@ -15,6 +15,7 @@ import User_Profilepage from "../Components/features/profilepage/User/User_Profi
 import NotFound from "../Components/features/notfound/NotFound";
 import TestingCropImage from "../Components/features/testcropimg/TestingCropImage";
 import { createBrowserRouter } from "react-router-dom";
+import TestOptions from "../Components/features/TestOptions/TestOptions";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,7 @@ function Routing() {
       <Route path="/profile/user" element={<User_Profilepage />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/testcrop" element={<TestingCropImage />} />
+      <Route path="/testOptions" element={<TestOptions />} />
     </Routes>
   );
 }

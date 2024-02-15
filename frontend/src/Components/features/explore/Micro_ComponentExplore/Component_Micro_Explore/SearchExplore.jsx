@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ImageSearchAside from "../../../../img/Vector-Explore.png";
-import "../../../../css/Explore.scss";
+import "../../../../css/Explore/Explore.scss";
 import axios from "axios";
 import { Link } from "react-router-dom";
 

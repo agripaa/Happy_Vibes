@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
-import "../../css/Explore.scss";
-import "../../css/Explore_TrendingPost.scss";
-import "../../css/Explore_PaintingPost.scss";
+import "../../css/Explore/Explore.scss";
+import "../../css/Explore/Explore_TrendingPost.scss";
+import "../../css/Explore/Explore_PaintingPost.scss";
 import "../../css/myLibrary.scss";
 import ComponentsSearchExplore from "./Micro_ComponentExplore/Component_Micro_Explore/SearchExplore";
 import Component_TrendingPost from "./Micro_ComponentExplore/Component_TrendingToday";

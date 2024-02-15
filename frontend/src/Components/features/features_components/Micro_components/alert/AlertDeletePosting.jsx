@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/AlertDeletePosting.scss";
+import "../../../../css/Alert/AlertDeletePosting.scss";
 import ImageAlert from "../../../../img/alert-red.svg";
 import { useDispatch, useSelector } from "react-redux";
 

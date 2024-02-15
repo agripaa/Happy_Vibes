@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
-import "../../../../css/Navbar.scss";
+import "../../../../css/Navbar/Navbar.scss";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -66,7 +66,7 @@ function ProfileNavbar({ check }) {
                   <span></span>
                   <span></span>
                 </div>
-                <OptionProfile Optionse={Options} responseCheck={true} />
+                {/* <OptionProfile Optionse={Options} responseCheck={true} /> */}
               </div>
             </div>
           </div>

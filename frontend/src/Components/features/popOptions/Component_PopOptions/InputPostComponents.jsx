@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../css/PostStatus.scss";
+import "../../../css/Status/PostStatus.scss";
 import { useSelector } from "react-redux";
 import PostSubmit from "../../features_components/Micro_components/post/PostSubmit";
 import PostCropImageSubmit from "../../features_components/Micro_components/post/PostCropImageSubmit";

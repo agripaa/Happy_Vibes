@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "../../css/Loading.scss";
+import "../../css/Loading/Loading.scss";
 function LoadingCircle({ size = "big" }) {
   return (
     <Fragment>

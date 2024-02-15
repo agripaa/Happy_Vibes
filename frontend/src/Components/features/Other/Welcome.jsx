@@ -1,5 +1,5 @@
 import React from "react";
-import "../../css/welcome.scss";
+import "../../css/Other/welcome.scss";
 function Welcome() {
   return (
     <div className="Container-Welcome">
