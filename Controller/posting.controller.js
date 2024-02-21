@@ -4,6 +4,8 @@ const db = require('../Config/database.js');
 const Users = require('../Models/usersData.model.js');
 const moment = require('moment');
 const path = require('path');
+const ImagePosting = require('../Models/imagePostingData.model.js');
+const RatioImage = require('../Models/ratioImagePostingData.model.js');
 
 const attributesUser = ['id', 'uuid', 'name', 'username', 'url', 'name_img'];
 
@@ -171,9 +173,18 @@ const createNewPosting = async (req, res) => {
           if(err) return res.status(500).json({status: 500, msg: 'Internal server error', image: "image hasn't been uploaded!" ,error: err});
           
           try {
+              const ratio_image = await RatioImage.findOne({
+                where: {ratio: ratio}
+              })
+
+              ImagePosting.findAll({})
+
+              const image_posting = await ImagePosting.create({
+                url,
+                name_img
+              });
+
               const posting = await Posting.create({
-                  name_img: name_img,
-                  url: url,
                   desc: desc,
                   like: like,
                   liked: false,

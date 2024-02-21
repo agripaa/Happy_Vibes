@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../Config/database.js');
+const Users = require('./usersData.model.js');
 
 const Token = db.define('tokens', {
     userId: {
@@ -18,4 +19,6 @@ const Token = db.define('tokens', {
     }
 }, { freezeTableName: true });
 
+Token.belongsTo(Users, {foreignKey: 'userId', onDelete: 'CASCADE'})
+Users.hasMany(Token, {foreignKey: 'userId', onDelete: 'CASCADE'})
 module.exports = Token;
