@@ -91,6 +91,8 @@ const Users = db.define('users_data', {
 
 Follows.belongsTo(Users, { foreignKey: 'followerId', as: 'follower', targetKey: 'id', onDelete: 'CASCADE' });
 Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey: 'id', onDelete: 'CASCADE' });
+Follows.belongsTo(Users, { foreignKey: 'userId', targetKey: 'id', onDelete: 'CASCADE' });
+Users.hasMany(Follows, {foreignKey: 'userId', onDelete: "CASCADE"});
 Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings', onDelete: 'CASCADE' });
 
