@@ -14,73 +14,73 @@ function Section_UserPosting({ userId }) {
 
   const dispatch = useDispatch();
 
-  async function getPostsUser() {
-    try {
-      await axios
-        .get(`http://localhost:5000/posting/${userId}/user`, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          setPosts(data.result);
-        })
-        .catch(({ response }) => {
-          console.error(response);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function getPostsUser() {
+  //   try {
+  //     await axios
+  //       .get(`http://localhost:5000/posting/${userId}/user`, {
+  //         withCredentials: true,
+  //       })
+  //       .then(({ data }) => {
+  //         setPosts(data.result);
+  //       })
+  //       .catch(({ response }) => {
+  //         console.error(response);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  const handleLike = async (postId, liked) => {
-    try {
-      await axios
-        .patch(
-          `http://localhost:5000/posting/like/${postId}`,
-          { liked },
-          { withCredentials: true }
-        )
-        .then(() => {
-          setPosts((prevPosts) => {
-            return prevPosts.map((post) => {
-              if (post.id === postId) {
-                return { ...post, liked: !post.liked };
-              }
-              return post;
-            });
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleLike = async (postId, liked) => {
+  //   try {
+  //     await axios
+  //       .patch(
+  //         `http://localhost:5000/posting/like/${postId}`,
+  //         { liked },
+  //         { withCredentials: true }
+  //       )
+  //       .then(() => {
+  //         setPosts((prevPosts) => {
+  //           return prevPosts.map((post) => {
+  //             if (post.id === postId) {
+  //               return { ...post, liked: !post.liked };
+  //             }
+  //             return post;
+  //           });
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  async function updatePost(postId) {
-    try {
-      await axios
-        .get(`http://localhost:5000/${postId}/posting`, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          const updatedPost = data.result;
-          const updatedPosts = posts.map((post) => {
-            if (post.id === postId) {
-              return updatedPost;
-            }
-            return post;
-          });
-          setPosts(updatedPosts);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function updatePost(postId) {
+  //   try {
+  //     await axios
+  //       .get(`http://localhost:5000/${postId}/posting`, {
+  //         withCredentials: true,
+  //       })
+  //       .then(({ data }) => {
+  //         const updatedPost = data.result;
+  //         const updatedPosts = posts.map((post) => {
+  //           if (post.id === postId) {
+  //             return updatedPost;
+  //           }
+  //           return post;
+  //         });
+  //         setPosts(updatedPosts);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  useEffect(() => {
-    getPostsUser();
-  }, [userId]);
+  // useEffect(() => {
+  //   getPostsUser();
+  // }, [userId]);
 
   const handleCommentClick = (postId) => {
     dispatch(CheckPostId(postId));
@@ -88,52 +88,51 @@ function Section_UserPosting({ userId }) {
   };
   return (
     <Fragment>
-      {posts.map((post, i) => (
-        <section className="UserPosting" key={i}>
-          <article className="UserPosting-NameProfile">
-            <div className="NameProfileText">
-              <figure className="ImageProfile-NameProfile">
-                <img
-                  src={post.users_datum.url}
-                  alt={post.users_datum.name_img}
-                />
-              </figure>
-              <div className="TextProfile-NameProfile">
-                <p> {post.users_datum.name}</p>
-                <p>@{post.users_datum.username}</p>
-                <img
-                  src={components.Verified}
-                  alt=""
-                  style={{ paddingTop: "1px" }}
-                />
-              </div>
-            </div>
-            <div className="ButtonList-NameProfile">
-              <figure className="Share-LikePosting">
-                <img
-                  role="button"
-                  src={components.alertRed}
-                  alt=""
-                  style={{ width: "20px", height: "20px" }}
-                  onClick={() => dispatch(CheckBugReportPost(true))}
-                />
-              </figure>
-            </div>
-          </article>
-          <article className="UserPosting-ImagePosting">
-            <figure className="Image-ImagePosting">
-              {post.url ? <img src={post.url} alt={post.name_img} /> : ""}
+      {/* <section className="UserPosting" key={i}> */}
+      <section className="UserPosting">
+        <article className="UserPosting-NameProfile">
+          <div className="NameProfileText">
+            <figure className="ImageProfile-NameProfile">
+              <img src={components.imgDummy} alt={"sdsd"} />
             </figure>
-          </article>
-          <article className="UserPosting-ArticlePosting">
-            <figcaption>
-              <p>{post.desc}</p>
-            </figcaption>
-          </article>
-          <article className="UserPosting-LikePosting">
-            <div className="wrapLikePosting">
-              <figure className="Love-LikePosting">
-                {post.liked ? (
+            <div className="TextProfile-NameProfile">
+              <p> syahroni</p>
+              <p>@Syahroni</p>
+              <img
+                src={components.Verified}
+                alt=""
+                style={{ paddingTop: "1px" }}
+              />
+            </div>
+          </div>
+          <div className="ButtonList-NameProfile">
+            <figure className="Share-LikePosting">
+              <img
+                role="button"
+                src={components.alertRed}
+                alt=""
+                style={{ width: "20px", height: "20px" }}
+                onClick={() => dispatch(CheckBugReportPost(true))}
+              />
+            </figure>
+          </div>
+        </article>
+        <article className="UserPosting-ImagePosting">
+          <figure className="Image-ImagePosting">
+            {/* {post.url ?  : ""} */}
+            <img src={components.imgDummy2} alt={"sadasd"} />
+          </figure>
+        </article>
+        <article className="UserPosting-ArticlePosting">
+          <figcaption>
+            {/* <p>user.desc</p> */}
+            <p>asdawd</p>
+          </figcaption>
+        </article>
+        <article className="UserPosting-LikePosting">
+          <div className="wrapLikePosting">
+            <figure className="Love-LikePosting">
+              {/* {post.liked ? (
                   <img
                     src={components.ImageLikeLove}
                     alt=""
@@ -154,24 +153,36 @@ function Section_UserPosting({ userId }) {
                       await updatePost(post.id);
                     }}
                   />
-                )}
-                <figcaption>
-                  <p>{post.like}</p>
-                </figcaption>
-              </figure>
-              <figure className="Chat-LikePosting">
-                <img
-                  src={components.ImageChat}
-                  alt=""
-                  role="button"
-                  onClick={() => handleCommentClick(post.id)}
-                />
-                <figcaption></figcaption>
-              </figure>
-            </div>
-          </article>
-        </section>
-      ))}
+                )} */}
+              <img
+                src={components.ImageLove}
+                alt=""
+                role="button"
+                className="LikeLove"
+                // onClick={async () => {
+                //   await handleLike(post.id, true);
+                //   await updatePost(post.id);
+                // }}
+              />
+              <figcaption>
+                {/* <p>{post.like}</p> */}
+                <p>12</p>
+              </figcaption>
+            </figure>
+            <figure className="Chat-LikePosting">
+              <img
+                src={components.ImageChat}
+                alt=""
+                role="button"
+                // onClick={() => handleCommentClick(post.id)}
+              />
+              <figcaption></figcaption>
+            </figure>
+          </div>
+        </article>
+      </section>
+      {/* {posts.map((post, i) => (
+      ))} */}
     </Fragment>
   );
 }

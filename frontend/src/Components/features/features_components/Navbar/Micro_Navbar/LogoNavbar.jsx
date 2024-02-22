@@ -14,7 +14,7 @@ function LogoNavbar({ myClass }) {
       {" "}
       {getInnerWidth > 500 ? (
         <div className={myClass}>
-          <h1>HyV</h1>
+          <h1>{getInnerWidth < 972 ? "HV" : "Happy Vibes"}</h1>
         </div>
       ) : null}
     </Fragment>

@@ -23,48 +23,50 @@ function Owner_Profilepage() {
   const [background, setBackground] = useState({});
   const myComment = useSelector((state) => state.check);
 
-  async function getDataUser() {
-    try {
-      await axios
-        .get("http://localhost:5000/auth/profile", { withCredentials: true })
-        .then(({ data }) => {
-          setUser(data.result);
-        })
-        .catch(({ response }) => {
-          console.error(response);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function getDataUser() {
+  //   try {
+  //     await axios
+  //       .get("http://localhost:5000/auth/profile", { withCredentials: true })
+  //       .then(({ data }) => {
+  //         setUser(data.result);
+  //       })
+  //       .catch(({ response }) => {
+  //         console.error(response);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  async function getDataBackground() {
-    try {
-      await axios
-        .get("http://localhost:5000/background/user", { withCredentials: true })
-        .then(({ data }) => {
-          setBackground(data.result);
-        })
-        .catch(({ response }) => {
-          console.error(response);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function getDataBackground() {
+  //   try {
+  //     await axios
+  //       .get("http://localhost:5000/background/user", { withCredentials: true })
+  //       .then(({ data }) => {
+  //         setBackground(data.result);
+  //       })
+  //       .catch(({ response }) => {
+  //         console.error(response);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  useEffect(() => {
-    getDataUser();
-    getDataBackground();
-  }, []);
+  // useEffect(() => {
+  //   getDataUser();
+  //   getDataBackground();
+  // }, []);
 
   return (
     <Fragment>
       <Navbar />
       <div className="Container-ProfilePage">
         <div className="WrapContainer-ProfilePage">
-          <HeaderPageProfile ImageBack={ImageBack} userName={user.name} />
-          <Owner_MainPageProfile users={user} background={background} />
+          <HeaderPageProfile ImageBack={ImageBack} userName={"syahroni"} />
+          <Owner_MainPageProfile
+          // users={user} background={background}
+          />
           <Navigation_ProfilePage />
           <FeaturePost_OwnerProfilePage />
         </div>

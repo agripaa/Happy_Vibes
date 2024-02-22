@@ -10,24 +10,25 @@ function InputCommentUser() {
   const [comment, setComment] = useState("");
   const [doneComment, setDoneComment] = useState(false);
   async function postComment(e) {
-    e.preventDefault();
-    setDoneComment(true);
-    try {
-      const formData = new FormData();
-      formData.append("comment", comment);
-      await axios
-        .post(`http://localhost:5000/posting/${postId}/comment`, formData, {
-          withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        .then(({ data }) => {
-          CommentComponents();
-          setComment("");
-          setDoneComment(false);
-        });
-    } catch (err) {
-      console.error(err);
-    }
+    console.log("ok");
+    // e.preventDefault();
+    // setDoneComment(true);
+    // try {
+    //   const formData = new FormData();
+    //   formData.append("comment", comment);
+    //   await axios
+    //     .post(`http://localhost:5000/posting/${postId}/comment`, formData, {
+    //       withCredentials: true,
+    //       headers: { "Content-Type": "multipart/form-data" },
+    //     })
+    //     .then(({ data }) => {
+    //       CommentComponents();
+    //       setComment("");
+    //       setDoneComment(false);
+    //     });
+    // } catch (err) {
+    //   console.error(err);
+    // }
   }
 
   return (
@@ -42,11 +43,11 @@ function InputCommentUser() {
             value={comment}
           />
           <button type="submit">
-            {!doneComment ? (
-              <img src={components.ImageSend} alt="" />
-            ) : (
-              <LoadingCircle size="smallThin" />
-            )}
+            {/* {!doneComment ? (
+              ) : (
+                <LoadingCircle size="smallThin" />
+                )} */}
+            <img src={components.ImageSend} alt="" />
           </button>
         </div>
       </form>

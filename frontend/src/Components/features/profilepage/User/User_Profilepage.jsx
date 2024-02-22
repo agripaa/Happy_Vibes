@@ -23,26 +23,26 @@ function User_Profilepage() {
 
   const [user, setUser] = useState({});
   const navigate = useNavigate();
-  async function getDataUser() {
-    try {
-      axios
-        .get(`http://localhost:5000/get/user/${id}`, { withCredentials: true })
-        .then(({ data }) => {
-          setUser(data.result);
-        })
-        .catch(({ response }) => {
-          const { status } = response.data;
-          if (status === 403) {
-            navigate("/profile/user");
-          }
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
-  useEffect(() => {
-    getDataUser();
-  }, [user.id, setUser]);
+  // async function getDataUser() {
+  //   try {
+  //     axios
+  //       .get(`http://localhost:5000/get/user/${id}`, { withCredentials: true })
+  //       .then(({ data }) => {
+  //         setUser(data.result);
+  //       })
+  //       .catch(({ response }) => {
+  //         const { status } = response.data;
+  //         if (status === 403) {
+  //           navigate("/profile/user");
+  //         }
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
+  // useEffect(() => {
+  //   getDataUser();
+  // }, [user.id, setUser]);
   return (
     <Fragment>
       <Navbar />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
@@ -31,62 +31,62 @@ function PostSubmit() {
   const postComponent = useSelector((state) => state.images);
   const dispatch = useDispatch();
 
-  function handleImageSubmit(e) {
-    const file = e.target.files[0];
-    if (file) {
-      setUploadFile(file);
-      setPreview(URL.createObjectURL(file));
-      setCropPhoto(true);
-    }
-  }
+  // function handleImageSubmit(e) {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setUploadFile(file);
+  //     setPreview(URL.createObjectURL(file));
+  //     setCropPhoto(true);
+  //   }
+  // }
 
-  async function getUserProfile() {
-    try {
-      await axios
-        .get("http://localhost:5000/auth/profile", { withCredentials: true })
-        .then(({ data }) => {
-          setProfile(data.result);
-        })
-        .catch(({ response }) => {
-          console.error(response);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function getUserProfile() {
+  //   try {
+  //     await axios
+  //       .get("http://localhost:5000/auth/profile", { withCredentials: true })
+  //       .then(({ data }) => {
+  //         setProfile(data.result);
+  //       })
+  //       .catch(({ response }) => {
+  //         console.error(response);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setDoneSubmit(true);
-    const { desc, like } = values;
-    const formData = new FormData();
-    formData.append("desc", desc);
-    formData.append("like", like);
-    formData.append("file", file);
-    try {
-      await axios
-        .post("http://localhost:5000/posting/new_content", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        })
-        .then((res) => {
-          setDoneSubmit(false);
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   setDoneSubmit(true);
+  //   const { desc, like } = values;
+  //   const formData = new FormData();
+  //   formData.append("desc", desc);
+  //   formData.append("like", like);
+  //   formData.append("file", file);
+  //   try {
+  //     await axios
+  //       .post("http://localhost:5000/posting/new_content", formData, {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //         withCredentials: true,
+  //       })
+  //       .then((res) => {
+  //         setDoneSubmit(false);
 
-          window.location.reload();
-        })
-        .catch(({ response }) => {});
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  //         window.location.reload();
+  //       })
+  //       .catch(({ response }) => {});
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   useEffect(() => {
     window.addEventListener("resize", () => {
       dispatch(HandleGetWidth(innerWidth));
     });
-    getUserProfile();
+    // getUserProfile();
   }, [dispatch]);
 
   function handleChange(e) {
@@ -96,89 +96,96 @@ function PostSubmit() {
     });
   }
 
-  return !crop ? (
-    <form
-      className="SquarePostStatus"
-      style={{
-        height:
-          postComponent.getImage && postComponent.getwidth <= 500
-            ? "100%"
-            : !postComponent.getImage && postComponent.getwidth <= 500
-            ? "100%"
-            : postComponent.getImage && postComponent.getwidth > 500
-            ? "auto"
-            : "470px",
-      }}
-      onSubmit={handleSubmit}
-    >
-      <header className="HeaderPostStatus">
-        <figure className="ImageProfilPost">
-          <img src={profile.url} alt={profile.name_img} />
-        </figure>
-        <figure
-          className="CloseProfilPost"
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            dispatch(CheckMyPostUser(false));
-            dispatch(HandleSaveImage(null));
-            dispatch(CheckCropImageUser(false));
-          }}
-        >
-          <img
-            src={
-              postComponent.getwidth > 500
-                ? components.Close
-                : components.ImageBack
-            }
-            alt=""
-          />
-        </figure>
-      </header>
-      <main className="imagePostStatus">
-        <img src={preview} alt="" />
-      </main>
-      <footer className="InputTextPostStatus">
-        <div className="InputAndButton">
-          <input
-            type="text"
-            placeholder="What’s happening?"
-            name="desc"
-            onChange={handleChange}
-          />
-          {postComponent.getwidth > 500 ? (
-            <button type="submit">
-              {!doneSubmit ? (
+  return (
+    <Fragment>
+      <form
+        className="SquarePostStatus"
+        style={{
+          height:
+            postComponent.getImage && postComponent.getwidth <= 500
+              ? "100%"
+              : !postComponent.getImage && postComponent.getwidth <= 500
+              ? "100%"
+              : postComponent.getImage && postComponent.getwidth > 500
+              ? "auto"
+              : "470px",
+        }}
+        onSubmit={handleSubmit}
+      >
+        <header className="HeaderPostStatus">
+          <figure className="ImageProfilPost">
+            <img src={components.imgDummy} alt={"asdasd"} />
+          </figure>
+          <figure
+            className="CloseProfilPost"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              dispatch(CheckMyPostUser(false));
+              dispatch(HandleSaveImage(null));
+              dispatch(CheckCropImageUser(false));
+            }}
+          >
+            <img
+              src={
+                postComponent.getwidth > 500
+                  ? components.Close
+                  : components.ImageBack
+              }
+              alt=""
+            />
+          </figure>
+        </header>
+        <main className="imagePostStatus">
+          <img src={preview} alt="" />
+        </main>
+        <footer className="InputTextPostStatus">
+          <div className="InputAndButton">
+            <input
+              type="text"
+              placeholder="What’s happening?"
+              name="desc"
+              // onChange={handleChange}
+            />
+            {postComponent.getwidth > 500 ? (
+              <button type="submit">
                 <img src={components.ImageSend} alt="" />
-              ) : (
-                <LoadingCircle size="smallThin" />
-              )}
-            </button>
-          ) : null}
-        </div>
-        <div className="InputImage">
-          <label htmlFor="input-imagePost">
-            <img src={components.inputImage} alt="" />
-          </label>
-          <input
-            id="input-imagePost"
-            type="file"
-            name="file"
-            onChange={handleImageSubmit}
-            style={{ display: "none" }}
-          />
-          {postComponent.getwidth < 500 ? (
-            <button type="submit" className="ButtonPostStatus">
-              {!doneSubmit ? " Post " : <LoadingCircle size="smallThin" />}
-            </button>
-          ) : null}
-        </div>
-      </footer>
-    </form>
-  ) : (
-    <PostCropImageSubmit
-      {...{ preview, setCropPhoto, setPreview, setUploadFile }}
-    />
+                {/* {!doneSubmit ? (
+                  <img src={components.ImageSend} alt="" />
+                ) : (
+                  <LoadingCircle size="smallThin" />
+                )} */}
+              </button>
+            ) : null}
+          </div>
+          <div className="InputImage">
+            <label htmlFor="input-imagePost">
+              <img src={components.inputImage} alt="" />
+            </label>
+            <input
+              id="input-imagePost"
+              type="file"
+              name="file"
+              onChange={handleImageSubmit}
+              style={{ display: "none" }}
+            />
+            {postComponent.getwidth < 500 ? (
+              <button type="submit" className="ButtonPostStatus">
+                {/* {!doneSubmit ? " Post " : <LoadingCircle size="smallThin" />} */}
+                Post
+              </button>
+            ) : null}
+          </div>
+        </footer>
+      </form>
+    </Fragment>
   );
+  // !crop ? (
+
+  // ) : (
+  //   <PostCropImageSubmit
+  //     {...{ preview, setCropPhoto, setPreview, setUploadFile }}
+  //   />
+  // );
 }
 
 export default PostSubmit;

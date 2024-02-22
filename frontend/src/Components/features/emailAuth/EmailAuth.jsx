@@ -9,26 +9,26 @@ function EmailAuth() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios
-        .patch("http://localhost:5000/user/resend/otp", { email: email })
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios
+  //       .patch("http://localhost:5000/user/resend/otp", { email: email })
+  //       .then(({ data }) => {
+  //         console.log(data);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetWidth(innerWidth);
     });
-    handleSubmit();
+    // handleSubmit();
   }, [getWitdh]);
   return (
     <div className="ContainerEmail">
@@ -43,7 +43,8 @@ function EmailAuth() {
             <h1>OTP Verification</h1>
           </header>
           <main className="mainEmail">
-            <form className="formEmail" onSubmit={handleSubmit}>
+            {/* <form className="formEmail" onSubmit={handleSubmit}> */}
+            <form className="formEmail">
               <div className="kolomInputEmail">
                 <input
                   type="email"

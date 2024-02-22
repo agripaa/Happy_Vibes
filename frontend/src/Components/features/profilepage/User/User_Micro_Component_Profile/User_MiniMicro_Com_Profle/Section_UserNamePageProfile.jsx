@@ -8,78 +8,78 @@ function Section_UserNamePageProfile({ name, userName, userId, userUUID }) {
   const [userLogin, setUserLogin] = useState({});
   const [getUserFollow, setGetUserFollow] = useState(false);
 
-  async function getDataUser() {
-    try {
-      axios
-        .get(`http://localhost:5000/get/user/${userUUID}`, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          setUser(data.result);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function getDataUser() {
+  //   try {
+  //     axios
+  //       .get(`http://localhost:5000/get/user/${userUUID}`, {
+  //         withCredentials: true,
+  //       })
+  //       .then(({ data }) => {
+  //         setUser(data.result);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  async function userLog() {
-    try {
-      axios
-        .get(`http://localhost:5000/auth/profile`, { withCredentials: true })
-        .then(({ data }) => {
-          setUserLogin(data.result);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function userLog() {
+  //   try {
+  //     axios
+  //       .get(`http://localhost:5000/auth/profile`, { withCredentials: true })
+  //       .then(({ data }) => {
+  //         setUserLogin(data.result);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  useEffect(() => {
-    getDataUser();
-    userLog();
-  }, [userUUID]);
+  // useEffect(() => {
+  //   getDataUser();
+  //   userLog();
+  // }, [userUUID]);
 
-  async function handleFollows(userId) {
-    setGetUserFollow(true);
+  // async function handleFollows(userId) {
+  //   setGetUserFollow(true);
 
-    try {
-      axios
-        .post(`http://localhost:5000/follow/${userId}/user/`, null, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          getDataUser();
-          setGetUserFollow(false);
-        })
-        .catch(({ response }) => {
-          setGetUserFollow(false);
-        });
-    } catch (err) {
-      setGetUserFollow(false);
-      console.error(err);
-    }
-  }
+  //   try {
+  //     axios
+  //       .post(`http://localhost:5000/follow/${userId}/user/`, null, {
+  //         withCredentials: true,
+  //       })
+  //       .then(({ data }) => {
+  //         getDataUser();
+  //         setGetUserFollow(false);
+  //       })
+  //       .catch(({ response }) => {
+  //         setGetUserFollow(false);
+  //       });
+  //   } catch (err) {
+  //     setGetUserFollow(false);
+  //     console.error(err);
+  //   }
+  // }
 
-  const checkIfUserIsFollowed = () => {
-    if (user.followers) {
-      for (const follower of user.followers) {
-        if (follower.followingId === userLogin.id) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
+  // const checkIfUserIsFollowed = () => {
+  //   if (user.followers) {
+  //     for (const follower of user.followers) {
+  //       if (follower.followingId === userLogin.id) {
+  //         return true;
+  //       }
+  //     }
+  //   }
+  //   return false;
+  // };
 
-  useEffect(() => {
-    setFollow(checkIfUserIsFollowed());
-  }, [user.followers, userLogin.id]);
+  // useEffect(() => {
+  //   setFollow(checkIfUserIsFollowed());
+  // }, [user.followers, userLogin.id]);
 
   return (
     <section className="section-NameProfilePage">
@@ -87,14 +87,14 @@ function Section_UserNamePageProfile({ name, userName, userId, userUUID }) {
         <div className="OriginalName-ProfilePage">
           <div className="WrapOriginalName">
             <div className="NameProfilePageUser">
-              <h4>{name}</h4>
-              <p>@{userName}</p>
+              <h4>Syhroni</h4>
+              <p>@roni</p>
             </div>
             <figure className="VerifiedClass"></figure>
           </div>
         </div>
         <div className="buttonFollow-ProfilePage">
-          {follow ? (
+          {/* {follow ? (
             <button
               type="button"
               className="ButtonFollowed-Aside"
@@ -114,7 +114,16 @@ function Section_UserNamePageProfile({ name, userName, userId, userUUID }) {
             >
               Follow
             </button>
-          )}
+          )} */}
+          <button
+            type="button"
+            className="ButtonFollow-Aside"
+            onClick={() => {
+              handleFollows(userId);
+            }}
+          >
+            Follow
+          </button>
         </div>
       </div>
     </section>

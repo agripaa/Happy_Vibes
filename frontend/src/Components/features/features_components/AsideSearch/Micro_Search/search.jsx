@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import ImageSearchAside from "../../../../img/Vector-Explore.png";
+import ImageSearchAside from "../../../../img/Vector-Search.png";
 import "../../../../css/Explore/Explore.scss";
 import "../../../../css/Aside/Aside-Search.scss";
 import { Link } from "react-router-dom";
@@ -9,24 +9,24 @@ function ComponentsSearch() {
   const [searchQuery, setSearchQuery] = useState("");
   const [resultSearch, setResultSearch] = useState([]);
   const [notFound, setNotFound] = useState([]);
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  // const handleSearch = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      await axios
-        .get(`http://localhost:5000/user/search?name=${searchQuery}`, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          setResultSearch(data.result);
-        })
-        .catch(({ response }) => {
-          setNotFound(response.data);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //   try {
+  //     await axios
+  //       .get(`http://localhost:5000/user/search?name=${searchQuery}`, {
+  //         withCredentials: true,
+  //       })
+  //       .then(({ data }) => {
+  //         setResultSearch(data.result);
+  //       })
+  //       .catch(({ response }) => {
+  //         setNotFound(response.data);
+  //       });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
@@ -35,7 +35,8 @@ function ComponentsSearch() {
   return (
     <div className="content_search">
       <div className="Container-search">
-        <form className="FormSearch-aside" onSubmit={handleSearch}>
+        <form className="FormSearch-aside">
+          {/* <form className="FormSearch-aside" onSubmit={handleSearch}> */}
           <figure className="imageSearch-aside">
             <img src={ImageSearchAside} alt="" />
           </figure>
@@ -48,7 +49,7 @@ function ComponentsSearch() {
           </div>
         </form>
       </div>
-      {resultSearch.map((user, i) => {
+      {/* {resultSearch.map((user, i) => {
         return (
           <>
             {notFound.status === 404 ? (
@@ -80,7 +81,7 @@ function ComponentsSearch() {
             )}
           </>
         );
-      })}
+      })} */}
     </div>
   );
 }

@@ -31,68 +31,68 @@ function ChangeProfileImage() {
     setPreviewBg(URL.createObjectURL(img));
   }
 
-  async function fetchUserData() {
-    try {
-      const { data } = await axios.get("http://localhost:5000/auth/profile", {
-        withCredentials: true,
-      });
-      setUser(data.result);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function fetchUserData() {
+  //   try {
+  //     const { data } = await axios.get("http://localhost:5000/auth/profile", {
+  //       withCredentials: true,
+  //     });
+  //     setUser(data.result);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  async function fetchBackgroundData() {
-    try {
-      const { data } = await axios.get(
-        "http://localhost:5000/background/user",
-        { withCredentials: true }
-      );
-      setBackgrund(data.result);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function fetchBackgroundData() {
+  //   try {
+  //     const { data } = await axios.get(
+  //       "http://localhost:5000/background/user",
+  //       { withCredentials: true }
+  //     );
+  //     setBackgrund(data.result);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   async function updateUser(e) {
     e.preventDefault();
-    setDoneChange(true);
-    try {
-      const formData = new FormData();
-      formData.append("desc", desc);
-      if (name_img) {
-        formData.append("file", name_img);
-      } else {
-        formData.append("file", null);
-      }
-      await axios.patch("http://localhost:5000/user/edit", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    // setDoneChange(true);
+    // try {
+    //   const formData = new FormData();
+    //   formData.append("desc", desc);
+    //   if (name_img) {
+    //     formData.append("file", name_img);
+    //   } else {
+    //     formData.append("file", null);
+    //   }
+    //   await axios.patch("http://localhost:5000/user/edit", formData, {
+    //     withCredentials: true,
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
 
-      await axios.patch(
-        "http://localhost:5000/background/user/update",
-        { file: bg_img },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      toast.success("Update Succesfully");
-      setDoneChange(false);
-    } catch (err) {
-      console.error(err);
-    }
+    //   await axios.patch(
+    //     "http://localhost:5000/background/user/update",
+    //     { file: bg_img },
+    //     {
+    //       withCredentials: true,
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     }
+    //   );
+    //   toast.success("Update Succesfully");
+    //   setDoneChange(false);
+    // } catch (err) {
+    //   console.error(err);
+    // }
   }
 
-  useEffect(() => {
-    fetchUserData();
-    fetchBackgroundData();
-  }, []);
+  // useEffect(() => {
+  //   fetchUserData();
+  //   fetchBackgroundData();
+  // }, []);
 
   return (
     <div className="ChangeProfile">
@@ -109,14 +109,15 @@ function ChangeProfileImage() {
             </div>
             <div className="buttonChangeProfile">
               <button type="submit">
-                {!doneChange ? "Post" : <LoadingCircle size="smallThin" />}
+                {/* {!doneChange ? "Post" : <LoadingCircle size="smallThin" />} */}
+                Post
               </button>
             </div>
           </header>
           <main className="MainChangeProfile">
             <section className="ImageProfileChange">
               <figure className="imageBackgroundChange">
-                {previewBg ? (
+                {/* {previewBg ? (
                   <img src={previewBg} alt="preview background" />
                 ) : (
                   <>
@@ -126,7 +127,8 @@ function ChangeProfileImage() {
                       <img src={components.ImageProfilePage} alt="" />
                     )}
                   </>
-                )}
+                )} */}
+                <img src={components.ImageProfilePage} alt="" />
                 <figcaption className="AboutChangeBackground">
                   <div className="DeleteImgBg">
                     <img src={components.DeleteImgBackground} alt="" />
@@ -146,11 +148,13 @@ function ChangeProfileImage() {
                 </figcaption>
               </figure>
               <figure className="ImagePPChange">
-                {previewProfile ? (
+                {/* {previewProfile ? (
                   <img src={previewProfile} alt="" />
                 ) : (
                   <img src={user.url} alt="" />
-                )}
+                )} */}
+                <img src={components.imgDummy} alt="" />
+
                 <figcaption className="AboutChangePP">
                   <label htmlFor="editPP">
                     <img
@@ -171,8 +175,10 @@ function ChangeProfileImage() {
             <section className="ArticleNameAndDesc">
               <div className="wrapArticleNameAndDesc">
                 <div className="NameArticleChange">
-                  <h3>{user.name}</h3>
-                  <p>@{user.username}</p>
+                  {/* <h3>{user.name}</h3>
+                  <p>@{user.username}</p> */}
+                  <h3>Syahrni</h3>
+                  <p>@roni</p>
                 </div>
                 <div className="ChangeDesc">
                   {updateDesc ? (
@@ -205,14 +211,18 @@ function ChangeProfileImage() {
                         </div>
                       ) : (
                         <div className="desc">
-                          {!user.desc ? (
+                          <p>
+                            Hello Guys I'am @{user.username}, I'm a new user at
+                            HYV
+                          </p>
+                          {/* {!user.desc ? (
                             <p>
                               Hello Guys I'am @{user.username}, I'm a new user
                               at HYV
                             </p>
                           ) : (
                             <p>{user.desc}</p>
-                          )}
+                          )} */}
                           <img
                             src={components.EditDesc}
                             alt=""

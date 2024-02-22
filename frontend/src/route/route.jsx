@@ -16,6 +16,7 @@ import NotFound from "../Components/features/notfound/NotFound";
 import TestingCropImage from "../Components/features/testcropimg/TestingCropImage";
 import { createBrowserRouter } from "react-router-dom";
 import TestOptions from "../Components/features/TestOptions/TestOptions";
+import Message from "../Components/features/Message/Message";
 
 const router = createBrowserRouter([
   {
@@ -41,14 +42,15 @@ function Routing() {
       <Route path="/authOtp/otp" element={<OTP />} />
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/update-pass/:userId/:token" element={<RenewPassword />} />
-      <Route path="/homepage" element={<Homepage />} />
-      <Route path="/explore" element={<Explore />} />
-      <Route path="/notifications" element={<Notifications />} />
-      <Route path="/profile/:id" element={<Owner_Profilepage />} />
-      <Route path="/profile/user" element={<User_Profilepage />} />
+      <Route path="homepage" element={<Homepage />} />
+      <Route path="explore" element={<Explore />} />
+      <Route path="notifications" element={<Notifications />} />
+      <Route path="message" element={<Message />} />
+      <Route path="profile/:id" element={<Owner_Profilepage />} />
+      <Route path="profile/user" element={<User_Profilepage />} />
       <Route path="/*" element={<NotFound />} />
-      <Route path="/testcrop" element={<TestingCropImage />} />
-      <Route path="/testOptions" element={<TestOptions />} />
+      <Route path="testcrop" element={<TestingCropImage />} />
+      <Route path="testOptions" element={<TestOptions />} />
     </Routes>
   );
 }

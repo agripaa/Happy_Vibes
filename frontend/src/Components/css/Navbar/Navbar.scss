@@ -1,12 +1,11 @@
 .activeNavbar {
   transform: translateX(0%) !important;
-  background-color: #f5f5f5;
 }
 .ContainerNavbar {
-  width: 200px;
+  width: 300px;
   height: 100vh;
   position: fixed;
-  left: 80px;
+  left: 0;
   z-index: 4;
   &-Components {
     position: relative;
@@ -16,7 +15,16 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    box-shadow: 3px 0px 4px 0px rgba(0, 0, 0, 0.15);
+    padding: 0 16px;
   }
+}
+.bgOption {
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.15);
 }
 .Navbar {
   &Logo {
@@ -27,7 +35,7 @@
     width: 100%;
     height: 60%;
   }
-  &Profile {
+  &More {
     width: 100%;
     height: 15%;
   }
@@ -43,6 +51,7 @@
   &Logo {
     display: flex;
     justify-content: flex-start;
+    align-items: end;
     h1 {
       font-size: 32px;
       font-weight: 600;
@@ -62,67 +71,91 @@
   width: 100%;
   height: 90%;
 }
-.NavbarList-Container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  li {
-    list-style: none;
+.NavbarList {
+  &-Container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    li {
+      list-style: none;
+    }
+  }
+  &-SubContainer {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 .List {
   &home {
     width: 100%;
-    a {
-      width: 50%;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      text-decoration: none;
-      color: #282828;
-      font-weight: 600;
-      font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 1rem;
+    &:hover {
+      background-color: #ffe4a8;
+      border-radius: 10px;
     }
   }
   &Explore {
-    a {
-      width: 50%;
+    width: 100%;
 
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      text-decoration: none;
-      color: #282828;
-      font-weight: 600;
-      font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 1rem;
+    &:hover {
+      background-color: #ffe4a8;
+      border-radius: 10px;
     }
   }
   &Notifications {
-    a {
-      width: 50%;
+    width: 100%;
 
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      text-decoration: none;
-      color: #282828;
-      font-weight: 600;
-      font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    padding: 1rem;
+
+    font-size: 16px;
+    &:hover {
+      background-color: #ffe4a8;
+      border-radius: 10px;
     }
   }
   &Messages {
-    a {
-      width: 50%;
+    width: 100%;
 
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      text-decoration: none;
-      color: #282828;
-      font-weight: 600;
-      font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    padding: 1rem;
+
+    font-size: 16px;
+    &:hover {
+      background-color: #ffe4a8;
+      border-radius: 10px;
     }
   }
   &Bookmarks {
@@ -132,85 +165,82 @@
       font-size: 16px;
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 8px;
+
       text-decoration: none;
-      color: #282828;
+      color: black;
     }
   }
   &Profile {
-    a {
-      width: 50%;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      text-decoration: none;
-      color: #282828;
-      font-weight: 600;
-      font-size: 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    padding: 1rem;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #ffe4a8;
+      border-radius: 10px;
     }
   }
   &ButtonPost {
     width: 100%;
     height: 49px;
+    display: flex;
+    background-color: #ffba53;
+    border-radius: 10px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    position: relative;
     p {
-      width: 100%;
-      height: 100%;
       font-weight: 600;
       font-size: 16px;
       text-decoration: none;
-      color: #282828;
-      background-color: #ffba53;
+      color: black;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 10px;
-      &:hover {
-        cursor: pointer;
-      }
+      letter-spacing: 0.1px;
+    }
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }
-.NavbarProfile {
+.ActiveclickLink {
+  background-color: #ffba53;
+  border-radius: 10px;
+}
+.NavbarMore {
   display: flex;
   align-items: center;
+  position: relative;
 }
-.NavbarProfile-Container {
+.NavbarMore-Container {
   width: 100%;
   height: 50%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  position: relative;
+
   &:hover {
     cursor: pointer;
+    background-color: #ffe4a8;
+    border-radius: 10px;
   }
-  figure {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-      object-fit: cover;
-    }
-  }
-  figcaption {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    p {
-      font-weight: 300;
-      font-size: 12px;
-      color: #757575;
-    }
+  p {
+    font-size: 16px;
   }
 }
-.bulletsProfile {
+.bulletsMore {
   width: 20%;
   height: 100%;
   display: flex;
@@ -220,12 +250,14 @@
   &-wrap {
     width: 70%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    gap: 4px;
     span {
-      width: 5px;
-      height: 5px;
+      width: 20px;
+      height: 3px;
       background-color: #282828;
-      border-radius: 10px;
+      border-radius: 5px;
     }
     &:hover {
       cursor: pointer;
@@ -233,131 +265,175 @@
   }
 }
 //
-@media screen and (max-width: 1020px) {
+@media screen and (max-width: 972px) {
   .ContainerNavbar {
-    left: 20px;
+    width: 80px;
   }
-}
-@media screen and (max-width: 720px) {
   .List {
     &home {
-      width: 100%;
+      justify-content: center;
+      padding: 1rem 0;
+
       a {
-        img {
-          width: 18px;
-          height: 18px;
-        }
-        font-weight: 600;
-        font-size: 13px;
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: none;
       }
     }
     &Explore {
+      justify-content: center;
+      padding: 1rem 0;
       a {
-        img {
-          width: 19px;
-          height: 19px;
-        }
-        font-weight: 600;
-        font-size: 13px;
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: none;
       }
     }
     &Notifications {
+      justify-content: center;
+      padding: 1rem 0;
       a {
-        img {
-          width: 19px;
-          height: 19px;
-        }
-        font-weight: 600;
-        font-size: 13px;
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: none;
       }
     }
     &Messages {
+      justify-content: center;
+      padding: 1rem 0;
       a {
-        img {
-          width: 19px;
-          height: 19px;
-        }
-        font-weight: 600;
-        font-size: 13px;
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: none;
       }
     }
     &Bookmarks {
+      justify-content: center;
+      padding: 1rem 0;
       a {
-        img {
-          width: 19px;
-          height: 19px;
-        }
-        font-weight: 600;
-        font-size: 13px;
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: none;
       }
     }
     &Profile {
+      justify-content: center;
+      padding: 1rem 0;
       a {
-        img {
-          width: 17px;
-          height: 19px;
-        }
-        font-weight: 600;
-        font-size: 13px;
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: none;
       }
     }
     &ButtonPost {
-      width: 80%;
-      height: 35px;
-      p {
-        font-size: 15px;
+      .text-upload {
+        display: none;
       }
     }
   }
+
+  .NavbarMore-Container {
+    p {
+      display: none;
+    }
+  }
+  .bulletsMore {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 720px) {
+  // .List {
+  //   &home {
+  //     width: 100%;
+  //     a {
+  //       img {
+  //         width: 18px;
+  //         height: 18px;
+  //       }
+  //       font-weight: 600;
+  //       font-size: 13px;
+  //     }
+  //   }
+  //   &Explore {
+  //     a {
+  //       img {
+  //         width: 19px;
+  //         height: 19px;
+  //       }
+  //       font-weight: 600;
+  //       font-size: 13px;
+  //     }
+  //   }
+  //   &Notifications {
+  //     a {
+  //       img {
+  //         width: 19px;
+  //         height: 19px;
+  //       }
+  //       font-weight: 600;
+  //       font-size: 13px;
+  //     }
+  //   }
+  //   &Messages {
+  //     a {
+  //       img {
+  //         width: 19px;
+  //         height: 19px;
+  //       }
+  //       font-weight: 600;
+  //       font-size: 13px;
+  //     }
+  //   }
+  //   &Bookmarks {
+  //     a {
+  //       img {
+  //         width: 19px;
+  //         height: 19px;
+  //       }
+  //       font-weight: 600;
+  //       font-size: 13px;
+  //     }
+  //   }
+  //   &Profile {
+  //     a {
+  //       img {
+  //         width: 17px;
+  //         height: 19px;
+  //       }
+  //       font-weight: 600;
+  //       font-size: 13px;
+  //     }
+  //   }
+  //   &ButtonPost {
+  //     width: 80%;
+  //     height: 35px;
+  //     p {
+  //       font-size: 15px;
+  //     }
+  //   }
+  // }
 }
 @media screen and (max-width: 600px) {
   .ContainerNavbar {
-    width: 200px;
-  }
-  .List {
-    &home {
-      a {
-        gap: 15px;
-        font-size: 12px;
-      }
-    }
-    &Explore {
-      a {
-        gap: 15px;
-        font-size: 12px;
-      }
-    }
-    &Notifications {
-      a {
-        gap: 15px;
-        font-size: 12px;
-      }
-    }
-    &Messages {
-      a {
-        gap: 15px;
-        font-size: 12px;
-      }
-    }
-    &Bookmarks {
-      a {
-        gap: 15px;
-        font-size: 12px;
-      }
-    }
-    &Profile {
-      a {
-        gap: 15px;
-        font-size: 12px;
-      }
-    }
+    width: 80px;
   }
 }
 @media screen and (max-width: 500px) {
   .ContainerNavbar {
     left: 0;
     width: 270px;
-    padding-left: 15px;
     display: flex;
     transform: translateX(-88%);
     transition: all 0.3s ease;
@@ -421,12 +497,12 @@
     width: 100%;
     height: 70%;
   }
-  .NavbarProfile {
+  .NavbarMore {
     width: 100%;
     height: 70%;
     align-items: flex-end;
   }
-  .NavbarProfile-Container {
+  .NavbarMore-Container {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
@@ -438,7 +514,8 @@
         width: 60px;
         height: 60px;
       }
-      .bulletsProfile {
+
+      .bulletsMore {
         width: 100%;
         height: 50%;
         display: flex;
@@ -459,6 +536,9 @@
     }
     figcaption {
       height: 50%;
+    }
+    p {
+      display: block;
     }
   }
   .NavbarFollow {
@@ -486,14 +566,72 @@
     }
   }
   .List {
-    &ButtonPost {
-      width: 70%;
-      height: 30px;
+    &home {
+      justify-content: start;
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
       p {
+        display: block;
+      }
+    }
+    &Explore {
+      justify-content: start;
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: block;
+      }
+    }
+    &Notifications {
+      justify-content: start;
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: block;
+      }
+    }
+    &Messages {
+      justify-content: start;
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: block;
+      }
+    }
+    &Bookmarks {
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+    }
+    &Profile {
+      justify-content: start;
+      a {
+        gap: 15px;
+        font-size: 12px;
+      }
+      p {
+        display: block;
+      }
+    }
+    &ButtonPost {
+      width: 100%;
+      height: 40px;
+      p {
+        display: block;
         font-size: 13px;
       }
     }
   }
+
   //
 }
 @media screen and (max-width: 420px) {
@@ -505,13 +643,13 @@
   }
 }
 @media screen and (max-width: 330px) {
-  .NavbarProfile-Container {
+  .NavbarMore-Container {
     figure {
       img {
         width: 40px;
         height: 40px;
       }
-      .bulletsProfile {
+      .bulletsMore {
         &-wrap {
           width: 11%;
         }
@@ -594,7 +732,7 @@
       }
     }
   }
-  .OptionsProfile {
+  .OptionsMore {
     width: 140px;
     height: 120px;
     top: auto;
@@ -676,7 +814,7 @@
       }
     }
   }
-  .NavbarProfile-Container {
+  .NavbarMore-Container {
     figure {
       width: 25%;
       img {
@@ -695,7 +833,7 @@
       }
     }
   }
-  .bulletsProfile-wrap {
+  .bulletsMore-wrap {
     width: 45%;
     span {
       width: 7px;

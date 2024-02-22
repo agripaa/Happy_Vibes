@@ -28,8 +28,41 @@ import AddImagePP from "../../../img/pencil.svg";
 import EditDesc from "../../../img/edit.svg";
 import IconSearchExplore from "../../../img/search-line.svg";
 import alertRed from "../../../img/alert-red2.svg";
+import Bookmarked from "../../../img/bookmark-line.svg";
+import LogoutRed from "../../../img/Logout-red.svg";
+import ArrowRight from "../../../img/arrow-right.svg";
+import IconAddPost from "../../../img/Vector-AddPost.svg";
+
+//
+import IconListHome from "../../../img/Vector-Home.svg";
+import IconListHomeClick from "../../../img/Vector-Home-Click.svg";
+//
+import IconListExplore from "../../../img/Vector-Explore.svg";
+import IconListExploreClick from "../../../img/Vector-Explore-Click.svg";
+//
+import IconListNotifications from "../../../img/Vector-Notifications.svg";
+import IconListNotificationsClick from "../../../img/Vector-Notifications-Click.svg";
+//
+import IconListProfile from "../../../img/Vector-Profile.svg";
+import IconListProfileClick from "../../../img/Vector-Profile-Click.svg";
+//
+import IconListMessage from "../../../img/Vector-Message.svg";
+import IconListMessageClick from "../../../img/Vector-Message-Click.svg";
+
 import { createSlice } from "@reduxjs/toolkit";
 let initialState = {
+  IconListHome,
+  IconListHomeClick,
+  IconListExplore,
+  IconListExploreClick,
+  IconListNotifications,
+  IconListNotificationsClick,
+  IconListProfile,
+  IconListProfileClick,
+  IconListMessage,
+  IconListMessageClick,
+  //
+
   ImageLove,
   ImageChat,
   ImageShare,
@@ -60,6 +93,10 @@ let initialState = {
   EditDesc,
   IconSearchExplore,
   alertRed,
+  Bookmarked,
+  LogoutRed,
+  ArrowRight,
+  IconAddPost,
 };
 const IconComponent = createSlice({
   name: "icon",

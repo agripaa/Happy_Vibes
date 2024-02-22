@@ -10,28 +10,28 @@ import axios from "axios";
 function Component_People({ ImageDummy2, ImageDummy, Verified }) {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
   const [users, setUsers] = useState([]);
-  
-  async function getUserExplore() {
-    try {
-      axios.get('http://localhost:5000/users/random', {withCredentials: true})
-      .then(({data}) => {
-        setUsers(data.result);
-      }).catch(err => console.error(err));
-    } catch (err) {
-      
-    }
-  }
 
-  useEffect(() => {
-    getUserExplore();
-  }, [])
+  // async function getUserExplore() {
+  //   try {
+  //     axios.get('http://localhost:5000/users/random', {withCredentials: true})
+  //     .then(({data}) => {
+  //       setUsers(data.result);
+  //     }).catch(err => console.error(err));
+  //   } catch (err) {
+
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   getUserExplore();
+  // }, [])
 
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetInnerWidth(innerWidth);
     });
   }, [getInnerWidth]);
-  
+
   return (
     <main className="main-ContainerPeople">
       <header className="JudulPeople">
@@ -49,7 +49,7 @@ function Component_People({ ImageDummy2, ImageDummy, Verified }) {
             ImageDummy={ImageDummy}
             ImageDummy2={ImageDummy2}
             Verified={Verified}
-            users={users}
+            // users={users}
           />
         </SwiperSlide>
       </Swiper>

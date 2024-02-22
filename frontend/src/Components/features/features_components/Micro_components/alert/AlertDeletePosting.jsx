@@ -12,19 +12,19 @@ function AlertDeletePosting() {
   const navigate = useNavigate();
   const { postId } = useSelector((state) => state.check);
 
-  async function deletePosting() {
-    try {
-      await axios
-        .delete(`http://localhost:5000/posting/${postId}`, {
-          withCredentials: true,
-        })
-        .then(() => {
-          window.location.reload();
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function deletePosting() {
+  //   try {
+  //     await axios
+  //       .delete(`http://localhost:5000/posting/${postId}`, {
+  //         withCredentials: true,
+  //       })
+  //       .then(() => {
+  //         window.location.reload();
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   return (
     <div className="AlertDeletePosting">
@@ -51,7 +51,8 @@ function AlertDeletePosting() {
             </section>
             <section className="ButtonArticleADP">
               <div className="containerButtonRed">
-                <button className="ButtonRedADP" onClick={deletePosting}>
+                {/* <button className="ButtonRedADP" onClick={deletePosting}> */}
+                <button className="ButtonRedADP">
                   Yes, i will delete my posting
                 </button>
               </div>

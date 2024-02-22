@@ -9,19 +9,19 @@ import { CheckBugReportPost } from "../../../../libs/redux/CheckReducer/Check";
 
 function AlertReportPosting() {
   const dispatch = useDispatch();
-  const { postId } = useSelector((state) => state.check);
+  // const { postId } = useSelector((state) => state.check);
 
-  async function handleReport() {
-    try {
-      await axios
-        .post(`http://localhost:5000/report/${postId}/posting`, null, {
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          toast.success(data.msg);
-        });
-    } catch (err) {}
-  }
+  // async function handleReport() {
+  //   try {
+  //     await axios
+  //       .post(`http://localhost:5000/report/${postId}/posting`, null, {
+  //         withCredentials: true,
+  //       })
+  //       .then(({ data }) => {
+  //         toast.success(data.msg);
+  //       });
+  //   } catch (err) {}
+  // }
 
   return (
     <div className="AlertReportPosting">
@@ -46,7 +46,8 @@ function AlertReportPosting() {
             </section>
             <section className="ButtonArticleARP">
               <div className="containerButtonRed">
-                <button className="ButtonRedARP" onClick={handleReport}>
+                {/* <button className="ButtonRedARP" onClick={handleReport}> */}
+                <button className="ButtonRedARP">
                   Yes, i will Report this posting
                 </button>
               </div>

@@ -1,21 +1,22 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import "../../../../css/Option/OptionProfile.scss";
+import "../../../../css/Option/OptionMore.scss";
 import {
   CHECKBUG,
   DELETECHECK,
 } from "../../../../libs/redux/CheckReducer/Check";
 import { AuthLogout } from "../../../../libs/react-query/Auth/logout";
 
-function OptionProfile({ Optionse, responseCheck }) {
+function OptionMore({ Optionse, responseCheck }) {
   const { dltCheckNav } = useSelector((state) => state.check);
   const components = useSelector((state) => state.icons);
   const [getWitdh, setGetWidth] = useState(innerWidth);
   const dispath = useDispatch();
   const navigate = useNavigate();
   const { mutate } = AuthLogout((v) => {
-    navigate(v.navigate && "/");
+    console.log(v);
+    // navigate(v.navigate && "/");
   });
   // async function handleLogout() {
   //   try {
@@ -31,7 +32,7 @@ function OptionProfile({ Optionse, responseCheck }) {
 
   function HandleClickButtonDelete(e) {
     e.preventDefault();
-    dispath(DELETECHECK(true));
+    // dispath(DELETECHECK(true));
   }
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -41,34 +42,41 @@ function OptionProfile({ Optionse, responseCheck }) {
   return (
     <Fragment>
       {responseCheck ? (
-        <div
-          className={
-            Optionse ? "OptionsProfile activeOption" : "OptionsProfile"
-          }
-        >
-          <div className="wrapOptionsProfile">
+        <div className={Optionse ? "OptionsMore activeOption" : "OptionsMore"}>
+          <div className="wrapOptionsMore">
+            <section className="Container-Bookmarked">
+              <img src={components.Bookmarked} alt="" />
+              <p className="paragraph-semibold" onClick={() => {}}>
+                Bookmarked
+              </p>
+            </section>
             <section className="Container-Logout">
-              <img src={components.ImageLogout} alt="" />
-              <p onClick={() => mutate()}>Logout</p>
+              <img src={components.LogoutRed} alt="" />
+              <p
+                className="color-danger-50 paragraph-regular"
+                onClick={() => mutate()}
+              >
+                Logout
+              </p>
             </section>
             <section
               className="Container-DeleteAccount"
               onClick={HandleClickButtonDelete}
             >
               <img src={components.ImageDeleteAccount} alt="" />
-              <p>Delete Account</p>
+              <p className="color-danger-50  paragraph-regular">
+                Delete Account
+              </p>
             </section>
           </div>
         </div>
       ) : (
         <div
           className={
-            Optionse && dltCheckNav
-              ? "OptionsProfile activeOption"
-              : "OptionsProfile"
+            Optionse && dltCheckNav ? "OptionsMore activeOption" : "OptionsMore"
           }
         >
-          <div className="wrapOptionsProfile">
+          <div className="wrapOptionsMore">
             <section
               className="Container-BugReport"
               onClick={() => dispath(CHECKBUG(true))}
@@ -94,4 +102,4 @@ function OptionProfile({ Optionse, responseCheck }) {
   );
 }
 
-export default OptionProfile;
+export default OptionMore;

@@ -16,28 +16,29 @@ function BugReport() {
 
   async function sendBugReport(e) {
     e.preventDefault();
-    const { title, type_bug, report } = values;
-    setDoneBugReport(true);
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("type_bug", type_bug);
-    formData.append("report", report);
+    console.log("ok");
+    // const { title, type_bug, report } = values;
+    // setDoneBugReport(true);
+    // const formData = new FormData();
+    // formData.append("title", title);
+    // formData.append("type_bug", type_bug);
+    // formData.append("report", report);
 
-    try {
-      await axios
-        .post("http://localhost:5000/bugreport", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true,
-        })
-        .then(({ data }) => {
-          setDoneBugReport(false);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (err) {
-      console.error(err);
-    }
+    // try {
+    //   await axios
+    //     .post("http://localhost:5000/bugreport", formData, {
+    //       headers: { "Content-Type": "multipart/form-data" },
+    //       withCredentials: true,
+    //     })
+    //     .then(({ data }) => {
+    //       setDoneBugReport(false);
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // } catch (err) {
+    //   console.error(err);
+    // }
   }
 
   function handleChange(e) {

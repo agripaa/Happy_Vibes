@@ -1,17 +1,26 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "../../../../css/Navbar/Navbar.scss";
-import ImageListHome from "../../../../img/Vector-Home.png";
-import ImageListExplore from "../../../../img/Vector-Explore.png";
-import ImageListNotifications from "../../../../img/Vector-Notifications.png";
-import ImageListProfile from "../../../../img/Vector-Profile.png";
 
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { CheckMyPostUser } from "../../../../libs/redux/CheckReducer/Check";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  CheckBgUpload,
+  CheckMyPostUser,
+} from "../../../../libs/redux/CheckReducer/Check";
+import OptionUpload from "../../Micro_components/option/OptionUpload";
 
 function ListNavbar() {
   const [getInnerWidth, setGetInnerWidth] = useState(innerWidth);
   const dispatch = useDispatch();
+  // const params = useSearchParams(location.search);
+  const params = window.location.pathname.split("/")[1];
+  const components = useSelector((state) => state.icons);
+  const { checkBgUpload } = useSelector((state) => state.check);
   useEffect(() => {
     window.addEventListener("resize", () => {
       setGetInnerWidth(innerWidth);
@@ -19,69 +28,124 @@ function ListNavbar() {
   }, [getInnerWidth]);
   return (
     <Fragment>
-      <div className="NavbarList">
-        <nav className="navTags">
+      <nav className="NavbarList">
+        <div className="navTags">
           <ul className="NavbarList-Container">
-            <li>
-              <div className="Listhome">
-                <Link to={"/homepage"}>
-                  <img src={ImageListHome} alt="" />
+            <div className="NavbarList-SubContainer">
+              <li>
+                <Link
+                  to={"/homepage"}
+                  className={`Listhome ${
+                    params.includes("homepage") && "ActiveclickLink"
+                  }`}
+                >
+                  <img
+                    src={
+                      params.includes("homepage")
+                        ? components.IconListHomeClick
+                        : components.IconListHome
+                    }
+                    alt=""
+                  />
                   <p>Home</p>
                 </Link>
-              </div>
-            </li>
-            <li>
-              <div className="ListExplore">
-                <Link to={"/explore"}>
-                  <img src={ImageListExplore} alt="" />
+              </li>
+              <li>
+                <Link
+                  to={"/message"}
+                  className={`ListMessages ${
+                    params.includes("message") && "ActiveclickLink"
+                  }`}
+                >
+                  <img
+                    src={
+                      params.includes("message")
+                        ? components.IconListMessageClick
+                        : components.IconListMessage
+                    }
+                    alt=""
+                  />
+                  <p>Messages</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/explore"}
+                  className={`ListExplore ${
+                    params.includes("explore") && "ActiveclickLink"
+                  }`}
+                >
+                  <img
+                    src={
+                      params.includes("explore")
+                        ? components.IconListExploreClick
+                        : components.IconListExplore
+                    }
+                    alt=""
+                  />
                   <p>Explore</p>
                 </Link>
-              </div>
-            </li>
-            <li>
-              <div className="ListNotifications">
-                <Link to={"/notifications"}>
-                  <img src={ImageListNotifications} alt="" />
+              </li>
+              <li>
+                <Link
+                  to={"/notifications"}
+                  className={`ListNotifications ${
+                    params.includes("notifications") && "ActiveclickLink"
+                  }`}
+                >
+                  <img
+                    src={
+                      params.includes("notifications")
+                        ? components.IconListNotificationsClick
+                        : components.IconListNotifications
+                    }
+                    alt=""
+                  />
                   <p>Notifications</p>
                 </Link>
-              </div>
-            </li>
-            {/* <li>
-            <div className="ListMessages">
-              <Link to={"/"}>
-                <img src={ImageListMessages} alt="" />
-                <p>Messages</p>
-              </Link>
-            </div>
-          </li>
-          <li>
+              </li>
+
+              {/* <li>
             <div className="ListBookmarks">
               <Link to={"/"}>
-                <img src={ImageListBookmarks} alt="" />
+                <img src={IconListBookmarks} alt="" />
                 <p>Bookmarks</p>
               </Link>
             </div>
           </li> */}
 
-            <li>
-              <div className="ListProfile">
-                <Link to={"/profile/user"}>
-                  <img src={ImageListProfile} alt="" />
+              <li>
+                <Link
+                  to={"/profile/user"}
+                  className={`ListProfile ${
+                    params.includes("profile") && "ActiveclickLink"
+                  }`}
+                >
+                  <img
+                    src={
+                      params.includes("profile")
+                        ? components.IconListProfileClick
+                        : components.IconListProfile
+                    }
+                    alt=""
+                  />
                   <p>Profile</p>
                 </Link>
-              </div>
-            </li>
+              </li>
+            </div>
             <li>
               <div
                 className="ListButtonPost"
-                onClick={() => dispatch(CheckMyPostUser(true))}
+                onClick={() => dispatch(CheckBgUpload(true))}
               >
-                <p>Post</p>
+                <img src={components.IconAddPost} alt="" />
+                <p className="text-upload">Upload</p>
+                <OptionUpload popCome={checkBgUpload} />
               </div>
             </li>
           </ul>
-        </nav>
-      </div>
+        </div>
+      </nav>
     </Fragment>
   );
 }

@@ -10,17 +10,17 @@ function AlertDeleteAccount() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  async function deleteAccount() {
-    try {
-      await axios
-        .delete("http://localhost:5000/delete/user", { withCredentials: true })
-        .then(() => {
-          navigate("/");
-        });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function deleteAccount() {
+  //   try {
+  //     await axios
+  //       .delete("http://localhost:5000/delete/user", { withCredentials: true })
+  //       .then(() => {
+  //         navigate("/");
+  //       });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   return (
     <div className="AlertDeleteAccount">
@@ -47,7 +47,10 @@ function AlertDeleteAccount() {
             </section>
             <section className="ButtonArticleADA">
               <div className="containerButtonRed">
-                <button className="ButtonRedADA" onClick={deleteAccount}>
+                {/* <button className="ButtonRedADA" onClick={deleteAccount}>
+                  Yes, i will delete my account
+                </button> */}
+                <button className="ButtonRedADA">
                   Yes, i will delete my account
                 </button>
               </div>

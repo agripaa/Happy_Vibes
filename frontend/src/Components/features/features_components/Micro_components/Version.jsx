@@ -10,7 +10,7 @@ function Version() {
   return (
     <div className="Container_Version">
       {getWitdh > 500 ? (
-        <p className="version color-neutral-70">Version 1.0.0</p>
+        <p className="version color-neutral-70">Version 2.0.0</p>
       ) : null}
     </div>
   );

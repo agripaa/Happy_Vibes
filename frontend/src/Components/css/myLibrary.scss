@@ -6,69 +6,105 @@
     color: #0000;
   }
   &-neutral {
-    &-5 {
+    &-50 {
       color: #f5f5f5;
     }
-    &-10 {
+    &-100 {
       color: #dbdbdb;
     }
-    &-20 {
+    &-200 {
       color: #c2c2c2;
     }
-    &-30 {
+    &-300 {
       color: #a8a8a8;
     }
-    &-40 {
+    &-400 {
       color: #8f8f8f;
     }
-    &-50 {
+    &-500 {
       color: #757575;
     }
-    &-60 {
+    &-600 {
       color: #5c5c5c;
     }
-    &-70 {
+    &-700 {
       color: #424242;
     }
-    &-80 {
+    &-800 {
       color: #282828;
     }
-    &-90 {
+    &-900 {
       color: #0f0f0f;
     }
   }
   &-primary {
-    &-10 {
-      color: #ffd89e;
+    &-50 {
+      color: #fffaed;
     }
-    &-20 {
-      color: #ffce85;
+    &-100 {
+      color: #fff3d4;
     }
-    &-30 {
-      color: #ffc46b;
+    &-200 {
+      color: #ffe4a8;
     }
-    &-40 {
+    &-300 {
+      color: #ffcf71;
+    }
+    &-400 {
       color: #ffba53;
     }
-    &-50 {
-      color: #ffaf38;
+    &-500 {
+      color: #fe9511;
+    }
+    &-600 {
+      color: #ef7907;
+    }
+    &-700 {
+      color: #c65b08;
+    }
+    &-800 {
+      color: #9d480f;
+    }
+    &-900 {
+      color: #9d480f;
+    }
+    &-950 {
+      color: #441c06;
     }
   }
   &-secondary {
-    &-10 {
-      color: #e56591;
-    }
-    &-20 {
-      color: #e54e82;
-    }
-    &-30 {
-      color: #e53773;
-    }
-    &-40 {
-      color: #e53773;
-    }
     &-50 {
-      color: #cc1d5a;
+      color: #fdf2f6;
+    }
+    &-100 {
+      color: #fbe8f0;
+    }
+    &-200 {
+      color: #fad0e2;
+    }
+    &-300 {
+      color: #f7aac9;
+    }
+    &-400 {
+      color: #f175a4;
+    }
+    &-500 {
+      color: #e53773;
+    }
+    &-600 {
+      color: #d62c5f;
+    }
+    &-700 {
+      color: #ba1c46;
+    }
+    &-800 {
+      color: #9a1a3b;
+    }
+    &-900 {
+      color: #801b35;
+    }
+    &-950 {
+      color: #4e091a;
     }
   }
   &-success {
@@ -132,69 +168,105 @@
     background-color: #0000;
   }
   &-neutral {
-    &-5 {
+    &-50 {
       background-color: #f5f5f5;
     }
-    &-10 {
+    &-100 {
       background-color: #dbdbdb;
     }
-    &-20 {
+    &-200 {
       background-color: #c2c2c2;
     }
-    &-30 {
+    &-300 {
       background-color: #a8a8a8;
     }
-    &-40 {
+    &-400 {
       background-color: #8f8f8f;
     }
-    &-50 {
+    &-500 {
       background-color: #757575;
     }
-    &-60 {
+    &-600 {
       background-color: #5c5c5c;
     }
-    &-70 {
+    &-700 {
       background-color: #424242;
     }
-    &-80 {
+    &-800 {
       background-color: #282828;
     }
-    &-90 {
+    &-900 {
       background-color: #0f0f0f;
     }
   }
   &-primary {
-    &-10 {
-      background-color: #ffd89e;
+    &-50 {
+      background-color: #fffaed;
     }
-    &-20 {
-      background-color: #ffce85;
+    &-100 {
+      background-color: #fff3d4;
     }
-    &-30 {
-      background-color: #ffc46b;
+    &-200 {
+      background-color: #ffe4a8;
     }
-    &-40 {
+    &-300 {
+      background-color: #ffcf71;
+    }
+    &-400 {
       background-color: #ffba53;
     }
-    &-50 {
-      background-color: #ffaf38;
+    &-500 {
+      background-color: #fe9511;
+    }
+    &-600 {
+      background-color: #ef7907;
+    }
+    &-700 {
+      background-color: #c65b08;
+    }
+    &-800 {
+      background-color: #9d480f;
+    }
+    &-900 {
+      background-color: #9d480f;
+    }
+    &-950 {
+      background-color: #441c06;
     }
   }
   &-secondary {
-    &-10 {
-      background-color: #e56591;
-    }
-    &-20 {
-      background-color: #e54e82;
-    }
-    &-30 {
-      background-color: #e53773;
-    }
-    &-40 {
-      background-color: #e53773;
-    }
     &-50 {
-      background-color: #cc1d5a;
+      background-color: #fdf2f6;
+    }
+    &-100 {
+      background-color: #fbe8f0;
+    }
+    &-200 {
+      background-color: #fad0e2;
+    }
+    &-300 {
+      background-color: #f7aac9;
+    }
+    &-400 {
+      background-color: #f175a4;
+    }
+    &-500 {
+      background-color: #e53773;
+    }
+    &-600 {
+      background-color: #d62c5f;
+    }
+    &-700 {
+      background-color: #ba1c46;
+    }
+    &-800 {
+      background-color: #9a1a3b;
+    }
+    &-900 {
+      background-color: #801b35;
+    }
+    &-950 {
+      background-color: #4e091a;
     }
   }
   &-success {
@@ -318,11 +390,23 @@
   }
 }
 .paragraph {
+  &-thin {
+    font-weight: 300;
+  }
   &-regular {
     font-weight: 400;
   }
-  &-thin {
-    font-weight: 300;
+  &-semibold {
+    font-weight: 600;
+  }
+  &-bold {
+    font-weight: 800;
+  }
+}
+
+.cursor {
+  &-pointer {
+    cursor: pointer;
   }
 }
 
