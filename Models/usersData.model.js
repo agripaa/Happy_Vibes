@@ -1,10 +1,11 @@
 const { DataTypes } = require('sequelize');
-const db = require('../Config/database.js');
-const Follows = require('./followsData.model.js');
-const CodeOTP = require('./codeOTP.model.js');
 const Background = require('./backgroundData.model.js');
-const Like = require('./likeData.model.js');
+const Follows = require('./followsData.model.js');
 const Posting = require('./postingData.model.js');
+const CodeOTP = require('./codeOTP.model.js');
+const db = require('../Config/database.js');
+const Like = require('./likeData.model.js');
+const ImageProfile = require('./imageProfileData.model.js');
 
 const Users = db.define('users_data', {
     uuid:{
@@ -13,7 +14,7 @@ const Users = db.define('users_data', {
         allowNull: false,
         validate: {
             notEmpty: true
-        }
+        }   
     },
     name : {
         type: DataTypes.STRING,
@@ -51,18 +52,15 @@ const Users = db.define('users_data', {
             notEmpty: false
         }
     },
-    name_img : {
-        type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-            notEmpty: false,
-        }
+    verify: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     },
-    url : {
-        type: DataTypes.STRING,
-        allowNull: true,
+    image_profile : {
+        type: DataTypes.INTEGER,
+        allowNull: false,
         validate: {
-            notEmpty: false,
+            notEmpty: true
         }
     },
     followerId: {
@@ -81,11 +79,11 @@ const Users = db.define('users_data', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
-      verificationCode : {
-        type: DataTypes.STRING,
+      backgroundId : {
+        type: DataTypes.INTEGER,
         allowNull: true
       },
-      backgroundId : {
+      verify_id: {
         type: DataTypes.INTEGER,
         allowNull: true
       }
@@ -93,15 +91,23 @@ const Users = db.define('users_data', {
 
 Follows.belongsTo(Users, { foreignKey: 'followerId', as: 'follower', targetKey: 'id', onDelete: 'CASCADE' });
 Follows.belongsTo(Users, { foreignKey: 'followingId', as: 'following', targetKey: 'id', onDelete: 'CASCADE' });
-CodeOTP.belongsTo(Users, { foreignKey: 'userId', onDelete: 'CASCADE' });
-Background.belongsTo(Users, { foreignKey: 'userId', as: 'users_data', targetKey: 'id', onDelete: 'CASCADE' });
-Posting.belongsTo(Users, {foreignKey: 'userId', onDelete: 'CASCADE' });
-Background.hasMany(Users, { foreignKey: 'backgroundId', as: 'background', targetKey: 'id', onDelete: 'CASCADE' });
-Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });
-Users.hasMany(Like, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Follows.belongsTo(Users, { foreignKey: 'userId', targetKey: 'id', onDelete: 'CASCADE' });
+Users.hasMany(Follows, {foreignKey: 'userId', onDelete: "CASCADE"});
 Users.hasMany(Follows, { foreignKey: 'followerId', as: 'followers', onDelete: 'CASCADE' });
 Users.hasMany(Follows, { foreignKey: 'followingId', as: 'followings', onDelete: 'CASCADE' });
-Users.hasOne(CodeOTP, { foreignKey: 'userId', as: 'codeOTP', onDelete: 'CASCADE' });
-Users.hasOne(Background, { foreignKey: 'userId', as: 'backgrounds', onDelete: 'CASCADE' });
+
+CodeOTP.hasMany(Users, { foreignKey: 'verify_id'})
+Users.belongsTo(CodeOTP, { foreignKey: 'verify_id'});
+
+Users.belongsTo(Background, { foreignKey: 'backgroundId', onDelete: 'CASCADE' });
+Background.hasMany(Users, { foreignKey: 'backgroundId', onDelete: 'CASCADE' });
+
+Posting.belongsTo(Users, {foreignKey: 'userId', onDelete: 'CASCADE' });
+Users.hasMany(Posting, { foreignKey: 'userId', onDelete: 'CASCADE' });
+
+Users.belongsTo(ImageProfile, {foreignKey: 'image_profile', onDelete: 'CASCADE'});
+ImageProfile.hasOne(Users, {foreignKey: 'image_profile', onDelete: 'CASCADE'});
+
+Users.hasMany(Like, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 module.exports = Users;

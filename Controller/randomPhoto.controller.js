@@ -2,18 +2,22 @@ const RandomPhoto = require('../Models/randomPhotos.models');
 const path = require('path');
 
 module.exports = {
-    async getRandom (req, res){
+    async getRandomPhoto (){
         try {
             const count = await RandomPhoto.count();
             const randomIndex = Math.floor(Math.random() * count);
             const randomPhoto = await RandomPhoto.findOne({
                 offset: randomIndex,
             });
-            return res.status(200).json({ randomPhoto });
+            const { url } = randomPhoto
+    
+            if(randomPhoto){
+                return url
+            }else {
+                return null
+            }
         } catch (error) {
-            console.error(err);
-            res.status(500).json({status: 500, msg: err.message});
-            return false;
+            console.error(error);
         }
     },
     async postPhoto(req, res){
@@ -28,7 +32,7 @@ module.exports = {
         if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
         
         const name_img = `user_${file.md5}${ext}`
-        const url = `${req.protocol}://${req.get("host")}/users/${name_img}`;
+        const url = `/users/${name_img}`;
 
         file.mv(`./public/random-pict/${name_img}`, async(err) => {
             if(err) return res.status(500).json({status: 500, msg: 'Internal server error', error: err});

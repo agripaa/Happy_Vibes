@@ -13,13 +13,12 @@ const Posting = db.define('posting_data', {
             notEmpty: true
         }
     },
-    url : {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    name_img : {
-        type: DataTypes.STRING,
-        allowNull: true,
+    image_posting_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
     },
     desc:{
         type: DataTypes.STRING,

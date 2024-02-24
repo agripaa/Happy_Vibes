@@ -10,7 +10,7 @@ module.exports = {
             }
         })
         if(!user) return res.status(404).json({status:404, msg: "User not found"});
-        if(user.verificationCode !== null) return res.status(401).json({status:401, msg: "User hasn't verified"})
+        if(!user.verify) return res.status(401).json({status:401, msg: "User hasn't verified"})
 
         req.userId = user.id;
         req.user = user;

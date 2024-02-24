@@ -7,13 +7,9 @@ const attributesUser = ['name','email', 'url', 'name_img'];
 module.exports = {
     async getBgUser(req, res){
         try {
+            const user = await Users.findOne({where: {id: req.userId}})
             const background = await Background.findOne({
-                where: {userId: req.userId},
-                include: {
-                    model: Users,
-                    attributes: attributesUser,
-                    as: 'users_data'
-                }
+                where: {id: user.backgroundId},
             });
 
             if(!background) return res.status(404).json({status: 404, msg: 'Please Upload your backgound file'});
@@ -26,14 +22,15 @@ module.exports = {
     async getBackgroundUserById(req, res) {
         const {userId} = req.params;
         try {
+            if (userId == req.userId) return res.status(401).json({status: 400, msg: "Cannot search your self background in this function."})
+
+            const user = await Users.findOne({where: {id: userId}})
+            if(!user) return res.status(404).json({status: 404, msg: "User Not Found!"})
+
             const background = await Background.findOne({
-                where: {userId: userId},
-                include: [{
-                    model: Users,
-                    attributes: attributesUser,
-                    as: 'users_data'
-                }]
-            })
+                where: {id: user.backgroundId},
+            });
+
             if(!background) return res.status(404).json({status: 404, msg: 'User has not background image'});
             return res.status(200).json({status: 200, result: background});
         } catch (err) {
@@ -46,8 +43,11 @@ module.exports = {
         const {files} = req;
         const {userId} = req;
 
+        const user = await Users.findOne({where: {id: userId}});
+        if (!user) return res.status(404).json({status: 404, msg: "User Not Found!"})
+
         const background = await Background.findOne({
-            where: {userId: userId}
+            where: {id: user.backgroundId}
         })
 
         if(!files) {
@@ -67,16 +67,15 @@ module.exports = {
             if(size > 5000000) return res.status(422).json({msg: "image must be less than 5 MB"});
             file.mv(`./public/users/bg_img/${name_bg}`, async (err) => {
                 if (err) return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-              });
+            });
         }
-        const bg_url = `${req.protocol}://${req.get('host')}/users/bg_img/${name_bg}`
+        const bg_url = `/users/bg_img/${name_bg}`
         try {
             Background.update({
                 name_bg: name_bg,
                 url_bg: bg_url,
-                userId: userId,
             },{
-                where: {userId: userId},
+                where: {id: background.id},
             })
             res.status(200).json({status: 200, msg: "Image updated successfully"})
         } catch (error) {

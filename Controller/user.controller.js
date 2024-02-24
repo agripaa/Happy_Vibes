@@ -3,16 +3,17 @@ const argon2 = require('argon2');
 const path = require('path');
 const validatePassword = require('../middleware/password.validation.js');
 const moment = require('moment');
-const nodemailer = require("nodemailer");
-const Token = require('../Models/tokenData.model.js');
 require('dotenv').config();
-const crypto = require('crypto');
 const Posting = require('../Models/postingData.model.js');
 const { unlinkSync, existsSync } = require('fs');
 const db = require('../Config/database.js');
 const { Op } = require('sequelize');
 const Background = require('../Models/backgroundData.model.js');
 const Follows = require('../Models/followsData.model.js');
+const CodeOTP = require('../Models/codeOTP.model.js');
+const { generateOTP, sendOTP } = require('./otp.controller.js');
+const ImageProfile = require('../Models/imageProfileData.model.js');
+const { getRandomPhoto } = require('./randomPhoto.controller.js')
 
 module.exports = {
   async getUsers(req, res) {
@@ -22,21 +23,27 @@ module.exports = {
       const user = await Users.findAll({
         where: {
           id: {
-            [Op.not]: userId
-          }
+            [Op.not]: userId,
+          },
+          verify: true
         },
         order: db.random(),
         limit: 3,
-        include: [{
-          model: Follows,
-          as: 'followers',
-          attributes: ['followingId']
-        },
-        {
-          model: Background,
-          as: 'backgrounds',
-          attributes: ['name_bg', 'url_bg']
-        }]      
+        include: [
+          {
+            model: Follows,
+            as: 'followers',
+            attributes: ['followingId']
+          },
+          {
+            model: Background,
+            attributes: ['name_bg', 'url_bg']
+          },
+          {
+            model: ImageProfile,
+            attributes: ['url_image', 'name_image']
+          }
+        ]      
       });
       if(!user) return res.status(404).json({status: 404, msg:"No have data!"})
       res.status(200).json({ status: 200, result: user });
@@ -55,17 +62,21 @@ module.exports = {
             [Op.eq]: uuid
           }
         },
-        attributes: ['id', 'uuid', 'name', 'username', 'desc', 'email', 'name_img', 'url', 'followingCount', 'followerCount'],
         include: [
           {
-            model: Follows,
-            as: 'followers',
-            attributes: ['followingId']
+            model: Background,
+            attributes: ['name_bg', 'url_bg']
+          },
+          {
+            model: ImageProfile,
+            attributes: ['url_image', 'name_image']
           }
-      ]    
+        ]    
       });
+
       if(user.id === userId) return res.status(403).json({status: 403, msg: 'Cannot see your profile in here'})
       if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });
+
       return res.status(200).json({ status: 200, result: user });
     } catch (err) {
       console.error(err);
@@ -81,7 +92,7 @@ module.exports = {
     return shuffledArray;
   },
   async createUser(req, res) {
-    const { name, username, email, password, confPassword, name_img, url } = req.body;
+    const { name, username, email, password, confPassword } = req.body;
     
     const validatePass = validatePassword(password);
     if(validatePass['regex'] === "false" || validatePass['regex_symbol'] === 'false') return res.status(402).json({status: 400, msg: "The password must be at least 8 characters, there is one capital, one number and certain symbols are prohibited"})
@@ -94,31 +105,41 @@ module.exports = {
         if (validationEmail) return res.status(409).json({ status: 409, msg: 'Email already exists' });
         
         try {
-            const OTP = module.exports.generateOTP();
-            module.exports.sendOTP(email, OTP);
+            const OTP = generateOTP();
+            const profile = await getRandomPhoto();
+
+            sendOTP(email, OTP);
+
+            const image_profile = await ImageProfile.create({
+              url_image: profile,
+              name_image: username
+            })
+
+            const otp = await CodeOTP.create({
+              otp: OTP,
+            })
             
+            const background = await Background.create({
+              name_bg: null,
+              url_bg: null
+            })
             
-            const user = await Users.create({
+            await Users.create({
                 name: name, 
                 username: username,
                 email: email,
                 password: hashPassword,                     
-                name_img: name_img, 
-                url: url,
-                verificationCode: OTP,
+                image_profile: image_profile.id,
+                verify_id: otp.id,
+                backgroundId: background.id,
                 createdAt: moment().toISOString()
               });
               
-              Background.create({
-                name_bg: null,
-                url_bg: null,
-                userId: user.id,
-            })
             res.status(200).json({status: 200, msg: 'data user created successfully'});
         } catch (err) {
             console.error(err);
-            res.status(500).json({status: 500, msg: err.message});
-            return false;
+            res.status(500).json({status: 500, msg: err.message, err});
+            return false; 
         }
     },
     validateName(name){
@@ -127,56 +148,6 @@ module.exports = {
     validateUsername(username){
       return username.length < 3 || username.length > 15
   },
-
-    async verifyUser(req, res){
-        const { otp } = req.body;
-        
-        const user = await Users.findOne({where: {verificationCode: otp}})
-        if(!user) return res.status(404).json({status: 404, msg: 'wrong otp code'})
-
-    if (user.verificationCode !== otp)
-      return res
-        .status(400)
-        .json({ status: 400, msg: 'code otp yang anda masukkan tidak sesuai' });
-    try {
-      await Users.update(
-        {
-          verificationCode: null,
-        },
-        {
-          where: { verificationCode: user.verificationCode },
-        }
-      );
-      res.status(200).json({ status: 200, msg: 'otp approved' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ status: 500, msg: 'Internal server Error' });
-      return false;
-    }
-  },
-  async resendCode(req, res) {
-    const { email } = req.body;
-
-    const user = await Users.findOne({ email: email });
-    if (!user)
-      return res.status(404).json({ status: 404, msg: 'email user not found' });
-    if (!user)
-      return res
-        .status(400)
-        .json({ status: 400, msg: 'email already registered' });
-
-        const OTP = module.exports.generateOTP();
-        module.exports.sendOTP(email, OTP);
-        try {
-            await Users.update({
-                verificationCode: OTP
-            },{where: {email: email}})
-        } catch (error) {
-            console.error(err);
-            res.status(500).json({status: 500, msg: "Internal server Error"});
-            return false;
-        }
-    },
     async updateUser(req, res) {
       let profile_img;
       const {files} = req;
@@ -185,11 +156,10 @@ module.exports = {
       try {
         const user = await Users.findOne({ where: { id: req.userId } });
         if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-        console.log(user)
+
         if (!desc) desc = user.desc;
         if (!files) {
           profile_img = user.name_img;
-          console.log(profile_img);
         } else {
           profile_img = user.name_img;
 
@@ -211,62 +181,37 @@ module.exports = {
 
         await Users.update(
           {
-            name_img: profile_img,
-            url: profile_url,
             desc: desc
           },
           {
             where: { id: user.id }
           }
         )
+        await ImageProfile.update({
+          url_image: profile_url,
+          name_image: profile_img,
+        }, {where: { id: user.image_profile }})
+
         res.status(200).json({ status: 200, msg: 'User updated successfully' });
       } catch (err) {
         console.error(err);
         res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
       }
     },
-  generateOTP() {
-    const digits = '0123456789';
-    let OTP = '';
-    for (let i = 0; i < 6; i++) {
-      OTP += digits[Math.floor(Math.random() * 10)];
-    }
-    return OTP;
-  },
-  async sendOTP(email, otp) {
-    let transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      secure: process.env.EMAIL_SECURE,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASS_EMAIL_OTP,
-      },
-    });
 
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: email,
-      subject: 'Verification Code',
-      text: `Your verification code is: ${otp}`,
-    };
-
-        return new Promise((resolve, reject) => {
-            transporter.sendMail(mailOptions, (error, info) => {
-              if (error) {
-                console.error('Error sending OTP email:', error);
-                reject(new Error('Failed to send OTP email'));
-              } else {
-                resolve();
-              }
-            });
-        });
-    },
     async deleteUser(req, res) {
         const {userId} = req;
 
         const user = await Users.findOne({
             where: {id: userId}
+        });
+
+        const image_profile = await ImageProfile.findOne({
+          where: {id: user.image_profile}
+        });
+
+        const background_image = await Background.findOne({
+          where: {id: user.backgroundId}
         });
 
         if(userId !== user.id) return res.status(400).json({status: 400, msg: "You cannot delete this account!"})
@@ -281,15 +226,15 @@ module.exports = {
             'user_ff0b300a0e11132de2c89be1d79da25e.jpeg'
         ];
 
-              if (user.name_img && !photosToKeep.includes(user.name_img)) {
-                const nameImgPath = `./public/users/${user.name_img}`;
+              if (image_profile.name_image && !photosToKeep.includes(image_profile.name_image)) {
+                const nameImgPath = `./public/users/${image_profile.name_image}`;
                 if (existsSync(nameImgPath)) {
                     unlinkSync(nameImgPath);
                 }
             }
 
-            if(user.bg_img !== null){
-                unlinkSync(`./public/users/bg_img/${user.bg_img}`, (err) => {
+            if(background_image.name_bg !== null){
+                unlinkSync(`./public/users/bg_img/${background_image.name_bg}`, (err) => {
                     if (err) return res.status(500).json({status: 500, msg: "Internal server error", error: err})
                 })
             }
@@ -298,11 +243,13 @@ module.exports = {
                 where: { userId: user.id }
             });
             
-            for (const posting of postings) {
-                if (posting.name_img) {
-                    await unlinkSync(`./public/postings/${posting.name_img}`);
-                }
-                await posting.destroy();
+            if(postings){
+              for (const posting of postings) {
+                  if (posting.name_img) {
+                      await unlinkSync(`./public/postings/${posting.name_img}`);
+                  }
+                  await posting.destroy();
+              }
             }
 
             await user.destroy();
@@ -310,90 +257,6 @@ module.exports = {
         } catch (err) {
             console.error(err);
             res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-        }
-    },
-    async sendEmailTokenNewPassword(email, subject, text){
-        try {
-          let transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
-            secure: process.env.EMAIL_SECURE,
-            auth: {
-              user: process.env.EMAIL,
-              pass: process.env.PASS_EMAIL_OTP,
-            },
-          });
-    
-            await transporter.sendMail({
-                from: process.env.EMAIL,
-                to: email,
-                subject: subject,
-                text: text,
-            });
-        } catch (error) {
-            console.error(error, "email not sent");
-        }
-    },
-    async getEmail(req, res) {
-        const { email } = req.body;
-    
-        try {
-          const user = await Users.findOne({
-            where: { email: email },
-          });
-    
-        if (!user) return res.status(404).json({status: 404, msg: "user with given email doesn't exist"});
-        if (user.verificationCode) return res.status(402).json({status: 402, msg: "user is not verified!"});
-
-        let token = await Token.findOne({ where: { userId: user.id } });
-        if (!token) {
-            token = await Token.create({
-                userId: user.id,
-                token: crypto.randomBytes(32).toString("hex"),
-            });
-        }
-
-        const link = `${req.protocol}://localhost:5173/update-pass/${user.id}/${token.token}`;
-        await module.exports.sendEmailTokenNewPassword(user.email, "Password reset", link);
-
-          res.status(200).json({
-            msg: 'password reset link sent to your email account"',
-            link
-          })
-        } catch (error){ 
-          console.error(error);
-          res.status(500).json({ msg: 'Internal server error', error });
-        }
-      },
-    async changePassword(req, res) {
-        const { password, confPassword } = req.body;
-        const { userId, token } = req.params;
-
-        try {
-          const user = await Users.findOne({where: {id: userId}});
-          
-          if (!user) return res.status(404).json({status: 404, msg: 'User not found'});
-          const matchingPassword = await argon2.verify(user.password, password);
-          if (matchingPassword) return res.status(430).json({status:430, msg: "The password cannot be the same as the previous password"})
-          if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and Confirm Password do not match' });
-
-          const tokenUser = await Token.findOne({
-              where: {
-                  userId: user.id,
-                  token: token,
-              },
-            });
-          if (user.id !== tokenUser.userId) return res.status(403).json({status: 403, msg: 'Have some problem on url link in token or id user'});
-          if (!tokenUser) return res.status(404).json({status: 403, msg: "Tokens don't match"});
-
-          validatePassword(password);
-          const hashPassword = await argon2.hash(password);
-      
-          await user.update({password: hashPassword});
-          await tokenUser.destroy();
-          res.status(200).json({ message: 'Password updated.' });
-          } catch (err) {
-          res.status(400).json({ msg: err.message });
         }
     },
 };

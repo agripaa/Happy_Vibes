@@ -1,6 +1,8 @@
 const BugReport = require("../Models/bugreportData.model");
 const nodemailer = require('nodemailer');
 const Users = require("../Models/usersData.model");
+const ImageProfile = require("../Models/imageProfileData.model");
+const TypeBug = require("../Models/typeBugData.model");
 
 require('dotenv').config();
 
@@ -10,7 +12,8 @@ module.exports = {
       const bugReport = await BugReport.findAll({
         include:[{
           model: Users,
-          attributes: ['uuid', 'name', 'email', 'url', 'name_img']
+          attributes: ['id', 'name', 'username', 'email', 'image_profile'],
+          include: [{model: ImageProfile}]
         }]
       })
       res.status(200).json({status: 200, result: bugReport})
@@ -20,7 +23,7 @@ module.exports = {
     }
   },
   async sendReport(req, res) {
-    const { title, type_bug, report } = req.body;
+    const { title, type_bug_id, report } = req.body;
 
     let transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
@@ -33,25 +36,21 @@ module.exports = {
     });
 
     try {
-      const user = await Users.findOne({
-        attributes: ['uuid', 'name', 'email'],
-        where: { uuid: req.session.userId },
-      });
-
-      if (!user) return res.status(404).json({ status: 404, msg: 'User not found!' });
-
       await BugReport.create({
         title: title,
-        type_bug: type_bug,
+        type_bug_id: type_bug_id,
         report: report,
         userId: req.userId,
       });
+
+      const type_bug = await TypeBug.findOne({where: {id: type_bug_id}})
+      const user = await Users.findOne({where: {id: req.userId}})
 
       const mailOptions = {
         from: process.env.EMAIL,
         to: process.env.EMAIL,
         subject: 'Bug Report!',
-        text: `Title: ${title}\nType bug: ${type_bug}\nBug Report: ${report}\nReporter: ${user.name}`,
+        text: `Title: ${title}\nType bug: ${type_bug.bug}\nBug Report: ${report}\nReporter: ${user.name}`,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {

@@ -11,6 +11,18 @@ const routeRandomPhoto = require('./randomPhoto.route');
 const routeReportPosting = require('./reportposting.route');
 const routeSearch = require('./search.route');
 const routeUsers = require('./users.route');
+const routeOtp = require('./otp.route');
+const routeForgotPass = require('./forgotPassword.route');
+const routeReportUser = require('./reportUser.route.js');
+const routeCategoryReportUser = require('./categoryReportUser.route.js');
+const routeStories = require('./stories.route.js')
+const routeCategoryStories = require('./categoryStories.route.js');
+const routeImageStories = require('./imageStories.route.js');
+const routeTextStories = require('./textStories.route.js');
+const routeBackgroundStories = require('./backgroundStories.route.js');
+const routeFontStories = require('./fontStories.route.js');
+const routeBookmarkCollection = require('./bookmarkCollection.route.js');
+const routeBookmarkPosting = require('./bookmarkPosting.route.js');
 
 const router = express.Router();
 
@@ -34,5 +46,17 @@ router.use('/random', routeRandomPhoto);
 router.use('/report', routeReportPosting);
 router.use('/search', routeSearch);
 router.use('/user', routeUsers);
+router.use('/otp', routeOtp);
+router.use('/forgot-pass', routeForgotPass);
+router.use('/report-user', routeReportUser);
+router.use('/category-report-user', routeCategoryReportUser);
+router.use('/stories', routeStories);
+router.use('/category-stories', routeCategoryStories);
+router.use('/image-stories', routeImageStories);
+router.use('/text-stories', routeTextStories);
+router.use('/background-stories', routeBackgroundStories);
+router.use('font-stories', routeFontStories);
+router.use('/bookmark-collection', routeBookmarkCollection);
+router.use('bookmark-posting', routeBookmarkPosting);
 
 module.exports = router;
