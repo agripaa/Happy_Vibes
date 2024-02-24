@@ -13,7 +13,7 @@ const Follows = require('../Models/followsData.model.js');
 const CodeOTP = require('../Models/codeOTP.model.js');
 const { generateOTP, sendOTP } = require('./otp.controller.js');
 const ImageProfile = require('../Models/imageProfileData.model.js');
-const { profile } = require('console');
+const { getRandomPhoto } = require('./randomPhoto.controller.js')
 
 module.exports = {
   async getUsers(req, res) {
@@ -92,7 +92,7 @@ module.exports = {
     return shuffledArray;
   },
   async createUser(req, res) {
-    const { name, username, email, password, confPassword, name_img, url } = req.body;
+    const { name, username, email, password, confPassword } = req.body;
     
     const validatePass = validatePassword(password);
     if(validatePass['regex'] === "false" || validatePass['regex_symbol'] === 'false') return res.status(402).json({status: 400, msg: "The password must be at least 8 characters, there is one capital, one number and certain symbols are prohibited"})
@@ -106,11 +106,13 @@ module.exports = {
         
         try {
             const OTP = generateOTP();
+            const profile = await getRandomPhoto();
+
             sendOTP(email, OTP);
 
             const image_profile = await ImageProfile.create({
-              url_image: url,
-              name_image: name_img
+              url_image: profile,
+              name_image: username
             })
 
             const otp = await CodeOTP.create({

@@ -21,6 +21,8 @@ const routeImageStories = require('./imageStories.route.js');
 const routeTextStories = require('./textStories.route.js');
 const routeBackgroundStories = require('./backgroundStories.route.js');
 const routeFontStories = require('./fontStories.route.js');
+const routeBookmarkCollection = require('./bookmarkCollection.route.js');
+const routeBookmarkPosting = require('./bookmarkPosting.route.js');
 
 const router = express.Router();
 
@@ -54,5 +56,7 @@ router.use('/image-stories', routeImageStories);
 router.use('/text-stories', routeTextStories);
 router.use('/background-stories', routeBackgroundStories);
 router.use('font-stories', routeFontStories);
+router.use('/bookmark-collection', routeBookmarkCollection);
+router.use('bookmark-posting', routeBookmarkPosting);
 
 module.exports = router;

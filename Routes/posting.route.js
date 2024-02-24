@@ -7,7 +7,6 @@ const {
     createNewPosting,
     getHotPost,
     deletePosting,
-    updateLike,
     getPostUser,
     getAllPostUserById,
 } = require('../Controller/posting.controller.js');
@@ -19,7 +18,6 @@ Routes.get('/:id/user', sessionUser , getAllPostUserById)
 Routes.get('/:id', sessionUser , getContentById);
 Routes.get('/get/hot_postings', sessionUser, getHotPost);
 Routes.post('/new_content' , sessionUser, createNewPosting);
-Routes.patch('/like/:postId', sessionUser , updateLike);
-Routes.delete('/:postId', sessionUser, deletePosting);
+Routes.delete('/:postUUID', sessionUser, deletePosting);
 
 module.exports = Routes

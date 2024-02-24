@@ -6,23 +6,37 @@ const moment = require('moment');
 const path = require('path');
 const ImagePosting = require('../Models/imagePostingData.model.js');
 const RatioImage = require('../Models/ratioImagePostingData.model.js');
+const ImageProfile = require('../Models/imageProfileData.model.js');
 
-const attributesUser = ['id', 'uuid', 'name', 'username', 'url', 'name_img'];
+const attributesUser = ['id', 'uuid', 'name', 'username', 'image_profile'];
+const subDataInclude = [
+  {
+    model: Users,
+    attributes: attributesUser,
+    include: [{
+      model: ImageProfile,
+      attributes: ['name_image', 'url_image']
+    }]
+  },
+  {
+    model: Like,
+    as: 'likes',
+    attributes: ['userId'],
+  },
+  {
+    model: ImagePosting,
+    attributes: ['name_img', 'url', 'ratio_id'],
+    include: [{
+      model: RatioImage,
+      attributes: ['ratio']
+    }]
+  }
+]
 
 const getAllContent = async (req, res) => {
     try {
       const postings = await Posting.findAll({
-        include: [
-          {
-            model: Users,
-            attributes: attributesUser,
-          },
-          {
-            model: Like,
-            as: 'likes',
-            attributes: ['userId'],
-          },
-        ],
+        include: subDataInclude,
         limit: 100,
         order: db.random()
       });
@@ -60,15 +74,7 @@ function generateRandomIndices(totalItems, count) {
     try {
       const postings = await Posting.findAll({
         where: {userId: req.userId},
-        include: [{
-          model: Users,
-          attributes: attributesUser
-        },
-        {
-          model: Like,
-          as: 'likes',
-          attributes: ['userId']
-        }]
+        include: subDataInclude,
       })
       if(!postings) return res.status(404).json({status: 404, msg: "user hasn't posted anything"})
 
@@ -92,15 +98,7 @@ function generateRandomIndices(totalItems, count) {
     try {
       const postings = await Posting.findAll({
         where: {userId: req.params.id},
-        include: [{
-          model: Users,
-          attributes: attributesUser
-        },
-        {
-          model: Like,
-          as: 'likes',
-          attributes: ['userId']
-        }]
+        include: subDataInclude,
       })
       if(!postings) return res.status(404).json({status: 404, msg: "user hasn't posted anything"})
 
@@ -131,18 +129,8 @@ function generateRandomIndices(totalItems, count) {
 const getContentById = async (req,res) => {
     try {
         const posting = await Posting.findOne({
-            where: {
-              id : req.params.id
-            },
-            include: [{
-                    model: Users,
-                    attributes: attributesUser
-                },
-                {
-                  model: Like,
-                  as: 'likes',
-                  attributes: ['userId']
-                }]
+            where: {id : req.params.id},
+            include: subDataInclude
           });
 
           if(!posting) return res.status(404).json({"msg" : "Data tidak ditemukan"})
@@ -159,35 +147,33 @@ const getContentById = async (req,res) => {
 
 const createNewPosting = async (req, res) => {
     const files = req.files;
-    const { desc, like } = req.body; 
+    const { desc, like, ratio } = req.body; 
 
     if(files){
       const file = files.file;
       const size = file.data.length;
       const extend = path.extname(file.name);
       const name_img = file.md5 + extend
-      const url = `${req.protocol}://${req.get("host")}/postings/${name_img}`;
+      const url = `/postings/${name_img}`;
 
       if(size > 5000000) return res.status(422).json({status: 422, msg: "Images must be less than 5MB"})
       file.mv(`./public/postings/${name_img}`, async(err) => {
           if(err) return res.status(500).json({status: 500, msg: 'Internal server error', image: "image hasn't been uploaded!" ,error: err});
           
           try {
-              const ratio_image = await RatioImage.findOne({
-                where: {ratio: ratio}
-              })
-
-              ImagePosting.findAll({})
+              const ratio_image = await RatioImage.create({ratio})
 
               const image_posting = await ImagePosting.create({
                 url,
-                name_img
+                name_img,
+                ratio_id: ratio_image.id
               });
 
               const posting = await Posting.create({
                   desc: desc,
                   like: like,
                   liked: false,
+                  image_posting_id: image_posting.id,
                   userId: req.userId
               });
               const createdAt = moment(posting.createdAt).fromNow();
@@ -216,44 +202,12 @@ const createNewPosting = async (req, res) => {
   }
 }
 
-const updateLike = async (req, res) => {
-    const { postId } = req.params;
-    const { liked } = req.body;
-  
-    try {
-        const posting = await Posting.findByPk(postId);
-        if (!posting) return res.status(404).json({ status: 404, msg: 'Posting not found' });
-  
-        let likeCount = posting.like;
-        if (liked) {
-            likeCount++;
-        } else {
-            likeCount--;
-        }
-
-        await posting.update({ like: likeCount });
-        return res.status(200).json({status: 200, result: posting});
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
-    }
-  }
-  
-
 const getHotPost = async (req, res) => {
     try {
         const posting = await Posting.findAll({
             order: [['like', 'DESC']],
             limit: 50,
-            include: [{
-                model: Users,
-                attributes: attributesUser
-            },
-            {
-              model: Like,
-              as: 'likes',
-              attributes: ['userId']
-            }]
+            include: subDataInclude,
         });
         res.status(200).json({
             status: "200", 
@@ -266,16 +220,16 @@ const getHotPost = async (req, res) => {
 } 
 
 const deletePosting = async (req, res) => {
-    const {postId}  = req.params;
+    const {postUUID}  = req.params;
     const {userId} = req;
-
+  console.log(postUUID)
   try {
     const post = await Posting.findOne({
         include: [{
           model: Users,
-          where: {id: userId}
+          where: {id: userId} 
       }],
-        where: { uuid: postId },
+        where: { uuid: postUUID },
     });
 
     if (!post) {
@@ -290,4 +244,4 @@ const deletePosting = async (req, res) => {
   }
 };
 
-module.exports = {getAllContent, getPostUser, getContentById, createNewPosting, getAllPostUserById, updateLike, getHotPost, deletePosting }
+module.exports = {getAllContent, getPostUser, getContentById, createNewPosting, getAllPostUserById, getHotPost, deletePosting }
