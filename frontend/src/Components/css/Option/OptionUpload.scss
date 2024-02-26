@@ -2,7 +2,7 @@
   width: 170px;
   height: 90px;
   flex-direction: column;
-  border-radius: 5px;
+  border-radius: 8px;
   padding: 0 0;
   gap: 2%;
   background-color: hsl(0, 0%, 96%);
@@ -10,35 +10,30 @@
   z-index: 1;
   position: absolute;
   top: 55px;
-  transition: all 0.5s ease-in-out;
-  transform: scale(0);
 }
-.activeOptionUpload {
-  transform: scale(1);
-}
+
 .OptionUpload {
   &-Story {
-    padding: 12px 0;
+    padding: 12px;
+    text-align: left;
     p {
       font-size: 16px;
-      padding: 0 10px;
     }
     &:hover {
       cursor: pointer;
-      background-color: #dbdbdb;
+      background-color: #ffe4a8;
       border-radius: 5px;
     }
   }
   &-Post {
-    padding: 12px 0;
+    padding: 12px;
 
     p {
       font-size: 16px;
-      padding: 0 10px;
     }
     &:hover {
       cursor: pointer;
-      background-color: #dbdbdb;
+      background-color: #ffe4a8;
       border-radius: 5px;
     }
   }

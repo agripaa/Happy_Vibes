@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   background-color: hsl(0, 0%, 96%);
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
   position: absolute;
@@ -18,7 +18,7 @@
 }
 
 .wrapOptionsMore {
-  width: 80%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -30,7 +30,7 @@
     width: 100%;
     display: flex;
     gap: 5%;
-    padding: 10px 3px;
+    padding: 12px;
 
     align-items: center;
     p {
@@ -39,7 +39,7 @@
     }
     &:hover {
       cursor: pointer;
-      background-color: #dbdbdb;
+      background-color: #ffe4a8;
       border-radius: 5px;
     }
   }
@@ -47,7 +47,8 @@
     width: 100%;
     display: flex;
     gap: 5%;
-    padding: 10px 3px;
+    padding: 12px;
+
     align-items: center;
     border-radius: 5px;
     p {
@@ -56,7 +57,7 @@
     }
     &:hover {
       cursor: pointer;
-      background-color: #dbdbdb;
+      background-color: #ffe4a8;
       border-radius: 5px;
     }
   }
@@ -64,7 +65,8 @@
     width: 100%;
     display: flex;
     gap: 5%;
-    padding: 10px 3px;
+    padding: 12px;
+
     align-items: center;
     border-radius: 5px;
     p {
@@ -73,7 +75,7 @@
     }
     &:hover {
       cursor: pointer;
-      background-color: #dbdbdb;
+      background-color: #ffe4a8;
       border-radius: 5px;
     }
   }

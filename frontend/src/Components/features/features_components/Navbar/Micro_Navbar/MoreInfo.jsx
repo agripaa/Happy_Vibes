@@ -84,7 +84,7 @@ function MoreInfo({ check }) {
                   <span></span>
                   <span></span>
                 </div>
-                <OptionProfile Optionse={checkBgMore} responseCheck={false} />
+                <OptionMore Optionse={checkBgMore} responseCheck={false} />
               </div>
             </figure>
             <figcaption>

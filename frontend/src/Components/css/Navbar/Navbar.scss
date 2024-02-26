@@ -7,6 +7,7 @@
   position: fixed;
   left: 0;
   z-index: 4;
+  transition: all 0.6s ease-in-out;
   &-Components {
     position: relative;
     width: 100%;
@@ -204,7 +205,7 @@
       text-decoration: none;
       color: black;
       display: flex;
-      justify-content: center;
+      justify-content: start;
       align-items: center;
       letter-spacing: 0.1px;
     }
@@ -354,76 +355,6 @@
   }
 }
 @media screen and (max-width: 720px) {
-  // .List {
-  //   &home {
-  //     width: 100%;
-  //     a {
-  //       img {
-  //         width: 18px;
-  //         height: 18px;
-  //       }
-  //       font-weight: 600;
-  //       font-size: 13px;
-  //     }
-  //   }
-  //   &Explore {
-  //     a {
-  //       img {
-  //         width: 19px;
-  //         height: 19px;
-  //       }
-  //       font-weight: 600;
-  //       font-size: 13px;
-  //     }
-  //   }
-  //   &Notifications {
-  //     a {
-  //       img {
-  //         width: 19px;
-  //         height: 19px;
-  //       }
-  //       font-weight: 600;
-  //       font-size: 13px;
-  //     }
-  //   }
-  //   &Messages {
-  //     a {
-  //       img {
-  //         width: 19px;
-  //         height: 19px;
-  //       }
-  //       font-weight: 600;
-  //       font-size: 13px;
-  //     }
-  //   }
-  //   &Bookmarks {
-  //     a {
-  //       img {
-  //         width: 19px;
-  //         height: 19px;
-  //       }
-  //       font-weight: 600;
-  //       font-size: 13px;
-  //     }
-  //   }
-  //   &Profile {
-  //     a {
-  //       img {
-  //         width: 17px;
-  //         height: 19px;
-  //       }
-  //       font-weight: 600;
-  //       font-size: 13px;
-  //     }
-  //   }
-  //   &ButtonPost {
-  //     width: 80%;
-  //     height: 35px;
-  //     p {
-  //       font-size: 15px;
-  //     }
-  //   }
-  // }
 }
 @media screen and (max-width: 600px) {
   .ContainerNavbar {
@@ -834,10 +765,10 @@
     }
   }
   .bulletsMore-wrap {
-    width: 45%;
+    width: 50%;
     span {
-      width: 7px;
-      height: 7px;
+      width: 20px;
+      height: 2px;
     }
   }
 }
