@@ -4,7 +4,7 @@ const Notifications = require("../Models/notifData.model");
 module.exports = {
     async getNotifications(req, res) {
       const { userId } = req;
-  
+
       try {
         const notifications = await Notifications.findAll({
           where: { userId: userId },

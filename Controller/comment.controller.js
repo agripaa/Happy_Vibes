@@ -1,22 +1,41 @@
 const Comment = require('../Models/commentsData.model.js');
+const ImagePosting = require('../Models/imagePostingData.model.js');
+const ImageProfile = require('../Models/imageProfileData.model.js');
 const Notifications = require('../Models/notifData.model.js');
 const Posting = require('../Models/postingData.model.js');
+const RatioImage = require('../Models/ratioImagePostingData.model.js');
 const Users = require('../Models/usersData.model.js');
-const attributesUser = ['name', 'url', 'name_img'];
-const attributePosting = ['url', 'name_img', 'desc'];
+
+const attributesUser = ['id', 'name', 'image_profile'];
+const includeUserDatas = {
+    model: Users,
+    attributes: attributesUser,
+    include: [{
+        model: ImageProfile,
+        attributes: ['url_image', 'name_image']
+    }]
+};
 
 module.exports = {
     async getComments(req, res) {
         try {
             const { id } = req.params;
+
             const comments = await Comment.findAll({
                 where: { postId: id },
-                include: [{
-                    model: Users,
-                    attributes: attributesUser
-                },{
+                include: [
+                    includeUserDatas,
+                    {
                     model: Posting,
-                    attributes: attributePosting
+                    attributes: ['desc'],
+                    include: [{
+                        model: ImagePosting,
+                        attributes: ['url', 'name_img', 'ratio_id'],
+                        include: [{
+                            model: RatioImage,
+                            attributes: ['ratio']
+                        }]
+                    }]
                 }],
                 order: [['id', 'DESC']] 
             })
@@ -30,23 +49,22 @@ module.exports = {
         const postId = req.params.id;
         const { comment } = req.body;
 
-        const post = await Posting.findByPk(postId,
-            {include: [{
-                model: Users,
-                attributes: ['id', 'uuid']
-            }]});
+        const post = await Posting.findByPk(postId, {include: includeUserDatas});
         if (!post) return res.status(404).json({ error: 'Posting not found' });
+        
+        console.log({data_post: post.users_datum.id})
+        console.log(req.userId)
 
-        try {
-        const createdComment = await Comment.create({ comment: comment , postId: post.id, userId: req.userId });
-        if(req.userId !== post.users_datum.id) {
+            try {
+            const createdComment = await Comment.create({ comment: comment , postId: post.id, userId: req.userId });
+            if(req.userId !== post.users_datum.id) {
             await Notifications.create({
                 content_notif: `User ${req.user.name} commented on your post : ${comment}`,
                 type_notif: 'comment',
                 userId: post.users_datum.id,
                 postId: post.id,
                 commentId: createdComment.id
-              });
+            });
         }
 
         return res.status(200).json({ status: 200, msg: 'Comment posted successfully' });

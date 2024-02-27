@@ -46,6 +46,7 @@ module.exports = {
         await Follows.create({
           followerId: followerId,
           followingId: followingId,
+          userId: req.userId
         });
 
         await Notifications.create({

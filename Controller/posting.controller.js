@@ -112,7 +112,7 @@ function generateRandomIndices(totalItems, count) {
         };
       });
       res.status(200).json({status: 200, result: formattedPostings})
-    } catch (err) {
+    } catch (err) { 
       console.error(err);
       return res.status(500).json({ status: 500, msg: 'Internal server error' });
     }
@@ -222,7 +222,7 @@ const getHotPost = async (req, res) => {
 const deletePosting = async (req, res) => {
     const {postUUID}  = req.params;
     const {userId} = req;
-  console.log(postUUID)
+
   try {
     const post = await Posting.findOne({
         include: [{

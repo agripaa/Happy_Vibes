@@ -3,6 +3,7 @@ const Token = require('../Models/tokenData.model.js');
 const crypto = require('crypto');
 const Users = require('../Models/usersData.model.js');
 const validatePassword = require('../middleware/password.validation.js');
+const argon2 = require('argon2');
 require('dotenv').config();
 
 module.exports = {
@@ -51,7 +52,8 @@ module.exports = {
         await module.exports.sendEmailTokenNewPassword(user.email, "Password reset", link);
 
           res.status(200).json({
-            msg: 'password reset link sent to your email account"',
+            status: 200,
+            msg: 'password reset link sent to your email account',
             link
           })
         } catch (error){ 
@@ -65,10 +67,10 @@ module.exports = {
 
         try {
           const user = await Users.findOne({where: {id: userId}});
-          
           if (!user) return res.status(404).json({status: 404, msg: 'User not found'});
+
           const matchingPassword = await argon2.verify(user.password, password);
-          if (matchingPassword) return res.status(430).json({status:430, msg: "The password cannot be the same as the previous password"})
+          if (matchingPassword) return res.status(430).json({status:430, msg: "The password cannot be the same as the previous password"});
           if (password !== confPassword) return res.status(400).json({ status: 400, msg: 'Password and Confirm Password do not match' });
 
           const tokenUser = await Token.findOne({
@@ -85,9 +87,9 @@ module.exports = {
       
           await user.update({password: hashPassword});
           await tokenUser.destroy();
-          res.status(200).json({ message: 'Password updated.' });
+          res.status(200).json({ status: 200, message: 'Password updated.' });
           } catch (err) {
-          res.status(400).json({ msg: err.message });
+          res.status(500).json({ status: 500, msg: err.message, err });
         }
     },
 }
