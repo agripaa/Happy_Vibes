@@ -11,10 +11,16 @@ let InitialState = {
   CheckBugReportPosting: false,
   checkEdit: false,
   dltCheckPosting: false,
+  checkoptionListPosting: false,
   checkReportPosting: false,
   checkReportAccount: false,
   checkBgMore: false,
   checkBgUpload: false,
+  checkSubmitReport: {
+    PopUp: false,
+    index: 0,
+    typeReport: "",
+  },
 };
 
 const SliceCheck = createSlice({
@@ -49,8 +55,12 @@ const SliceCheck = createSlice({
     CheckDeletePosting: (state, action) => {
       state.dltCheckPosting = action.payload;
     },
+
     CheckBugReportPost: (state, action) => {
       state.CheckBugReportPosting = action.payload;
+    },
+    CheckoptionListPosting: (state, action) => {
+      state.checkoptionListPosting = action.payload;
     },
     CheckReportPosting: (state, action) => {
       state.checkReportPosting = action.payload;
@@ -63,6 +73,9 @@ const SliceCheck = createSlice({
     },
     CheckBgUpload: (state, action) => {
       state.checkBgUpload = action.payload;
+    },
+    CheckSubmitReport: (state, action) => {
+      state.checkSubmitReport = action.payload;
     },
   },
 });
@@ -78,9 +91,11 @@ export const {
   CheckEditProfil,
   CheckDeletePosting,
   CheckBugReportPost,
+  CheckoptionListPosting,
   CheckReportPosting,
   CheckReportAccount,
   CheckBgMore,
   CheckBgUpload,
+  CheckSubmitReport,
 } = SliceCheck.actions;
 export default SliceCheck.reducer;

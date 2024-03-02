@@ -11,6 +11,10 @@ import LoadingCircle from "../Loading/LoadingCircle";
 import { AuthProfile } from "../../libs/react-query/Auth/profile";
 import { AuthLogin } from "../../libs/react-query/Auth/login";
 
+("auth/login");
+("auth/logout");
+("auth/profile");
+
 function Login() {
   const [displayWidth, setDisplayWidth] = React.useState(innerWidth);
   const [displayHeight, setDisplayHeight] = React.useState(innerHeight);
@@ -21,7 +25,7 @@ function Login() {
     email: "",
     password: "",
   });
-  const { isLoading } = AuthProfile();
+  const { data, isLoading, isError: err } = AuthProfile();
   const { mutate } = AuthLogin((v) => {
     setIsLogged(v.isLogged);
     if (!v.isErrorLogin) {

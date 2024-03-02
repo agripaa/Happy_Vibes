@@ -2,6 +2,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  top: 0;
 }
 .OptionReportAccount {
   &-Container {
@@ -16,7 +17,7 @@
     header {
       position: relative;
       width: 100%;
-      height: 50px;
+      height: 20%;
       border-bottom: 1px solid black;
 
       h2 {
@@ -25,28 +26,29 @@
       }
       img {
         position: absolute;
-        top: 15px;
         right: 5px;
       }
     }
   }
   &-Section {
-    height: 130px;
+    height: 80%;
     flex-direction: column;
+    justify-content: center;
+    padding: 0 8px;
     section {
       display: flex;
       justify-content: space-between;
       p {
         font-size: 16px;
         font-weight: 600;
-        padding: 15px 10px;
+        padding: 12px;
       }
       img {
         transform: translateX(-40px);
       }
       &:hover {
         cursor: pointer;
-        background-color: #dbdbdb;
+        background-color: #ffe4a8;
         img {
           animation-name: Shake;
           animation-duration: 2s;
@@ -55,12 +57,6 @@
         }
       }
     }
-  }
-  &-Bg {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    position: absolute;
   }
 }
 

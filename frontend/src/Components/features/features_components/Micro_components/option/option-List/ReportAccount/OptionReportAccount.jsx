@@ -8,13 +8,7 @@ export default function OptionReportAccount() {
   const { Close, ArrowRight } = useSelector((state) => state.icons);
   const dispatch = useDispatch();
   return (
-    <article className="OptionReportPost flex flex-complete-center">
-      <div
-        className="OptionReportPost-Bg"
-        onClick={() => {
-          dispatch(CheckReportAccount(false));
-        }}
-      ></div>
+    <article className="Container-ReportOption  flex flex-complete-center">
       <div className="OptionReportAccount-Container">
         <header className="flex flex-complete-center ">
           <h2>Report Account</h2>

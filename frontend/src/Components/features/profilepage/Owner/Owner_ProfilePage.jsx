@@ -73,7 +73,7 @@ function Owner_Profilepage() {
       </div>
       {myComment.checkEdit ? <ChangeProfileImage /> : null}
       {myComment.checkImageComment ? <CommentComponents /> : null}
-      {myComment.dltCheckPosting ? <AlertDeletePosting /> : null}
+      {myComment.CheckOptionPosting ? <AlertDeletePosting /> : null}
       <OptionBugReport />
       <AsideSearch />
       <Version />

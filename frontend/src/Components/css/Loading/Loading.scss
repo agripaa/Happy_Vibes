@@ -1,20 +1,53 @@
-.lds-ring.big {
+@mixin includesSize($size) {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  @if $size == big {
+    width: 80px;
+    height: 80px;
+  } @else if $size == medium {
+    width: 50px;
+    height: 50px;
+  } @else if $size == small {
+    width: 30px;
+    height: 30px;
+  } @else if $size == smallThin {
+    width: 20px;
+    height: 20px;
+  }
 }
-.lds-ring.big div {
+@mixin includesColor($colors) {
   box-sizing: border-box;
   display: block;
   position: absolute;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  @if $colors == blacks {
+    border-color: black;
+    border-color: black transparent transparent transparent;
+  } @else {
+    border-color: #ffba53;
+    border-color: #ffba53 transparent transparent transparent;
+  }
+}
+
+.lds-ring.big {
+  @include includesSize(big);
+}
+.lds-ring.big div {
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 6px solid black;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: black transparent transparent transparent;
+  border-width: 7px;
+  border-style: solid;
+  @include includesColor("");
+}
+.lds-ring.big.black div {
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-width: 7px;
+  border-style: solid;
+  @include includesColor(blacks);
 }
 .lds-ring.big div:nth-child(1) {
   animation-delay: -0.45s;
@@ -26,21 +59,21 @@
   animation-delay: -0.15s;
 }
 .lds-ring.medium {
-  display: inline-block;
-  position: relative;
-  width: 50px;
-  height: 50px;
+  @include includesSize(medium);
 }
 .lds-ring.medium div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
   width: 44px;
   height: 44px;
-  border: 4px solid black;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: black transparent transparent transparent;
+  border-width: 4px;
+  border-style: solid;
+  @include includesColor("");
+}
+.lds-ring.medium.black div {
+  width: 44px;
+  height: 44px;
+  border-width: 4px;
+  border-style: solid;
+  @include includesColor(blacks);
 }
 .lds-ring.medium div:nth-child(1) {
   animation-delay: -0.45s;
@@ -52,21 +85,21 @@
   animation-delay: -0.15s;
 }
 .lds-ring.small {
-  display: inline-block;
-  position: relative;
-  width: 30px;
-  height: 30px;
+  @include includesSize(small);
 }
 .lds-ring.small div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
   width: 24px;
   height: 24px;
-  border: 2px solid black;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: black transparent transparent transparent;
+  border-width: 2px;
+  border-style: solid;
+  @include includesColor("");
+}
+.lds-ring.small.black div {
+  width: 24px;
+  height: 24px;
+  border-width: 2px;
+  border-style: solid;
+  @include includesColor(blacks);
 }
 .lds-ring.small div:nth-child(1) {
   animation-delay: -0.45s;
@@ -78,21 +111,21 @@
   animation-delay: -0.15s;
 }
 .lds-ring.smallThin {
-  display: inline-block;
-  position: relative;
-  width: 20px;
-  height: 20px;
+  @include includesSize(smallThin);
 }
 .lds-ring.smallThin div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
   width: 14px;
   height: 14px;
-  border: 2px solid black;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: black transparent transparent transparent;
+  border-width: 2px;
+  border-style: solid;
+  @include includesColor("");
+}
+.lds-ring.smallThin.black div {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+  border-style: solid;
+  @include includesColor(blacks);
 }
 .lds-ring.smallThin div:nth-child(1) {
   animation-delay: -0.45s;

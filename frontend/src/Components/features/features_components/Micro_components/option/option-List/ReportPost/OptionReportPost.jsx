@@ -1,19 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../../../../../../css/Option/OptionList/OptionReportPost.scss";
-import { CheckReportPosting } from "../../../../../../libs/redux/CheckReducer/Check";
+import {
+  CheckReportPosting,
+  CheckSubmitReport,
+} from "../../../../../../libs/redux/CheckReducer/Check";
 import { InitalValueRepotPost } from "./InitalValueReportPost";
 export default function OptionReportPost() {
   const { Close, ArrowRight } = useSelector((state) => state.icons);
   const dispatch = useDispatch();
   return (
-    <article className="OptionReportPost flex flex-complete-center">
-      <div
-        className="OptionReportPost-Bg"
-        onClick={() => {
-          dispatch(CheckReportPosting(false));
-        }}
-      ></div>
+    <article className="Container-ReportOption flex flex-complete-center">
       <div className="OptionReportPost-Container">
         <header className="flex flex-complete-center ">
           <h2>Repost Post</h2>
@@ -28,14 +25,56 @@ export default function OptionReportPost() {
           />
         </header>
         <div className="OptionReportPost-Section flex flex-justify-between">
+          <section
+            onClick={() => {
+              dispatch(
+                CheckSubmitReport({
+                  popUp: true,
+                  index: 0,
+                  typeReport: "Spam",
+                })
+              );
+              dispatch(CheckReportPosting(false));
+            }}
+          >
+            <p className="paragraph-semibold">Ini Spam</p>
+            <img src={ArrowRight} alt="Arrow" />
+          </section>
           {InitalValueRepotPost?.map((value, index) => {
             return (
-              <section key={index}>
+              <section
+                key={index}
+                onClick={() => {
+                  dispatch(
+                    CheckSubmitReport({
+                      popUp: true,
+                      index,
+                      typeReport: "Posting",
+                    })
+                  );
+                  dispatch(CheckReportPosting(false));
+                }}
+              >
                 <p className="paragraph-semibold">{value}</p>
                 <img src={ArrowRight} alt="Arrow" />
               </section>
             );
           })}
+          <section
+            onClick={() => {
+              dispatch(
+                CheckSubmitReport({
+                  popUp: true,
+                  index: 0,
+                  typeReport: "ThisLike",
+                })
+              );
+              dispatch(CheckReportPosting(false));
+            }}
+          >
+            <p className="paragraph-semibold">Saya hanya tidak menyukainya</p>
+            <img src={ArrowRight} alt="Arrow" />
+          </section>
         </div>
       </div>
     </article>

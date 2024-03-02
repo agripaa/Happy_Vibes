@@ -1,13 +1,15 @@
 .UserPosting {
   width: 490px;
-  padding: 0 0 5% 0;
+  padding: 18px 24px 18px 24px;
   position: relative;
+  height: 100%;
 }
 .UserPosting-NameProfile {
   width: 100%;
   display: flex;
   justify-content: space-between;
   padding-right: 5px;
+  position: relative;
 }
 .NameProfileText {
   width: 70%;
@@ -20,8 +22,8 @@
   display: flex;
   align-items: center;
   img {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -33,12 +35,11 @@
   width: 60%;
   gap: 3%;
   p:nth-child(1) {
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 10px;
+    font-weight: 600;
   }
   p:nth-child(2) {
     font-size: 10px;
-    color: #757575;
     font-weight: 300;
   }
   p:nth-child(3) {
@@ -48,7 +49,7 @@
   }
 }
 .ButtonList-NameProfile {
-  width: 25px;
+  width: 18px;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -59,10 +60,20 @@
     cursor: pointer;
   }
 }
+.Menu_Posting {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  span {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+  }
+}
 .UserPosting-ImagePosting {
   padding-top: 10px;
   width: 100%;
-  height: 270px;
+  height: auto;
   position: relative;
 }
 .Image-ImagePosting {
@@ -70,8 +81,7 @@
   height: auto;
   position: relative;
   img {
-    width: auto;
-    height: auto;
+    width: 100%;
     border-radius: 10px;
     object-fit: fill;
   }
@@ -82,9 +92,8 @@
   padding-bottom: 15px;
   figcaption {
     p {
-      font-size: 16px;
+      font-size: 10px;
       font-weight: 300;
-      color: #282828;
     }
   }
 }
@@ -94,7 +103,6 @@
 }
 .wrapLikePosting {
   width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   gap: 10%;
@@ -104,28 +112,28 @@
   display: flex;
   align-items: center;
   height: 100%;
-  gap: 5px;
+  gap: 3px;
 
+  p {
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
+.Chat-LikePosting {
   img {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     &:hover {
       cursor: pointer;
     }
-  }
-  p {
-    font-size: 14px;
-    font-weight: 400;
   }
 }
 .Share-LikePosting {
   display: flex;
   align-items: center;
-  height: 100%;
-  padding-top: 3px;
   img {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     &:hover {
       cursor: pointer;
     }
@@ -134,11 +142,10 @@
 .Bookmarks-LikePosting {
   display: flex;
   align-items: center;
-  padding-top: 3px;
 
   img {
-    width: 16px;
-    height: 17.5px;
+    width: 20px;
+    height: 20px;
     &:hover {
       cursor: pointer;
     }
@@ -148,6 +155,7 @@
 .Love-LikePosting {
   img {
     padding-top: 2px;
-    height: 17.5px;
+    width: 20px;
+    height: 19px;
   }
 }

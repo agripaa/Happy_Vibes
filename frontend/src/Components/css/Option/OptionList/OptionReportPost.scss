@@ -2,21 +2,22 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  top: 0;
 }
 .OptionReportPost {
   &-Container {
     width: 400px;
-    height: 600px;
+    height: 640px;
     background-color: hsl(0, 0%, 96%);
     box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.1);
     transition: all 0.5s ease-in-out;
     border-radius: 8px;
     overflow-x: hidden;
-    z-index: 1;
+    z-index: 2;
     header {
       position: relative;
       width: 100%;
-      height: 50px;
+      height: 8%;
       border-bottom: 1px solid black;
 
       h2 {
@@ -31,42 +32,32 @@
     }
   }
   &-Section {
-    height: 550px;
+    height: 92.01%;
     flex-direction: column;
     section {
       display: flex;
       justify-content: space-between;
       p {
-        padding: 10px 10px;
+        padding: 12px;
       }
       img {
         transform: translateX(-20px);
       }
       &:hover {
         cursor: pointer;
-        background-color: #dbdbdb;
+        background-color: #ffe4a8;
         img {
           animation-name: Shake;
           animation-duration: 2s;
-          animation-fill-mode: forwards;
           animation-direction: normal;
         }
       }
     }
   }
-  &-Bg {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
 }
 
 @keyframes Shake {
   0% {
-    transform: translateX(0);
-  }
-  25% {
     transform: translateX(20px);
   }
   50% {

@@ -1,0 +1,89 @@
+@mixin IncludeSize($size) {
+  @if $size == spam {
+    width: 467px;
+  } @else {
+    width: 500px;
+  }
+}
+.widthSubmitReport {
+  @include IncludeSize("");
+}
+.widthSpamReport {
+  @include IncludeSize(spam);
+}
+.OptionSubmitReport {
+  height: auto;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 2;
+
+  &-header {
+    width: 100%;
+    height: 48px;
+    padding: 0 5px;
+    position: relative;
+    border-bottom: 1px solid black;
+    h2 {
+      font-size: 16px;
+    }
+  }
+  &-content {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &-WrapContent {
+    width: 436px;
+    height: auto;
+    padding: 15px 12px;
+  }
+}
+.content {
+  &-header {
+    width: 100%;
+    height: 90px;
+    h3 {
+      text-align: center;
+      font-size: 22px;
+    }
+  }
+}
+.List-Content {
+  padding: 0 18px;
+  li {
+    padding: 1px 0;
+    p {
+      font-size: 16px;
+      letter-spacing: 0.5;
+    }
+  }
+}
+.closeSpam {
+  position: absolute;
+  right: 5px;
+}
+.section-button {
+  width: 100%;
+  height: 56px;
+  margin: 20px 0;
+
+  button {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 32px 16px 32px;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: black;
+    &:hover {
+      background-color: #fe9511;
+    }
+    &:disabled {
+      cursor: default;
+      background-color: #ffba53;
+    }
+  }
+}

@@ -2,7 +2,7 @@
   &-HomePage {
     width: 100%;
     height: 100vh;
-    padding-top: 2%;
+    position: relative;
   }
 }
 
@@ -13,14 +13,16 @@
 }
 .ContainerValuePosting-HomePage {
   width: 100%;
-  padding: 0 3% 0 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .wrapContainerValuePosting-HomePage {
   width: 550px;
-  margin: 0 auto;
-  padding-right: 4%;
+
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .LikeLove {

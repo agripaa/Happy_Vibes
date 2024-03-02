@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 import { useNavigate } from "react-router";
-
+import OptionList from "../../features_components/Micro_components/option/option-List/OptionList";
 import AlertReportPosting from "../../features_components/Micro_components/alert/AlertReportPosting";
 import LoadingCircle from "../../Loading/LoadingCircle";
 import {
   CheckBugReportPost,
   CheckImageUserComment,
   CheckPostId,
+  CheckoptionListPosting,
 } from "../../../libs/redux/CheckReducer/Check";
 
 function Section_UserPostingHomePage() {
@@ -20,6 +21,7 @@ function Section_UserPostingHomePage() {
   const checkReport = useSelector((state) => state.check);
   const [displayPosting, setDisplayPosting] = useState(false);
   const [scrolledDown, setScrolledDown] = useState(false);
+  const [optionPosting, setOptionPosting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -138,28 +140,26 @@ function Section_UserPostingHomePage() {
             <div
               className="TextProfile-NameProfile"
               style={{ cursor: "pointer" }}
+              // onClick={() => dispatch(CheckOptionPosting(true))}
               // onClick={() => navigate(`/profile/${post.users_datum.uuid}`)}
             >
               {/* <p>{post.users_datum.name}</p>
                   <p>@{post.users_datum.username}</p>
                   <p> - {post.createdAt} - </p> */}
-              <p>Syahroni</p>
-              <p>@Roni</p>
+              <p className="color-neutral-800">Syahroni</p>
+              <p className="color-neutral-600">@Roni</p>
               <p> - 2024 - </p>
             </div>
           </div>
           <div className="ButtonList-NameProfile">
-            <figure className="Share-LikePosting">
-              <img
-                role="button"
-                src={components.alertRed}
-                alt=""
-                style={{ width: "20px", height: "20px" }}
-                onClick={() => {
-                  dispatch(CheckBugReportPost(true));
-                  dispatch(CheckPostId(post.id));
-                }}
-              />
+            <figure
+              className="Menu_Posting"
+              style={{ cursor: "pointer" }}
+              onClick={() => dispatch(CheckoptionListPosting(true))}
+            >
+              <span className="bcolor-neutral-800"></span>
+              <span className="bcolor-neutral-800"></span>
+              <span className="bcolor-neutral-800"></span>
             </figure>
           </div>
         </article>
@@ -172,7 +172,12 @@ function Section_UserPostingHomePage() {
         <article className="UserPosting-ArticlePosting">
           <figcaption>
             {/* <p>{post.desc}</p> */}
-            <p>asdasdasd</p>
+            <p className="color-neutral-800">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas
+              quos praesentium quis corrupti quaerat repellendus maiores at
+              molestias consectetur, non omnis laborum, quia aspernatur culpa
+              vitae placeat voluptatem, corporis accusantium!
+            </p>
           </figcaption>
         </article>
         <article className="UserPosting-LikePosting">
@@ -206,15 +211,35 @@ function Section_UserPostingHomePage() {
                 //   handleLike(post.id);
                 // }}
               />
-              <figcaption>
-                {/* <p>{post.like}</p> */}
-                <p>2</p>
-              </figcaption>
+              {/* <p>{post.like}</p> */}
+              <p className="color-neutral-700">2</p>
             </figure>
 
             <figure className="Chat-LikePosting">
               <img
                 src={components.ImageChat}
+                alt=""
+                role="button"
+                // onClick={() => {
+                //   handleCommentClick(post.id);
+                // }}
+              />
+              <p className="color-neutral-700">2</p>
+            </figure>
+            <figure className="Share-LikePosting">
+              <img
+                src={components.ImageShare}
+                alt=""
+                role="button"
+                // onClick={() => {
+                //   handleCommentClick(post.id);
+                // }}
+              />
+              <figcaption></figcaption>
+            </figure>
+            <figure className="Bookmarks-LikePosting">
+              <img
+                src={components.ImageBookmarks}
                 alt=""
                 role="button"
                 // onClick={() => {

@@ -13,8 +13,8 @@ function AboutHv() {
     });
   }, [displayWidth]);
   return (
-    <div className="Container bcolor-neutral-5">
-      <div className="Container-description bcolor-neutral-5">
+    <div className="Container bcolor-neutral-50">
+      <div className="Container-description bcolor-neutral-50">
         <div className="Container-description1">
           <header className="Judul">
             <div className="Judul1">
@@ -52,7 +52,7 @@ function AboutHv() {
             <section className="button-Auth">
               <div className="button-Auth-login flex flex-justify-center">
                 <button
-                  className="bcolor-primary-30"
+                  className="bcolor-primary-400"
                   onClick={() => navigate("/login")}
                 >
                   Login

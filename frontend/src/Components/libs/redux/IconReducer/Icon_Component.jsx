@@ -1,8 +1,8 @@
-import ImageLove from "../../../img/Vector-Like.png";
+import ImageLove from "../../../img/Vector-Like.svg";
 import ImageLikeLove from "../../../img/heart-red.svg";
-import ImageChat from "../../../img/Vector-Chat.png";
-import ImageShare from "../../../img/Vector-Share.png";
-import ImageBookmarks from "../../../img/Vector-Save.png";
+import ImageChat from "../../../img/Vector-Chat.svg";
+import ImageShare from "../../../img/Vector-Share.svg";
+import ImageBookmarks from "../../../img/Vector-Bookmarks.svg";
 import ImageChat2 from "../../../img/chat-components.svg";
 import ImageDummy2 from "../../../img/Frame_10.png";
 import ImageDummy from "../../../img/imageDummy2.png";
@@ -31,7 +31,9 @@ import alertRed from "../../../img/alert-red2.svg";
 import Bookmarked from "../../../img/bookmark-line.svg";
 import LogoutRed from "../../../img/Logout-red.svg";
 import ArrowRight from "../../../img/arrow-right.svg";
+import ArrowLeft from "../../../img/arrow-left.svg";
 import IconAddPost from "../../../img/Vector-AddPost.svg";
+import IconSuccessReport from "../../../img/Vector-SuccessReport.svg";
 
 //
 import IconListHome from "../../../img/Vector-Home.svg";
@@ -96,7 +98,9 @@ let initialState = {
   Bookmarked,
   LogoutRed,
   ArrowRight,
+  ArrowLeft,
   IconAddPost,
+  IconSuccessReport,
 };
 const IconComponent = createSlice({
   name: "icon",
