@@ -1,6 +1,10 @@
 import React, { Fragment } from "react";
 import "../../../../css/Option/OptionUpload.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { CheckMyPostUser } from "../../../../libs/redux/CheckReducer/Check";
+
 export default function OptionUpload({ popCome }) {
+  const dispatch = useDispatch();
   return (
     <Fragment>
       {popCome && (
@@ -12,7 +16,10 @@ export default function OptionUpload({ popCome }) {
           <section className="OptionUpload-Story">
             <p className="paragraph-semibold">Story</p>
           </section>
-          <section className="OptionUpload-Post">
+          <section
+            className="OptionUpload-Post"
+            onClick={() => dispatch(CheckMyPostUser(true))}
+          >
             <p className="paragraph-semibold">Post</p>
           </section>
         </article>

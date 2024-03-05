@@ -147,7 +147,10 @@ function SubmitReportSpamAndThisLike({ Close, IconSuccessReport }) {
               <img src={IconSuccessReport} alt="" />
             </header>
             <section className="content-section">
-              <p className="paragraph-semibold" style={{ fontSize: "22px" }}>
+              <p
+                className="paragraph-semibold"
+                style={{ fontSize: "22px", textAlign: "center" }}
+              >
                 Terimakasih telah memberi tahu kami{" "}
               </p>
               <p
@@ -156,6 +159,7 @@ function SubmitReportSpamAndThisLike({ Close, IconSuccessReport }) {
                   fontSize: "16px",
                   letterSpacing: "0.5px",
                   paddingTop: "10px",
+                  textAlign: "center",
                 }}
               >
                 Masukanmu sangat membantu kami menjaga kebahagiaan dalam

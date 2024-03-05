@@ -34,6 +34,9 @@ import ArrowRight from "../../../img/arrow-right.svg";
 import ArrowLeft from "../../../img/arrow-left.svg";
 import IconAddPost from "../../../img/Vector-AddPost.svg";
 import IconSuccessReport from "../../../img/Vector-SuccessReport.svg";
+import IconChangeBgStory from "../../../img/Vector-ChangeColor.svg";
+import IconChangeFontStory from "../../../img/Vector-ChangeFont.svg";
+import IconResetStory from "../../../img/Vector-Reset.svg";
 
 //
 import IconListHome from "../../../img/Vector-Home.svg";
@@ -101,6 +104,9 @@ let initialState = {
   ArrowLeft,
   IconAddPost,
   IconSuccessReport,
+  IconChangeBgStory,
+  IconChangeFontStory,
+  IconResetStory,
 };
 const IconComponent = createSlice({
   name: "icon",

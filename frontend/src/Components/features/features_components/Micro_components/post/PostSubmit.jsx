@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
 import PostCropImageSubmit from "./PostCropImageSubmit";
-import { useNavigate } from "react-router-dom";
 
 import LoadingCircle from "../../../Loading/LoadingCircle";
 import {
@@ -25,20 +24,20 @@ function PostSubmit() {
   const [crop, setCropPhoto] = useState(false);
   const [doneSubmit, setDoneSubmit] = useState(false);
   const [profile, setProfile] = useState({});
-  const navigate = useNavigate();
 
   const components = useSelector((state) => state.icons);
   const postComponent = useSelector((state) => state.images);
   const dispatch = useDispatch();
 
-  // function handleImageSubmit(e) {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setUploadFile(file);
-  //     setPreview(URL.createObjectURL(file));
-  //     setCropPhoto(true);
-  //   }
-  // }
+  function handleImageSubmit(e) {
+    console.log("oke");
+    // const file = e.target.files[0];
+    // if (file) {
+    //   setUploadFile(file);
+    //   setPreview(URL.createObjectURL(file));
+    //   setCropPhoto(true);
+    // }
+  }
 
   // async function getUserProfile() {
   //   try {
@@ -55,32 +54,33 @@ function PostSubmit() {
   //   }
   // }
 
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   setDoneSubmit(true);
-  //   const { desc, like } = values;
-  //   const formData = new FormData();
-  //   formData.append("desc", desc);
-  //   formData.append("like", like);
-  //   formData.append("file", file);
-  //   try {
-  //     await axios
-  //       .post("http://localhost:5000/posting/new_content", formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //         withCredentials: true,
-  //       })
-  //       .then((res) => {
-  //         setDoneSubmit(false);
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setDoneSubmit(true);
+    console.log("Okwe");
+    // const { desc, like } = values;
+    // const formData = new FormData();
+    // formData.append("desc", desc);
+    // formData.append("like", like);
+    // formData.append("file", file);
+    // try {
+    //   await axios
+    //     .post("http://localhost:5000/posting/new_content", formData, {
+    //       headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //       withCredentials: true,
+    //     })
+    //     .then((res) => {
+    //       setDoneSubmit(false);
 
-  //         window.location.reload();
-  //       })
-  //       .catch(({ response }) => {});
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
+    //       window.location.reload();
+    //     })
+    //     .catch(({ response }) => {});
+    // } catch (err) {
+    //   console.error(err);
+    // }
+  }
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -114,7 +114,7 @@ function PostSubmit() {
       >
         <header className="HeaderPostStatus">
           <figure className="ImageProfilPost">
-            <img src={components.imgDummy} alt={"asdasd"} />
+            <img src={components.ImageDummy} alt={"asdasd"} />
           </figure>
           <figure
             className="CloseProfilPost"
