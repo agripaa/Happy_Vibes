@@ -31,7 +31,7 @@ export default function OptionReportPost() {
                 CheckSubmitReport({
                   popUp: true,
                   index: 0,
-                  typeReport: "Spam",
+                  typeReport: "Confirm",
                 })
               );
               dispatch(CheckReportPosting(false));
@@ -66,7 +66,7 @@ export default function OptionReportPost() {
                 CheckSubmitReport({
                   popUp: true,
                   index: 0,
-                  typeReport: "ThisLike",
+                  typeReport: "Confirm",
                 })
               );
               dispatch(CheckReportPosting(false));

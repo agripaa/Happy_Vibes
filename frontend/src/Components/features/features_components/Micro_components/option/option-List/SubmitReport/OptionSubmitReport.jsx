@@ -19,7 +19,9 @@ export default function OptionSubmitReport() {
     if (loading) {
       setTimeout(() => {
         setLoading(false);
-        dispatch(CheckSubmitReport({ popUp: false, index: 0, typeReport: "" }));
+        dispatch(
+          CheckSubmitReport({ popUp: true, index: 0, typeReport: "Confirm" })
+        );
       }, 3000);
     }
   }, [loading]);
@@ -34,8 +36,7 @@ export default function OptionSubmitReport() {
           loading={loading}
           setLoading={setLoading}
         />
-      ) : checkSubmitReport.typeReport === "Spam" ||
-        checkSubmitReport.typeReport === "ThisLike" ? (
+      ) : checkSubmitReport.typeReport === "Confirm" ? (
         <SubmitReportSpamAndThisLike
           Close={Close}
           IconSuccessReport={IconSuccessReport}
@@ -147,7 +148,10 @@ function SubmitReportSpamAndThisLike({ Close, IconSuccessReport }) {
               <img src={IconSuccessReport} alt="" />
             </header>
             <section className="content-section">
-              <p className="paragraph-semibold" style={{ fontSize: "22px" }}>
+              <p
+                className="paragraph-semibold"
+                style={{ fontSize: "22px", textAlign: "center" }}
+              >
                 Terimakasih telah memberi tahu kami{" "}
               </p>
               <p
@@ -156,6 +160,7 @@ function SubmitReportSpamAndThisLike({ Close, IconSuccessReport }) {
                   fontSize: "16px",
                   letterSpacing: "0.5px",
                   paddingTop: "10px",
+                  textAlign: "center",
                 }}
               >
                 Masukanmu sangat membantu kami menjaga kebahagiaan dalam
