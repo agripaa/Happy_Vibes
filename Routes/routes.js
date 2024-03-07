@@ -55,8 +55,8 @@ router.use('/category-stories', routeCategoryStories);
 router.use('/image-stories', routeImageStories);
 router.use('/text-stories', routeTextStories);
 router.use('/background-stories', routeBackgroundStories);
-router.use('font-stories', routeFontStories);
+router.use('/font-stories', routeFontStories);
 router.use('/bookmark-collection', routeBookmarkCollection);
-router.use('bookmark-posting', routeBookmarkPosting);
+router.use('/bookmark-posting', routeBookmarkPosting);
 
 module.exports = router;

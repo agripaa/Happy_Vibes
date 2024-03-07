@@ -59,17 +59,6 @@ const getAllContent = async (req, res) => {
     }
 };
 
-function generateRandomIndices(totalItems, count) {
-  const indices = [];
-  while (indices.length < count) {
-    const randomIndex = Math.floor(Math.random() * totalItems) + 1;
-    if (!indices.includes(randomIndex)) {
-      indices.push(randomIndex);
-    }
-  }
-  return indices;
-}
-
   const getPostUser = async(req, res) => {
     try {
       const postings = await Posting.findAll({
