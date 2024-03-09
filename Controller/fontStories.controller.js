@@ -9,5 +9,15 @@ module.exports = {
             console.error(error);
             res.status(500).json({status: 500, msg: error.message, data: null});
         }
+    },
+    createFontCategory: async function(req, res) {
+        const { type_font } = req.body
+        try {
+            await FontStories.create({type_font})
+            res.status(200).json({status: 200, msg: 'Font Category created successfully!'})
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({status: 500, msg: error.message, data: null});
+        }
     }
 }

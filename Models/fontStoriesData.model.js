@@ -14,7 +14,7 @@ const FontStories = db.define('font_stories', {
     type_font: {
         type: DataTypes.STRING,
         validate: {
-            len: [80]
+            len: [0, 80]
         }
     }
 }, {freezeTableName: true});

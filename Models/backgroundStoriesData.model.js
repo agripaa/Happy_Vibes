@@ -14,7 +14,7 @@ const BackgroundStories = db.define('background_stories', {
     color_code: {
         type: DataTypes.STRING,
         validate: {
-            len: [60]
+            len: [0, 60]
         }
     }
 }, {freezeTableName: true});

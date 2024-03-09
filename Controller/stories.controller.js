@@ -2,6 +2,7 @@ const CategoryStories = require('../Models/categoryStoriesData.model.js');
 const ImageStories = require('../Models/imageStoriesData.model.js');
 const Stories = require('../Models/storiesData.model.js');
 const path = require('path');
+const TextStories = require('../Models/textStoriesData.model.js');
 
 module.exports = {
     getAll: async function(req, res) {
@@ -48,7 +49,9 @@ module.exports = {
     },
     handleTextUpload: async function (text_stories, stories, res){
         try {
-            
+            const text_stories = await TextStories.create({
+                text_stories
+            })
         } catch (error) {
             console.error(error);
             res.status(500).json({ status: 500, msg: error.message });
@@ -56,7 +59,7 @@ module.exports = {
     },
     uploadStories: async function(req, res) {
         const { userId, files } = req;
-        const { category_stories_id, text_stories } = req.body;
+        const { category_stories_id, text_stories, background_id, font_id } = req.body;
 
         try {
             const category_stories = await CategoryStories.findOne({
