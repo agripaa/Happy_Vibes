@@ -18,6 +18,7 @@
     "argon2": "^0.30.3",
     "body-parser": "^1.20.2",
     "connect-session-sequelize": "^7.1.7",
+    "connect-timeout": "^1.9.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",

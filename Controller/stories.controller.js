@@ -8,7 +8,6 @@ module.exports = {
     getAll: async function(req, res) {
         try {
             const stories = await Stories.findAll();
-
             res.status(200).json({status: 200, data: stories});
         } catch (error) {
             console.error(error);
@@ -47,11 +46,16 @@ module.exports = {
             res.status(500).json({ status: 500, msg: error.message });
         }
     },
-    handleTextUpload: async function (text_stories, stories, res){
+    handleTextUpload: async function (text_stories, stories, background_id, font_id, res){
         try {
-            const text_stories = await TextStories.create({
-                text_stories
+            const text_story = await TextStories.create({
+                text_stories,
+                background_id,
+                font_id,
+                stories_id: stories.id
             })
+
+            res.status(200).json({status: 200, text_story})
         } catch (error) {
             console.error(error);
             res.status(500).json({ status: 500, msg: error.message });
@@ -76,7 +80,7 @@ module.exports = {
             if (category_stories['category_story'] === "IMAGE") {
                 module.exports.handleImageUpload(files, text_stories, stories, res);
             } else if (category_stories['category_story'] === "TEXT") {
-                handleTextUpload(text_stories, stories, res);
+                module.exports.handleTextUpload(text_stories, stories, background_id, font_id, res);
             } else {
                 res.status(404).json({ status: 404, msg: "Category story does not exist!" });
             }
