@@ -23,16 +23,12 @@ const routeBackgroundStories = require('./backgroundStories.route.js');
 const routeFontStories = require('./fontStories.route.js');
 const routeBookmarkCollection = require('./bookmarkCollection.route.js');
 const routeBookmarkPosting = require('./bookmarkPosting.route.js');
+const routeRatioImagePosting = require('./ratioImagePosting.route.js')
 
 const router = express.Router();
+const corsHeader = require('../middleware/corsHeader.middleware.js');
 
-router.use((req, res, next) => {
-    res.header(
-        'Access-Control-Allow-Headers',
-        'x-access-token, Origin, Content-Type, Accept',
-    );
-    next();
-});
+router.use(corsHeader);
 
 router.use('/auth', routeAuth);
 router.use('/background', routeBackground);
@@ -58,5 +54,6 @@ router.use('/background-stories', routeBackgroundStories);
 router.use('/font-stories', routeFontStories);
 router.use('/bookmark-collection', routeBookmarkCollection);
 router.use('/bookmark-posting', routeBookmarkPosting);
+router.use('/ratio-posting', routeRatioImagePosting);
 
 module.exports = router;
