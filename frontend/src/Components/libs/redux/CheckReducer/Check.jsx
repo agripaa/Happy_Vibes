@@ -16,6 +16,7 @@ let InitialState = {
   checkReportAccount: false,
   checkBgMore: false,
   checkBgUpload: false,
+  checkUploadStory: false,
   checkSubmitReport: {
     PopUp: false,
     index: 0,
@@ -77,6 +78,9 @@ const SliceCheck = createSlice({
     CheckSubmitReport: (state, action) => {
       state.checkSubmitReport = action.payload;
     },
+    CheckUploadStory: (state, action) => {
+      state.checkUploadStory = action.payload;
+    },
   },
 });
 
@@ -97,5 +101,6 @@ export const {
   CheckBgMore,
   CheckBgUpload,
   CheckSubmitReport,
+  CheckUploadStory,
 } = SliceCheck.actions;
 export default SliceCheck.reducer;

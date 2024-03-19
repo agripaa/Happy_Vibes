@@ -37,6 +37,7 @@ import IconSuccessReport from "../../../img/Vector-SuccessReport.svg";
 import IconChangeBgStory from "../../../img/Vector-ChangeColor.svg";
 import IconChangeFontStory from "../../../img/Vector-ChangeFont.svg";
 import IconResetStory from "../../../img/Vector-Reset.svg";
+import IconUploadImgStory from "../../../img/Vector-UploadImgStory.svg";
 
 //
 import IconListHome from "../../../img/Vector-Home.svg";
@@ -107,6 +108,7 @@ let initialState = {
   IconChangeBgStory,
   IconChangeFontStory,
   IconResetStory,
+  IconUploadImgStory,
 };
 const IconComponent = createSlice({
   name: "icon",

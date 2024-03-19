@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import InputPostComponents from "./Component_PopOptions/InputPostComponents";
 import AlertDeleteAccount from "../features_components/Micro_components/alert/AlertDeleteAccount";
 import BugReport from "../features_components/Micro_components/bug/BugReport";
-import PostStory from "../features_components/Micro_components/post/PostStory";
+import PostStory from "../features_components/Micro_components/post/PostStory/PostStory";
 
 function PopOptions() {
-  const { dltCheck, checkPost, CheckBugReport } = useSelector(
+  const { dltCheck, checkPost, CheckBugReport, checkUploadStory } = useSelector(
     (state) => state.check
   );
 
@@ -16,7 +16,7 @@ function PopOptions() {
       {checkPost ? <InputPostComponents /> : null}
       {dltCheck ? <AlertDeleteAccount /> : null}
       {CheckBugReport ? <BugReport /> : null}
-      {/* <PostStory /> */}
+      {checkUploadStory ? <PostStory /> : null}
     </Fragment>
   );
 }

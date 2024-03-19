@@ -1,7 +1,10 @@
 import React, { Fragment } from "react";
 import "../../../../css/Option/OptionUpload.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckMyPostUser } from "../../../../libs/redux/CheckReducer/Check";
+import {
+  CheckMyPostUser,
+  CheckUploadStory,
+} from "../../../../libs/redux/CheckReducer/Check";
 
 export default function OptionUpload({ popCome }) {
   const dispatch = useDispatch();
@@ -13,7 +16,10 @@ export default function OptionUpload({ popCome }) {
             popCome && `activeOptionUpload`
           }`}
         >
-          <section className="OptionUpload-Story">
+          <section
+            className="OptionUpload-Story"
+            onClick={() => dispatch(CheckUploadStory(true))}
+          >
             <p className="paragraph-semibold">Story</p>
           </section>
           <section
