@@ -19,6 +19,19 @@ module.exports = {
       res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
     }
   },
+  async getListFollower(req, res){
+    const { userId } = req;
+    try {
+      const user = await Users.findByPk(userId, {
+        attributes: ['uuid', 'name', 'followerCount', 'followingCount']
+      });
+
+      if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
+      res.status(200).json({ status: 200, result:user });
+    } catch (err) {
+      
+    }
+  },
   async followUser(req, res) {
     const followerId = req.params.id;
     const followingId = req.userId;
