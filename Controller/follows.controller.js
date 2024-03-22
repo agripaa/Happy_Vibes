@@ -1,10 +1,11 @@
 const Follows = require("../Models/followsData.model");
+const ImageProfile = require("../Models/imageProfileData.model");
 const Notifications = require("../Models/notifData.model");
 const Users = require("../Models/usersData.model");
 
 
 module.exports = {
-  async getFollowers(req, res) {
+  async getFollowsCount(req, res) {
     const { userId } = req;
     try {
       const user = await Users.findByPk(userId, {
@@ -19,17 +20,49 @@ module.exports = {
       res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
     }
   },
-  async getListFollower(req, res){
+  async getFollowers(req, res){
     const { userId } = req;
     try {
-      const user = await Users.findByPk(userId, {
-        attributes: ['uuid', 'name', 'followerCount', 'followingCount']
-      });
-
-      if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
-      res.status(200).json({ status: 200, result:user });
-    } catch (err) {
+      const listFollowers = await Follows.findAll({
+        where: {followingId: userId}
+      })
       
+      const follower = listFollowers.map(follow => follow.followerId)
+      if (!follower) return res.status(404).json({ status: 404, msg: 'you are has no followers' });
+      console.log(`list followers: ${follower}`)
+      const dataFollower = await Users.findAll({
+        where: {id: follower},
+        attributes: ['id', 'uuid', 'name', 'username', 'email', 'image_profile'],
+        include: [{model: ImageProfile}]
+      })
+
+      res.status(200).json({ status: 200, result: dataFollower });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
+    }
+  },
+  async getFollowing(req, res){
+    const {userId} = req;
+
+    try {
+      const listFollowing = await Follows.findAll({
+        where: {followingId: userId}
+      })
+      
+      const following = listFollowing.map(follow => follow.followingId)
+      if (!following) return res.status(404).json({ status: 404, msg: 'you are has no following' });
+
+      const dataFollowing = await Users.findAll({
+        where: {id: following},
+        attributes: ['id', 'uuid', 'name', 'username', 'email', 'image_profile'],
+        include: [{model: ImageProfile}]
+      })
+
+      res.status(200).json({ status: 200, result: dataFollowing });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
     }
   },
   async followUser(req, res) {
