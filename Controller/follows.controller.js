@@ -24,12 +24,12 @@ module.exports = {
     const { userId } = req;
     try {
       const listFollowers = await Follows.findAll({
-        where: {followingId: userId}
+        where: {followerId: userId}
       })
       
-      const follower = listFollowers.map(follow => follow.followerId)
-      if (!follower) return res.status(404).json({ status: 404, msg: 'you are has no followers' });
-      console.log(`list followers: ${follower}`)
+      console.log(`list followers: ${listFollowers}`)
+      const follower = listFollowers.map(follow => follow.followingId)
+      if (!follower) return res.status(404).json  ({ status: 404, msg: 'you are has no followers' });
       const dataFollower = await Users.findAll({
         where: {id: follower},
         attributes: ['id', 'uuid', 'name', 'username', 'email', 'image_profile'],
@@ -50,8 +50,8 @@ module.exports = {
         where: {followingId: userId}
       })
       
-      const following = listFollowing.map(follow => follow.followingId)
-      if (!following) return res.status(404).json({ status: 404, msg: 'you are has no following' });
+      const following = listFollowing.map(follow => follow.followerId)
+      if (!following) return res.status(404).json ({ status: 404, msg: 'you are has no following' });
 
       const dataFollowing = await Users.findAll({
         where: {id: following},
@@ -112,6 +112,42 @@ module.exports = {
       res
         .status(500)
         .json({ status: 500, msg: "Internal server error", err: err.message });
+    }
+  },
+  async getMutualFollows(req, res) {
+    const { userId } = req;
+    try {
+      const user = await Users.findByPk(userId);
+
+      if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
+
+      const userFollowings = await Follows.findAll({
+        where: { followerId: userId }
+      });
+
+      const userFollowers = await Follows.findAll({
+        where: { followingId: userId }
+      });
+
+      const userFollowingIds = userFollowings.map(follow => follow.followingId);
+      const userFollowerIds = userFollowers.map(follow => follow.followerId);
+
+      const mutualFollowIds = userFollowingIds.filter(id => userFollowerIds.includes(id));
+
+      if (mutualFollowIds.length === 0) {
+        return res.status(200).json({ status: 200, msg: 'No mutual follows found', result: [] });
+      }
+
+      const mutualFollows = await Users.findAll({
+        where: { id: mutualFollowIds },
+        attributes: ['id', 'uuid', 'name', 'username', 'email', 'image_profile'],
+        include: [{ model: ImageProfile }]
+      });
+
+      res.status(200).json({ status: 200, result: mutualFollows });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: 500, msg: 'Internal server error', err: err.message });
     }
   },
 }
