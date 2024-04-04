@@ -1,6 +1,7 @@
 const Like = require("../Models/likeData.model");
 const Posting = require("../Models/postingData.model");
 const Users = require("../Models/usersData.model");
+const { attributesLikePosting } = require("../utils/attributes.utils");
 
 module.exports = {
   async getLike(req, res) {
@@ -8,7 +9,7 @@ module.exports = {
     try {
         const like = await Posting.findOne({
             where: {id: postId},
-            attributes: ['id', 'uuid', 'like']
+            attributes: attributesLikePosting
         })
         res.status(200).json({status: 200, result: like})
     } catch (err) {
@@ -24,7 +25,7 @@ module.exports = {
           where: { id: postId },
           include: [{
             model: Users,
-            attributes: ['id', 'uuid', 'name']
+            attributes: attributesIdUUIDNameUser
           }]
         });
         const user = await Users.findOne({

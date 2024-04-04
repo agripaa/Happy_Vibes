@@ -7,28 +7,28 @@ const path = require('path');
 const ImagePosting = require('../Models/imagePostingData.model.js');
 const RatioImage = require('../Models/ratioImagePostingData.model.js');
 const ImageProfile = require('../Models/imageProfileData.model.js');
+const { attributesUserImageProfileId, attributesImageProfile, attributesLikeUserId, attributesImagePosting, attributesRatioImage } = require('../utils/attributes.utils.js');
 
-const attributesUser = ['id', 'uuid', 'name', 'username', 'image_profile'];
 const subDataInclude = [
   {
     model: Users,
-    attributes: attributesUser,
+    attributes: attributesUserImageProfileId,
     include: [{
       model: ImageProfile,
-      attributes: ['name_image', 'url_image']
+      attributes: attributesImageProfile
     }]
   },
   {
     model: Like,
     as: 'likes',
-    attributes: ['userId'],
+    attributes: attributesLikeUserId,
   },
   {
     model: ImagePosting,
-    attributes: ['name_img', 'url', 'ratio_id'],
+    attributes: attributesImagePosting,
     include: [{
       model: RatioImage,
-      attributes: ['ratio']
+      attributes: attributesRatioImage
     }]
   }
 ]

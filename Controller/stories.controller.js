@@ -3,6 +3,7 @@ const ImageStories = require('../Models/imageStoriesData.model.js');
 const Stories = require('../Models/storiesData.model.js');
 const path = require('path');
 const TextStories = require('../Models/textStoriesData.model.js');
+const { attributesCategoryStory } = require('../utils/attributes.utils.js');
 
 module.exports = {
     getAll: async function(req, res) {
@@ -68,7 +69,7 @@ module.exports = {
         try {
             const category_stories = await CategoryStories.findOne({
                 where: { id: category_stories_id },
-                attributes: ['category_story']
+                attributes: attributesCategoryStory
             });
 
             const stories = await Stories.create({

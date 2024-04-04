@@ -13,7 +13,8 @@ const Follows = require('../Models/followsData.model.js');
 const CodeOTP = require('../Models/codeOTP.model.js');
 const { generateOTP, sendOTP } = require('./otp.controller.js');
 const ImageProfile = require('../Models/imageProfileData.model.js');
-const { getRandomPhoto } = require('./randomPhoto.controller.js')
+const { getRandomPhoto } = require('./randomPhoto.controller.js');
+const { attributesFollowingId, attributesBackground, attributesImageProfile } = require('../utils/attributes.utils.js');
 
 module.exports = {
   async getUsers(req, res) {
@@ -33,15 +34,15 @@ module.exports = {
           {
             model: Follows,
             as: 'followers',
-            attributes: ['followingId']
+            attributes: attributesFollowingId
           },
           {
             model: Background,
-            attributes: ['name_bg', 'url_bg']
+            attributes: attributesBackground
           },
           {
             model: ImageProfile,
-            attributes: ['url_image', 'name_image']
+            attributes: attributesImageProfile
           }
         ]      
       });
@@ -65,11 +66,11 @@ module.exports = {
         include: [
           {
             model: Background,
-            attributes: ['name_bg', 'url_bg']
+            attributes: attributesBackground
           },
           {
             model: ImageProfile,
-            attributes: ['url_image', 'name_image']
+            attributes: attributesImageProfile
           }
         ]    
       });

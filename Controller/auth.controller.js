@@ -1,5 +1,6 @@
 const Background = require("../Models/backgroundData.model");
 const ImageProfile = require("../Models/imageProfileData.model");
+const { attributesUser, attributesImageProfile, attributesBackground }  = require('../utils/attributes.utils.js');
 const Users = require("../Models/usersData.model");
 const argon2 = require("argon2");
 
@@ -33,18 +34,18 @@ module.exports = {
         if(!req.session.userId) return res.status(401).json({status:401, msg:"Please login your account"})
 
         const user = await Users.findOne({
-            attributes: ['id','uuid','username', 'name', 'desc', 'email', 'image_profile', 'verify', 'backgroundId','followerCount', 'followingCount'],
+            attributes: attributesUser,
             where: {
                 uuid: req.session.userId
             },
             include: [
                 {
                     model: ImageProfile,
-                    attributes: ['url_image', 'name_image']
+                    attributes: attributesImageProfile
                 },
                 {
                     model: Background,
-                    attributes: ['url_bg', 'name_bg']
+                    attributes: attributesBackground
                 }
             ]
         })

@@ -5,14 +5,14 @@ const Notifications = require('../Models/notifData.model.js');
 const Posting = require('../Models/postingData.model.js');
 const RatioImage = require('../Models/ratioImagePostingData.model.js');
 const Users = require('../Models/usersData.model.js');
+const { attributesUserImageProfileId, attributesImageProfile, attributesPostingDescription, attributesImagePosting } = require('../utils/attributes.utils.js');
 
-const attributesUser = ['id', 'name', 'image_profile'];
 const includeUserDatas = {
     model: Users,
-    attributes: attributesUser,
+    attributes: attributesUserImageProfileId,
     include: [{
         model: ImageProfile,
-        attributes: ['url_image', 'name_image']
+        attributes: attributesImageProfile
     }]
 };
 
@@ -27,13 +27,13 @@ module.exports = {
                     includeUserDatas,
                     {
                     model: Posting,
-                    attributes: ['desc'],
+                    attributes: attributesPostingDescription,
                     include: [{
                         model: ImagePosting,
-                        attributes: ['url', 'name_img', 'ratio_id'],
+                        attributes: attributesImagePosting,
                         include: [{
                             model: RatioImage,
-                            attributes: ['ratio']
+                            attributes: atatributesRatioImage
                         }]
                     }]
                 }],

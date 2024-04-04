@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const Users = require("../Models/usersData.model");
 const ImageProfile = require("../Models/imageProfileData.model");
 const TypeBug = require("../Models/typeBugData.model");
+const { attributesUserImageProfileId } = require("../utils/attributes.utils");
 
 require('dotenv').config();
 
@@ -12,7 +13,7 @@ module.exports = {
       const bugReport = await BugReport.findAll({
         include:[{
           model: Users,
-          attributes: ['id', 'name', 'username', 'email', 'image_profile'],
+          attributes: attributesUserImageProfileId,
           include: [{model: ImageProfile}]
         }]
       })

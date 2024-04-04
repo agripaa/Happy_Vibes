@@ -1,6 +1,7 @@
 const ImageProfile = require("../Models/imageProfileData.model");
 const Users = require("../Models/usersData.model");
 const { Op }  = require('sequelize');
+const { attributesImageProfile, attributesUserImageProfileId } = require("../utils/attributes.utils");
 
 module.exports = {
     async searchTerm(req, res){
@@ -18,11 +19,11 @@ module.exports = {
                     ]
                 },
                 limit: 15,
+                attributes: attributesUserImageProfileId,
                 include: [{
                     model: ImageProfile,
-                    attributes: ['name_image', 'url_image']
+                    attributes: attributesImageProfile
                 }],
-                attributes: ['id', 'uuid', 'name', 'username', 'image_profile']
             });
 
             return res.status(200).json({status: 200, result: users});

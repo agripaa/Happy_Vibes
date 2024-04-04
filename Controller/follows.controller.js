@@ -2,14 +2,14 @@ const Follows = require("../Models/followsData.model");
 const ImageProfile = require("../Models/imageProfileData.model");
 const Notifications = require("../Models/notifData.model");
 const Users = require("../Models/usersData.model");
-
+const { attributesFollowCountUser, attributesFollowsListUser } = require('../utils/attributes.utils.js');
 
 module.exports = {
   async getFollowsCount(req, res) {
     const { userId } = req;
     try {
       const user = await Users.findByPk(userId, {
-        attributes: ['uuid', 'name', 'followerCount', 'followingCount']
+        attributes: attributesFollowCountUser
       });
 
       if (!user) return res.status(404).json({ status: 404, msg: 'User not found' });
@@ -27,12 +27,11 @@ module.exports = {
         where: {followerId: userId}
       })
       
-      console.log(`list followers: ${listFollowers}`)
       const follower = listFollowers.map(follow => follow.followingId)
       if (!follower) return res.status(404).json  ({ status: 404, msg: 'you are has no followers' });
       const dataFollower = await Users.findAll({
         where: {id: follower},
-        attributes: ['id', 'uuid', 'name', 'username', 'email', 'image_profile'],
+        attributes: attributesFollowsListUser,
         include: [{model: ImageProfile}]
       })
 
@@ -55,7 +54,7 @@ module.exports = {
 
       const dataFollowing = await Users.findAll({
         where: {id: following},
-        attributes: ['id', 'uuid', 'name', 'username', 'email', 'image_profile'],
+        attributes: attributesFollowsListUser,
         include: [{model: ImageProfile}]
       })
 
@@ -140,7 +139,7 @@ module.exports = {
 
       const mutualFollows = await Users.findAll({
         where: { id: mutualFollowIds },
-        attributes: ['id', 'uuid', 'name', 'username', 'email', 'image_profile'],
+        attributes: attributesFollowsListUser,
         include: [{ model: ImageProfile }]
       });
 
