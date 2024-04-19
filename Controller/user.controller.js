@@ -109,6 +109,9 @@ module.exports = {
             const OTP = generateOTP();
             const profile = await getRandomPhoto();
 
+            if (!profile) return res.status(403).json({status: 403, msg: "Random photo is null"});
+            if (!OTP) return res.status(403).json({status: 402, msg: "OTP is not genereated"});
+
             sendOTP(email, OTP);
 
             const image_profile = await ImageProfile.create({
