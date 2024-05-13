@@ -33,10 +33,9 @@ module.exports = {
     handleBookmarkPosting: async function (req, res) {
         const { postId, bookmark_coll_id } = req.body;
 
-        const bookmark_post = await BookmarkPosting.findOne({ where: { bookmark_coll_id } })
-
+        const bookmark_post = await BookmarkPosting.findOne({ where: { bookmark_coll_id: bookmark_coll_id } })
         try {
-            if (bookmark_coll_id === bookmark_post.bookmark_coll_id && !bookmark_post.bookmark_coll_id) {
+            if (!bookmark_post) {
                 try {
                     const bookmark_posting = await BookmarkPosting.create({postId, bookmark_coll_id});
                     return res.status(200).json({ status: 200, msg: "Bookmark post add to collection successfully", bookmark_data: {bookmark_posting}});
@@ -44,7 +43,9 @@ module.exports = {
                     console.error(error);
                     res.status(500).json({ status: 500, error_msg: error.message, data: null })
                 }
-            } else {
+            } 
+            
+            if (bookmark_post.bookmark_coll_id == bookmark_coll_id){
                 try {
                     await BookmarkPosting.destroy({where: {bookmark_coll_id: bookmark_coll_id}})
                     return res.status(200).json({ status: 200, msg: "Bookmark post remove to collection successfully"});
@@ -53,6 +54,7 @@ module.exports = {
                     res.status(500).json({ status: 500, error_msg: error.message, data: null })
                 }
             }
+
         } catch (error) {
             console.error(error);
             res.status(500).json({ status: 500, error_msg: error.message, data: null })
