@@ -9,14 +9,13 @@ module.exports = {
         
         const userOtp = await CodeOTP.findOne({otp});        
         if(!userOtp) return res.status(404).json({status: 404, msg: 'wrong otp code'})
-
         if (userOtp.otp !== otp)
         return res
             .status(400)
             .json({ status: 400, msg: 'code otp yang anda masukkan tidak sesuai' });
         try {
         await Users.update({
-          verify: true,
+          verify: true || 1,
         }, {where: {verify_id: userOtp.id}});
 
         await CodeOTP.destroy({
