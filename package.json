@@ -4,11 +4,10 @@
   "description": "",
   "main": "./api/index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev:app": "nodemon server.js",
+    "start": "node ./api/server.js",
+    "dev:app": "nodemon ./api/server.js",
     "dev": "nodemon ./api/index.js",
-    "vercel-build": "echo hello",
-    "test:app": "jest server.js"
+    "test:app": "npx jest"
   },
   "include": [
     "./api/*.js"
@@ -39,6 +38,7 @@
     "node": "20.10.0"
   },
   "devDependencies": {
-    "prisma": "^5.9.1"
+    "prisma": "^5.9.1",
+    "supertest": "^7.0.0"
   }
 }
