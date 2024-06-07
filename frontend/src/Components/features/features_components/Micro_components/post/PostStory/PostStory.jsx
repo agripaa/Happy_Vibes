@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../../../../css/Post/PostStory.scss";
+import "@css/Post/PostStory.scss";
 import { useDispatch, useSelector } from "react-redux";
 
 import PostStorytext from "./Component/StoryText";

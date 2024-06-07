@@ -1,0 +1,68 @@
+@mixin BorderRadiusOptionStories($arrow) {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  cursor: pointer;
+  p {
+    font-weight: 600;
+    padding: 13px 8px;
+  }
+
+  &:hover {
+    @if $arrow == top {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    } @else if $arrow == bottom {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    background-color: #ffe4a8;
+  }
+}
+.ShadowOptionStories {
+  width: 100vw;
+  height: 100svh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ShadowManageStories {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 11, 11, 0.5);
+}
+.WrapOptionStories {
+  width: 490px;
+  height: 100%;
+  position: relative;
+}
+.DisplayOptionStories {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  border-radius: 8px;
+  right: 15px;
+  top: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.DeleteStories {
+  @include BorderRadiusOptionStories(top);
+}
+.ManageStories {
+  @include BorderRadiusOptionStories(bottom);
+}

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@css/*": ["./src/Components/css/*"],
+      "@icons/*": ["./src/Components/img/*"],
+      "@redux/*": ["./src/Components/libs/redux/*"],
+      "@reactQuery/*": ["./src/Components/libs/react-query/*"]
+    }
+  }
+}

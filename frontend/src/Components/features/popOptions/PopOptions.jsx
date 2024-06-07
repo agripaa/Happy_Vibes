@@ -6,6 +6,8 @@ import AlertDeleteAccount from "../features_components/Micro_components/alert/Al
 import BugReport from "../features_components/Micro_components/bug/BugReport";
 import PostStory from "../features_components/Micro_components/post/PostStory/PostStory";
 
+import ContainerDisplayStories from "../homepage/Micro_ComponentHomePage/DisplayStories/ContainerDisplayStories";
+
 function PopOptions() {
   const { dltCheck, checkPost, CheckBugReport, checkUploadStory } = useSelector(
     (state) => state.check
@@ -17,6 +19,7 @@ function PopOptions() {
       {dltCheck ? <AlertDeleteAccount /> : null}
       {CheckBugReport ? <BugReport /> : null}
       {checkUploadStory ? <PostStory /> : null}
+      <ContainerDisplayStories />
     </Fragment>
   );
 }

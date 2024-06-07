@@ -1,7 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import "../../css/Homepage/Homepage.scss";
-import "../../css/Comment/Comment.scss";
-import "../../css/myLibrary.scss";
+import "@css/Homepage/Homepage.scss";
+import "@css/Homepage/BubbleStories.scss";
+import "@css/Comment/Comment.scss";
+import "@css/myLibrary.scss";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import FeaturePost_HomePage from "./Micro_ComponentHomePage/FeaturesPost_HomePage";
 
 import { useDispatch, useSelector } from "react-redux";
