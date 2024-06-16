@@ -31,7 +31,7 @@ module.exports = {
       port: process.env.EMAIL_PORT,
       secure: process.env.EMAIL_SECURE,
       auth: {
-        user: process.env.EMAIL,
+        user: process.env.EMAIL_SENDER,
         pass: process.env.PASS_EMAIL_OTP,
       },
     });
@@ -48,8 +48,8 @@ module.exports = {
       const user = await Users.findOne({where: {id: req.userId}})
 
       const mailOptions = {
-        from: process.env.EMAIL,
-        to: process.env.EMAIL,
+        from: process.env.EMAIL_SENDER,
+        to: process.env.INTERNAL_EMAIL,
         subject: 'Bug Report!',
         text: `Title: ${title}\nType bug: ${type_bug.bug}\nBug Report: ${report}\nReporter: ${user.name}`,
       };

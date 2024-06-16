@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 const mysql2 = require('mysql2');
 require('dotenv').config();
 
-// use database for productions
+// use database for productions 
 
 // const db = new Sequelize(process.env.DB_URL, {
 //     dialect: process.env.DATABASE,

@@ -14,13 +14,13 @@ module.exports = {
             port: process.env.EMAIL_PORT,
             secure: process.env.EMAIL_SECURE,
             auth: {
-              user: process.env.EMAIL,
+              user: process.env.EMAIL_SENDER,
               pass: process.env.PASS_EMAIL_OTP,
             },
           });
     
             await transporter.sendMail({
-                from: process.env.EMAIL,
+                from: process.env.EMAIL_SENDER,
                 to: email,
                 subject: subject,
                 text: text,

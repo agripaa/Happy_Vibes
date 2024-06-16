@@ -1,0 +1,72 @@
+{
+    "False Information": [
+        "Konten yang secara eksplisit menyebar hoaks atau berita palsu.",
+        "Informasi yang secara tidak akurat menggambarkan peristiwa atau fakta.",
+        "Klaim kesehatan yang tidak terbukti atau pengobatan ajaib yang tidak didukung oleh bukti medis yang sah.",
+        "Teori konspirasi yang tidak memiliki dasar yang kuat dalam bukti atau fakta yang dapat diverifikasi.",
+        "Manipulasi gambar atau video untuk menyesatkan atau menipu pemirsa."
+    ],
+    "Scam or Fraud": [
+        "Penawaran investasi yang menjanjikan hasil yang tidak realistis atau tidak masuk akal.",
+        "Promosi produk atau layanan yang palsu atau menipu.",
+        "Penggalangan dana yang tidak jelas tujuannya.",
+        "Iklan atau penawaran yang meminta informasi pribadi tanpa alasan yang jelas atau tanpa izin yang tepat.",
+        "Penawaran barang atau layanan yang palsu atau mengabaikan regulasi yang berlaku."
+    ],
+    "Eating Disorders": [
+        "Konten yang memuji tubuh yang kurus atau mempromosikan citra tubuh yang tidak realistis.",
+        "Gambar atau teks yang memperkuat kepercayaan negatif tentang tubuh atau makanan.",
+        "Dukungan untuk perilaku makan yang ekstrem atau berbahaya.",
+        "Promosi diet yang ekstrem atau tindakan pengendalian berat badan yang tidak sehat.",
+        "Komentar atau saran yang meremehkan atau memicu kecemasan tentang penampilan fisik atau berat badan."
+    ],
+    "Suicide or Self-injury": [
+        "Konten yang mendukung atau meromantisasi tindakan bunuh diri atau penyakitan diri.",
+        "Materi yang secara eksplisit menggambarkan atau mengarahkan cara-cara untuk melukai diri sendiri.",
+        "Dorongan atau pernyataan yang menyalahkan atau mempermalukan individu yang mengalami masalah kesehatan mental.",
+        "Konten yang mengaburkan batas antara realitas dan fantasi yang berbahaya.",
+        "Tindakan atau konten yang meremehkan seriusnya masalah kesehatan mental."
+    ],
+    "Intellectual Property Violation": [
+        "Konten yang menggunakan materi yang dilindungi hak cipta tanpa izin atau lisensi.",
+        "Penjualan atau distribusi produk atau barang palsu atau bajakan.",
+        "Penggunaan merek dagang atau logo tanpa izin yang tepat.",
+        "Pembajakan atau distribusi ilegal software, musik, film, atau konten digital lainnya.",
+        "Penyalahgunaan atau manipulasi karya-karya kreatif orang lain tanpa persetujuan yang tepat."
+    ],
+    "Bullying or Harassment": [
+        "Konten yang menghina, mengejek, atau mengancam individu atau kelompok.",
+        "Pesan atau komentar yang memicu rasa takut, malu, atau kecemasan pada orang lain.",
+        "Penyebaran informasi pribadi atau pelecehan online terhadap individu.",
+        "Pembuatan atau penyebaran meme, gambar, atau video yang bermaksud merendahkan atau merugikan orang lain.",
+        "Tindakan atau komentar yang bertujuan untuk mengisolasi atau menyingkirkan seseorang dari komunitas."
+    ],
+    "Sale of Illegal or Regulated Goods": [
+        "Penjualan narkoba, senjata ilegal, obat-obatan berbahaya, atau barang lain yang diatur oleh hukum.",
+        "Penawaran atau promosi barang curian atau hasil kejahatan lainnya.",
+        "Penjualan produk ilegal seperti obat-obatan terlarang, barang curian, atau dokumen palsu.",
+        "Penawaran barang yang tidak sesuai dengan regulasi kesehatan atau keselamatan yang berlaku.",
+        "Tindakan yang melanggar undang-undang atau regulasi perdagangan internasional atau nasional."
+    ],
+    "Violence/Dangerous Organization": [
+        "Konten yang mempromosikan kekerasan fisik, pelecehan, atau tindakan agresif lainnya.",
+        "Materi yang memuji atau mendukung kelompok-kelompok teroris, kekerasan jalanan, atau organisasi berbahaya lainnya.",
+        "Pembebasan atau penyebaran informasi tentang cara membuat atau menggunakan senjata, bahan peledak, atau alat yang dapat merugikan.",
+        "Dukungan untuk perang atau konflik bersenjata yang merugikan.",
+        "Promosi atau pujian untuk kekerasan terhadap orang atau kelompok tertentu."
+    ],
+    "Hate Speech/Symbol": [
+        "Penggunaan bahasa atau simbol yang menghina atau merendahkan kelompok berdasarkan ras, agama, gender, orientasi seksual, atau atribut lainnya.",
+        "Konten yang mempromosikan intoleransi, diskriminasi, atau kebencian terhadap individu atau kelompok.",
+        "Pujian atau dukungan untuk organisasi atau gerakan yang secara terang-terangan mempromosikan kebencian atau supremasi rasial.",
+        "Tindakan atau pernyataan yang menyerang hak asasi manusia atau martabat individu atau kelompok.",
+        "Penyebaran teori konspirasi yang merendahkan atau menyalahkan kelompok tertentu atas masalah sosial atau ekonomi."
+    ],
+    "Nudity/Sexual Activity": [
+        "Konten yang menampilkan adegan seksual eksplisit atau tindakan seksual.",
+        "Gambar atau video yang menampilkan keadaan telanjang atau ketelanjangan secara tidak senonoh.",
+        "Materi yang memperlihatkan kekerasan seksual, pemerkosaan, atau eksploitasi seksual.",
+        "Promosi atau penawaran layanan prostitusi atau pornografi.",
+        "Konten yang memanfaatkan seksualitas seseorang tanpa izin atau dengan maksud merendahkan."
+    ]
+}

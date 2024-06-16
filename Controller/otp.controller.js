@@ -65,13 +65,13 @@ module.exports = {
           port: process.env.EMAIL_PORT,
           secure: process.env.EMAIL_SECURE,
           auth: {
-            user: process.env.EMAIL,
+            user: process.env.EMAIL_SENDER,
             pass: process.env.PASS_EMAIL_OTP,
           },
         });
     
         const mailOptions = {   
-          from: process.env.EMAIL,
+          from: process.env.EMAIL_SENDER,
           to: email,
           subject: 'Verification Code',
           text: `Your verification code is: ${otp}`,
