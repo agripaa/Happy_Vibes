@@ -3,7 +3,11 @@ const ImageStories = require('../Models/imageStoriesData.model.js');
 const Stories = require('../Models/storiesData.model.js');
 const path = require('path');
 const TextStories = require('../Models/textStoriesData.model.js');
-const { attributesCategoryStory } = require('../utils/attributes.utils.js');
+const { attributesCategoryStory, attributesImageProfile } = require('../utils/attributes.utils.js');
+const Follows = require('../Models/followsData.model.js');
+const { Op } = require('sequelize');
+const ImageProfile = require('../Models/imageProfileData.model.js');
+const Users = require('../Models/usersData.model.js');
 
 module.exports = {
     getAll: async function(req, res) {
@@ -13,6 +17,41 @@ module.exports = {
         } catch (error) {
             console.error(error);
             res.status(500).json({status: 500, msg: error.message});
+        }
+    },
+    getListStoriesFollowerOrFollowing: async function (req, res) {
+        const {userId} = req;
+
+        try{
+            const follows = await Follows.getAll({where: {userId}});
+            if (!follows.length) return res.status(404).json({status: 'Not Found', statusCode: 404, msg: "follows user is null!" });
+
+            const followingIds = follows.map(follow => follow.followingId).filter(id => id !== null);
+            const followerIds = follows.map(follow => follow.followerId).filter(id => id !== null);
+            
+            const userIds = [...new Set([...followingIds, ...followerIds])];
+            if (!userIds.length) return res.status(404).json({ status: 'Not Found', statusCode: 404, msg: "No valid user IDs found for following or followers!" });
+
+            const storiesFollows = await Stories.findAll({
+                where: {
+                    userId: {
+                        [Op.in]: userIds
+                    }
+                },
+                include: [{
+                    model: Users,
+                    attributes: ['id', 'username', 'email', "image_profile"],
+                    include: [{
+                        model: ImageProfile,
+                        attributes: attributesImageProfile,
+                    }]
+                }]
+            });
+
+            res.status(200).json({status: 'success', statusCode: 200, data: storiesFollows})
+        } catch(error){
+            console.error(error);
+            res.status(500).json({status: 500, msg: error.message, error});
         }
     },
     handleImageUpload: async function(files, text_stories, stories, res){

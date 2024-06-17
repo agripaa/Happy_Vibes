@@ -26,7 +26,7 @@ module.exports = {
       }
     },
     async sendReportPost(req, res) {
-        const { postId, category }  = req.params;
+        const { postId, category }  = req.body;
         const { userId } = req;
         try {
             const posting = await Posting.findOne({where: {id: postId,}}); 
