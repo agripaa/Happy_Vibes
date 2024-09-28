@@ -1,16 +1,21 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CarouselTimer from "./CarouselTimer";
 import HeaderStories from "./HeaderStories";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
+import { PlayAndPauseStory } from "@redux/StoryReducer/StoryReducer";
 
 export default function DisplayStories({ items }) {
-  const { countSlideStories, indexContentStories } = useSelector(
+  const { countSlideStories, indexContentStories, autoPlay } = useSelector(
     (state) => state?.story
   );
+  const dispatch = useDispatch();
   return (
     <Fragment>
-      <section className="UserStoriesDisplay">
+      <section
+        className="UserStoriesDisplay"
+        onClick={() => dispatch(PlayAndPauseStory(!autoPlay))}
+      >
         <div className="ListUserStories">
           <div className="CarouselStories">
             {items.stories?.map((_, i) => (

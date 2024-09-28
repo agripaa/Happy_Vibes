@@ -1,13 +1,17 @@
-import { PlayAndPauseStory } from "@redux/StoryReducer/StoryReducer";
+import {
+  FuncOptionsStories,
+  PlayAndPauseStory,
+} from "@redux/StoryReducer/StoryReducer";
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function HeaderStories({ user }) {
   const components = useSelector((state) => state?.icons);
-  const { autoPlay } = useSelector((state) => state?.story);
+  const { autoPlay, isOptionStories } = useSelector((state) => state?.story);
   const dispatch = useDispatch();
   function handleAutoPlayStories() {
     dispatch(PlayAndPauseStory(!autoPlay));
+    dispatch(FuncOptionsStories(true));
   }
   return (
     <Fragment>

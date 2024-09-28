@@ -32,7 +32,7 @@
   z-index: 3;
   display: flex;
   justify-content: center;
-  display: none;
+  // display: none;
 }
 .UserStoriesDisplay {
   width: 506px;
@@ -171,6 +171,7 @@
   }
   .swiper-slide-shadow-right,
   .swiper-slide-shadow-left {
+    display: none !important;
     background-image: none !important;
   }
 }

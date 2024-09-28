@@ -7,6 +7,7 @@ import { Fragment, useRef, useState } from "react";
 import SekeletonStories from "./Component_DisplayStories/SkeletonStories";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  FuncOptionsStories,
   nextBarStories,
   nextIndexContentStories,
   PlayAndPauseStory,
@@ -18,7 +19,9 @@ import ButtonSlide from "./Component_DisplayStories/ButtonSlide";
 
 export default function ContainerDisplayStories() {
   const slideRef = useRef(null);
-  const { SlideStories } = useSelector((state) => state?.story);
+  const { SlideStories, isOptionStories, isManageOptionStories } = useSelector(
+    (state) => state?.story
+  );
   const [indexed, indexedSet] = useState(0);
   const dispatch = useDispatch();
 
@@ -66,13 +69,24 @@ export default function ContainerDisplayStories() {
             );
           })}
         </Swiper>
+        {isOptionStories && (
+          <>
+            <div className="ShadowOptionStories">
+              <div
+                className="WrapOptionStories"
+                onClick={() => {
+                  dispatch(FuncOptionsStories(false));
 
-        <div className="ShadowOptionStories">
-          <div className="WrapOptionStories">
-            <OptionStories />
-          </div>
-          {/* <div className="ShadowManageStories"></div> */}
-        </div>
+                  console.log("ok");
+                }}
+              ></div>
+              {isManageOptionStories && (
+                <div className="ShadowManageStories"></div>
+              )}
+              <OptionStories />
+            </div>
+          </>
+        )}
         <ButtonSlide arrows="next" indexed={indexed} slideRef={slideRef} />
         <ButtonSlide arrows="prev" slideRef={slideRef} />
       </article>

@@ -142,6 +142,8 @@ const initialState = {
   countSlideStories: 0,
   indexContentStories: 0,
   autoPlay: false,
+  isOptionStories: false,
+  isManageOptionStories: false,
 };
 
 const StoryReducer = createSlice({
@@ -197,6 +199,12 @@ const StoryReducer = createSlice({
     PlayAndPauseStory: (state, action) => {
       state.autoPlay = action.payload;
     },
+    FuncOptionsStories: (state, action) => {
+      state.isOptionStories = action.payload;
+    },
+    FuncManageOptionsStories: (state, action) => {
+      state.isManageOptionStories = action.payload;
+    },
   },
 });
 
@@ -212,5 +220,7 @@ export const {
   nextIndexContentStories,
   prevIndexContentStories,
   PlayAndPauseStory,
+  FuncOptionsStories,
+  FuncManageOptionsStories,
 } = StoryReducer.actions;
 export default StoryReducer.reducer;
