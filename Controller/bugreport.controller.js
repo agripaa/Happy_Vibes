@@ -10,11 +10,17 @@ module.exports = {
   async getReport(req, res) {
     try {
       const bugReport = await BugReport.findAll({
-        include:[{
-          model: Users,
-          attributes: ['id', 'name', 'username', 'email', 'image_profile'],
-          include: [{model: ImageProfile}]
-        }]
+        include:[
+          {
+            model: Users,
+            attributes: ['id', 'name', 'username', 'email', 'image_profile'],
+            include: [{model: ImageProfile}]
+          },
+          {
+            model: TypeBug,
+            attributes: ['bug']
+          }
+      ]
       })
       res.status(200).json({status: 200, result: bugReport})
     } catch (err) {

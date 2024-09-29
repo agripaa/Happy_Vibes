@@ -23,6 +23,7 @@ const routeBackgroundStories = require('./backgroundStories.route.js');
 const routeFontStories = require('./fontStories.route.js');
 const routeBookmarkCollection = require('./bookmarkCollection.route.js');
 const routeBookmarkPosting = require('./bookmarkPosting.route.js');
+const routeTypeBugReport = require('./typeBug.route.js');
 const routeRatioImagePosting = require('./ratioImagePosting.route.js')
 
 const router = express.Router();
@@ -33,6 +34,7 @@ router.use(corsHeader);
 router.use('/auth', routeAuth);
 router.use('/background', routeBackground);
 router.use('/bug-report', routeBugreport);
+router.use('/type-bug', routeTypeBugReport);
 router.use('/comment', routeComment);
 router.use('/follows', routeFollows);
 router.use('/like', routeLike);
