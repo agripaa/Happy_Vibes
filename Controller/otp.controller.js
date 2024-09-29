@@ -67,7 +67,7 @@ module.exports = {
           secure: process.env.EMAIL_SECURE,
           auth: {
             user: process.env.EMAIL,
-            pass: process.env.PASS_EMAIL_OTP,
+            pass: process.env.PASS_EMAIL,
           },
         });
     

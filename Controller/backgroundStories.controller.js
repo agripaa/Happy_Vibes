@@ -6,7 +6,7 @@ module.exports = {
             const background_stories = await BackgroundStories.findAll({
                 attributes: ['id', 'color_code']
             });
-            // res.status(200).json({status: 200, data: background_stories});
+            res.status(200).json({status: 200, data: background_stories});
         } catch (error) {
             console.error(error);
             res.status(500).json({status: 500, msg: error.message, data: null});
