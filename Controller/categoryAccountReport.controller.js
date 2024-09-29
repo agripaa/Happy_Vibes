@@ -14,7 +14,8 @@ module.exports = {
         const { category_report, desc_category_report } = req.body;
         
         try {
-            
+            await CategoryReportUser.create({category_report, desc_category_report});
+            res.status(200).json({status: 200, msg: "category data account report created successfully"})
         } catch (error) {
             console.error(error);
             res.status(500).json({status: 500, msg: "Internal server error!"});
