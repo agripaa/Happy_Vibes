@@ -2,8 +2,6 @@ const Background = require("../Models/backgroundData.model");
 const Users = require("../Models/usersData.model");
 const path = require('path');
 
-const attributesUser = ['name','email', 'url', 'name_img'];
-
 module.exports = {
     async getBgUser(req, res){
         try {

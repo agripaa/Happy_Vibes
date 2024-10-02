@@ -25,6 +25,7 @@ const routeBookmarkCollection = require('./bookmarkCollection.route.js');
 const routeBookmarkPosting = require('./bookmarkPosting.route.js');
 const routeTypeBugReport = require('./typeBug.route.js');
 const routeRatioImagePosting = require('./ratioImagePosting.route.js')
+const routeCategoryReportPosting = require('./categoryReportPosting.route.js');
 
 const router = express.Router();
 const corsHeader = require('../middleware/corsHeader.middleware.js');
@@ -57,5 +58,6 @@ router.use('/font-stories', routeFontStories);
 router.use('/bookmark-collection', routeBookmarkCollection);
 router.use('/bookmark-posting', routeBookmarkPosting);
 router.use('/ratio-posting', routeRatioImagePosting);
+router.use('/category-report-posting', routeCategoryReportPosting);
 
 module.exports = router;
