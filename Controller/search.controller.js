@@ -26,6 +26,8 @@ module.exports = {
                 }],
             });
 
+            if(!users) return res.status(404)
+
             return res.status(200).json({status: 200, result: users});
         } catch (error) {
             console.error(error);

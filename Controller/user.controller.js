@@ -33,7 +33,6 @@ module.exports = {
         include: [
           {
             model: Follows,
-            as: 'followers',
             attributes: attributesFollowingId
           },
           {
@@ -50,7 +49,7 @@ module.exports = {
       res.status(200).json({ status: 200, result: user });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ status: 500, result: 'Terjadi kesalahan saat mengambil data pengguna' });
+      res.status(500).json({ status: 500, result: 'Terjadi kesalahan saat mengambil data pengguna', msg: error.message });
     }
   },
   async getUserId(req, res){
@@ -75,8 +74,8 @@ module.exports = {
         ]    
       });
 
-      if(user.id === userId) return res.status(403).json({status: 403, msg: 'Cannot see your profile in here'})
       if(!user) return res.status(404).json({ status: 404, msg: 'User not found' });
+      if(user.id === userId) return res.status(403).json({status: 403, msg: 'Cannot see your profile in here'})
 
       return res.status(200).json({ status: 200, result: user });
     } catch (err) {

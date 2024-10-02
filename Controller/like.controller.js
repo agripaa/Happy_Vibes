@@ -1,7 +1,7 @@
 const Like = require("../Models/likeData.model");
 const Posting = require("../Models/postingData.model");
 const Users = require("../Models/usersData.model");
-const { attributesLikePosting } = require("../utils/attributes.utils");
+const { attributesLikePosting, attributesIdUUIDNameUser } = require("../utils/attributes.utils");
 
 module.exports = {
   async getLike(req, res) {
@@ -28,6 +28,7 @@ module.exports = {
             attributes: attributesIdUUIDNameUser
           }]
         });
+        if (!posting) return res.status(404).json({status: 404, msg: "Posting data is not found!"})
         const user = await Users.findOne({
             where: { id: userId },
         })
@@ -59,7 +60,7 @@ module.exports = {
         }
 
     } catch (error) {
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).json({ status:500, error: "Internal Server Error", msg: error.message });
     }
   }
 };

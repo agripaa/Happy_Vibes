@@ -34,6 +34,9 @@ module.exports = {
         const { postId, bookmark_coll_id } = req.body;
 
         const bookmark_post = await BookmarkPosting.findOne({ where: { bookmark_coll_id: bookmark_coll_id } })
+
+        const postExists = await Posting.findOne({ where: { id: postId } });
+        if (!postExists) return res.status(400).json({ status: 400, msg: "Invalid postId, post does not exist" });
         try {
             if (!bookmark_post) {
                 try {

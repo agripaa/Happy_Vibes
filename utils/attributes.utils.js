@@ -13,7 +13,7 @@ module.exports = {
     attributesIdUUIDNameUser: ['id', 'uuid', 'name'],
     attributesLikeUserId: ['userId'],
     attributesCategoryStory: ['category_story'],
-    attributesFollowingId: ['follwingId'],
+    attributesFollowingId: ['followingId'],
     attributesPostingsBookmark: ['id', 'uuid', 'image_posting_id', 'userId', 'like'],
     attributesImagePostingId: ['image_posting_id'],
 } 

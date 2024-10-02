@@ -34,7 +34,7 @@ module.exports = {
         const user = await Users.findOne({ email: email });
         if (!user)
           return res.status(404).json({ status: 404, msg: 'email user not found' });
-        if (!user)
+        if (user.verify)
           return res
             .status(400)
             .json({ status: 400, msg: 'email already registered' });
@@ -87,13 +87,5 @@ module.exports = {
               }
             });
         });
-    },
-    generateOTP() {
-        const digits = '0123456789';
-        let OTP = '';
-        for (let i = 0; i < 6; i++) {
-          OTP += digits[Math.floor(Math.random() * 10)];
-        }
-        return OTP;
     },
 }
