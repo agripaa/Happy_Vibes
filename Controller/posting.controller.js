@@ -118,7 +118,7 @@ const getAllContent = async (req, res) => {
 const getContentById = async (req,res) => {
     try {
         const posting = await Posting.findOne({
-            where: {id : req.params.id},
+            where: {uuid : req.params.uuid},
             include: subDataInclude
           });
 

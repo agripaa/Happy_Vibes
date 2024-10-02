@@ -134,7 +134,7 @@ module.exports = {
       const mutualFollowIds = userFollowingIds.filter(id => userFollowerIds.includes(id));
 
       if (mutualFollowIds.length === 0) {
-        return res.status(200).json({ status: 200, msg: 'No mutual follows found', result: [] });
+        return res.status(404).json({ status: 404, msg: 'No mutual follows found', result: [] });
       }
 
       const mutualFollows = await Users.findAll({
