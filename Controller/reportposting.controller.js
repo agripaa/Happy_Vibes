@@ -6,6 +6,7 @@ const ReportPosting = require('../Models/reportPostingData.model');
 const Users = require('../Models/usersData.model');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const { attributesUser, attributesImagePostingId, attributesImagePosting, attributesRatioImage } = require('../utils/attributes.utils');
 
 module.exports = {
     async getReportPosting(req, res){
@@ -14,17 +15,17 @@ module.exports = {
           include: [
             {
               model: Users,
-              attributes: ['id', 'username', 'email']
+              attributes: attributesUser
             },
             {
               model: Posting,
-              attributes: ['image_posting_id'],
+              attributes: attributesImagePostingId,
               include: [{
                 model: ImagePosting,
-                attributes: ['url', 'name_img', 'ratio_id'],
+                attributes: attributesImagePosting,
                 include: [{
                   model: RatioImage,
-                  attributes: ['ratio']
+                  attributes: attributesRatioImage
                 }]
               }]
             }
@@ -47,14 +48,14 @@ module.exports = {
             include: [
               {
                 model: Users,
-                attributes: ['id', 'username', 'email']
+                attributes: attributesUser
               },
               {
                 model: ImagePosting,
-                attributes: ['url', 'name_img', 'ratio_id'],
+                attributes: attributesImagePosting,
                 include: [{
                   model: RatioImage,
-                  attributes: ['ratio']
+                  attributes: attributesRatioImage
                 }]
               }
             ]
