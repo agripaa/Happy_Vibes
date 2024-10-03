@@ -21,7 +21,10 @@ const Stories = db.define('stories', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },
-}, {freezeTableName: true});
+}, {
+    freezeTableName: true,
+    timestamps: true
+});
 
 Stories.belongsTo(User, {foreignKey: "userId", onDelete: "CASCADE"});
 User.hasMany(Stories, {foreignKey: "userId", onDelete: "CASCADE"})
