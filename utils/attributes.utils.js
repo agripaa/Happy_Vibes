@@ -16,4 +16,8 @@ module.exports = {
     attributesFollowingId: ['followingId'],
     attributesPostingsBookmark: ['id', 'uuid', 'image_posting_id', 'userId', 'like'],
     attributesImagePostingId: ['image_posting_id'],
+    attributesImageStories: ['url_stories', 'name_image', 'text_stories'],
+    attributesTextStories: ["text_stories", "background_id", "font_id"],
+    attributesUserIdToFollowing: ['followerId'],
+    attributesUserIdToFollower: ['followingId'],
 } 

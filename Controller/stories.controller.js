@@ -3,9 +3,14 @@ const ImageStories = require('../Models/imageStoriesData.model.js');
 const Stories = require('../Models/storiesData.model.js');
 const path = require('path');
 const TextStories = require('../Models/textStoriesData.model.js');
-const { attributesCategoryStory } = require('../utils/attributes.utils.js');
+const Follows = require('../Models/followsData.model.js');
+const { attributesCategoryStory, attributesUserImageProfileId, attributesImageProfile, attributesImageStories, attributesTextStories, attributesUserIdToFollowing } = require('../utils/attributes.utils.js');
 const cron = require('node-cron');
 const {Op} = require('sequelize');
+const FontStories = require('../Models/fontStoriesData.model.js');
+const BackgroundStories = require('../Models/backgroundStoriesData.model.js');
+const Users = require('../Models/usersData.model.js');
+const ImageProfile = require('../Models/imageProfileData.model.js');
 
 async function deleteOldStories() {
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000); 
@@ -125,27 +130,76 @@ module.exports = {
     },
     getStoryUser: async function (req, res) {
         const { userId } = req;
-
+        
         try {
-            const stories = await Stories.findOne({ where: { userId } });
-            if (!stories) return res.status(404).json({ status: 404, msg: "Stories user is not defined" });
-
-            res.status(200).json({ status: 200, result: stories });
+            const stories = await Stories.findAll({
+                where: { 
+                    userId,
+                    createdAt: {
+                        [Op.gt]: new Date(Date.now() - 24 * 60 * 60 * 1000) 
+                    }
+                },
+                include: [
+                    {
+                        model: CategoryStories,
+                        attributes: ['category_story']
+                    },
+                    {
+                        model: ImageStories,
+                        attributes: attributesImageStories,
+                        required: false
+                    },
+                    {
+                        model: TextStories,
+                        attributes: attributesTextStories,
+                        required: false, 
+                        include: [
+                            FontStories,
+                            BackgroundStories
+                        ]
+                    },
+                    {
+                        model: Users,
+                        attributes: attributesUserImageProfileId,
+                        include: [{ model: ImageProfile, attributes: attributesImageProfile }]
+                    }
+                ]
+            });
+    
+            if (!stories.length) return res.status(404).json({ status: 404, msg: "Stories user is not defined" });
+    
+            const formattedStories = stories.map(story => {
+                if (story['category_story'].category_story === "IMAGE") {
+                    return {
+                        ...story.get({ plain: true }),
+                        imageStories: story.ImageStories
+                    };
+                } else if (story['category_story'].category_story === "TEXT") {
+                    return {
+                        ...story.get({ plain: true }),
+                        textStories: story.TextStories,
+                        user: story.User
+                    };
+                }
+                return story;
+            });
+    
+            res.status(200).json({ status: 200, result: formattedStories });
         } catch (error) {
             console.error(error);
             res.status(500).json({ status: 500, msg: error.message });
         }
     },
+    
     getFollowingStoriesIds: async function (req, res) {
         const { userId } = req;
 
         try {
             const followingUsers = await Follows.findAll({
                 where: { followingId: userId }, 
-                attributes: ['followerId'], 
+                attributes: attributesUserIdToFollowing, 
             });
 
-            
             const followerIds = followingUsers.map(follow => follow.followerId);
             if (!followerIds || followerIds.length === 0) return res.status(404).json({ status: 404, msg: "You are not following anyone with stories" });
 
@@ -161,9 +215,8 @@ module.exports = {
         try {
             const followingUsers = await Follows.findAll({
                 where: { followingId: userId }, 
-                attributes: ['followerId'], 
+                attributes: attributesUserIdToFollowing, 
             });
-
             
             const followerIds = followingUsers.map(follow => follow.followerId);
 
@@ -178,24 +231,95 @@ module.exports = {
                         [Op.gt]: new Date(Date.now() - 24 * 60 * 60 * 1000) 
                     }
                 },
-                include: [ImageStories, TextStories],
+                include: [
+                    {
+                        model: CategoryStories,
+                        attributes: ['category_story']
+                    },
+                    {
+                        model: ImageStories,
+                        attributes: attributesImageStories,
+                        required: false
+                    },
+                    {
+                        model: TextStories,
+                        attributes: attributesTextStories,
+                        required: false, 
+                        include: [
+                            FontStories,
+                            BackgroundStories
+                        ]
+                    },
+                    {
+                        model: Users,
+                        attributes: attributesUserImageProfileId,
+                        include: [{ model: ImageProfile, attributes: attributesImageProfile }]
+                    }
+                ]
             });
 
-            if (stories.length === 0) {
-                return res.status(404).json({ status: 404, msg: "No stories found for the users you are following" });
-            }
+            if (!stories.length) return res.status(404).json({ status: 404, msg: "Stories user is not defined" });
+    
+            const formattedStories = stories.map(story => {
+                if (story['category_story'].category_story === "IMAGE") {
+                    return {
+                        ...story.get({ plain: true }),
+                        imageStories: story.ImageStories
+                    };
+                } else if (story['category_story'].category_story === "TEXT") {
+                    return {
+                        ...story.get({ plain: true }),
+                        textStories: story.TextStories,
+                        user: story.User
+                    };
+                }
+                return story;
+            });
 
-            res.status(200).json({ status: 200, result: stories });
+            res.status(200).json({ status: 200, result: formattedStories });
         } catch (error) {
             console.error(error);
             res.status(500).json({ status: 500, msg: error.message });
         }
     },
     seeStoryFollowing: async function(req, res) {
-        const { followingId } = req.body;
+        const { followerId } = req.params;
+        const { userId } = req;
+
+        if (followerId === userId) return res.status(400).json({ status: 400, msh: "you can't request you're id in followerId"});
+
+        const followsExist = await Follows.findOne({where: {[Op.and]: [{followerId}, {followingId: userId}]}});
+        if(!followsExist) return res.status(404).json({status: 404, msg: "following is not exist!"})
 
         try {
-            const stories = await Stories.findOne({where: {userId: followingId}});
+            const stories = await Stories.findOne({
+                where: {userId: followingId,}, 
+                include: [
+                    {
+                        model: CategoryStories,
+                        attributes: ['category_story']
+                    },
+                    {
+                        model: ImageStories,
+                        attributes: attributesImageStories,
+                        required: false
+                    },
+                    {
+                        model: TextStories,
+                        attributes: attributesTextStories,
+                        required: false, 
+                        include: [
+                            FontStories,
+                            BackgroundStories
+                        ]
+                    },
+                    {
+                        model: Users,
+                        attributes: attributesUserImageProfileId,
+                        include: [{ model: ImageProfile, attributes: attributesImageProfile }]
+                    }
+                ]
+            });
             if(!stories) return res.status(404).json({ status: 404, msg: "story is not defined!"});
 
             res.status(200).json({status: 200, result: stories});
