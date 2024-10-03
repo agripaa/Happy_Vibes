@@ -19,7 +19,7 @@ function PopOptions() {
       {dltCheck ? <AlertDeleteAccount /> : null}
       {CheckBugReport ? <BugReport /> : null}
       {checkUploadStory ? <PostStory /> : null}
-      <ContainerDisplayStories />
+      {/* <ContainerDisplayStories /> */}
     </Fragment>
   );
 }
